@@ -7,37 +7,55 @@ on:
       - ".github/workflows/compress-instagram-media.yml"
   workflow_dispatch:
 
+concurrency:
+  group: compress-instagram-media-main
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
 jobs:
   compress:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Check media tools
+        shell: bash
         run: |
-          # GitHub-hosted Ubuntu runners commonly include these tools already.
-          # Only use apt when a required tool is actually missing.
-          missing=0
-          command -v ffmpeg >/dev/null 2>&1 || missing=1
-          command -v convert >/dev/null 2>&1 || missing=1
-          if [ "$missing" -eq 1 ]; then
-            sudo apt-get update
-            sudo apt-get install -y ffmpeg imagemagick
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v convert >/dev/null 2>&1; then
+            timeout 180s sudo apt-get update
+            timeout 180s sudo apt-get install -y ffmpeg imagemagick
           fi
           ffmpeg -version | head -n 1
           convert -version | head -n 1
+
       - name: Compress Instagram images and Reels
         shell: bash
         run: |
           set -euo pipefail
           changed=0
-          while IFS= read -r -d '' file; do
+
+          # Capture the file lists BEFORE creating temporary files. Otherwise find
+          # may discover *.compressed.jpg / *.compressed.mp4 while the loop runs.
+          mapfile -d '' image_files < <(find public/media/instagram -type f -iname '*.jpg' ! -name '*.compressed.jpg' -print0)
+          mapfile -d '' video_files < <(find public/media/reels -type f -iname '*.mp4' ! -name '*.compressed.mp4' -print0)
+
+          echo "Found ${#image_files[@]} Instagram JPG images."
+          index=0
+          for file in "${image_files[@]}"; do
+            index=$((index + 1))
             tmp="${file%.*}.compressed.jpg"
-            convert "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"
+            echo "Compressing image ${index}/${#image_files[@]}: $file"
+            if ! timeout 90s convert "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"; then
+              rm -f "$tmp"
+              echo "::warning::Could not compress image: $file"
+              continue
+            fi
             old_size=$(stat -c%s "$file")
             new_size=$(stat -c%s "$tmp")
             if [ "$new_size" -lt "$old_size" ]; then
@@ -48,10 +66,19 @@ jobs:
               rm -f "$tmp"
               echo "Kept image (already smaller): $file"
             fi
-          done < <(find public/media/instagram -type f -iname '*.jpg' -print0)
-          while IFS= read -r -d '' file; do
+          done
+
+          echo "Found ${#video_files[@]} Reels MP4 videos."
+          index=0
+          for file in "${video_files[@]}"; do
+            index=$((index + 1))
             tmp="${file%.mp4}.compressed.mp4"
-            ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -map '0:a?' -c:v libx264 -preset fast -crf 25 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$tmp"
+            echo "Compressing video ${index}/${#video_files[@]}: $file"
+            if ! timeout 240s ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -map '0:a?' -c:v libx264 -preset fast -crf 25 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$tmp"; then
+              rm -f "$tmp"
+              echo "::warning::Could not compress video: $file"
+              continue
+            fi
             old_size=$(stat -c%s "$file")
             new_size=$(stat -c%s "$tmp")
             if [ "$new_size" -lt "$old_size" ]; then
@@ -62,14 +89,14 @@ jobs:
               rm -f "$tmp"
               echo "Kept video (already smaller): $file"
             fi
-          done < <(find public/media/reels -type f -iname '*.mp4' -print0)
-          if [ "$changed" -eq 0 ]; then
-            echo "No media files needed compression."
-          fi
+          done
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/media/instagram public/media/reels
-          if ! git diff --cached --quiet; then
+          if [ "$changed" -eq 1 ] && ! git diff --cached --quiet; then
             git commit -m "Compress Instagram images and lightly optimize Reels"
-            git push
+            git push origin HEAD:main
+          else
+            echo "No media changes to commit."
           fi
