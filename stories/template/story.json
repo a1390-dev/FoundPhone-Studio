@@ -3998,6 +3998,383 @@
           "time": "2026-10-27 19:42"
         }
       ]
+    },
+    {
+      "id": "whatsapp-liu-zhimin-chat",
+      "app": "whatsapp",
+      "title": "刘知珉",
+      "participants": [
+        "owner",
+        "liu-zhimin"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-liu-zhimin-chat-message-1",
+          "body": "在吗？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-u-nae-ri-chat",
+      "app": "whatsapp",
+      "title": "内永绘里",
+      "participants": [
+        "owner",
+        "u-nae-ri"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-u-nae-ri-chat-message-1",
+          "body": "在吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-kim-minjeong-chat",
+      "app": "whatsapp",
+      "title": "金旼炡",
+      "participants": [
+        "owner",
+        "kim-minjeong"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-kim-minjeong-chat-message-1",
+          "body": "在吗？",
+          "senderId": "kim-minjeong",
+          "time": "2026-10-27 16:42",
+          "meta": {
+            "pinned": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-ning-yizhuo-chat",
+      "app": "whatsapp",
+      "title": "宁艺卓",
+      "participants": [
+        "owner",
+        "ning-yizhuo"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-ning-yizhuo-chat-message-1",
+          "body": "在吗？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-lin-jianguo-chat",
+      "app": "whatsapp",
+      "title": "金道允",
+      "participants": [
+        "owner",
+        "lin-jianguo"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-lin-jianguo-chat-message-1",
+          "body": "在吗？",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-zhou-wanning-chat",
+      "app": "whatsapp",
+      "title": "朴瑞妍",
+      "participants": [
+        "owner",
+        "zhou-wanning"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-zhou-wanning-chat-message-1",
+          "body": "在吗？",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-lin-zihao-chat",
+      "app": "whatsapp",
+      "title": "李俊昊",
+      "participants": [
+        "owner",
+        "lin-zihao"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-lin-zihao-chat-message-1",
+          "body": "在吗？",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-lin-yutong-chat",
+      "app": "whatsapp",
+      "title": "崔有真",
+      "participants": [
+        "owner",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-lin-yutong-chat-message-1",
+          "body": "在吗？",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-xu-jiaqi-chat",
+      "app": "whatsapp",
+      "title": "郑夏凛",
+      "participants": [
+        "owner",
+        "xu-jiaqi"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-xu-jiaqi-chat-message-1",
+          "body": "在吗？",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-chen-yinuo-chat",
+      "app": "whatsapp",
+      "title": "姜敏书",
+      "participants": [
+        "owner",
+        "chen-yinuo"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-chen-yinuo-chat-message-1",
+          "body": "在吗？",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-wang-chenxi-chat",
+      "app": "whatsapp",
+      "title": "尹志浩",
+      "participants": [
+        "owner",
+        "wang-chenxi"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-wang-chenxi-chat-message-1",
+          "body": "在吗？",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-zhao-yuchen-chat",
+      "app": "whatsapp",
+      "title": "韩瑞俊",
+      "participants": [
+        "owner",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-zhao-yuchen-chat-message-1",
+          "body": "在吗？",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-sun-ruoxi-chat",
+      "app": "whatsapp",
+      "title": "吴知友",
+      "participants": [
+        "owner",
+        "sun-ruoxi"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-sun-ruoxi-chat-message-1",
+          "body": "在吗？",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-li-minghui-chat",
+      "app": "whatsapp",
+      "title": "金秀贤",
+      "participants": [
+        "owner",
+        "li-minghui"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-li-minghui-chat-message-1",
+          "body": "在吗？",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-gao-ziyang-chat",
+      "app": "whatsapp",
+      "title": "林道贤",
+      "participants": [
+        "owner",
+        "gao-ziyang"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-gao-ziyang-chat-message-1",
+          "body": "在吗？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-tang-xinyi-chat",
+      "app": "whatsapp",
+      "title": "申叡恩",
+      "participants": [
+        "owner",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-tang-xinyi-chat-message-1",
+          "body": "在吗？",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-he-junhao-chat",
+      "app": "whatsapp",
+      "title": "张珉载",
+      "participants": [
+        "owner",
+        "he-junhao"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-he-junhao-chat-message-1",
+          "body": "在吗？",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-song-yiran-chat",
+      "app": "whatsapp",
+      "title": "裴秀彬",
+      "participants": [
+        "owner",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-song-yiran-chat-message-1",
+          "body": "在吗？",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-luo-jiayi-chat",
+      "app": "whatsapp",
+      "title": "权娜妍",
+      "participants": [
+        "owner",
+        "luo-jiayi"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-luo-jiayi-chat-message-1",
+          "body": "在吗？",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-fang-zheng-chat",
+      "app": "whatsapp",
+      "title": "赵贤宇",
+      "participants": [
+        "owner",
+        "fang-zheng"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-fang-zheng-chat-message-1",
+          "body": "在吗？",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-wu-xiaoyu-chat",
+      "app": "whatsapp",
+      "title": "文彩元",
+      "participants": [
+        "owner",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-wu-xiaoyu-chat-message-1",
+          "body": "在吗？",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 16:42"
+        }
+      ]
+    },
+    {
+      "id": "whatsapp-jiang-chen-chat",
+      "app": "whatsapp",
+      "title": "柳建宇",
+      "participants": [
+        "owner",
+        "jiang-chen"
+      ],
+      "messages": [
+        {
+          "id": "whatsapp-jiang-chen-chat-message-1",
+          "body": "在吗？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 16:42"
+        }
+      ]
     }
   ],
   "content": {
