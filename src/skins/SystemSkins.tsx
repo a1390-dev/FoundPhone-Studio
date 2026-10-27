@@ -166,7 +166,11 @@ export function ContactsSkin(p: Props) {
             <h4 className="native-section">{g}</h4>
             {items
               .filter((i) => (i.folder || "所有联系人") === g)
-              .sort((a, b) => a.title.localeCompare(b.title, "zh-CN"))
+              .sort((a, b) => {
+                const aPinned = a.meta.pinned === "true";
+                const bPinned = b.meta.pinned === "true";
+                return Number(bPinned) - Number(aPinned) || a.title.localeCompare(b.title, "zh-CN");
+              })
               .map((i) => (
                 <Row
                   key={i.id}
