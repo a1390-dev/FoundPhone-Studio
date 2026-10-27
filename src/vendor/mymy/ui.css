@@ -1137,3 +1137,27 @@
     font-size: 11px;
   }
 }
+
+/* First Instagram carousel post: emphasize like/comment/repost; keep share smaller. */
+.mymy-ui .ig-first-actions button:nth-child(1) svg,
+.mymy-ui .ig-first-actions button:nth-child(2) svg,
+.mymy-ui .ig-first-actions button:nth-child(3) svg {
+  width: 27px;
+  height: 27px;
+}
+.mymy-ui .ig-first-actions button:nth-child(4) svg {
+  width: 20px;
+  height: 20px;
+}
+@media (max-width: 360px) {
+  .mymy-ui .ig-first-actions button:nth-child(1) svg,
+  .mymy-ui .ig-first-actions button:nth-child(2) svg,
+  .mymy-ui .ig-first-actions button:nth-child(3) svg {
+    width: 24px;
+    height: 24px;
+  }
+  .mymy-ui .ig-first-actions button:nth-child(4) svg {
+    width: 18px;
+    height: 18px;
+  }
+}
