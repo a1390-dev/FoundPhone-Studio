@@ -6,7 +6,7 @@ import {
   Plus,
   Search,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { memo, useState, type ReactNode } from "react";
 import type { SkinProps } from "../AppSkins";
 import { safeMedia, type Item } from "../schema";
 export type Props = SkinProps;
@@ -113,7 +113,7 @@ export function Avatar({
     </span>
   );
 }
-export function Media({
+export const Media = memo(function Media({
   item,
   className = "",
 }: {
@@ -141,7 +141,7 @@ export function Media({
       <span>{item.title}</span>
     </div>
   );
-}
+});
 export function Row({
   item,
   onItem,
