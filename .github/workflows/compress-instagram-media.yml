@@ -28,7 +28,7 @@ jobs:
           changed=0
           while IFS= read -r -d '' file; do
             tmp="${file%.*}.compressed.jpg"
-            magick "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"
+            convert "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"
             old_size=$(stat -c%s "$file")
             new_size=$(stat -c%s "$tmp")
             if [ "$new_size" -lt "$old_size" ]; then
