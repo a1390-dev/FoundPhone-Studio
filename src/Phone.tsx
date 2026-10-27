@@ -22,7 +22,7 @@ import {
   KeyboardContext,
   NativeSettings,
 } from "./DeviceSystem";
-import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
+import { AppArtwork, hasNativeArtwork, preloadOriginalIcons } from "./AppArtwork";
 import { getFields } from "./fields";
 import { catalogSkins } from "./skins/catalog";
 import "./skins/skins.css";
@@ -154,6 +154,11 @@ function PhoneRuntime({
   const shell = useRef<HTMLDivElement>(null);
   const gesture = useRef({ x: 0, y: 0, time: 0, zone: "" });
   const [launchOrigin, setLaunchOrigin] = useState(screenOrigin);
+
+  useEffect(() => {
+    // Start loading the original home-screen icons before the user unlocks.
+    preloadOriginalIcons();
+  }, []);
 
   const beginUnlock = () => {
     setPinError("");
