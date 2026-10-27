@@ -225,8 +225,13 @@ export function DeliverySkin(p: Props) {
   const [category, setCategory] = useState("全部");
   const [q, setQ] = useState("");
   const [cart, setCart] = useState<Record<string, number>>({});
-  const [address, setAddress] = useState("首尔特别市麻浦区杨花路 12号 101室");
-  const [savedAddresses, setSavedAddresses] = useState(["首尔特别市麻浦区杨花路 12号 101室", "首尔特别市城东区圣水一路 25号 302室"]);
+  const [address, setAddress] = useState("首尔特别市 江南区 · 清潭洞高级别墅区");
+  const [savedAddresses, setSavedAddresses] = useState([
+    "首尔特别市 江南区 · 清潭洞高级别墅区",
+    "首尔特别市 江南区 · 三成洞高层公寓区",
+    "SM娱乐总部 · 首尔特别市城东区圣水洞",
+    "KWANGYA SEOUL · SM大楼附近",
+  ]);
   const [addressEditing, setAddressEditing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("KakaoPay");
   const [payer, setPayer] = useState("我自己");
