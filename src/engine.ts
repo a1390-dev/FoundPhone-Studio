@@ -230,7 +230,7 @@ export function advance(
     };
   }
 
-  const s = structuredClone(previous);
+  const s = cloneRuntime(previous);
   s.elapsedMs ??= 0;
   s.clockRemainderMs ??= 0;
   s.scheduled ??= [];
