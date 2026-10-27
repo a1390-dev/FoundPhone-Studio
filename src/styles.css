@@ -4946,7 +4946,7 @@ label {
 }
 .player-session-modal {
   position: absolute;
-  top: 57%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: min(320px, calc(100% - 40px));
@@ -5006,7 +5006,7 @@ label {
   border-radius: 12px;
   background: #fff;
   color: #171717;
-  font-size: 24px !important;
+  font-size: 16px !important;
   line-height: 1.25;
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
