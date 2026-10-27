@@ -349,7 +349,6 @@ export function MymyInstagram(p: SkinProps) {
     "/media/reels/ig-reel-03.mp4",
     "/media/reels/ig-reel-04.mp4",
     "/media/reels/ig-reel-05.mp4",
-    "/media/reels/ig-reel-06.mp4",
   ];
   const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
     ...officialAccount,
@@ -363,9 +362,15 @@ export function MymyInstagram(p: SkinProps) {
   })) : [];
   const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
   const reelCounts = (id: string) => {
-    let hash = 0;
-    for (let n = 0; n < id.length; n++) hash = (hash * 31 + id.charCodeAt(n)) >>> 0;
-    return { likes: 1000000 + (hash % 3999999), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
+    const index = Math.max(0, Number(id.split("-").pop()) - 1);
+    const counts = [
+      { likes: 2240000, comments: 79000, shares: 14000, saves: 15000 },
+      { likes: 3180000, comments: 63000, shares: 21000, saves: 27000 },
+      { likes: 1470000, comments: 42000, shares: 9800, saves: 18000 },
+      { likes: 4720000, comments: 88000, shares: 23900, saves: 49000 },
+      { likes: 2670000, comments: 56000, shares: 17300, saves: 32000 },
+    ];
+    return counts[index % counts.length];
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   useEffect(() => {
@@ -518,7 +523,7 @@ export function MymyInstagram(p: SkinProps) {
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
-                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline onClick={(e) => {
+                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline preload="metadata" onClick={(e) => {
                       const v = e.currentTarget;
                       if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
                     }} />
