@@ -1008,7 +1008,7 @@
 .mymy-ui .ig-first-carousel {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: #fff;
   touch-action: pan-y;
@@ -1138,28 +1138,16 @@
   }
 }
 
-/* First Instagram carousel post: four interaction icons slightly larger; share icon smaller. */
+/* First Instagram carousel post: four icons slightly larger; share icon smaller. */
 .mymy-ui .ig-first-actions button:nth-child(1) svg,
 .mymy-ui .ig-first-actions button:nth-child(2) svg,
 .mymy-ui .ig-first-actions button:nth-child(3) svg,
-.mymy-ui .ig-first-actions button:nth-child(5) svg {
-  width: 26px;
-  height: 26px;
-}
-.mymy-ui .ig-first-actions button:nth-child(4) svg {
-  width: 19px;
-  height: 19px;
-}
+.mymy-ui .ig-first-actions button:nth-child(5) svg { width: 26px; height: 26px; }
+.mymy-ui .ig-first-actions button:nth-child(4) svg { width: 19px; height: 19px; }
 @media (max-width: 360px) {
   .mymy-ui .ig-first-actions button:nth-child(1) svg,
   .mymy-ui .ig-first-actions button:nth-child(2) svg,
   .mymy-ui .ig-first-actions button:nth-child(3) svg,
-  .mymy-ui .ig-first-actions button:nth-child(5) svg {
-    width: 23px;
-    height: 23px;
-  }
-  .mymy-ui .ig-first-actions button:nth-child(4) svg {
-    width: 17px;
-    height: 17px;
-  }
+  .mymy-ui .ig-first-actions button:nth-child(5) svg { width: 23px; height: 23px; }
+  .mymy-ui .ig-first-actions button:nth-child(4) svg { width: 17px; height: 17px; }
 }
