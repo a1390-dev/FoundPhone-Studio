@@ -69,6 +69,8 @@ export function DeviceLock({
   onUnlock,
   onCamera,
   onLight,
+  canContinue,
+  onNewPlayer,
 }: {
   work: Work;
   time: string;
