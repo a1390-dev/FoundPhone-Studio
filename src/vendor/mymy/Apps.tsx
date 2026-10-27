@@ -323,7 +323,10 @@ export function MymyInstagram(p: SkinProps) {
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
     [reposted, setReposted] = useSkinState<string[]>(p, "mymyReposted", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
-    [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
+    [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []),
+    [profileId, setProfileId] = useSkinState<string>(p, "mymyInstagramProfileId", p.owner || "机主"),
+    [profileAvatar, setProfileAvatar] = useSkinState<string>(p, "mymyInstagramProfileAvatar", "");
+  const profileAvatarInput = useRef<HTMLInputElement | null>(null);
   const [reelIndex, setReelIndex] = useState(0),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
@@ -825,42 +828,47 @@ export function MymyInstagram(p: SkinProps) {
             </div>
           )}
           {!selected && tab === "个人主页" && (
-            <>
+            <section className="ig-profile-settings">
               <div className="pf">
-                <Avatar name={p.owner || "机主"} />
+                <button className="ig-profile-avatar-button" onClick={() => profileAvatarInput.current?.click()} aria-label="上传头像">
+                  {profileAvatar ? <img className="ig-profile-avatar-image" src={profileAvatar} alt="个人头像" /> : <Avatar name={profileId || "机主"} />}
+                </button>
+                <input
+                  ref={profileAvatarInput}
+                  className="ig-profile-avatar-input"
+                  type="file"
+                  accept="image/*"
+                  aria-label="选择头像图片"
+                  onChange={(e) => {
+                    const file = e.currentTarget.files?.[0];
+                    if (!file) return;
+                    if (!file.type.startsWith("image/")) return;
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      if (typeof reader.result === "string") setProfileAvatar(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                    e.currentTarget.value = "";
+                  }}
+                />
                 <div className="ps">
-                  <div>
-                    <b>{posts.length}</b>
-                    <small>帖子</small>
-                  </div>
-                  <div>
-                    <b>—</b>
-                    <small>粉丝</small>
-                  </div>
-                  <div>
-                    <b>—</b>
-                    <small>关注</small>
-                  </div>
+                  <div><b>0</b><small>帖子</small></div>
+                  <div><b>—</b><small>粉丝</small></div>
+                  <div><b>—</b><small>关注</small></div>
                 </div>
               </div>
-              <p className="pn">{p.owner}</p>
-              <div className="ptab">
-                <div className="on">
-                  <Grid />
-                </div>
-              </div>
-              <div className="pg2">
-                {posts.map((i) => (
-                  <button key={i.id} onClick={() => openPost(i)}>
-                    {i.id === firstCarouselPostId || i.id === secondCarouselPostId || i.id === thirdCarouselPostId || i.id === fourthCarouselPostId ? (
-                      <img src={i.id === firstCarouselPostId ? firstCarouselImages[0] : i.id === secondCarouselPostId ? secondCarouselImages[0] : i.id === thirdCarouselPostId ? thirdCarouselImages[0] : fourthCarouselImages[0]} alt="imwinter carousel post" loading="lazy" />
-                    ) : (
-                      <Media item={i} />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </>
+              <label className="ig-profile-id-label">
+                <span>ID</span>
+                <input
+                  aria-label="设置个人主页ID"
+                  value={profileId}
+                  maxLength={30}
+                  placeholder="输入你的ID"
+                  onChange={(e) => setProfileId(e.target.value.replace(/^@/, ""))}
+                />
+              </label>
+              <p className="ig-profile-hint">点击头像可上传自己的图片</p>
+            </section>
           )}
           {!selected && tab === "私信" && (
             <>
