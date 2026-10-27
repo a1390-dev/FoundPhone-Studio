@@ -533,10 +533,9 @@ export function MymyInstagram(p: SkinProps) {
                     <button aria-label="转发 Reels" onClick={() => setPop("已打开转发选项")}><Repeat2 /><small>{shortCount(reelCounts(reel.id).shares)}</small></button>
                     <button aria-label="分享 Reels" onClick={() => setTab("私信")}><Send /><small>{shortCount(reelCounts(reel.id).shares + 1000)}</small></button>
                     <button aria-label="收藏 Reels" onClick={() => toggle(reel.id, reelSaved, setReelSaved)}><Bookmark fill={reelSaved.includes(reel.id) ? "white" : "none"} /><small>{shortCount(reelCounts(reel.id).saves)}</small></button>
-                    <span className="ig-reel-avatar"><img src="/media/reels/aespa-official-avatar.jpg" alt="aespa_official avatar" /></span>
                   </div>
                   <div className="ig-reel-caption">
-                    <div className="ig-reel-account"><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
+                    <div className="ig-reel-account"><span className="ig-reel-account-avatar"><img src="/media/reels/aespa-official-avatar.jpg" alt="" /></span><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
                     {reel.body && <p>{reel.body}</p>}
                     <small>♪ aespa_official · 原声</small>
                   </div>
