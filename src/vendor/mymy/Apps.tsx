@@ -331,6 +331,8 @@ export function MymyInstagram(p: SkinProps) {
     [muted, setMuted] = useState(true),
     [playing, setPlaying] = useState(true);
   const reelStageRef = useRef<HTMLDivElement | null>(null);
+  const lastReelSwipeAt = useRef(0);
+  const lastReelNavigationAt = useRef(0);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
   const [thirdCarouselIndex, setThirdCarouselIndex] = useState(0);
@@ -461,7 +463,10 @@ export function MymyInstagram(p: SkinProps) {
     setPlaying(true);
   };
   const requestReel = (nextIndex: number) => {
-    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
+    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex || pendingReelIndex !== null) return;
+    const now = Date.now();
+    if (now - lastReelNavigationAt.current < 280) return;
+    lastReelNavigationAt.current = now;
     const stage = reelStageRef.current;
     const selector = 'video[data-reel-id="' + reels[nextIndex].id + '"]';
     const target = stage?.querySelector<HTMLVideoElement>(selector);
@@ -470,12 +475,14 @@ export function MymyInstagram(p: SkinProps) {
     } else {
       if (stage) stage.dataset.pendingIndex = String(nextIndex);
       setPendingReelIndex(nextIndex);
-      // iOS Safari often ignores preload=auto for the hidden adjacent video.
-      // A swipe is a user gesture, so explicitly request playback to start fetching/decoding it.
+      // Do not play an off-screen preload video. Its rejected play() promise can race
+      // with the index switch and incorrectly pause the newly active reel on iOS Safari.
+      // Buffer it while hidden, then play it only after it becomes the active video.
       if (target) {
         target.muted = true;
         target.playsInline = true;
-        attemptReelPlayback(target);
+        target.preload = "auto";
+        if (target.networkState === 0) target.load();
       }
     }
   };
@@ -752,20 +759,33 @@ export function MymyInstagram(p: SkinProps) {
           {!selected && tab === "Reels" && (
             <div className="ig-reels" onTouchStartCapture={(e) => {
               const touch = e.touches[0];
-              (e.currentTarget as HTMLDivElement).dataset.touchY = String(touch?.clientY ?? 0);
+              const el = e.currentTarget as HTMLDivElement;
+              el.dataset.touchY = String(touch?.clientY ?? 0);
+              el.dataset.touchX = String(touch?.clientX ?? 0);
             }} onTouchEndCapture={(e) => {
               const el = e.currentTarget as HTMLDivElement;
               const start = Number(el.dataset.touchY ?? NaN);
-              const end = e.changedTouches[0]?.clientY;
+              const startX = Number(el.dataset.touchX ?? NaN);
+              const endTouch = e.changedTouches[0];
+              const end = endTouch?.clientY;
+              const endX = endTouch?.clientX;
               delete el.dataset.touchY;
-              if (!Number.isFinite(start) || end === undefined) return;
+              delete el.dataset.touchX;
+              if (!Number.isFinite(start) || !Number.isFinite(startX) || end === undefined || endX === undefined) return;
               const delta = end - start;
-              if (Math.abs(delta) >= 42 && reels.length) {
-                if (delta < 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
-                else if (delta > 0 && reelIndex > 0) requestReel(reelIndex - 1);
+              const deltaX = endX - startX;
+              if (Math.abs(delta) >= 48 && Math.abs(delta) > Math.abs(deltaX) * 1.15 && reels.length) {
+                if (delta < 0 && reelIndex < reels.length - 1) {
+                  lastReelSwipeAt.current = Date.now();
+                  requestReel(reelIndex + 1);
+                } else if (delta > 0 && reelIndex > 0) {
+                  lastReelSwipeAt.current = Date.now();
+                  requestReel(reelIndex - 1);
+                }
               }
             }} onTouchCancelCapture={(e) => {
               delete (e.currentTarget as HTMLDivElement).dataset.touchY;
+              delete (e.currentTarget as HTMLDivElement).dataset.touchX;
             }} onWheel={(e) => {
               if (Math.abs(e.deltaY) >= 25 && reels.length) {
                 if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
@@ -786,7 +806,9 @@ export function MymyInstagram(p: SkinProps) {
                             finishReelSwitch(targetIndex);
                           }
                         };
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={() => {
+                        const itemIndex = reels.findIndex((candidate) => candidate.id === item.id);
+                        const preloadPosition = itemIndex > reelIndex ? "ig-reel-video-next" : "ig-reel-video-previous";
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload " + preloadPosition)} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={() => {
                           const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
                           const stage = reelStageRef.current;
                           if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
@@ -795,6 +817,8 @@ export function MymyInstagram(p: SkinProps) {
                           }
                           if (activeVideo) setPlaying(false);
                         }} onClick={activeVideo ? (e) => {
+                          // iOS can synthesize a click after a swipe changes the active video.
+                          if (Date.now() - lastReelSwipeAt.current < 450) return;
                           const v = e.currentTarget;
                           if (v.paused) { setPlaying(true); attemptReelPlayback(v); } else { v.pause(); setPlaying(false); }
                         } : undefined} />;
