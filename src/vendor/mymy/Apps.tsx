@@ -321,6 +321,7 @@ export function MymyInstagram(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "主页"),
     [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", []),
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
+    [reposted, setReposted] = useSkinState<string[]>(p, "mymyReposted", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
@@ -330,20 +331,66 @@ export function MymyInstagram(p: SkinProps) {
     [muted, setMuted] = useState(true),
     [playing, setPlaying] = useState(true);
   const reelStageRef = useRef<HTMLDivElement | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const carouselTouchStart = useRef<number | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
     [story, setStory] = useState(0),
     [draft, setDraft] = useState(""),
     [pop, setPop] = useState("");
-  const posts = p.items.filter(
+  const sourcePosts = p.items.filter(
       (i) => i.folder !== "私信" && i.meta.story !== "true",
     ),
     stories = p.items.filter((i) => i.meta.story === "true"),
     dms = p.items.filter((i) => i.folder === "私信"),
     active = stories[story - 1];
+  const firstCarouselPostId = "imwinter-carousel-post-01";
+  const firstCarouselImages = [
+    "/media/instagram/post-01/slide-01.jpg",
+    "/media/instagram/post-01/slide-02.jpg",
+    "/media/instagram/post-01/slide-03.jpg",
+    "/media/instagram/post-01/slide-04.jpg",
+    "/media/instagram/post-01/slide-05.jpg",
+    "/media/instagram/post-01/slide-06.jpg",
+    "/media/instagram/post-01/slide-07.jpg",
+  ];
+  const firstCarouselCaptions = [
+    "뽀아나",
+    "뽀졸려",
+    "마주찼다,눈",
+    "?",
+    "우구구구구구구구구구구궁",
+    "교✨감✨",
+    "시차이슈",
+  ];
+  const firstCarouselCounts = {
+    likes: 2864000,
+    comments: 4769,
+    reposts: 55000,
+    shares: 62000,
+    saves: 73800,
+  };
+  const firstCarouselPost = makeItem({
+    id: firstCarouselPostId,
+    title: "imwinter",
+    body: firstCarouselCaptions[0],
+    time: "5天前",
+    sender: "imwinter",
+    avatar: "/media/instagram/post-01/avatar.jpg",
+    kind: "image",
+    media: firstCarouselImages[0],
+    likes: firstCarouselCounts.likes,
+    comments: [
+      "MY: 너무 귀여워요 🥹",
+      "MY: 뽀아나 너무 귀여워 🤍",
+      "MY: 강아지랑 같이 있는 거 너무 좋아요",
+    ],
+    meta: { handle: "imwinter", verified: "true", carousel: "true" },
+  });
+  const posts = [firstCarouselPost, ...sourcePosts];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
-  const officialAccount = posts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || posts[0];
+  const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0];
   const reelVideos = [
     "/media/reels/ig-reel-01.mp4",
     "/media/reels/ig-reel-02.mp4",
@@ -374,6 +421,7 @@ export function MymyInstagram(p: SkinProps) {
     return counts[index % counts.length];
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
+  const formatIgCount = (n: number) => n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "万" : n.toLocaleString("en-US");
   const requestReel = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
     const stage = reelStageRef.current;
@@ -412,91 +460,172 @@ export function MymyInstagram(p: SkinProps) {
     setStory(i + 1);
   };
   const openPost = (i: Item) => {
+    if (i.id === firstCarouselPostId) {
+      setSelected(i);
+      return;
+    }
     if (p.creator || i.password) p.onItem(i);
     else {
       read(p, i);
       setSelected(i);
     }
   };
-  const post = (i: Item) => (
-    <article className="igp" key={i.id}>
-      <header className="igph">
-        <Avatar name={i.sender} src={i.avatar} />
-        <div className="igpn">
-          <button onClick={() => setTab("个人主页")}>
-            <b>{i.sender}</b>
+  const post = (i: Item) => {
+    const isFirstCarouselPost = i.id === firstCarouselPostId;
+    const caption = isFirstCarouselPost ? firstCarouselCaptions[carouselIndex] : i.body;
+    const carouselImage = firstCarouselImages[carouselIndex];
+    return (
+      <article className={"igp " + (isFirstCarouselPost ? "ig-first-post" : "")} key={i.id}>
+        <header className="igph">
+          {isFirstCarouselPost ? (
+            <img className="ig-first-avatar" src={i.avatar} alt="" />
+          ) : (
+            <Avatar name={i.sender} src={i.avatar} />
+          )}
+          <div className="igpn">
+            <button className={isFirstCarouselPost ? "ig-first-userrow" : ""} onClick={() => setTab("个人主页")}>
+              <b>{i.sender}</b>
+              {isFirstCarouselPost && <BadgeCheck className="ig-first-verified" size={18} fill="#159CF4" color="#FFFFFF" />}
+            </button>
+            {!isFirstCarouselPost && <small>{i.meta.location || i.time}</small>}
+          </div>
+          <button aria-label="帖子详情" onClick={() => openPost(i)}>
+            <MoreHorizontal />
           </button>
-          <small>{i.meta.location || i.time}</small>
-        </div>
-        <button aria-label="帖子详情" onClick={() => openPost(i)}>
-          <MoreHorizontal />
-        </button>
-      </header>
-      <div
-        className="carw"
-        onDoubleClick={() => {
-          if (!liked.includes(i.id)) setLiked([...liked, i.id]);
-          setPop(i.id);
-        }}
-      >
-        <Media item={i} />
-        {pop === i.id && (
-          <Heart
-            className="mymy-heart-pop"
-            fill="white"
-            onAnimationEnd={() => setPop("")}
-          />
-        )}
-      </div>
-      <div className="iga">
-        <button
-          aria-label={"点赞" + i.title}
-          aria-pressed={liked.includes(i.id)}
-          onClick={() => toggle(i.id, liked, setLiked)}
-        >
-          <Heart
-            fill={liked.includes(i.id) ? "#ff3040" : "none"}
-            color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
-          />
-        </button>
-        <button
-          aria-label={"评论" + i.title}
-          onClick={() => {
-            read(p, i);
-            setSheet(i);
+        </header>
+        <div
+          className="carw"
+          onDoubleClick={() => {
+            if (!liked.includes(i.id)) setLiked([...liked, i.id]);
+            setPop(i.id);
           }}
         >
-          <MessageCircle />
-        </button>
-        <button aria-label="分享帖子" onClick={() => setTab("私信")}>
-          <Send />
-        </button>
+          {isFirstCarouselPost ? (
+            <div
+              className="ig-first-carousel"
+              onTouchStart={(e) => {
+                carouselTouchStart.current = e.touches[0]?.clientX ?? null;
+              }}
+              onTouchEnd={(e) => {
+                const start = carouselTouchStart.current;
+                const end = e.changedTouches[0]?.clientX;
+                carouselTouchStart.current = null;
+                if (start === null || end === undefined) return;
+                const delta = end - start;
+                if (Math.abs(delta) < 38) return;
+                setCarouselIndex((current) => Math.max(0, Math.min(firstCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+              }}
+            >
+              <img
+                src={carouselImage}
+                alt={caption}
+                loading={carouselIndex === 0 ? "eager" : "lazy"}
+                draggable={false}
+              />
+              <span className="ig-first-count">{carouselIndex + 1}/7</span>
+            </div>
+          ) : (
+            <Media item={i} />
+          )}
+          {pop === i.id && (
+            <Heart
+              className="mymy-heart-pop"
+              fill="white"
+              onAnimationEnd={() => setPop("")}
+            />
+          )}
+        </div>
+        {isFirstCarouselPost && (
+          <div className="ig-first-dots" aria-label="贴文图片页码">
+            {firstCarouselImages.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                className={index === carouselIndex ? "active" : ""}
+                aria-label={`第${index + 1}张图片`}
+                aria-pressed={index === carouselIndex}
+                onClick={() => setCarouselIndex(index)}
+              />
+            ))}
+          </div>
+        )}
+        {isFirstCarouselPost ? (
+          <div className="iga ig-first-actions">
+            <button aria-label="点赞" aria-pressed={liked.includes(i.id)} onClick={() => toggle(i.id, liked, setLiked)}>
+              <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} color={liked.includes(i.id) ? "#ff3040" : "#111111"} />
+              <b>{formatIgCount(firstCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
+            </button>
+            <button aria-label="评论" onClick={() => setSheet(i)}>
+              <MessageCircle />
+              <b>{formatIgCount(firstCarouselCounts.comments)}</b>
+            </button>
+            <button aria-label="转发" aria-pressed={reposted.includes(i.id)} onClick={() => toggle(i.id, reposted, setReposted)}>
+              <Repeat2 color={reposted.includes(i.id) ? "#159CF4" : "#111111"} />
+              <b>{formatIgCount(firstCarouselCounts.reposts + (reposted.includes(i.id) ? 1 : 0))}</b>
+            </button>
+            <button aria-label="分享" onClick={() => setTab("私信")}>
+              <Send />
+              <b>{formatIgCount(firstCarouselCounts.shares)}</b>
+            </button>
+            <button aria-label="收藏" aria-pressed={saved.includes(i.id)} onClick={() => toggle(i.id, saved, setSaved)}>
+              <Bookmark fill={saved.includes(i.id) ? "#111111" : "none"} />
+              <b>{formatIgCount(firstCarouselCounts.saves + (saved.includes(i.id) ? 1 : 0))}</b>
+            </button>
+          </div>
+        ) : (
+          <div className="iga">
+            <button
+              aria-label={"点赞" + i.title}
+              aria-pressed={liked.includes(i.id)}
+              onClick={() => toggle(i.id, liked, setLiked)}
+            >
+              <Heart
+                fill={liked.includes(i.id) ? "#ff3040" : "none"}
+                color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
+              />
+            </button>
+            <button
+              aria-label={"评论" + i.title}
+              onClick={() => {
+                read(p, i);
+                setSheet(i);
+              }}
+            >
+              <MessageCircle />
+            </button>
+            <button aria-label="分享帖子" onClick={() => setTab("私信")}>
+              <Send />
+            </button>
+            <button
+              className="mymy-save"
+              aria-label={"收藏" + i.title}
+              aria-pressed={saved.includes(i.id)}
+              onClick={() => toggle(i.id, saved, setSaved)}
+            >
+              <Bookmark fill={saved.includes(i.id) ? "currentColor" : "none"} />
+            </button>
+          </div>
+        )}
+        {!isFirstCarouselPost && <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>}
         <button
-          className="mymy-save"
-          aria-label={"收藏" + i.title}
-          aria-pressed={saved.includes(i.id)}
-          onClick={() => toggle(i.id, saved, setSaved)}
+          className="igc"
+          onClick={() => {
+            openPost(i);
+          }}
         >
-          <Bookmark fill={saved.includes(i.id) ? "currentColor" : "none"} />
+          <b>{i.sender}</b> {caption}
         </button>
-      </div>
-      <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>
-      <button
-        className="igc"
-        onClick={() => {
-          openPost(i);
-        }}
-      >
-        <b>{i.sender}</b> {i.body}
-      </button>
-      <button className="cmall" onClick={() => setSheet(i)}>
-        查看评论{" "}
-        {i.comments.length +
-          replies.filter((r) => r.startsWith(i.id + "\t")).length}
-      </button>
-      <p className="igt">{i.time}</p>
-    </article>
-  );
+        {!isFirstCarouselPost && (
+          <button className="cmall" onClick={() => setSheet(i)}>
+            查看评论{" "}
+            {i.comments.length +
+              replies.filter((r) => r.startsWith(i.id + "\t")).length}
+          </button>
+        )}
+        <p className="igt">{isFirstCarouselPost ? "5天前 · 查看翻译" : i.time}</p>
+      </article>
+    );
+  };
   return (
     <div className="mymy-ui mymy-instagram" data-mymy="instagram">
       <div className="ig">
@@ -507,12 +636,23 @@ export function MymyInstagram(p: SkinProps) {
           >
             <ArrowLeft />
           </button>
-          <span className="igl2">
-            {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
-          </span>
-          <button aria-label="打开私信" onClick={() => setTab("私信")}>
-            <Send />
-          </button>
+          {selected?.id === firstCarouselPostId ? (
+            <span className="igl2 ig-first-detail-title">
+              <b>帖子</b>
+              <small>imwinter</small>
+            </span>
+          ) : (
+            <span className="igl2">
+              {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
+            </span>
+          )}
+          {selected?.id === firstCarouselPostId ? (
+            <span className="ig-first-header-space" aria-hidden="true" />
+          ) : (
+            <button aria-label="打开私信" onClick={() => setTab("私信")}>
+              <Send />
+            </button>
+          )}
         </header>
         <div className="igb">
           {selected && post(selected)}
