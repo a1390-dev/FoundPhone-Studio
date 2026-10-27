@@ -71,7 +71,9 @@ export function MymyKakao(p: SkinProps) {
     [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
-  const list = grouped(p.items),
+  const list = grouped(p.items).sort(
+      (a, b) => Number(b.title === "金旼炡") - Number(a.title === "金旼炡"),
+    ),
     messages = [
       ...p.items.filter((i) => i.title === p.thread),
       ...sent.flatMap((raw, index) => {
