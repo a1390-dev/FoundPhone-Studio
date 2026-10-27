@@ -288,12 +288,12 @@ function PhoneRuntime({
       ) {
         // Preserve timer progress without forcing a full phone rerender every second.
         void db.saves
-          .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
+          .put({ id: autoSaveId, state: { ...next, workId: work.id, revision: work.updatedAt } })
           .catch(() => {});
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [creator, ready, work.id, work.updatedAt, work.mode]);
+  }, [creator, ready, work.id, work.updatedAt, work.mode, autoSaveId]);
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, runtimeRef.current, event, target));
   };
