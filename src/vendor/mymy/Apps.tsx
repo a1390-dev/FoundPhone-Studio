@@ -24,6 +24,9 @@ import {
   Smile,
   Menu,
   Compass,
+  CirclePlay,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import type { SkinProps } from "../../AppSkins";
 import { Avatar, Media } from "../../skins/shared";
@@ -319,6 +322,11 @@ export function MymyInstagram(p: SkinProps) {
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
+  const [reelIndex, setReelIndex] = useState(0),
+    [reelLiked, setReelLiked] = useState<string[]>([]),
+    [reelSaved, setReelSaved] = useState<string[]>([]),
+    [muted, setMuted] = useState(true),
+    [playing, setPlaying] = useState(true);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
     [story, setStory] = useState(0),
@@ -332,6 +340,14 @@ export function MymyInstagram(p: SkinProps) {
     active = stories[story - 1];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
+  const reels = posts.filter((i) => !!i.media);
+  const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
+  const reelCounts = (id: string) => {
+    let hash = 0;
+    for (let n = 0; n < id.length; n++) hash = (hash * 31 + id.charCodeAt(n)) >>> 0;
+    return { likes: 1000000 + (hash % 99000000), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
+  };
+  const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(
@@ -473,6 +489,44 @@ export function MymyInstagram(p: SkinProps) {
               {!posts.length && <Blank />}
             </>
           )}
+          {!selected && tab === "Reels" && (
+            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); }} onTouchEnd={(e) => {
+              const start = Number((e.currentTarget as HTMLDivElement).dataset.touchY || 0);
+              const delta = (e.changedTouches[0]?.clientY ?? start) - start;
+              if (Math.abs(delta) > 45 && reels.length) setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length);
+            }}>
+              {reel ? (
+                <>
+                  {reel.kind === "video" ? (
+                    <video className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline onClick={(e) => {
+                      const v = e.currentTarget;
+                      if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
+                    }} />
+                  ) : <Media item={reel} className="ig-reel-media" />}
+                  <div className="ig-reel-top">
+                    <button aria-label="返回动态" onClick={() => setTab("主页")}><ArrowLeft /></button>
+                    <strong>Reels</strong>
+                    <button aria-label={muted ? "开启声音" : "静音"} onClick={() => setMuted((v) => !v)}>{muted ? <VolumeX /> : <Volume2 />}</button>
+                  </div>
+                  <div className="ig-reel-actions">
+                    <button aria-label="点赞 Reels" onClick={() => toggle(reel.id, reelLiked, setReelLiked)}><Heart fill={reelLiked.includes(reel.id) ? "#ff3040" : "none"} color={reelLiked.includes(reel.id) ? "#ff3040" : "white"} /><small>{shortCount(reelCounts(reel.id).likes + (reelLiked.includes(reel.id) ? 1 : 0))}</small></button>
+                    <button aria-label="评论 Reels" onClick={() => setSheet(reel)}><MessageCircle /><small>{shortCount(reelCounts(reel.id).comments)}</small></button>
+                    <button aria-label="转发 Reels" onClick={() => setPop("已打开转发选项")}><Repeat2 /><small>{shortCount(reelCounts(reel.id).shares)}</small></button>
+                    <button aria-label="分享 Reels" onClick={() => setTab("私信")}><Send /><small>{shortCount(reelCounts(reel.id).shares + 1000)}</small></button>
+                    <button aria-label="收藏 Reels" onClick={() => toggle(reel.id, reelSaved, setReelSaved)}><Bookmark fill={reelSaved.includes(reel.id) ? "white" : "none"} /><small>{shortCount(reelCounts(reel.id).saves)}</small></button>
+                    <Avatar name={reel.sender || "creator"} src={reel.avatar} />
+                  </div>
+                  <div className="ig-reel-caption">
+                    <div><b>{reel.meta.handle ? "@" + reel.meta.handle : reel.sender}</b><button onClick={() => setTab("个人主页")}>追踪</button></div>
+                    <p>{reel.body}</p>
+                    <small>♪ 原声 · {reel.sender}</small>
+                  </div>
+                  <div className="ig-reel-progress"><span /></div>
+                  {!playing && <div className="ig-reel-paused"><span>▶</span></div>}
+                </>
+              ) : <div className="ig-reels-empty"><CirclePlay size={44} /><b>Reels</b><span>上传视频内容后会在这里显示</span></div>}
+            </div>
+          )}
           {!selected && tab === "个人主页" && (
             <>
               <div className="pf">
@@ -537,16 +591,15 @@ export function MymyInstagram(p: SkinProps) {
           )}
         </div>
         <nav className="mymy-ig-nav">
-          {[Home, Search, Send, User].map((Icon, n) => (
+          {[Home, CirclePlay, Send, Search, User].map((Icon, n) => (
             <button
               key={n}
-              aria-label={["主页", "搜索", "私信", "个人主页"][n]}
-              aria-pressed={
-                !selected && tab === ["主页", "搜索", "私信", "个人主页"][n]
-              }
+              aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]}
+              aria-pressed={!selected && tab === ["主页", "Reels", "私信", "搜索", "个人主页"][n]}
               onClick={() => {
                 setSelected(null);
-                setTab(["主页", "搜索", "私信", "个人主页"][n]);
+                setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]);
+                setReelIndex(0);
               }}
             >
               <Icon />
