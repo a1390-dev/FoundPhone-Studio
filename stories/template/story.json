@@ -2,12 +2,12 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "仅用于界面测试，不含剧情",
+  "description": "解锁手机后，KakaoTalk 自动弹出金旼炡发来的第一条消息。",
   "revision": 8,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
-    "time": "17:04",
+    "time": "20:17",
     "battery": 94,
     "network": "5G",
     "wallpaper": "dog",
@@ -375,67 +375,13 @@
       ],
       "messages": [
         {
-          "id": "kakao-kim-minjeong-conversation-1",
-          "body": "你到家了吗？",
+          "id": "kkt-minjeong-opening-01",
+          "body": "아직 안 잤어?",
           "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:04",
+          "time": "2026-10-27 20:17",
           "meta": {
             "pinned": "true"
           }
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-2",
-          "body": "刚到，你呢？",
-          "senderId": "owner",
-          "time": "2026-10-27 17:06"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-3",
-          "body": "我也刚结束，今天有点累。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:08"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-4",
-          "body": "那先休息一会儿，记得吃东西。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:10"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-5",
-          "body": "你晚饭吃什么了？",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:12"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-6",
-          "body": "还没决定，你有什么推荐？",
-          "senderId": "owner",
-          "time": "2026-10-27 17:14"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-7",
-          "body": "想吃热汤或者面条。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:16"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-8",
-          "body": "那就吃点热乎的吧。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:18"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-9",
-          "body": "好，等下拍给你看。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:20"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-10",
-          "body": "嗯，吃完跟我说一声。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:22"
         }
       ]
     },
@@ -6933,6 +6879,27 @@
     "appstore": []
   },
   "variables": {},
-  "events": [],
+  "events": [
+    {
+      "id": "kkt-first-message-after-unlock",
+      "label": "解锁后收到金旼炡的第一条 KKT 消息",
+      "type": "event",
+      "event": "password",
+      "target": "0101",
+      "conditions": [],
+      "logic": "and",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KKT|金旼炡: 아직 안 잤어?"
+        }
+      ],
+      "next": [],
+      "once": true,
+      "x": 240,
+      "y": 120
+    }
+  ],
   "tests": []
 }
