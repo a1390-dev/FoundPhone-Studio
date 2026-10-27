@@ -3,22 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>先婚后爱模拟器 · KKT 通知测试</title>
+<title>先婚后爱模拟器 · KKT 独立测试</title>
 <style>
-:root{color-scheme:light;--yellow:#fee500;--bg:#b9c7d4;--bubble:#fff;--ink:#191919}
-*{box-sizing:border-box}body{margin:0;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#e9edf1;color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:18px}
-.phone{width:min(100%,390px);height:min(820px,92vh);min-height:610px;border:8px solid #202124;border-radius:36px;overflow:hidden;background:#abc0d1;position:relative;box-shadow:0 16px 50px #0002;display:flex;flex-direction:column}
-.status{height:32px;padding:8px 18px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:700}
-.top{height:56px;background:#f8f8f8;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #ddd}.back{font-size:24px}.avatar{width:36px;height:36px;border-radius:50%;background:#e5c5d0;display:grid;place-items:center;font-weight:700}.name{font-weight:700}.sub{font-size:11px;color:#777;margin-top:3px}
-.messages{flex:1;overflow:auto;padding:16px 12px;display:flex;flex-direction:column;gap:10px}.time{text-align:center;font-size:11px;color:#4f5d69;margin:6px 0}.msg{max-width:84%;padding:10px 12px;border-radius:4px 14px 14px 14px;background:#fff;align-self:flex-start;box-shadow:0 1px 1px #0001;white-space:pre-wrap;line-height:1.45}.msg.me{align-self:flex-end;background:#fee500;border-radius:14px 4px 14px 14px}.cn{font-size:12px;color:#6b6b6b;margin-top:5px}.composer{background:#f6f6f6;padding:10px;display:flex;gap:8px}.composer input{min-width:0;flex:1;border:0;border-radius:20px;padding:11px;background:white}.composer button,.controls button{border:0;border-radius:12px;padding:10px 12px;background:#fee500;font-weight:700}.controls{padding:12px;background:#fff;display:grid;gap:8px}.controls p{font-size:12px;color:#555;margin:0;line-height:1.5}.controls select{padding:10px;border:1px solid #ddd;border-radius:10px;background:white}.notice{position:absolute;top:42px;left:10px;right:10px;background:#f7f7f7ed;backdrop-filter:blur(18px);border:1px solid #fff;border-radius:17px;padding:12px;box-shadow:0 8px 28px #0003;z-index:5;display:none;text-align:left}.notice strong{display:block;font-size:13px;margin-bottom:4px}.notice small{display:block;color:#444;line-height:1.4}.notice button{width:100%;border:0;background:transparent;text-align:left;padding:0;color:inherit}.toast{font-size:12px;color:#37623b;min-height:16px}
+:root{color-scheme:light;--yellow:#fee500;--ink:#191919}
+*{box-sizing:border-box}body{margin:0;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#e9edf1;color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:12px}
+.phone{width:min(100%,390px);height:min(900px,96vh);min-height:650px;border:8px solid #202124;border-radius:36px;overflow:hidden;background:#abc0d1;position:relative;box-shadow:0 16px 50px #0002;display:flex;flex-direction:column}
+.status{height:30px;flex-shrink:0;padding:7px 18px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:700}
+.top{height:56px;flex-shrink:0;background:#f8f8f8;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #ddd}.back{font-size:24px}.avatar{width:36px;height:36px;border-radius:50%;background:#e5c5d0;display:grid;place-items:center;font-weight:700}.name{font-weight:700}.sub{font-size:11px;color:#777;margin-top:3px}
+.messages{flex:1;min-height:0;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:9px}.time{text-align:center;font-size:11px;color:#4f5d69;margin:5px 0}.msg{max-width:86%;padding:9px 11px;border-radius:4px 14px 14px 14px;background:#fff;align-self:flex-start;box-shadow:0 1px 1px #0001;white-space:pre-wrap;line-height:1.4;overflow-wrap:anywhere}.msg.me{align-self:flex-end;background:#fee500;border-radius:14px 4px 14px 14px}.cn{font-size:12px;color:#6b6b6b;margin-top:5px}
+.composer{background:#f6f6f6;padding:9px;display:flex;gap:8px;flex-shrink:0}.composer input{min-width:0;flex:1;border:0;border-radius:20px;padding:11px;background:white}.composer button,.controls button{border:0;border-radius:12px;padding:10px 12px;background:#fee500;font-weight:700}
+.controls{width:min(100%,650px);padding:13px;background:#fff;display:grid;gap:9px;margin-top:12px;border-radius:16px}.controls p{font-size:12px;color:#555;margin:0;line-height:1.5}.controls select{padding:10px;border:1px solid #ddd;border-radius:10px;background:white}
+.notice{position:absolute;top:40px;left:10px;right:10px;background:#f7f7f7ed;backdrop-filter:blur(18px);border:1px solid #fff;border-radius:17px;padding:12px;box-shadow:0 8px 28px #0003;z-index:5;display:none;text-align:left}.notice strong{display:block;font-size:13px;margin-bottom:4px}.notice small{display:block;color:#444;line-height:1.4}.notice button{width:100%;border:0;background:transparent;text-align:left;padding:0;color:inherit}.toast{font-size:12px;color:#37623b;min-height:16px}
+.choice-panel{background:#fff;padding:12px;border-top:1px solid #ddd;max-height:34%;overflow:auto;flex-shrink:0}.choice-head{font-size:13px;font-weight:700;margin-bottom:5px}.hint{font-size:11px;color:#666;line-height:1.4;margin-bottom:8px}.choice{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eee;font-size:12px;line-height:1.4}.choice input{margin-top:3px;accent-color:#d6bd00}.choice .zh{display:block;color:#666;margin-top:3px}.choice-actions{display:flex;gap:8px;align-items:center;margin-top:9px}.choice-actions button{border:0;border-radius:10px;background:#fee500;padding:10px;font-weight:700}.count{font-size:11px;color:#555}
+@media(min-width:700px){body{grid-template-columns:minmax(320px,390px) minmax(280px,650px);align-items:center;gap:18px}.phone{height:min(900px,94vh)}.controls{margin-top:0}}
 </style>
 </head>
 <body>
-<main class="phone" aria-label="KakaoTalk 通知测试手机">
-<div class="status"><span>20:21</span><span>●●● ▰</span></div>
-<header class="top"><span class="back">‹</span><div class="avatar">민</div><div><div class="name">김민정 · 金旼炡</div><div class="sub">先婚后爱 · 剧情测试</div></div></header>
+<main class="phone" aria-label="KakaoTalk 剧情测试手机">
+<div class="status"><span>20:22</span><span>●●● ▰</span></div>
+<header class="top"><span class="back">‹</span><div class="avatar">민</div><div><div class="name">김민정 · 金旼炡</div><div class="sub">先婚后爱 · 独立测试分支</div></div></header>
 <section class="messages" id="messages" aria-live="polite">
+<div class="time">20:17</div>
+<div class="msg">아직 안 잤어?<div class="cn">还没睡？</div></div>
+<div class="msg">나 오늘 집에 좀 늦게 들어갈 것 같아.<div class="cn">我今天可能会晚点回家。</div></div>
+<div class="time">20:18</div>
+<div class="msg me">몇 시쯤 들어올 것 같아?<div class="cn">你大概几点回来？</div></div>
+<div class="time">20:19</div>
+<div class="msg">음… 아마 열한 시쯤?<div class="cn">嗯……大概十一点左右？</div></div>
+<div class="msg">아직 마무리할 게 조금 남았어.<div class="cn">还有一点事情要收尾。</div></div>
+<div class="msg">너무 늦으면 먼저 자도 돼.<div class="cn">如果太晚的话，你可以先睡。</div></div>
 <div class="time">20:20</div>
+<div class="msg me">내가 뭐 준비해 놓을까? 먹고 싶은 거 있어?<div class="cn">要不要我提前准备点吃的？你想吃什么？</div></div>
 <div class="msg">음… 따뜻한 거 먹고 싶어.<div class="cn">嗯……我想吃点热乎的。</div></div>
 <div class="msg">네가 해 주는 거면 아무거나 좋아.<div class="cn">只要是你做的，什么都好。</div></div>
 <div class="msg">근데 너무 무리하지는 마. 나 때문에 늦게까지 기다리거나 요리하지 말고.<div class="cn">不过别太勉强自己。别因为我就一直等到很晚，也别特意熬夜做饭。</div></div>
@@ -28,58 +43,65 @@
 <div class="msg">오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.<div class="cn">今天再稍微等我一下嘛。我一忙完就马上回去。</div></div>
 <div class="msg">집에 가면 네 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.<div class="cn">回家以后我要一直黏着你。今天要多抱抱我。</div></div>
 </section>
-<form class="composer" id="form"><input id="reply" placeholder="输入消息（测试）" autocomplete="off"><button>发送</button></form>
-<div class="notice" id="notice"><button id="openNotice"><strong>🟡 KakaoTalk · 金旼炡 · 刚刚</strong><small id="noticeText">新消息</small><small style="margin-top:7px;color:#777">点击打开聊天</small></button></div>
-<section class="controls">
-<p><b>通知行为测试</b>：选中金旼炡聊天窗口时，新消息只加入聊天记录；切到桌面或其他 App 时，新消息显示通知。此页面是独立演示，不会修改主应用。</p>
-<select id="location"><option value="chat">当前在金旼炡的聊天窗口</option><option value="home">当前在手机桌面</option><option value="other">当前正在使用其他 App</option></select>
-<button id="simulate">模拟金旼炡发来消息</button>
-<div class="toast" id="toast" role="status"></div>
+<section class="choice-panel">
+<div class="choice-head">下一条玩家回复 · 候选池</div>
+<div class="hint">当前是检查用候选池。勾选 3–4 条可作为本轮正式选项的候选；这一步不会发送消息，也不会把未选内容记成已发送。</div>
+<div id="choices">
+<label class="choice"><input type="checkbox" value="0"><span>당연하지. 오늘은 내가 꼭 안아 줄게. 빨리 와, 보고 싶어.<span class="zh">当然啦。今天我会好好抱着你。快点回来，我想你了。</span></span></label>
+<label class="choice"><input type="checkbox" value="1"><span>우리 민정이 오늘 많이 힘들었구나. 집에 오면 꼭 안아 줄 테니까 조금만 더 힘내.<span class="zh">我们旼炡今天很辛苦吧。回家以后我一定抱抱你，再坚持一下下。</span></span></label>
+<label class="choice"><input type="checkbox" value="2"><span>많이 안아 달라고? 그럼 오늘은 내가 먼저 안 놔줄 거야.<span class="zh">想让我多抱抱你呀？那今天我可要先抱着你不放了。</span></span></label>
+<label class="choice"><input type="checkbox" value="3"><span>알았어, 자기야. 따뜻한 거 준비해 놓고 꼭 안아 줄게. 그러니까 조심해서 와.<span class="zh">知道啦，亲爱的。我会准备好热乎的东西，再好好抱抱你。所以路上要小心哦。</span></span></label>
+<label class="choice"><input type="checkbox" value="4"><span>나도 네가 빨리 왔으면 좋겠어. 오늘은 내 옆에 꼭 붙어 있어도 돼.<span class="zh">我也希望你能早点回来。今天你可以一直黏在我身边哦。</span></span></label>
+<label class="choice"><input type="checkbox" value="5"><span>그렇게 말하니까 나도 벌써 안아 주고 싶잖아. 일 끝나면 바로 와, 응?<span class="zh">你这么一说，我现在就想抱抱你了。忙完就马上回来，好不好？</span></span></label>
+<label class="choice"><input type="checkbox" value="6"><span>오늘 고생 많았어, 우리 자기. 집에 오면 아무 생각 말고 나한테 기대 있어.<span class="zh">今天辛苦啦，我的宝贝。回家以后什么都别想，就靠在我身边吧。</span></span></label>
+</div>
+<div class="choice-actions"><button id="confirmChoices">确认候选（仅测试）</button><span class="count" id="count">已选 0 条</span></div>
 </section>
+<div class="notice" id="notice"><button id="openNotice"><strong>🟡 KakaoTalk · 金旼炡 · 刚刚</strong><small id="noticeText">新消息</small><small style="margin-top:7px;color:#777">点击打开聊天</small></button></div>
 </main>
+<aside class="controls">
+<p><b>通知行为测试</b>：在金旼炡聊天窗口收到消息时直接加入聊天记录，不弹通知；在手机桌面或其他 App 时显示通知样式，点击后再进入聊天。此页面是独立测试文件，不接入主模拟器。</p>
+<select id="location"><option value="chat">当前在金旼炡的聊天窗口</option><option value="home">当前在手机桌面</option><option value="other">当前正在使用其他 App</option></select>
+<button id="simulate">模拟金旼炡发来一条新消息</button>
+<div class="toast" id="toast" role="status">历史消息已载入。当前候选尚未发送。</div>
+</aside>
 <script>
 const $=s=>document.querySelector(s);
-const historyMessages=[];
 let currentView="chat";
 const storyMessage={ko:"금방 끝내고 갈게. 조금만 기다려 줘.",zh:"我很快就忙完回去，再等我一下哦。"};
-function addMessage({ko,zh,me=false,time="20:22"}) {
-  const item={ko,zh,me,time};
-  historyMessages.push(item);
-  const node=document.createElement("div");
-  node.className="msg"+(me?" me":"");
+function addMessage({ko,zh,me=false,time="刚刚"}) {
+  const node=document.createElement("div");node.className="msg"+(me?" me":"");
   node.append(document.createTextNode(ko));
-  const translation=document.createElement("div");
-  translation.className="cn";translation.textContent=zh;node.append(translation);
+  const translation=document.createElement("div");translation.className="cn";translation.textContent=zh;node.append(translation);
   $("#messages").append(node);$("#messages").scrollTop=$("#messages").scrollHeight;
 }
 function receiveFromWinter(message) {
-  // 先入聊天历史，再判断通知；即使通知被关闭，消息也不会丢失。
   if(currentView==="chat") {
-    addMessage({...message,time:"刚刚"});
-    $("#toast").textContent="已加入聊天记录：当前在对话框内，不弹通知。";
-    return;
+    addMessage(message);$("#toast").textContent="已加入聊天记录：当前在对话框内，不弹通知。";return;
   }
   $("#noticeText").textContent=message.ko+" · "+message.zh;
-  $("#notice").style.display="block";
-  $("#notice").dataset.message=JSON.stringify(message);
-  $("#toast").textContent="已显示通知示意；消息将在打开聊天时加入可见记录。";
+  $("#notice").style.display="block";$("#notice").dataset.message=JSON.stringify(message);
+  $("#toast").textContent="通知已显示；点击通知后才会把这条新消息加入可见聊天记录。";
 }
 function openChatFromNotice(){
   const message=JSON.parse($("#notice").dataset.message||"null");
   $("#notice").style.display="none";currentView="chat";$("#location").value="chat";
-  if(message)addMessage({...message,time:"刚刚"});
-  $("#toast").textContent="已打开聊天；通知消息已加入聊天记录。";
+  if(message)addMessage(message);
+  $("#toast").textContent="已打开聊天；通知中的消息已加入聊天记录。";
 }
 $("#location").addEventListener("change",e=>{
  currentView=e.target.value;
- $("#toast").textContent=currentView==="chat"?"当前在聊天窗口：新消息不弹通知。":"当前不在聊天窗口：新消息将弹出通知。";
+ $("#toast").textContent=currentView==="chat"?"当前在聊天窗口：新消息不弹通知。":"当前不在聊天窗口：新消息将显示通知。";
 });
 $("#simulate").addEventListener("click",()=>receiveFromWinter(storyMessage));
 $("#openNotice").addEventListener("click",openChatFromNotice);
-$("#form").addEventListener("submit",e=>{
- e.preventDefault();const text=$("#reply").value.trim();if(!text)return;
- addMessage({ko:text,zh:"（测试消息：未配置自动翻译）",me:true,time:"现在"});$("#reply").value="";
- $("#toast").textContent="测试消息已加入聊天；真实剧情里应只允许发送已确认的玩家选项。";
+const checks=[...document.querySelectorAll('#choices input[type="checkbox"]')];
+function updateCount(){const n=checks.filter(c=>c.checked).length;$("#count").textContent="已选 "+n+" 条";$("#confirmChoices").disabled=n<3||n>4;$("#confirmChoices").style.opacity=$("#confirmChoices").disabled?".5":"1";}
+checks.forEach(c=>c.addEventListener("change",updateCount));updateCount();
+$("#confirmChoices").addEventListener("click",()=>{
+ const n=checks.filter(c=>c.checked).length;
+ if(n<3||n>4){$("#toast").textContent="请勾选 3–4 条候选。";return;}
+ $("#toast").textContent="已暂存 "+n+" 条候选供你检查；没有发送任何玩家消息。";
 });
 </script>
 </body>
