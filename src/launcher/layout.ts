@@ -196,10 +196,12 @@ export function useDeviceLayout(authored: Work, creator = false) {
       ...base,
       apps,
       data: Object.fromEntries(
-        Object.entries(base.data).map(([id, items]) => [
-          id,
-          layout.cleared.includes(id) ? [] : items,
-        ]),
+        Object.entries(base.data)
+          .filter(([id]) => !ICON_TEST_REMOVED_APPS.has(id))
+          .map(([id, items]) => [
+            id,
+            layout.cleared.includes(id) ? [] : items,
+          ]),
       ),
     };
   }, [base, creator, layout]);
