@@ -410,23 +410,41 @@ export function MymyInstagram(p: SkinProps) {
   const posts = [firstCarouselPost, secondCarouselPost, thirdCarouselPost, fourthCarouselPost, ...sourcePosts];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
-  const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0];
+  const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0] || makeItem({
+    id: "aespa-official-reel-source",
+    title: "aespa_official",
+    body: "",
+    time: "1天前",
+    sender: "aespa_official",
+    avatar: "/media/reels/aespa-official-avatar.jpg",
+    kind: "video",
+    meta: { handle: "aespa_official", verified: "true" },
+  });
   const reelVideos = [
     "/media/reels/ig-reel-01.mp4?v=20261027-q26-video",
     "/media/reels/ig-reel-02.mp4?v=20261027-q26-video",
     "/media/reels/ig-reel-03.mp4?v=20261027-q26-video",
     "/media/reels/ig-reel-05.mp4?v=20261027-q26-video",
   ];
-  const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
+  const reelComments = [
+    ["무대 너무 좋아요 🤍", "aespa 최고야", "이 영상 계속 보게 돼요"],
+    ["민정이 너무 예뻐요 🫶", "aespa 사랑해", "이 조합 최고"],
+    ["완전 레전드", "너무 멋있어 🔥", "계속 돌려보는 중"],
+    ["🌻🌻🌻", "너무 예뻐요 🤍", "aespa 최고"],
+  ];
+  const reels: Item[] = reelVideos.map((media, n) => ({
     ...officialAccount,
     id: "aespa-official-reel-" + (n + 1),
     title: "aespa_official Reel " + (n + 1),
     sender: "aespa_official",
+    avatar: "/media/reels/aespa-official-avatar.jpg",
     media,
     kind: "video",
-    meta: { ...officialAccount.meta, handle: "aespa_official" },
+    likes: [2240000, 2840000, 1470000, 2670000][n],
+    comments: reelComments[n],
+    meta: { ...officialAccount.meta, handle: "aespa_official", verified: "true" },
     body: "",
-  })) : [];
+  }));
   const reel = reels[reelIndex];
   const reelCounts = (id: string) => {
     const index = Math.max(0, Number(id.split("-").pop()) - 1);
