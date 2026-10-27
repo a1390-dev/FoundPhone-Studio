@@ -1,3 +1,4 @@
+import "./styles.css";
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { HomeLauncher } from "./launcher/HomeLauncher";
 import { useDeviceLayout } from "./launcher/layout";
