@@ -27,6 +27,7 @@ import {
   CirclePlay,
   Volume2,
   VolumeX,
+  BadgeCheck,
 } from "lucide-react";
 import type { SkinProps } from "../../AppSkins";
 import { Avatar, Media } from "../../skins/shared";
@@ -340,7 +341,25 @@ export function MymyInstagram(p: SkinProps) {
     active = stories[story - 1];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
-  const reels = posts.filter((i) => !!i.media);
+  const officialAccount = posts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || posts[0];
+  const reelVideos = [
+    "/media/reels/ig-reel-01.mp4",
+    "/media/reels/ig-reel-02.mp4",
+    "/media/reels/ig-reel-03.mp4",
+    "/media/reels/ig-reel-04.mp4",
+    "/media/reels/ig-reel-05.mp4",
+    "/media/reels/ig-reel-06.mp4",
+  ];
+  const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
+    ...officialAccount,
+    id: "aespa-official-reel-" + (n + 1),
+    title: "aespa_official Reel " + (n + 1),
+    sender: "aespa_official",
+    media,
+    kind: "video",
+    meta: { ...officialAccount.meta, handle: "aespa_official" },
+    body: officialAccount.body || "aespa_official",
+  })) : [];
   const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
   const reelCounts = (id: string) => {
     let hash = 0;
@@ -517,9 +536,9 @@ export function MymyInstagram(p: SkinProps) {
                     <Avatar name={reel.sender || "creator"} src={reel.avatar} />
                   </div>
                   <div className="ig-reel-caption">
-                    <div><b>{reel.meta.handle ? "@" + reel.meta.handle : reel.sender}</b><button onClick={() => setTab("个人主页")}>追踪</button></div>
+                    <div className="ig-reel-account"><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
                     <p>{reel.body}</p>
-                    <small>♪ 原声 · {reel.sender}</small>
+                    <small>♪ aespa_official · 原声</small>
                   </div>
                   <div className="ig-reel-progress"><span /></div>
                   <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
