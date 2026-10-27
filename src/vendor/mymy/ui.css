@@ -902,7 +902,8 @@
 .mymy-ui .ig { position: relative; min-height: 0; }
 .mymy-ui .ig-reels {
   position: absolute; inset: 0; z-index: 8; overflow: hidden;
-  background: #090909; color: #fff; touch-action: pan-x;
+  background: #090909; color: #fff; touch-action: none;
+  overscroll-behavior: contain;
 }
 .mymy-ui .ig-reel-video-stage {
   position: absolute; inset: 0; overflow: hidden; background: #090909;
