@@ -87,7 +87,7 @@ export const AppIcon = memo(function AppIcon({
       <span className="app-icon" style={{ background: a.color }}>
         {custom ? (
           safeMedia(custom) ? (
-            <img src={safeMedia(custom)} alt="自定义图标" />
+            <img src={safeMedia(custom)} alt="自定义图标" loading="lazy" decoding="async" />
           ) : (
             <span>{custom.slice(0, 2)}</span>
           )
