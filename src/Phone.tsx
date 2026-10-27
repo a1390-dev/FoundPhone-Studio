@@ -192,6 +192,31 @@ function PhoneRuntime({
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
+  const slotId = (index: number) => `${work.id}:manual-slot-${index + 1}`;
+  useEffect(() => {
+    let active = true;
+    if (creator || external) return;
+    void Promise.all([0, 1, 2].map((index) => db.saves.get(slotId(index))))
+      .then((slots) => { if (active) setSaveSlots(slots); })
+      .catch(() => {});
+    return () => { active = false; };
+  }, [work.id, creator, external]);
+  const saveToSlot = async (index: number) => {
+    const entry = { id: slotId(index), state: { ...runtimeRef.current, workId: work.id, revision: work.updatedAt } };
+    await db.saves.put(entry);
+    setSaveSlots((previous) => previous.map((slot, i) => i === index ? entry : slot));
+  };
+  const loadFromSlot = async (index: number) => {
+    const entry = saveSlots[index] ?? await db.saves.get(slotId(index));
+    if (!entry) return;
+    const restored = { ...entry.state, workId: work.id, revision: work.updatedAt };
+    runtimeRef.current = restored;
+    setOwn(restored);
+    onRuntime?.(restored);
+    setApp("");
+    setPanel("");
+    setFolder("");
+  };
   const update = (next: Runtime) => {
     runtimeRef.current = next;
     setOwn(next);
