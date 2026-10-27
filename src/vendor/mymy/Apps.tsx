@@ -337,6 +337,8 @@ export function MymyInstagram(p: SkinProps) {
   const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
   const [thirdCarouselIndex, setThirdCarouselIndex] = useState(0);
   const [fourthCarouselIndex, setFourthCarouselIndex] = useState(0);
+  const [leavingReelIndex, setLeavingReelIndex] = useState<number | null>(null);
+  const [reelSwipeDirection, setReelSwipeDirection] = useState<"next" | "previous">("next");
   const carouselTouchStart = useRef<number | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
@@ -426,7 +428,12 @@ export function MymyInstagram(p: SkinProps) {
   })) : [];
   const reel = reels[reelIndex];
   const preloadReel = pendingReelIndex !== null ? reels[pendingReelIndex] : reelIndex < reels.length - 1 ? reels[reelIndex + 1] : reelIndex > 0 ? reels[reelIndex - 1] : undefined;
-  const reelMediaItems = [reel, preloadReel].filter((item): item is Item => item !== undefined);
+  const leavingReel = leavingReelIndex !== null ? reels[leavingReelIndex] : undefined;
+  const reelMediaItems = [
+    reel,
+    ...(leavingReel && leavingReel.id !== reel?.id ? [leavingReel] : []),
+    ...(preloadReel && preloadReel.id !== reel?.id && preloadReel.id !== leavingReel?.id ? [preloadReel] : []),
+  ].filter((item): item is Item => item !== undefined);
   const reelCounts = (id: string) => {
     const index = Math.max(0, Number(id.split("-").pop()) - 1);
     const counts = [
@@ -454,11 +461,14 @@ export function MymyInstagram(p: SkinProps) {
     const targetId = reels[nextIndex].id;
     if (stage) {
       stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
-        if (video.dataset.reelId !== targetId) video.pause();
+        // Keep the outgoing active video alive until its slide-out transition finishes.
+        if (video.dataset.reelId !== targetId && video.dataset.reelId !== reels[reelIndex]?.id) video.pause();
       });
       delete stage.dataset.pendingIndex;
     }
     setPendingReelIndex(null);
+    setLeavingReelIndex(reelIndex);
+    setReelSwipeDirection(nextIndex > reelIndex ? "next" : "previous");
     setReelIndex(nextIndex);
     setPlaying(true);
   };
@@ -807,8 +817,10 @@ export function MymyInstagram(p: SkinProps) {
                           }
                         };
                         const itemIndex = reels.findIndex((candidate) => candidate.id === item.id);
+                        const isLeavingVideo = !activeVideo && item.id === leavingReel?.id;
                         const preloadPosition = itemIndex > reelIndex ? "ig-reel-video-next" : "ig-reel-video-previous";
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload " + preloadPosition)} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={() => {
+                        const videoPositionClass = activeVideo ? "ig-reel-video-active" : isLeavingVideo ? "ig-reel-video-exiting-" + (reelSwipeDirection === "next" ? "up" : "down") : "ig-reel-video-preload " + preloadPosition;
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
                           const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
                           const stage = reelStageRef.current;
                           if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
