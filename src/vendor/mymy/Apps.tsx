@@ -285,9 +285,10 @@ export function MymyKakao(p: SkinProps) {
             </button>
             <input
               aria-label="KKT消息"
-              placeholder="输入消息"
+              placeholder={p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
               value={draft}
               maxLength={2000}
+              readOnly={p.thread === "金旼炡"}
               onFocus={() => { if (p.thread === "金旼炡") setCandidateOpen(true); }}
               onChange={(e) => { setDraft(e.target.value); setSelectedZh(""); }}
             />
