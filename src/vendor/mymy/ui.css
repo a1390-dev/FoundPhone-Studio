@@ -959,3 +959,15 @@
   align-items: center; justify-content: center; gap: 12px; color: #fff;
 }
 .mymy-ui .ig-reels-empty span { color: #bbb; font-size: 12px; }
+
+.mymy-ui .ig-reel-bottom-nav {
+  position: absolute; left: 8%; right: 8%; bottom: 10px; z-index: 5;
+  height: 52px; border-radius: 28px; display: flex; align-items: center;
+  justify-content: space-around; background: rgba(22,22,22,.58);
+  border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(12px);
+}
+.mymy-ui .ig-reel-bottom-nav button { color: #fff; display: flex; align-items: center; justify-content: center; width: 20%; height: 100%; }
+.mymy-ui .ig-reel-bottom-nav svg { width: 25px; height: 25px; stroke-width: 2; }
+.mymy-ui .ig-reel-progress { bottom: 72px; }
+.mymy-ui .ig-reel-caption { bottom: 112px; }
+.mymy-ui .ig-reel-actions { bottom: 180px; }
