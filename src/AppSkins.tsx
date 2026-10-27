@@ -1,6 +1,6 @@
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronLeft,
   Plus,
@@ -737,6 +737,72 @@ export function WhatsAppSkin(p: SkinProps) {
     </div>
   );
 }
+function ReelVideo({
+  item,
+  rootRef,
+}: {
+  item: Item;
+  rootRef: { current: HTMLDivElement | null };
+}) {
+  const src = safeMedia(item.media);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [preload, setPreload] = useState<"none" | "metadata" | "auto">("none");
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setPreload("auto");
+      return;
+    }
+
+    const root = rootRef.current;
+    // Nearby clips load metadata ahead of time; only the mostly-visible clip
+    // is allowed to buffer the full video.
+    const nearbyObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setPreload((current) => (current === "none" ? "metadata" : current));
+          }
+        }
+      },
+      { root, rootMargin: "80% 0px", threshold: 0 },
+    );
+    const visibleObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.intersectionRatio >= 0.6) {
+            setPreload("auto");
+          } else if (!entry.isIntersecting) {
+            if (!video.paused) video.pause();
+            setPreload((current) => (current === "none" ? "none" : "metadata"));
+          }
+        }
+      },
+      { root, threshold: [0, 0.6] },
+    );
+    nearbyObserver.observe(video);
+    visibleObserver.observe(video);
+    return () => {
+      nearbyObserver.disconnect();
+      visibleObserver.disconnect();
+      if (!video.paused) video.pause();
+    };
+  }, [rootRef, src]);
+
+  if (!src) return <ItemMedia item={item} />;
+  return (
+    <video
+      ref={videoRef}
+      controls
+      playsInline
+      preload={preload}
+      src={src}
+      onClick={(event) => event.stopPropagation()}
+    />
+  );
+}
 export function InstagramSkin(p: SkinProps) {
   const [tab, setTab] = useState("首页"),
     [dm, setDm] = useState(false),
@@ -744,6 +810,7 @@ export function InstagramSkin(p: SkinProps) {
     [likes, setLikes] = useSkinState<string[]>(p, "likes", []),
     [saved, setSaved] = useSkinState<string[]>(p, "saved", []),
     [showSaved, setShowSaved] = useState(false);
+  const igScrollRef = useRef<HTMLDivElement>(null);
   const posts = p.items.filter(
       (i) =>
         i.kind === "post" ||
@@ -782,7 +849,7 @@ export function InstagramSkin(p: SkinProps) {
           </button>
         </div>
       </div>
-      <div className="skin-scroll ig-scroll">
+      <div className="skin-scroll ig-scroll" ref={igScrollRef}>
         {dm ? (
           <>
             {messages.map((i) => (
@@ -935,7 +1002,7 @@ export function InstagramSkin(p: SkinProps) {
           <>
             {reels.map((i) => (
               <div className="ig-reel" key={i.id}>
-                <ItemMedia item={i} />
+                <ReelVideo item={i} rootRef={igScrollRef} />
                 <button onClick={() => p.onItem(i)}>
                   {i.sender} · {i.title}
                 </button>
