@@ -614,6 +614,7 @@ function PhoneRuntime({
                   }}
                   work={work}
                   initialThread={appThread}
+                  playerId={playerId}
                 />
               </AppWindow>
             ) : (
@@ -1020,6 +1021,7 @@ function AppContent({
   onLoadSlot,
   work,
   initialThread = "",
+  playerId = "",
 }: {
   app: AppPlugin;
   name: string;
@@ -1037,6 +1039,7 @@ function AppContent({
   onLoadSlot?: (index: number) => void | Promise<void>;
   work: Work;
   initialThread?: string;
+  playerId?: string;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
   const [thread, setThread] = useState(initialThread || "");
@@ -1146,6 +1149,7 @@ function AppContent({
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
+              playerId={playerId}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
