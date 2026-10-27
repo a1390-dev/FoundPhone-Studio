@@ -324,6 +324,7 @@ export function MymyInstagram(p: SkinProps) {
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
+    [pendingReelIndex, setPendingReelIndex] = useState<number | null>(null),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
@@ -360,7 +361,8 @@ export function MymyInstagram(p: SkinProps) {
     body: "",
   })) : [];
   const reel = reels[reelIndex];
-  const reelMediaItems = [reel, reelIndex < reels.length - 1 ? reels[reelIndex + 1] : undefined].filter((item): item is Item => item !== undefined);
+  const preloadReel = pendingReelIndex !== null ? reels[pendingReelIndex] : reelIndex < reels.length - 1 ? reels[reelIndex + 1] : reelIndex > 0 ? reels[reelIndex - 1] : undefined;
+  const reelMediaItems = [reel, preloadReel].filter((item): item is Item => item !== undefined);
   const reelCounts = (id: string) => {
     const index = Math.max(0, Number(id.split("-").pop()) - 1);
     const counts = [
@@ -372,6 +374,21 @@ export function MymyInstagram(p: SkinProps) {
     return counts[index % counts.length];
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
+  const requestReel = (nextIndex: number) => {
+    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
+    const stage = reelStageRef.current;
+    const selector = 'video[data-reel-id="' + reels[nextIndex].id + '"]';
+    const target = stage?.querySelector<HTMLVideoElement>(selector);
+    if (target && target.readyState >= 3) {
+      if (stage) delete stage.dataset.pendingIndex;
+      setPendingReelIndex(null);
+      setReelIndex(nextIndex);
+      setPlaying(true);
+    } else {
+      if (stage) stage.dataset.pendingIndex = String(nextIndex);
+      setPendingReelIndex(nextIndex);
+    }
+  };
   useEffect(() => {
     if (tab !== "Reels" || !reel) return;
     const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel.id}"]`);
@@ -535,17 +552,28 @@ export function MymyInstagram(p: SkinProps) {
               const v = el.querySelector("video");
               if (v) { v.style.transform = ""; v.style.transition = "transform 140ms ease-out"; }
               if (Math.abs(delta) > 55 && reels.length) {
-                if (delta < 0 && reelIndex < reels.length - 1) { setReelIndex(reelIndex + 1); setPlaying(true); }
-                else if (delta > 0 && reelIndex > 0) { setReelIndex(reelIndex - 1); setPlaying(true); }
+                if (delta < 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
+                else if (delta > 0 && reelIndex > 0) requestReel(reelIndex - 1);
               }
-            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { if (e.deltaY > 0 && reelIndex < reels.length - 1) { setReelIndex(reelIndex + 1); setPlaying(true); } else if (e.deltaY < 0 && reelIndex > 0) { setReelIndex(reelIndex - 1); setPlaying(true); } } }}>
+            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1); else if (e.deltaY < 0 && reelIndex > 0) requestReel(reelIndex - 1); } }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
                     <div className="ig-reel-video-stage" ref={reelStageRef}>
                       {reelMediaItems.map((item) => {
                         const activeVideo = item.id === reel.id;
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={muted} playsInline preload="auto" onEnded={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={muted} playsInline preload="auto" onCanPlay={(e) => {
+                          if (activeVideo || e.currentTarget.readyState < 3) return;
+                          const stage = reelStageRef.current;
+                          const pending = stage?.dataset.pendingIndex;
+                          const targetIndex = reels.findIndex((candidate) => candidate.id === item.id);
+                          if (pending !== undefined && Number(pending) === targetIndex) {
+                            if (stage) delete stage.dataset.pendingIndex;
+                            setPendingReelIndex(null);
+                            setReelIndex(targetIndex);
+                            setPlaying(true);
+                          }
+                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
                           const v = e.currentTarget;
                           if (v.paused) { const result = v.play(); if (result && typeof result.catch === "function") result.catch(() => {}); setPlaying(true); } else { v.pause(); setPlaying(false); }
                         } : undefined} />;
