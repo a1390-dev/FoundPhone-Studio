@@ -100,7 +100,13 @@ export const AppIcon = memo(function AppIcon({
       {name && <span className="app-name">{name}</span>}
     </span>
   );
-});
+}, (prev, next) =>
+  prev.id === next.id &&
+  prev.name === next.name &&
+  prev.small === next.small &&
+  prev.custom === next.custom &&
+  (prev.id !== "calendar" || prev.date === next.date) &&
+  (prev.id !== "clock" || prev.time === next.time));
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
