@@ -520,9 +520,12 @@ export function MymyInstagram(p: SkinProps) {
       finishReelSwitch(pendingReelIndex);
       return;
     }
+    // Keep the pending/off-screen reel buffered but do not call play() until it is active.
+    // A rejected hidden-video play() promise can race with the active index switch.
     targetVideo.muted = true;
     targetVideo.playsInline = true;
-    attemptReelPlayback(targetVideo);
+    targetVideo.preload = "auto";
+    if (targetVideo.networkState === 0) targetVideo.load();
   }, [pendingReelIndex, reelIndex, tab, reels.length]);
   useEffect(() => {
     if (!active) return;
