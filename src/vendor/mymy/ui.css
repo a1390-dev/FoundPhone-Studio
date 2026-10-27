@@ -263,7 +263,19 @@
   font-size: 13px;
 }
 .mymy-ui .iga {
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 24px;
+  column-gap: 0;
+  align-items: center;
+}
+.mymy-ui .iga .ig-action {
+  min-width: 0;
+  justify-content: center;
+  gap: 5px;
+}
+.mymy-ui .iga .mymy-save {
+  justify-self: end;
+  width: 24px;
 }
 .mymy-ui .lk2 {
   display: flex;
@@ -273,7 +285,7 @@
   font-size: 12.5px;
 }
 .mymy-ui .igc {
-  font-size: 12.5px;
+  font-size: 14px;
   padding-top: 2px;
 }
 .mymy-ui .igt {
