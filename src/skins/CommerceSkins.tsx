@@ -218,7 +218,7 @@ export function DeliverySkin(p: Props) {
                     <span>{meta(i, "duration")}</span>
                   </p>
                   <small>{i.body.split("\n")[0]}</small>
-                  <strong>¥ {meta(i, "price", "—")}</strong>
+                  <strong>₩ {meta(i, "price", "—")}</strong>
                 </div>
               </button>
             ))
@@ -240,7 +240,7 @@ export function DeliverySkin(p: Props) {
                     <p>{i.body}</p>
                     <small>{i.time}</small>
                   </div>
-                  <b>¥ {meta(i, "price", "—")}</b>
+                  <b>₩ {meta(i, "price", "—")}</b>
                 </section>
                 <footer>
                   <MapPin size={13} />
