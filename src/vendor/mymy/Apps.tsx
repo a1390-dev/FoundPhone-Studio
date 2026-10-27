@@ -266,7 +266,7 @@ export function MymyKakao(p: SkinProps) {
                 const nextRound = KKT_STORY_ROUNDS[nextStep];
                 if (nextRound) {
                   for (const [ko, zh] of nextRound.npc)
-                    added.push(JSON.stringify([p.thread, ko.replaceAll("{{playerId}}", p.owner || "你"), nextRound.time, "npc", zh.replaceAll("{{playerId}}", p.owner || "你")]));
+                    added.push(JSON.stringify([p.thread, ko.replaceAll("{{playerId}}", p.playerId || "你"), nextRound.time, "npc", zh.replaceAll("{{playerId}}", p.playerId || "你")]));
                 }
                 setStoryStep(Math.min(nextStep, KKT_STORY_ROUNDS.length));
               }
@@ -312,10 +312,10 @@ export function MymyKakao(p: SkinProps) {
                   type="button"
                   className={"kkt-choice" + (draft === ko ? " selected" : "")}
                   key={ko}
-                  onClick={() => { setDraft(ko); setSelectedZh(zh.replaceAll("{{playerId}}", p.owner || "你")); }}
+                  onClick={() => { setDraft(ko); setSelectedZh(zh.replaceAll("{{playerId}}", p.playerId || "你")); }}
                 >
                   <span>{ko}</span>
-                  <small>{zh.replaceAll("{{playerId}}", p.owner || "你")}</small>
+                  <small>{zh.replaceAll("{{playerId}}", p.playerId || "你")}</small>
                 </button>
               ))}
               {!KKT_STORY_ROUNDS[storyStep] && <p className="kkt-story-finished">这段已确认的开局对话先到这里；没有自动结束手机或跳转结局。</p>}
