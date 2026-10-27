@@ -910,7 +910,7 @@ function AppSearch({
     </>
   );
 }
-function Media({ item }: { item: Item }) {
+const Media = memo(function Media({ item }: { item: Item }) {
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
@@ -935,7 +935,7 @@ function Media({ item }: { item: Item }) {
       </small>
     </div>
   );
-}
+});
 const AppContent = memo(function AppContent({
   app,
   name,
