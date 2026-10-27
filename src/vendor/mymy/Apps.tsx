@@ -552,7 +552,7 @@ export function MymyInstagram(p: SkinProps) {
         {isFirstCarouselPost ? (
           <div className="iga ig-first-actions">
             <button aria-label="点赞" aria-pressed={liked.includes(i.id)} onClick={() => toggle(i.id, liked, setLiked)}>
-              <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} color={liked.includes(i.id) ? "#ff3040" : "#111111"} />
+              <Heart fill={liked.includes(i.id) ? "#ff3040" : "#ff3040"} color="#ff3040" />
               <b>{formatIgCount(firstCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
             </button>
             <button aria-label="评论" onClick={() => setSheet(i)}>
@@ -569,7 +569,6 @@ export function MymyInstagram(p: SkinProps) {
             </button>
             <button aria-label="收藏" aria-pressed={saved.includes(i.id)} onClick={() => toggle(i.id, saved, setSaved)}>
               <Bookmark fill={saved.includes(i.id) ? "#111111" : "none"} />
-              <b>{formatIgCount(firstCarouselCounts.saves + (saved.includes(i.id) ? 1 : 0))}</b>
             </button>
           </div>
         ) : (
