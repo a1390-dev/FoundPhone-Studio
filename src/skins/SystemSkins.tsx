@@ -903,10 +903,10 @@ export function WalletSkin(p: Props) {
   return (
     <div className="catalog-skin native-wallet" style={{ background: "#f5f5f7", color: "#111" }}>
       <Header p={p} />
-      <div className="catalog-scroll" style={{ padding: "12px 16px 32px" }}>
+      <div className="catalog-scroll" onClick={(event) => { if (selected && event.target === event.currentTarget) setSelected(""); }} style={{ padding: "12px 16px 32px" }}>
         <h1 style={{ fontSize: 30, margin: "8px 0 4px", letterSpacing: "-1px" }}>钱包</h1>
         <p style={{ color: "#777", margin: "0 0 18px", fontSize: 13 }}>银行卡 · 5 张卡片</p>
-        <div className="wallet-stack" style={{ display: "flex", flexDirection: "column", alignItems: "stretch", paddingBottom: 4 }}>
+        <div className="wallet-stack" onClick={(event) => { if (selected && event.target === event.currentTarget) setSelected(""); }} style={{ display: "flex", flexDirection: "column", alignItems: "stretch", paddingBottom: 4 }}>
           {cards.map((i, index) => {
             const expanded = selected === i.id;
             const stackAbove = selectedIndex < 0 || index < selectedIndex;
