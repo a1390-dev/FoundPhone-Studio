@@ -297,7 +297,7 @@ export function MymyKakao(p: SkinProps) {
               aria-label="发送KKT消息"
               disabled={!draft.trim()}
             >
-              ↑
+              发送
             </button>
           </form>
           {p.thread === "金旼炡" && candidateOpen && (
