@@ -58,6 +58,88 @@ const read = (p: SkinProps, i: Item) =>
 function Blank() {
   return <p className="mymy-empty">暂无内容</p>;
 }
+
+// These are the confirmed Korean/Chinese dialogue rounds from the standalone
+// KKT rehearsal, now reused by the native KakaoTalk screen.
+const KKT_STORY_ROUNDS = [
+  {
+    time: "20:17",
+    npc: [["아직 안 잤어?", "还没睡？"]],
+    choices: [
+      ["응, 아직 안 잤어. 무슨 일이야?", "嗯，还没睡。怎么啦？"],
+      ["아직. 자기 기다리고 있었지.", "还没睡呀，在等你呢。"],
+      ["응, 이제 자려고 했어. 자기는 아직 일하는 중이야?", "嗯，正准备睡了。你还在工作吗？"],
+      ["왜, 보고 싶어서 전화라도 하려고?", "怎么啦，是想我了，准备给我打电话吗？"],
+      ["안 잤어. 오늘은 몇 시쯤 들어와?", "还没睡。你今天大概几点回来？"],
+      ["응, 자기 메시지 기다렸어. 오늘 많이 바빠?", "嗯，在等你的消息。今天很忙吗？"],
+      ["아직 안 자. 무슨 일 있으면 나한테 바로 말해.", "还没睡。有事的话就直接跟我说。"],
+    ],
+  },
+  {
+    time: "20:17",
+    npc: [["나 오늘 집에 좀 늦게 들어갈 것 같아.", "我今天可能会晚点回家。"]],
+    choices: [
+      ["몇 시쯤 들어올 것 같아?", "你大概几点回来？"],
+      ["알았어. 너무 무리하지 말고 천천히 마무리해.", "知道啦。别太勉强，慢慢收尾。"],
+      ["오늘 많이 바쁜가 보네. 끝나면 연락해 줘.", "今天好像很忙呀。结束后联系我。"],
+      ["기다릴 수는 있는데, 너무 늦으면 꼭 말해 줘.", "我可以等你，不过太晚的话一定告诉我。"],
+      ["집에 오면 바로 쉴 수 있게 미리 준비해 둘게.", "我会提前准备好，让你回家就能休息。"],
+      ["아쉽다. 오늘은 조금 일찍 보고 싶었는데.", "有点可惜，本来今天想早点见到你。"],
+      ["무슨 일인지는 괜찮아? 힘든 건 아니지?", "事情还顺利吗？不是遇到什么难事了吧？"],
+    ],
+  },
+  {
+    time: "20:19",
+    npc: [
+      ["음… 아마 열한 시쯤?", "嗯……大概十一点左右？"],
+      ["아직 마무리할 게 조금 남았어.", "还有一点事情要收尾。"],
+      ["너무 늦으면 먼저 자도 돼.", "如果太晚的话，你可以先睡。"],
+    ],
+    choices: [
+      ["내가 뭐 준비해 놓을까? 먹고 싶은 거 있어?", "要不要我提前准备点吃的？你想吃什么？"],
+      ["알았어. 끝나는 대로 연락해 줘.", "好，忙完就联系我。"],
+      ["기다릴게. 그래도 너무 무리하지는 마.", "我会等你，不过别太勉强自己。"],
+      ["자기 피곤할 텐데, 집에 오면 내가 챙겨 줄게.", "你应该很累了，回家我照顾你。"],
+      ["먼저 자라고 해도 아마 기다릴 것 같은데?", "就算你让我先睡，我大概还是会等你吧？"],
+      ["열한 시쯤이면 따뜻한 거 준비해 둘 수 있겠다.", "十一点左右的话，我可以提前准备点热乎的。"],
+      ["응, 알겠어. 조심해서 와.", "嗯，知道了。路上小心。"],
+    ],
+  },
+  {
+    time: "20:20",
+    npc: [
+      ["음… 따뜻한 거 먹고 싶어.", "嗯……我想吃点热乎的。"],
+      ["네가 해 주는 거면 아무거나 좋아.", "只要是你做的，什么都好。"],
+      ["근데 너무 무리하지는 마. 나 때문에 늦게까지 기다리거나 요리하지 말고.", "不过别太勉强自己。别因为我就一直等到很晚，也别特意熬夜做饭。"],
+    ],
+    choices: [
+      ["자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.", "我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。"],
+      ["따뜻한 거 준비해 둘게. 자기는 걱정 말고 일부터 마무리해.", "我会准备热乎的东西，你别操心，先把工作忙完。"],
+      ["알았어. 무리하지 않고 준비할게. 그래도 같이 먹고 싶어.", "知道啦，我不会勉强自己的。不过还是想和你一起吃。"],
+      ["우리 민정이 먹고 싶은 거라면 해 줘야지. 빨리 보고 싶다.", "是我们旼炡想吃的，当然要做呀。好想快点见到你。"],
+      ["걱정 마. 나도 이제 쉬면서 준비할 거야. 천천히 와.", "别担心，我也会一边休息一边准备。慢慢回来就好。"],
+      ["그럼 오늘은 따뜻한 국이랑 네가 좋아하는 것도 조금 준비할게.", "那今天准备热汤，再做一点你喜欢的东西。"],
+      ["나 때문에 걱정해 주는 거 알아. 나도 무리하지 않을게.", "我知道你是在担心我。我也不会勉强自己的。"],
+    ],
+  },
+  {
+    time: "20:22",
+    npc: [
+      ["뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.", "干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。"],
+      ["오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.", "今天再稍微等我一下嘛。我一忙完就马上回去。"],
+      ["집에 가면 {{playerId}} 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.", "回家以后我要一直黏在{{playerId}}身边。今天要多抱抱我。"],
+    ],
+    choices: [
+      ["당연하지. 오늘은 내가 꼭 안아 줄게. 빨리 와, 보고 싶어.", "当然啦。今天我会好好抱着你。快点回来，我想你了。"],
+      ["우리 민정이 오늘 많이 힘들었구나. 집에 오면 꼭 안아 줄 테니까 조금만 더 힘내.", "我们旼炡今天很辛苦吧。回家以后我一定抱抱你，再坚持一下下。"],
+      ["많이 안아 달라고? 그럼 오늘은 내가 먼저 안 놔줄 거야.", "想让我多抱抱你呀？那今天我可要先抱着你不放了。"],
+      ["알았어, 자기야. 따뜻한 거 준비해 놓고 꼭 안아 줄게. 그러니까 조심해서 와.", "知道啦，亲爱的。我会准备好热乎的东西，再好好抱抱你。所以路上要小心哦。"],
+      ["나도 네가 빨리 왔으면 좋겠어. 오늘은 내 옆에 꼭 붙어 있어도 돼.", "我也希望你能早点回来。今天你可以一直黏在我身边哦。"],
+      ["그렇게 말하니까 나도 벌써 안아 주고 싶잖아. 일 끝나면 바로 와, 응?", "你这么一说，我现在就想抱抱你了。忙完就马上回来，好不好？"],
+      ["오늘 고생 많았어, 우리 자기. 집에 오면 아무 생각 말고 나한테 기대 있어.", "今天辛苦啦，我的宝贝。回家以后什么都别想，就靠在我身边吧。"],
+    ],
+  },
+] as const;
 function Back({ onClick }: { onClick: () => void }) {
   return (
     <button aria-label="返回" onClick={onClick}>
@@ -68,7 +150,10 @@ function Back({ onClick }: { onClick: () => void }) {
 export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
+    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV1", 0),
     [draft, setDraft] = useState(""),
+    [selectedZh, setSelectedZh] = useState(""),
+    [candidateOpen, setCandidateOpen] = useState(false),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
   const list = grouped(p.items).sort(
@@ -81,20 +166,25 @@ export function MymyKakao(p: SkinProps) {
           const entry: unknown = JSON.parse(raw);
           if (
             !Array.isArray(entry) ||
-            entry.length !== 3 ||
+            (entry.length !== 3 && entry.length !== 5) ||
             !entry.every((v) => typeof v === "string") ||
             entry[0] !== p.thread
           )
             return [];
+          const role = entry.length >= 4 ? entry[3] : "owner";
+          const outgoing = role !== "npc";
           return [
             makeItem({
               id: "local-kkt-" + index,
               title: entry[0],
               body: entry[1],
               time: entry[2],
-              sender: p.owner || "机主",
-              outgoing: true,
-              meta: { local: "true" },
+              sender: outgoing ? (p.owner || "机主") : "金旼炡",
+              outgoing,
+              meta: {
+                local: "true",
+                translation: entry.length >= 5 ? entry[4] : "",
+              },
             }),
           ];
         } catch {
@@ -152,6 +242,7 @@ export function MymyKakao(p: SkinProps) {
                     onClick={() => m.meta.local !== "true" && read(p, m)}
                   >
                     {m.media ? <Media item={m} /> : m.body}
+                    {m.meta.translation ? <small className="kkt-translation">{m.meta.translation}</small> : null}
                   </button>
                   {!m.outgoing && run.last && (
                     <span className="kzt">{m.time.slice(-5)}</span>
@@ -165,17 +256,24 @@ export function MymyKakao(p: SkinProps) {
             className="kzinp"
             onSubmit={(e) => {
               e.preventDefault();
-              if (draft.trim()) {
-                setSent([
-                  ...sent,
-                  JSON.stringify([
-                    p.thread,
-                    draft.trim(),
-                    p.virtualTime || "09:41",
-                  ]),
-                ]);
-                setDraft("");
+              if (!draft.trim()) return;
+              const time = KKT_STORY_ROUNDS[storyStep]?.time || p.virtualTime || "20:17";
+              const added = [
+                JSON.stringify([p.thread, draft.trim(), time, "owner", selectedZh || ""]),
+              ];
+              if (p.thread === "金旼炡") {
+                const nextStep = storyStep + 1;
+                const nextRound = KKT_STORY_ROUNDS[nextStep];
+                if (nextRound) {
+                  for (const [ko, zh] of nextRound.npc)
+                    added.push(JSON.stringify([p.thread, ko.replaceAll("{{playerId}}", p.owner || "你"), nextRound.time, "npc", zh.replaceAll("{{playerId}}", p.owner || "你")]));
+                }
+                setStoryStep(Math.min(nextStep, KKT_STORY_ROUNDS.length));
               }
+              setSent([...sent, ...added]);
+              setDraft("");
+              setSelectedZh("");
+              setCandidateOpen(false);
             }}
           >
             <button
@@ -190,7 +288,8 @@ export function MymyKakao(p: SkinProps) {
               placeholder="输入消息"
               value={draft}
               maxLength={2000}
-              onChange={(e) => setDraft(e.target.value)}
+              onFocus={() => { if (p.thread === "金旼炡") setCandidateOpen(true); }}
+              onChange={(e) => { setDraft(e.target.value); setSelectedZh(""); }}
             />
             <Smile size={22} />
             <button
@@ -201,6 +300,27 @@ export function MymyKakao(p: SkinProps) {
               ↑
             </button>
           </form>
+          {p.thread === "金旼炡" && candidateOpen && (
+            <section className="kkt-choice-panel" aria-label="剧情回复选项">
+              <div className="kkt-choice-heading">
+                <strong>选择一条回复</strong>
+                <span>点选只会填入输入框，不会自动发送</span>
+                <button type="button" aria-label="收起回复选项" onClick={() => setCandidateOpen(false)}>收起</button>
+              </div>
+              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
+                <button
+                  type="button"
+                  className={"kkt-choice" + (draft === ko ? " selected" : "")}
+                  key={ko}
+                  onClick={() => { setDraft(ko); setSelectedZh(zh.replaceAll("{{playerId}}", p.owner || "你")); }}
+                >
+                  <span>{ko}</span>
+                  <small>{zh.replaceAll("{{playerId}}", p.owner || "你")}</small>
+                </button>
+              ))}
+              {!KKT_STORY_ROUNDS[storyStep] && <p className="kkt-story-finished">这段已确认的开局对话先到这里；没有自动结束手机或跳转结局。</p>}
+            </section>
+          )}
           {menu && (
             <div className="mymy-local-menu">
               <strong>{p.thread}</strong>
