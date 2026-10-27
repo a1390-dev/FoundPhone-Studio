@@ -364,7 +364,7 @@ export function MymyInstagram(p: SkinProps) {
   const reelCounts = (id: string) => {
     let hash = 0;
     for (let n = 0; n < id.length; n++) hash = (hash * 31 + id.charCodeAt(n)) >>> 0;
-    return { likes: 1000000 + (hash % 4000000), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
+    return { likes: 1000000 + (hash % 3999999), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   useEffect(() => {
