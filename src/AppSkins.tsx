@@ -178,7 +178,15 @@ export function WeChatSkin(p: SkinProps) {
         .filter((i) => !["朋友圈", "我"].includes(i.folder))
         .map((i) => i.title),
     ),
-  ];
+  ].sort((a, b) => {
+    const aPinned = p.items.some(
+      (i) => i.title === a && i.meta.pinned === "true",
+    );
+    const bPinned = p.items.some(
+      (i) => i.title === b && i.meta.pinned === "true",
+    );
+    return Number(bPinned) - Number(aPinned);
+  });
   const contacts = [
     ...new Set(p.items.map((i) => i.sender).filter((s) => s !== "我")),
   ];
