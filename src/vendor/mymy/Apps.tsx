@@ -725,10 +725,10 @@ export function MymyInstagram(p: SkinProps) {
             </>
           )}
           {!selected && tab === "Reels" && (
-            <div className="ig-reels" onTouchStart={(e) => {
+            <div className="ig-reels" onTouchStartCapture={(e) => {
               const touch = e.touches[0];
               (e.currentTarget as HTMLDivElement).dataset.touchY = String(touch?.clientY ?? 0);
-            }} onTouchEnd={(e) => {
+            }} onTouchEndCapture={(e) => {
               const el = e.currentTarget as HTMLDivElement;
               const start = Number(el.dataset.touchY ?? NaN);
               const end = e.changedTouches[0]?.clientY;
@@ -739,6 +739,8 @@ export function MymyInstagram(p: SkinProps) {
                 if (delta < 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
                 else if (delta > 0 && reelIndex > 0) requestReel(reelIndex - 1);
               }
+            }} onTouchCancelCapture={(e) => {
+              delete (e.currentTarget as HTMLDivElement).dataset.touchY;
             }} onWheel={(e) => {
               if (Math.abs(e.deltaY) >= 25 && reels.length) {
                 if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
