@@ -22,7 +22,7 @@ import {
   KeyboardContext,
   NativeSettings,
 } from "./DeviceSystem";
-import { AppArtwork, hasNativeArtwork, preloadOriginalIcons } from "./AppArtwork";
+import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
 import { getFields } from "./fields";
 import { catalogSkins } from "./skins/catalog";
 import "./skins/skins.css";
@@ -155,11 +155,6 @@ function PhoneRuntime({
   const gesture = useRef({ x: 0, y: 0, time: 0, zone: "" });
   const [launchOrigin, setLaunchOrigin] = useState(screenOrigin);
 
-  useEffect(() => {
-    // Start loading the original home-screen icons before the user unlocks.
-    preloadOriginalIcons();
-  }, []);
-
   const beginUnlock = () => {
     setPinError("");
     setQuickCamera(false);
@@ -177,6 +172,40 @@ function PhoneRuntime({
   const [saveSlots, setSaveSlots] = useState<Array<{ id: string; state: Runtime } | undefined>>([undefined, undefined, undefined]);
   const [ready, setReady] = useState(creator || !!external);
   const [loadError, setLoadError] = useState("");
+  const [playerId, setPlayerId] = useState(() => {
+    try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || ""; }
+    catch { return ""; }
+  });
+  const [saveGeneration, setSaveGeneration] = useState(() => {
+    try {
+      const savedId = localStorage.getItem("foundphone.player-id.v1")?.trim();
+      return savedId
+        ? localStorage.getItem(`foundphone.player-run.v1:${encodeURIComponent(savedId)}`) || "legacy"
+        : "legacy";
+    } catch { return "legacy"; }
+  });
+  const [resumePromptKey, setResumePromptKey] = useState(0);
+  useEffect(() => {
+    if (creator) return;
+    let hiddenAt = 0;
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        hiddenAt = Date.now();
+        return;
+      }
+      if (hiddenAt && Date.now() - hiddenAt >= 30 * 60 * 1000 && playerId) {
+        setApp("");
+        setPinOpen(false);
+        setQuickCamera(false);
+        setLocked(true);
+        setResumePromptKey((value) => value + 1);
+      }
+      hiddenAt = 0;
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [creator, playerId]);
+
   useEffect(() => {
     const el = shell.current;
     if (!el) return;
@@ -204,9 +233,26 @@ function PhoneRuntime({
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
-  const playerId = (() => { try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || "未设置玩家ID"; } catch { return "未设置玩家ID"; } })();
-  const autoSaveId = `${work.id}:default:${encodeURIComponent(playerId)}`;
-  const slotId = (index: number) => `${work.id}:manual-slot-${index + 1}`;
+  const playerSaveName = playerId || "未设置玩家ID";
+  const autoSaveBase = `${work.id}:default:${encodeURIComponent(playerSaveName)}`;
+  const autoSaveId = saveGeneration === "legacy"
+    ? autoSaveBase
+    : `${autoSaveBase}:${saveGeneration}`;
+  const slotId = (index: number) => saveGeneration === "legacy"
+    ? `${work.id}:manual-slot-${index + 1}`
+    : `${work.id}:manual-slot:${encodeURIComponent(playerSaveName)}:${saveGeneration}:${index + 1}`;
+  const startNewPlayer = (value: string) => {
+    const generation = `run-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    try {
+      localStorage.setItem("foundphone.player-id.v1", value);
+      localStorage.setItem(`foundphone.player-run.v1:${encodeURIComponent(value)}`, generation);
+    } catch { /* This session can still start if storage is unavailable. */ }
+    setReady(false);
+    setLoadError("");
+    setPlayerId(value);
+    setSaveGeneration(generation);
+    setOwn(dispatch(work, initialRuntime(work), "start"));
+  };
   useEffect(() => {
     let active = true;
     if (creator || external) return;
@@ -214,7 +260,7 @@ function PhoneRuntime({
       .then((slots) => { if (active) setSaveSlots(slots); })
       .catch(() => {});
     return () => { active = false; };
-  }, [work.id, creator, external]);
+  }, [work.id, creator, external, playerId, saveGeneration]);
   const saveToSlot = async (index: number) => {
     const entry = { id: slotId(index), state: { ...runtimeRef.current, workId: work.id, revision: work.updatedAt } };
     await db.saves.put(entry);
@@ -467,6 +513,9 @@ function PhoneRuntime({
           <AnimatePresence mode="wait">
             {locked && !(quickCamera && app === "camera") ? (
               <DeviceLock
+                key={resumePromptKey}
+                canContinue={ready}
+                onNewPlayer={startNewPlayer}
                 work={
                   s.date
                     ? { ...work, phone: { ...work.phone, date: s.date } }
