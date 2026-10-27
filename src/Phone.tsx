@@ -261,11 +261,23 @@ function PhoneRuntime({
       // Keep elapsed time advancing in runtimeRef, but avoid rerendering the entire
       // phone every 5 seconds (or every second while a delay is scheduled). UI/storage
       // only need an update when visible story state actually changes.
+      const elapsedCheckpoint =
+        Math.floor((next.elapsedMs ?? 0) / 5000) !==
+        Math.floor((previous.elapsedMs ?? 0) / 5000);
+      const hasScheduledTimer =
+        work.mode !== "explore" && (next.scheduled?.length ?? 0) > 0;
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
         (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
-      if (changed) update(next);
+      if (changed) {
+        update(next);
+      } else if (hasScheduledTimer && elapsedCheckpoint) {
+        // Persist timer progress occasionally without rerendering the full phone UI.
+        void db.saves
+          .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
+          .catch(() => {});
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, [creator, ready, work.id, work.updatedAt]);
