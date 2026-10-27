@@ -512,8 +512,8 @@ export function MymyInstagram(p: SkinProps) {
             <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); }} onTouchEnd={(e) => {
               const start = Number((e.currentTarget as HTMLDivElement).dataset.touchY || 0);
               const delta = (e.changedTouches[0]?.clientY ?? start) - start;
-              if (Math.abs(delta) > 45 && reels.length) setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length);
-            }}>
+              if (Math.abs(delta) > 35 && reels.length) { setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); }
+            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 20 && reels.length) { setReelIndex((n) => (n + (e.deltaY > 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); } }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
@@ -533,11 +533,10 @@ export function MymyInstagram(p: SkinProps) {
                     <button aria-label="转发 Reels" onClick={() => setPop("已打开转发选项")}><Repeat2 /><small>{shortCount(reelCounts(reel.id).shares)}</small></button>
                     <button aria-label="分享 Reels" onClick={() => setTab("私信")}><Send /><small>{shortCount(reelCounts(reel.id).shares + 1000)}</small></button>
                     <button aria-label="收藏 Reels" onClick={() => toggle(reel.id, reelSaved, setReelSaved)}><Bookmark fill={reelSaved.includes(reel.id) ? "white" : "none"} /><small>{shortCount(reelCounts(reel.id).saves)}</small></button>
-                    <Avatar name={reel.sender || "creator"} src={reel.avatar} />
                   </div>
                   <div className="ig-reel-caption">
                     <div className="ig-reel-account"><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
-                    <p>{reel.body}</p>
+                    {reel.body && <p>{reel.body}</p>}
                     <small>♪ aespa_official · 原声</small>
                   </div>
                   <div className="ig-reel-progress"><span /></div>
