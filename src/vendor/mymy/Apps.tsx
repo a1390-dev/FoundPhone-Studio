@@ -179,7 +179,7 @@ export function MymyKakao(p: SkinProps) {
               title: entry[0],
               body: entry[1],
               time: entry[2],
-              sender: outgoing ? (p.owner || "机主") : "金旼炡",
+              sender: outgoing ? (p.playerId || p.owner || "机主") : "金旼炡",
               outgoing,
               meta: {
                 local: "true",
