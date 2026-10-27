@@ -920,9 +920,6 @@ export function AppArtwork({
       data-original-icon={id}
       style={{ opacity: 1 }}
     >
-      <span className="original-icon-fallback" style={{ position: "absolute", inset: 0 }}>
-        <DrawnArtwork id={id} date={date} />
-      </span>
       <img
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
