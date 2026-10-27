@@ -99,6 +99,7 @@ export function TaobaoSkin(p: Props) {
   const [payer, setPayer] = useState("金旼炡");
   const [address, setAddress] = useState("我家 · 首尔江南区");
   const [orderDone, setOrderDone] = useState(false);
+  const [orders, setOrders] = useState<Array<{ id: number; payer: string; address: string; total: number; lines: Array<{ title: string; count: number; price: number }> }>>([]);
   const products = items.filter((i) => i.folder === "商品");
   const addresses = items.filter((i) => i.folder === "地址");
   const categories = ["全部", "包包", "项链", "手表", "衣服", "鞋子"];
@@ -174,11 +175,13 @@ export function TaobaoSkin(p: Props) {
               {(addresses.length ? addresses.map(a => meta(a,"address",a.title)) : ["我家 · 首尔江南区","刘知珉家","内永绘里家","金旼炡家","宁艺卓家","我学校 · 首尔","刘知珉公司","内永绘里公司","金旼炡公司","宁艺卓公司"]).map(a => <button key={a} onClick={() => setAddress(a)} style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 4px", borderBottom: "1px solid #eee", background: "transparent", color: "#222" }}>{address === a ? "🔘 " : "◯ "}{a}</button>)}
             </section>
             <section style={{ background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12 }}><strong>商品清单</strong>{cartProducts.map(i => <p key={i.id} style={{ fontSize: 13 }}>{i.title} × {cart[i.id]} <span style={{ float: "right" }}>{money(Number(meta(i,"price","0").replace(/,/g,""))*(cart[i.id]||0))}</span></p>)}<hr/><strong>应付总额：<span style={{ color: "#c62828" }}>{money(total)}</span></strong></section>
-            <button disabled={!totalCount} onClick={() => setOrderDone(true)} style={{ width: "100%", padding: 14, borderRadius: 24, background: totalCount ? "#f04438" : "#ccc", color: "#fff", fontWeight: 700 }}>确认下单（模拟）</button>
+            <button disabled={!totalCount} onClick={() => { setOrders(old => [...old, { id: Date.now(), payer, address, total, lines: cartProducts.map(i => ({ title: i.title, count: cart[i.id] || 0, price: Number(meta(i,"price","0").replace(/,/g,"")) })) }]); setOrderDone(true); }} style={{ width: "100%", padding: 14, borderRadius: 24, background: totalCount ? "#f04438" : "#ccc", color: "#fff", fontWeight: 700 }}>确认下单（模拟）</button>
             <p style={{ color: "#999", fontSize: 11, textAlign: "center" }}>仅为剧情模拟，不会进行真实扣款或发货。</p>
           </>}
         </>}
-        {tab === "订单" && <section style={{ background: "#fff", borderRadius: 12, padding: 16 }}><h3>我的订单</h3><p style={{ color: "#888" }}>模拟订单会在结账完成后显示。</p><button onClick={() => setTab("商品")} style={{ padding: 10, borderRadius: 20, background: "#f7a31b", color: "#fff" }}>继续逛逛</button></section>}
+        {tab === "订单" && <section style={{ background: "#fff", borderRadius: 12, padding: 16 }}><h3>我的订单</h3>
+          {orders.length ? [...orders].reverse().map((o) => <article key={o.id} style={{ borderBottom: "1px solid #eee", padding: "12px 0" }}><strong>订单 #{String(o.id).slice(-6)}</strong><p>付款人：{o.payer}</p><p>收货地址：{o.address}</p>{o.lines.map((line) => <small key={line.title} style={{ display: "block" }}>{line.title} × {line.count} · {money(line.price * line.count)}</small>)}<b style={{ display: "block", color: "#c62828", marginTop: 6 }}>{money(o.total)}</b><small style={{ color: "#888" }}>模拟订单 · 待处理</small></article>) : <p style={{ color: "#888" }}>暂时没有订单。</p>}
+          <button onClick={() => setTab("商品")} style={{ padding: 10, borderRadius: 20, background: "#f7a31b", color: "#fff", marginTop: 12 }}>继续逛逛</button></section>}
         {detail && (() => { const i = products.find(x => x.id === detail); if (!i) return null; return <div style={{ position: "absolute", inset: 0, zIndex: 20, background: "#0007", display: "grid", placeItems: "center", padding: 18 }}><section style={{ background: "#fff", borderRadius: 18, padding: 20, width: "100%", maxWidth: 340, color: "#222" }}><button onClick={() => setDetail("")} style={{ float: "right" }}>✕</button><div style={{ fontSize: 54, textAlign: "center", padding: 20 }}>{({ "包包":"👜", "项链":"📿", "手表":"⌚", "衣服":"🧥", "鞋子":"👟"} as Record<string,string>)[meta(i,"category","包包")]}</div><small>{meta(i,"brand")} · {meta(i,"category")}</small><h3>{i.title}</h3><strong style={{ color: "#c62828", fontSize: 22 }}>{money(Number(meta(i,"price","0").replace(/,/g,"")))}</strong><p>{meta(i,"description",i.body)}</p><button onClick={() => { add(i.id); setDetail(""); }} style={{ width: "100%", padding: 12, borderRadius: 22, background: "#f7a31b", color: "#fff", fontWeight: 700 }}>加入购物车</button></section></div>; })()}
       </div>
       <Tabs tabs={["商品", "购物车", "订单"]} value={tab === "结账" ? "购物车" : tab} set={(t) => { setTab(t); setOrderDone(false); }} icons={[<Home />, <ShoppingBag />, <Receipt />]} />
