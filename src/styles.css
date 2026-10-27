@@ -751,6 +751,12 @@ svg {
     #b7bfa9
   );
 }
+.wallpaper-dog {
+  background-image: url("./assets/custom/wallpaper.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .wallpaper-orb {
   position: absolute;
   pointer-events: none;
