@@ -422,6 +422,15 @@ export function MymyInstagram(p: SkinProps) {
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   const formatIgCount = (n: number) => n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "万" : n.toLocaleString("en-US");
+  const attemptReelPlayback = (video: HTMLVideoElement) => {
+    const playRequest = video.play();
+    if (playRequest && typeof playRequest.catch === "function") {
+      playRequest.catch(() => {
+        const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
+        if (activeVideo === video) setPlaying(false);
+      });
+    }
+  };
   const requestReel = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
     const stage = reelStageRef.current;
@@ -442,7 +451,7 @@ export function MymyInstagram(p: SkinProps) {
     const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel.id}"]`);
     if (!activeVideo) return;
     activeVideo.muted = muted;
-    if (playing) { const result = activeVideo.play(); if (result && typeof result.catch === "function") result.catch(() => {}); }
+    if (playing) attemptReelPlayback(activeVideo);
     else activeVideo.pause();
   }, [reelIndex, tab, muted, playing, reel?.id]);
   useEffect(() => {
@@ -712,9 +721,9 @@ export function MymyInstagram(p: SkinProps) {
                             setReelIndex(targetIndex);
                             setPlaying(true);
                           }
-                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
+                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
                           const v = e.currentTarget;
-                          if (v.paused) { const result = v.play(); if (result && typeof result.catch === "function") result.catch(() => {}); setPlaying(true); } else { v.pause(); setPlaying(false); }
+                          if (v.paused) { setPlaying(true); attemptReelPlayback(v); } else { v.pause(); setPlaying(false); }
                         } : undefined} />;
                       })}
                     </div>
