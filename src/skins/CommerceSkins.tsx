@@ -5,7 +5,6 @@ import {
   ShoppingBag,
   Star,
   Ticket,
-  Truck,
   Utensils,
   Wallet,
 } from "lucide-react";
