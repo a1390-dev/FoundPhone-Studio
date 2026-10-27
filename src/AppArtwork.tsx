@@ -913,8 +913,17 @@ export function AppArtwork({
     };
   }, []);
   const file = originalIconFiles[id];
-  if (!originalsEnabled || !file || failed)
-    return <DrawnArtwork id={id} date={date} />;
+  if (!originalsEnabled) return <DrawnArtwork id={id} date={date} />;
+  if (!file || failed) {
+    return (
+      <span
+        className="original-icon-wrap original-icon-fallback"
+        style={{ opacity: iconsReady ? 1 : 0 }}
+      >
+        <DrawnArtwork id={id} date={date} />
+      </span>
+    );
+  }
   const d = /^\d{4}-\d{2}-\d{2}$/.test(date || "")
     ? new Date(date + "T12:00:00Z")
     : new Date("2026-10-25T12:00:00Z");
@@ -922,7 +931,11 @@ export function AppArtwork({
     ? time.split(":").map(Number)
     : [9, 41];
   return (
-    <span className="original-icon-wrap" data-original-icon={id}>
+    <span
+      className="original-icon-wrap"
+      data-original-icon={id}
+      style={{ opacity: iconsReady ? 1 : 0 }}
+    >
       <img
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
@@ -930,7 +943,7 @@ export function AppArtwork({
         loading="eager"
         decoding="async"
         draggable={false}
-        style={{ position: "absolute", inset: 0, opacity: iconsReady ? 1 : 0 }}
+        style={{ position: "absolute", inset: 0 }}
         onError={() => setFailed(true)}
       />
       {id === "calendar" && (
