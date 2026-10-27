@@ -189,8 +189,14 @@ export function useDeviceLayout(authored: Work, creator = false) {
     if (creator) return base;
     const known = new Map(base.apps.map((a) => [a.id, a]));
     const apps = [
-      ...layout.apps.filter((a) => known.has(a.id)),
-      ...base.apps.filter((a) => !layout.apps.some((b) => b.id === a.id)),
+      ...layout.apps.filter(
+        (a) => known.has(a.id) && !ICON_TEST_REMOVED_APPS.has(a.id),
+      ),
+      ...base.apps.filter(
+        (a) =>
+          !ICON_TEST_REMOVED_APPS.has(a.id) &&
+          !layout.apps.some((b) => b.id === a.id),
+      ),
     ];
     return {
       ...base,
