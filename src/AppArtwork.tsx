@@ -862,9 +862,6 @@ export function AppArtwork({
     : [9, 41];
   return (
     <span className="original-icon-wrap" data-original-icon={id}>
-      <span aria-hidden="true" style={{ position: "absolute", inset: 0 }}>
-        <DrawnArtwork id={id} date={date} />
-      </span>
       <img
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
