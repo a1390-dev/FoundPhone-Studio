@@ -449,7 +449,7 @@
   padding-bottom: 92px;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  touch-action: none;
+  touch-action: pan-y;
 }
 .mymy-ui .kzksec {
   display: flex;
