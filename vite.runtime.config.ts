@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => ({
             urlPattern: /icon-assets/,
             handler: "CacheFirst",
             options: {
-              cacheName: "foundphone-app-icons",
+              cacheName: "foundphone-app-icons-v2",
               expiration: { maxEntries: 60, maxAgeSeconds: 31536000 },
             },
           },
