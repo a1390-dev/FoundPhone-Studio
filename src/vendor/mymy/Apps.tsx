@@ -672,7 +672,7 @@ export function MymyInstagram(p: SkinProps) {
   return (
     <div className="mymy-ui mymy-instagram" data-mymy="instagram">
       <div className="ig">
-        <header className="igh">
+        <header className={"igh" + (!selected && tab === "搜索" ? " ig-search-header-hidden" : "")}>
           <button
             aria-label={selected ? "返回Instagram动态" : "关闭当前App"}
             onClick={() => (selected ? setSelected(null) : p.onBack())}
@@ -878,13 +878,20 @@ export function MymyInstagram(p: SkinProps) {
           )}
           {!selected && tab === "搜索" && (
             <>
-              <input
-                className="mymy-search"
-                aria-label="搜索Instagram"
-                placeholder="搜索"
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-              />
+              <div className="ig-explore-search-row">
+                <label className="ig-explore-search">
+                  <Search size={22} aria-hidden="true" />
+                  <input
+                    aria-label="搜索Instagram"
+                    placeholder="搜索"
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                  />
+                </label>
+                <button className="ig-explore-bookmark" aria-label="已保存内容" onClick={() => setDraft(draft ? "" : "imwinter")}>
+                  <Bookmark size={27} />
+                </button>
+              </div>
               {posts
                 .filter((i) => (i.title + i.body + i.sender).includes(draft))
                 .map(post)}
