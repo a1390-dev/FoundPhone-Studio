@@ -449,28 +449,43 @@ export function MymyInstagram(p: SkinProps) {
         )}
       </div>
       <div className="iga">
-        <button
-          aria-label={"点赞" + i.title}
-          aria-pressed={liked.includes(i.id)}
-          onClick={() => toggle(i.id, liked, setLiked)}
-        >
-          <Heart
-            fill={liked.includes(i.id) ? "#ff3040" : "none"}
-            color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
-          />
-        </button>
-        <button
-          aria-label={"评论" + i.title}
-          onClick={() => {
-            read(p, i);
-            setSheet(i);
-          }}
-        >
-          <MessageCircle />
-        </button>
-        <button aria-label="分享帖子" onClick={() => setTab("私信")}>
-          <Send />
-        </button>
+        <span className="ig-action">
+          <button
+            aria-label={"点赞" + i.title}
+            aria-pressed={liked.includes(i.id)}
+            onClick={() => toggle(i.id, liked, setLiked)}
+          >
+            <Heart
+              fill={liked.includes(i.id) ? "#ff3040" : "none"}
+              color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
+            />
+          </button>
+          <b>{(100 + [...i.id].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 401).toFixed(1)}万</b>
+        </span>
+        <span className="ig-action">
+          <button
+            aria-label={"评论" + i.title}
+            onClick={() => {
+              read(p, i);
+              setSheet(i);
+            }}
+          >
+            <MessageCircle />
+          </button>
+          <b>{(1000 + [...i.title].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 9000).toLocaleString("en-US")}</b>
+        </span>
+        <span className="ig-action">
+          <button aria-label="转发帖子" onClick={() => setTab("动态")}>
+            <Repeat2 />
+          </button>
+          <b>{(1 + [...i.sender].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 80)}万</b>
+        </span>
+        <span className="ig-action">
+          <button aria-label="分享帖子" onClick={() => setTab("私信")}>
+            <Send />
+          </button>
+          <b>{(1 + [...i.body].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 90)}万</b>
+        </span>
         <button
           className="mymy-save"
           aria-label={"收藏" + i.title}
@@ -480,7 +495,6 @@ export function MymyInstagram(p: SkinProps) {
           <Bookmark fill={saved.includes(i.id) ? "currentColor" : "none"} />
         </button>
       </div>
-      <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>
       <button
         className="igc"
         onClick={() => {
