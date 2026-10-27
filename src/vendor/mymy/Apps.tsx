@@ -308,7 +308,7 @@ export function MymyKakao(p: SkinProps) {
                 <span>点选只会填入输入框，不会自动发送</span>
                 <button type="button" aria-label="收起回复选项" onClick={() => setCandidateOpen(false)}>收起</button>
               </div>
-              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
+              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).slice(0, 4).map(([ko, zh]) => (
                 <button
                   type="button"
                   className={"kkt-choice" + (draft === ko ? " selected" : "")}
