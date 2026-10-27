@@ -72,7 +72,7 @@ function StoryPlayer() {
           <Phone work={work} />
         </Suspense>
       ) : (
-        <p role="status">{error || "正在打开手机…"} </p>
+        <p role="status">{error || "正在打开手机…"}</p>
       )}
     </main>
   );
