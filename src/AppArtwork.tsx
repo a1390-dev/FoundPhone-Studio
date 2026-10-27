@@ -869,7 +869,7 @@ export function AppArtwork({
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
         alt=""
-        loading="lazy"
+        loading="eager"
         decoding="async"
         draggable={false}
         style={{ position: "absolute", inset: 0, opacity: loaded ? 1 : 0 }}
