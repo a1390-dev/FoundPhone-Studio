@@ -710,7 +710,7 @@ export function MymyInstagram(p: SkinProps) {
               {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
             </span>
           )}
-          {selected?.id === firstCarouselPostId || selected?.id === thirdCarouselPostId ? (
+          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
             <span className="ig-first-header-space" aria-hidden="true" />
           ) : (
             <button aria-label="打开私信" onClick={() => setTab("私信")}>
