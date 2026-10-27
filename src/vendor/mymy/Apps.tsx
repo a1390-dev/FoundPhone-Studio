@@ -347,7 +347,6 @@ export function MymyInstagram(p: SkinProps) {
     "/media/reels/ig-reel-01.mp4",
     "/media/reels/ig-reel-02.mp4",
     "/media/reels/ig-reel-03.mp4",
-    "/media/reels/ig-reel-04.mp4",
     "/media/reels/ig-reel-05.mp4",
   ];
   const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
@@ -367,7 +366,6 @@ export function MymyInstagram(p: SkinProps) {
       { likes: 2240000, comments: 79000, shares: 14000, saves: 15000 },
       { likes: 3180000, comments: 63000, shares: 21000, saves: 27000 },
       { likes: 1470000, comments: 42000, shares: 9800, saves: 18000 },
-      { likes: 4720000, comments: 88000, shares: 23900, saves: 49000 },
       { likes: 2670000, comments: 56000, shares: 17300, saves: 32000 },
     ];
     return counts[index % counts.length];
