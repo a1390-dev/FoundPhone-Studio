@@ -904,14 +904,15 @@
   position: absolute; inset: 0; z-index: 8; overflow: hidden;
   background: #090909; color: #fff; touch-action: pan-x;
 }
+.mymy-ui .ig-reel-video-stage {
+  position: absolute; inset: 0; overflow: hidden; background: #090909;
+}
 .mymy-ui .ig-reel-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; background: #090909; display: block;
 }
-.mymy-ui .ig-reels-slide-up .ig-reel-media { animation: ig-reel-enter-up .24s cubic-bezier(.2,.7,.25,1) both; }
-.mymy-ui .ig-reels-slide-down .ig-reel-media { animation: ig-reel-enter-down .24s cubic-bezier(.2,.7,.25,1) both; }
-@keyframes ig-reel-enter-up { from { transform: translateY(32%); } to { transform: translateY(0); } }
-@keyframes ig-reel-enter-down { from { transform: translateY(-32%); } to { transform: translateY(0); } }
+.mymy-ui .ig-reel-video-active { z-index: 1; opacity: 1; pointer-events: auto; }
+.mymy-ui .ig-reel-video-preload { z-index: 0; opacity: 0; pointer-events: none; }
 .mymy-ui .ig-reel-top {
   position: absolute; top: 0; left: 0; right: 0; z-index: 2;
   display: flex; align-items: center; justify-content: space-between;
