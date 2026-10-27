@@ -17,10 +17,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Install media tools
+      - name: Check media tools
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg imagemagick
+          # GitHub-hosted Ubuntu runners commonly include these tools already.
+          # Only use apt when a required tool is actually missing.
+          missing=0
+          command -v ffmpeg >/dev/null 2>&1 || missing=1
+          command -v convert >/dev/null 2>&1 || missing=1
+          if [ "$missing" -eq 1 ]; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg imagemagick
+          fi
+          ffmpeg -version | head -n 1
+          convert -version | head -n 1
       - name: Compress Instagram images and Reels
         shell: bash
         run: |
