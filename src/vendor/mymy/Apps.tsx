@@ -334,6 +334,7 @@ export function MymyInstagram(p: SkinProps) {
   const lastReelSwipeAt = useRef(0);
   const lastReelNavigationAt = useRef(0);
   const previousReelTab = useRef(tab);
+  const justEnteredReels = useRef(false);
   const reelPlayAttempt = useRef(0);
   const reelRecoveryCount = useRef<Record<string, number>>({});
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -518,6 +519,7 @@ export function MymyInstagram(p: SkinProps) {
     previousReelTab.current = tab;
     if (tab === "Reels" && previous !== "Reels") {
       // Re-entering Reels must not inherit a stale pending slide or stale paused state.
+      justEnteredReels.current = true;
       setPendingReelIndex(null);
       setLeavingReelIndex(null);
       setPlaying(true);
@@ -532,7 +534,6 @@ export function MymyInstagram(p: SkinProps) {
           activeVideo.muted = true;
           activeVideo.playsInline = true;
           if (activeVideo.networkState === 0) activeVideo.load();
-          attemptReelPlayback(activeVideo);
         }
       }
     }
@@ -549,8 +550,15 @@ export function MymyInstagram(p: SkinProps) {
     if (!activeVideo) return;
     activeVideo.muted = muted;
     activeVideo.playsInline = true;
-    if (playing) attemptReelPlayback(activeVideo);
-    else activeVideo.pause();
+    if (playing) {
+      justEnteredReels.current = false;
+      attemptReelPlayback(activeVideo);
+    } else if (justEnteredReels.current) {
+      // The tab-entry effect is already changing playing back to true; do not race it with pause().
+      justEnteredReels.current = false;
+    } else {
+      activeVideo.pause();
+    }
   }, [reelIndex, tab, muted, playing, reel?.id]);
 
   // A preloaded video can fire canplay just before the swipe sets pendingReelIndex.
