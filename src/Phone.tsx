@@ -229,6 +229,10 @@ function PhoneRuntime({
     const el = shell.current;
     if (!el) return;
     const fit = () => {
+      // Do not recompute the device size while iOS Safari is showing the
+      // keyboard for the player-ID field. Its temporary viewport height is
+      // not the usable phone layout and must not shrink the whole simulator.
+      if (document.activeElement?.id === "foundphone-player-id") return;
       setDeviceScale(
         Math.max(
           0.4,
@@ -241,12 +245,18 @@ function PhoneRuntime({
       );
     };
     const observer = new ResizeObserver(fit);
+    const viewport = window.visualViewport;
+    const onFocusOut = () => requestAnimationFrame(fit);
     observer.observe(el.parentElement!);
     window.addEventListener("resize", fit);
+    viewport?.addEventListener("resize", fit);
+    document.addEventListener("focusout", onFocusOut);
     fit();
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", fit);
+      viewport?.removeEventListener("resize", fit);
+      document.removeEventListener("focusout", onFocusOut);
     };
   }, [creator, ready]);
   const s = external ?? own;
