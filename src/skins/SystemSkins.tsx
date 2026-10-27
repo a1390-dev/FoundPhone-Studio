@@ -902,38 +902,50 @@ export function MapsSkin(p: Props) {
 }
 export function WalletSkin(p: Props) {
   const [selected, setSelected] = useState("");
-  const cards = p.items.filter((i) => i.folder !== "交易"),
-    transactions = p.items.filter((i) => i.folder === "交易");
+  const cards = p.items.filter((i) => i.folder !== "交易");
+  const transactions = p.items.filter((i) => i.folder === "交易");
   return (
-    <div className="catalog-skin native-wallet">
+    <div className="catalog-skin native-wallet" style={{ background: "#f5f5f7", color: "#111" }}>
       <Header p={p} />
-      <div className="catalog-scroll">
-        <h1>钱包</h1>
-        <div className="wallet-stack">
+      <div className="catalog-scroll" style={{ padding: "12px 16px 32px" }}>
+        <h1 style={{ fontSize: 30, margin: "8px 0 4px", letterSpacing: "-1px" }}>钱包</h1>
+        <p style={{ color: "#777", margin: "0 0 18px", fontSize: 13 }}>银行卡 · 5 张卡片</p>
+        <div className="wallet-stack" style={{ display: "grid", gap: 14 }}>
           {cards.map((i, n) => (
             <button
               key={i.id}
               className={selected === i.id ? "selected" : ""}
+              onClick={() => { setSelected(i.id); p.onItem(i); }}
               style={{
-                background: ["#252d38", "#716456", "#4a655d", "#735e6b"][n % 4],
-              }}
-              onClick={() => {
-                setSelected(i.id);
-                p.onItem(i);
+                minHeight: 178, padding: 18, textAlign: "left", color: "#fff",
+                borderRadius: 20, position: "relative", overflow: "hidden",
+                background: "linear-gradient(135deg,#292929 0%,#080808 58%,#333 100%)",
+                border: selected === i.id ? "2px solid #d8c18a" : "1px solid #555",
+                boxShadow: "0 8px 18px #00000020",
               }}
             >
-              <strong>{i.title}</strong>
-              <span>{meta(i, "number", "••••")}</span>
-              <small>{meta(i, "amount", i.sender)}</small>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: 10, letterSpacing: 2, color: "#d9c99f" }}>PRIVATE BANKING</span>
+                <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: -1 }}> Pay</span>
+              </div>
+              <div style={{ height: 24, width: 34, borderRadius: 5, marginTop: 17, background: "linear-gradient(135deg,#d9d4bd,#8f8a7c)", border: "1px solid #eee5c8" }} />
+              <strong style={{ display: "block", marginTop: 14, fontSize: 15, letterSpacing: 1 }}>{i.title}</strong>
+              <span style={{ display: "block", marginTop: 3, fontSize: 12, letterSpacing: 2, color: "#d4d4d4" }}>{meta(i, "number", "••••  ••••")}</span>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginTop: 12, gap: 8 }}>
+                <div><small style={{ display: "block", color: "#c6c6c6", fontSize: 10 }}>AVAILABLE CREDIT</small><b style={{ fontSize: 17 }}>{meta(i, "amount", "₩1,000,000,000 KRW")}</b></div>
+                <span style={{ fontSize: 10, color: "#d9c99f", letterSpacing: 1 }}>KRW</span>
+              </div>
+              <span aria-hidden="true" style={{ position: "absolute", right: -18, bottom: -40, width: 150, height: 150, borderRadius: "50%", border: "1px solid #ffffff16" }} />
             </button>
           ))}
         </div>
-        <h4 className="native-section">交易记录</h4>
+        <h4 className="native-section" style={{ marginTop: 24 }}>交易记录</h4>
         {transactions.map((i) => (
           <Row key={i.id} item={i} onItem={p.onItem} leading={<Wallet />}>
             <strong>{meta(i, "amount")}</strong>
           </Row>
         ))}
+        <p style={{ color: "#999", fontSize: 11, textAlign: "center", padding: 12 }}>模拟卡片与虚构额度，不连接真实银行或支付服务。</p>
         <Empty items={p.items} />
       </div>
     </div>
