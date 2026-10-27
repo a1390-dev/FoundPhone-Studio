@@ -431,19 +431,37 @@ export function MymyInstagram(p: SkinProps) {
       });
     }
   };
+  const finishReelSwitch = (nextIndex: number) => {
+    if (nextIndex < 0 || nextIndex >= reels.length) return;
+    const stage = reelStageRef.current;
+    const targetId = reels[nextIndex].id;
+    if (stage) {
+      stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
+        if (video.dataset.reelId !== targetId) video.pause();
+      });
+      delete stage.dataset.pendingIndex;
+    }
+    setPendingReelIndex(null);
+    setReelIndex(nextIndex);
+    setPlaying(true);
+  };
   const requestReel = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
     const stage = reelStageRef.current;
     const selector = 'video[data-reel-id="' + reels[nextIndex].id + '"]';
     const target = stage?.querySelector<HTMLVideoElement>(selector);
-    if (target && target.readyState >= 3) {
-      if (stage) delete stage.dataset.pendingIndex;
-      setPendingReelIndex(null);
-      setReelIndex(nextIndex);
-      setPlaying(true);
+    if (target && target.readyState >= 2) {
+      finishReelSwitch(nextIndex);
     } else {
       if (stage) stage.dataset.pendingIndex = String(nextIndex);
       setPendingReelIndex(nextIndex);
+      // iOS Safari often ignores preload=auto for the hidden adjacent video.
+      // A swipe is a user gesture, so explicitly request playback to start fetching/decoding it.
+      if (target) {
+        target.muted = true;
+        target.playsInline = true;
+        attemptReelPlayback(target);
+      }
     }
   };
   useEffect(() => {
@@ -465,12 +483,14 @@ export function MymyInstagram(p: SkinProps) {
     const targetVideo = stage.querySelector<HTMLVideoElement>(
       'video[data-reel-id="' + targetItem.id + '"]',
     );
-    if (targetVideo && targetVideo.readyState >= 3) {
-      delete stage.dataset.pendingIndex;
-      setPendingReelIndex(null);
-      setReelIndex(pendingReelIndex);
-      setPlaying(true);
+    if (!targetVideo) return;
+    if (targetVideo.readyState >= 2) {
+      finishReelSwitch(pendingReelIndex);
+      return;
     }
+    targetVideo.muted = true;
+    targetVideo.playsInline = true;
+    attemptReelPlayback(targetVideo);
   }, [pendingReelIndex, reelIndex, tab, reels.length]);
   useEffect(() => {
     if (!active) return;
@@ -705,41 +725,41 @@ export function MymyInstagram(p: SkinProps) {
             </>
           )}
           {!selected && tab === "Reels" && (
-            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); const v = (e.currentTarget as HTMLDivElement).querySelector("video"); if (v) v.style.transition = "none"; }} onTouchMove={(e) => {
-              const el = e.currentTarget as HTMLDivElement;
-              const start = Number(el.dataset.touchY || 0);
-              const delta = (e.touches[0]?.clientY ?? start) - start;
-              const v = el.querySelector("video");
-              if (v) v.style.transform = `translateY(${Math.max(-180, Math.min(180, delta))}px)`;
+            <div className="ig-reels" onTouchStart={(e) => {
+              const touch = e.touches[0];
+              (e.currentTarget as HTMLDivElement).dataset.touchY = String(touch?.clientY ?? 0);
             }} onTouchEnd={(e) => {
               const el = e.currentTarget as HTMLDivElement;
-              const start = Number(el.dataset.touchY || 0);
-              const delta = (e.changedTouches[0]?.clientY ?? start) - start;
-              const v = el.querySelector("video");
-              if (v) { v.style.transform = ""; v.style.transition = "transform 140ms ease-out"; }
-              if (Math.abs(delta) > 55 && reels.length) {
+              const start = Number(el.dataset.touchY ?? NaN);
+              const end = e.changedTouches[0]?.clientY;
+              delete el.dataset.touchY;
+              if (!Number.isFinite(start) || end === undefined) return;
+              const delta = end - start;
+              if (Math.abs(delta) >= 42 && reels.length) {
                 if (delta < 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
                 else if (delta > 0 && reelIndex > 0) requestReel(reelIndex - 1);
               }
-            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1); else if (e.deltaY < 0 && reelIndex > 0) requestReel(reelIndex - 1); } }}>
+            }} onWheel={(e) => {
+              if (Math.abs(e.deltaY) >= 25 && reels.length) {
+                if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
+                else if (e.deltaY < 0 && reelIndex > 0) requestReel(reelIndex - 1);
+              }
+            }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
                     <div className="ig-reel-video-stage" ref={reelStageRef}>
                       {reelMediaItems.map((item) => {
                         const activeVideo = item.id === reel.id;
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={muted} playsInline preload="auto" onCanPlay={(e) => {
-                          if (activeVideo || e.currentTarget.readyState < 3) return;
+                        const finishIfPending = (video: HTMLVideoElement) => {
+                          if (video.readyState < 2) return;
                           const stage = reelStageRef.current;
-                          const pending = stage?.dataset.pendingIndex;
                           const targetIndex = reels.findIndex((candidate) => candidate.id === item.id);
-                          if (pending !== undefined && Number(pending) === targetIndex) {
-                            if (stage) delete stage.dataset.pendingIndex;
-                            setPendingReelIndex(null);
-                            setReelIndex(targetIndex);
-                            setPlaying(true);
+                          if (stage && Number(stage.dataset.pendingIndex) === targetIndex) {
+                            finishReelSwitch(targetIndex);
                           }
-                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={(e) => {
+                        };
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={() => {
                           const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
                           const stage = reelStageRef.current;
                           if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
