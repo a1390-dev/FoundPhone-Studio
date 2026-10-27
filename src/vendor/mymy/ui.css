@@ -396,7 +396,7 @@
   padding-bottom: 92px;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  touch-action: pan-y;
+  touch-action: none;
 }
 .mymy-ui .kzksec {
   display: flex;
@@ -917,7 +917,7 @@
 .mymy-ui .ig-reel-top strong { font-size: 18px; font-weight: 700; }
 .mymy-ui .ig-reel-top button { color: #fff; display: flex; padding: 4px; }
 .mymy-ui .ig-reel-actions {
-  position: absolute; right: 10px; bottom: 128px; z-index: 3;
+  position: absolute; right: 10px; bottom: 76px; z-index: 3;
   display: flex; flex-direction: column; align-items: center; gap: 19px;
 }
 .mymy-ui .ig-reel-actions button {
@@ -932,6 +932,8 @@
   color: #111; background: #fff; overflow: hidden;
 }
 .mymy-ui .ig-reel-actions .catalog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.mymy-ui .ig-reel-actions .ig-reel-avatar { width: 38px; height: 38px; flex: 0 0 38px; overflow: hidden; border: 2px solid #fff; border-radius: 50%; background: #fff; }
+.mymy-ui .ig-reel-actions .ig-reel-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .mymy-ui .ig-reel-caption {
   position: absolute; left: 14px; right: 68px; bottom: 43px; z-index: 3;
   color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65);
@@ -968,6 +970,8 @@
   border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(12px);
 }
 .mymy-ui .ig-reel-bottom-nav button { color: #fff; display: flex; align-items: center; justify-content: center; width: 20%; height: 100%; }
+.mymy-ui .ig-reel-bottom-nav button.active { background: rgba(255,255,255,.28); border-radius: 28px; }
+.mymy-ui .ig-reel-bottom-nav button.active svg { stroke-width: 2.8; }
 .mymy-ui .ig-reel-bottom-nav svg { width: 25px; height: 25px; stroke-width: 2; }
 .mymy-ui .ig-reel-progress { bottom: 72px; }
 .mymy-ui .ig-reel-caption { bottom: 112px; }
