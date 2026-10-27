@@ -888,9 +888,9 @@ export function MymyInstagram(p: SkinProps) {
                     onChange={(e) => setDraft(e.target.value)}
                   />
                 </label>
-                <button className="ig-explore-bookmark" aria-label="已保存内容" onClick={() => setDraft(draft ? "" : "imwinter")}>
+                <span className="ig-explore-bookmark" aria-hidden="true">
                   <Bookmark size={27} />
-                </button>
+                </span>
               </div>
               {posts
                 .filter((i) => (i.title + i.body + i.sender).includes(draft))
