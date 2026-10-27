@@ -188,17 +188,30 @@ export function TaobaoSkin(p: Props) {
   );
 }
 
+const DEFAULT_DELIVERY_MERCHANTS = [
+  { id: "delivery-kimbap", title: "김밥천국 · 紫菜包饭", body: "紫菜包饭、拉面、简餐\n经典韩式平价套餐", sender: "김밥천국", time: "约20–30分钟", folder: "商家", meta: { price: "6,500", rating: "4.8", duration: "20–30分钟", address: "首尔配送地址" } },
+  { id: "delivery-chicken", title: "교촌치킨 · 韩式炸鸡", body: "蜂蜜蒜香炸鸡\n可选原味、酱油、辣味", sender: "교촌치킨", time: "约35–45分钟", folder: "商家", meta: { price: "19,000", rating: "4.9", duration: "35–45分钟", address: "首尔配送地址" } },
+  { id: "delivery-bibimbap", title: "비빔밥집 · 拌饭小馆", body: "石锅拌饭、牛肉拌饭\n配韩式小菜", sender: "비빔밥집", time: "约20–30分钟", folder: "商家", meta: { price: "10,000", rating: "4.7", duration: "20–30分钟", address: "首尔配送地址" } },
+  { id: "delivery-tteokbokki", title: "엽기떡볶이 · 辣炒年糕", body: "韩式辣炒年糕\n可选辣度与配料", sender: "엽기떡볶이", time: "约25–35分钟", folder: "商家", meta: { price: "14,000", rating: "4.8", duration: "25–35分钟", address: "首尔配送地址" } },
+  { id: "delivery-burger", title: "롯데리아 · 汉堡薯条", body: "汉堡、薯条、炸鸡块\n适合快速简餐", sender: "롯데리아", time: "约20–30分钟", folder: "商家", meta: { price: "8,500", rating: "4.6", duration: "20–30分钟", address: "首尔配送地址" } },
+  { id: "delivery-cafe", title: "메가커피 · 咖啡饮品", body: "冰美式、拿铁、奶茶\n咖啡与日常饮品", sender: "메가커피", time: "约15–25分钟", folder: "商家", meta: { price: "3,500", rating: "4.8", duration: "15–25分钟", address: "首尔配送地址" } },
+  { id: "delivery-bakery", title: "파리바게뜨 · 面包甜点", body: "面包、蛋糕、三明治\n早餐与下午茶", sender: "파리바게뜨", time: "约20–30分钟", folder: "商家", meta: { price: "5,800", rating: "4.7", duration: "20–30分钟", address: "首尔配送地址" } },
+  { id: "delivery-convenience", title: "편의점 · 便利店", body: "饮料、零食、日用品\n日常急需用品配送", sender: "편의점", time: "约15–25分钟", folder: "商家", meta: { price: "2,000", rating: "4.6", duration: "15–25分钟", address: "首尔配送地址" } },
+] as const;
+
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
-  const list = items.filter((i) =>
+  const source = items.length ? items : DEFAULT_DELIVERY_MERCHANTS;
+  const list = source.filter((i) =>
     tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
   );
+  const location = items[0] ?? DEFAULT_DELIVERY_MERCHANTS[0];
   return (
     <div className="catalog-skin delivery-ui">
       <Header p={p} />
       <div className="delivery-location">
         <MapPin size={18} />
-        <strong>{meta(items[0], "address", "作品配送地址")}</strong>
+        <strong>{meta(location, "address", "作品配送地址")}</strong>
       </div>
       <SearchBox value={q} set={setQ} placeholder="搜索商家或订单" />
       <div className="catalog-scroll">
@@ -215,7 +228,7 @@ export function DeliverySkin(p: Props) {
                   <p>
                     <Star size={12} />
                     {meta(i, "rating", "—")}
-                    <span>{meta(i, "duration")}</span>
+                    <span>{meta(i, "duration") || i.time}</span>
                   </p>
                   <small>{i.body.split("\n")[0]}</small>
                   <strong>₩ {meta(i, "price", "—")}</strong>
