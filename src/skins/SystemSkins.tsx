@@ -923,7 +923,7 @@ export function WalletSkin(p: Props) {
                   height: expanded ? 310 : 190,
                   minHeight: expanded ? 310 : 190,
                   flex: "0 0 auto",
-                  marginBottom: index === stackedCards.length - 1 ? 0 : expanded ? 12 : -100,
+                  marginBottom: index === stackedCards.length - 1 ? 0 : expanded ? 12 : -85,
                   padding: expanded ? "22px 20px 18px" : "0 20px",
                   textAlign: "left",
                   color: "#fff",
@@ -938,7 +938,12 @@ export function WalletSkin(p: Props) {
                 }}
               >
                 {!expanded ? (
-                  <span aria-hidden="true" style={{ display: "block", width: 34, height: 3, borderRadius: 3, background: "#d9c99f", marginTop: 0 }} />
+                  <>
+                    <span aria-hidden="true" style={{ display: "block", width: 34, height: 3, borderRadius: 3, background: "#d9c99f", marginTop: 0 }} />
+                    <strong style={{ display: "block", marginTop: 10, fontSize: 14, letterSpacing: 1 }}>{i.title}</strong>
+                    <span style={{ display: "block", marginTop: 4, fontSize: 12, letterSpacing: 2, color: "#e1e1e1" }}>{meta(i, "number", "••••  ••••")}</span>
+                    <span style={{ display: "block", marginTop: 5, fontSize: 13, fontWeight: 700, letterSpacing: 1, color: "#e4d5ac" }}>{meta(i, "amount", "₩1,000,000,000 KRW")}</span>
+                  </>
                 ) : (
                   <>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
