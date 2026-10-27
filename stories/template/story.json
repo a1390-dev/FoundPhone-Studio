@@ -6917,7 +6917,1490 @@
       }
     ],
     "netease": [],
-    "delivery": [],
+    "delivery": [
+      {
+        "id": "delivery-001",
+        "title": "泡菜炒饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "9800",
+          "currency": "KRW",
+          "priceLabel": "₩9,800",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "泡菜炒饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-002",
+        "title": "韩式拌饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "11500",
+          "currency": "KRW",
+          "priceLabel": "₩11,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "韩式拌饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-003",
+        "title": "石锅拌饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "13000",
+          "currency": "KRW",
+          "priceLabel": "₩13,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "石锅拌饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-004",
+        "title": "牛肉汤饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "12000",
+          "currency": "KRW",
+          "priceLabel": "₩12,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "牛肉汤饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-005",
+        "title": "猪肉汤饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "11000",
+          "currency": "KRW",
+          "priceLabel": "₩11,000",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "猪肉汤饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-006",
+        "title": "参鸡汤",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "18000",
+          "currency": "KRW",
+          "priceLabel": "₩18,000",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "参鸡汤，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-007",
+        "title": "部队锅",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "16000",
+          "currency": "KRW",
+          "priceLabel": "₩16,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "部队锅，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-008",
+        "title": "泡菜汤",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "10000",
+          "currency": "KRW",
+          "priceLabel": "₩10,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "泡菜汤，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-009",
+        "title": "大酱汤套餐",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "10500",
+          "currency": "KRW",
+          "priceLabel": "₩10,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "大酱汤套餐，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-010",
+        "title": "辣炒年糕",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "7000",
+          "currency": "KRW",
+          "priceLabel": "₩7,000",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "辣炒年糕，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-011",
+        "title": "韩式炸鸡原味",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "18000",
+          "currency": "KRW",
+          "priceLabel": "₩18,000",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "韩式炸鸡原味，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-012",
+        "title": "韩式甜辣炸鸡",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "19000",
+          "currency": "KRW",
+          "priceLabel": "₩19,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "韩式甜辣炸鸡，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-013",
+        "title": "蜂蜜蒜香炸鸡",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "19500",
+          "currency": "KRW",
+          "priceLabel": "₩19,500",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "蜂蜜蒜香炸鸡，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-014",
+        "title": "炸鸡半半拼盘",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "21000",
+          "currency": "KRW",
+          "priceLabel": "₩21,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "炸鸡半半拼盘，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-015",
+        "title": "紫菜包饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "5500",
+          "currency": "KRW",
+          "priceLabel": "₩5,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "紫菜包饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-016",
+        "title": "金枪鱼紫菜包饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "6500",
+          "currency": "KRW",
+          "priceLabel": "₩6,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "金枪鱼紫菜包饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-017",
+        "title": "韩式鱼饼汤",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "6000",
+          "currency": "KRW",
+          "priceLabel": "₩6,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "韩式鱼饼汤，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-018",
+        "title": "冷面",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "11000",
+          "currency": "KRW",
+          "priceLabel": "₩11,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "冷面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-019",
+        "title": "拌冷面",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "11500",
+          "currency": "KRW",
+          "priceLabel": "₩11,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "拌冷面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-020",
+        "title": "韩式烤五花肉套餐",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "17000",
+          "currency": "KRW",
+          "priceLabel": "₩17,000",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "韩式烤五花肉套餐，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-021",
+        "title": "烤牛肉饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "14500",
+          "currency": "KRW",
+          "priceLabel": "₩14,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "烤牛肉饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-022",
+        "title": "辣炒猪肉饭",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "12500",
+          "currency": "KRW",
+          "priceLabel": "₩12,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "辣炒猪肉饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-023",
+        "title": "韩式煎饼",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "9000",
+          "currency": "KRW",
+          "priceLabel": "₩9,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "韩式煎饼，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-024",
+        "title": "海鲜葱饼",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "13000",
+          "currency": "KRW",
+          "priceLabel": "₩13,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "海鲜葱饼，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-025",
+        "title": "饺子汤",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "9500",
+          "currency": "KRW",
+          "priceLabel": "₩9,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "饺子汤，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-026",
+        "title": "韩式饺子",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "7000",
+          "currency": "KRW",
+          "priceLabel": "₩7,000",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "韩式饺子，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-027",
+        "title": "芝士拉面",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "6500",
+          "currency": "KRW",
+          "priceLabel": "₩6,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "芝士拉面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-028",
+        "title": "辛拉面套餐",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "7500",
+          "currency": "KRW",
+          "priceLabel": "₩7,500",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "辛拉面套餐，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-029",
+        "title": "炸酱面",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "8500",
+          "currency": "KRW",
+          "priceLabel": "₩8,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "炸酱面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-030",
+        "title": "糖醋肉",
+        "body": "韩食 · 模拟外卖商品",
+        "sender": "韩式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "韩食",
+          "price": "16000",
+          "currency": "KRW",
+          "priceLabel": "₩16,000",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "糖醋肉，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-031",
+        "title": "三文鱼刺身",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "18000",
+          "currency": "KRW",
+          "priceLabel": "₩18,000",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "三文鱼刺身，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-032",
+        "title": "三文鱼寿司8贯",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "14500",
+          "currency": "KRW",
+          "priceLabel": "₩14,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "三文鱼寿司8贯，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-033",
+        "title": "综合寿司12贯",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "17000",
+          "currency": "KRW",
+          "priceLabel": "₩17,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "综合寿司12贯，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-034",
+        "title": "炙烤三文鱼寿司",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "15500",
+          "currency": "KRW",
+          "priceLabel": "₩15,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "炙烤三文鱼寿司，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-035",
+        "title": "金枪鱼寿司",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "16000",
+          "currency": "KRW",
+          "priceLabel": "₩16,000",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "金枪鱼寿司，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-036",
+        "title": "鳗鱼寿司",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "19000",
+          "currency": "KRW",
+          "priceLabel": "₩19,000",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "鳗鱼寿司，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-037",
+        "title": "加州卷",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "12000",
+          "currency": "KRW",
+          "priceLabel": "₩12,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "加州卷，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-038",
+        "title": "三文鱼牛油果卷",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "13500",
+          "currency": "KRW",
+          "priceLabel": "₩13,500",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "三文鱼牛油果卷，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-039",
+        "title": "天妇罗乌冬面",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "12000",
+          "currency": "KRW",
+          "priceLabel": "₩12,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "天妇罗乌冬面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-040",
+        "title": "豚骨拉面",
+        "body": "日料 · 模拟外卖商品",
+        "sender": "日式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日料",
+          "price": "12500",
+          "currency": "KRW",
+          "priceLabel": "₩12,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "豚骨拉面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-041",
+        "title": "麻婆豆腐盖饭",
+        "body": "中餐 · 模拟外卖商品",
+        "sender": "中式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "中餐",
+          "price": "9500",
+          "currency": "KRW",
+          "priceLabel": "₩9,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "麻婆豆腐盖饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-042",
+        "title": "宫保鸡丁饭",
+        "body": "中餐 · 模拟外卖商品",
+        "sender": "中式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "中餐",
+          "price": "11000",
+          "currency": "KRW",
+          "priceLabel": "₩11,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "宫保鸡丁饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-043",
+        "title": "扬州炒饭",
+        "body": "中餐 · 模拟外卖商品",
+        "sender": "中式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "中餐",
+          "price": "9000",
+          "currency": "KRW",
+          "priceLabel": "₩9,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "扬州炒饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-044",
+        "title": "海鲜炒面",
+        "body": "中餐 · 模拟外卖商品",
+        "sender": "中式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "中餐",
+          "price": "11500",
+          "currency": "KRW",
+          "priceLabel": "₩11,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "海鲜炒面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-045",
+        "title": "锅贴",
+        "body": "中餐 · 模拟外卖商品",
+        "sender": "中式料理",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "中餐",
+          "price": "7500",
+          "currency": "KRW",
+          "priceLabel": "₩7,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "锅贴，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-046",
+        "title": "珍珠奶茶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "5500",
+          "currency": "KRW",
+          "priceLabel": "₩5,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "珍珠奶茶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-047",
+        "title": "黑糖珍珠鲜奶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "6000",
+          "currency": "KRW",
+          "priceLabel": "₩6,000",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "黑糖珍珠鲜奶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-048",
+        "title": "芋泥奶茶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "6000",
+          "currency": "KRW",
+          "priceLabel": "₩6,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "芋泥奶茶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-049",
+        "title": "抹茶拿铁",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "5500",
+          "currency": "KRW",
+          "priceLabel": "₩5,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "抹茶拿铁，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-050",
+        "title": "草莓奶昔",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "6500",
+          "currency": "KRW",
+          "priceLabel": "₩6,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "草莓奶昔，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-051",
+        "title": "芒果冰沙",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "6500",
+          "currency": "KRW",
+          "priceLabel": "₩6,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "芒果冰沙，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-052",
+        "title": "柠檬茶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "4500",
+          "currency": "KRW",
+          "priceLabel": "₩4,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "柠檬茶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-053",
+        "title": "葡萄柚气泡饮",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "5000",
+          "currency": "KRW",
+          "priceLabel": "₩5,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "葡萄柚气泡饮，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-054",
+        "title": "美式咖啡",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "4000",
+          "currency": "KRW",
+          "priceLabel": "₩4,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "美式咖啡，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-055",
+        "title": "冰拿铁",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "4800",
+          "currency": "KRW",
+          "priceLabel": "₩4,800",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "冰拿铁，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-056",
+        "title": "香草拿铁",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "5200",
+          "currency": "KRW",
+          "priceLabel": "₩5,200",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "香草拿铁，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-057",
+        "title": "巧克力奶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "4500",
+          "currency": "KRW",
+          "priceLabel": "₩4,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "巧克力奶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-058",
+        "title": "乌龙茶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "3500",
+          "currency": "KRW",
+          "priceLabel": "₩3,500",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "乌龙茶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-059",
+        "title": "蜜桃乌龙",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "4500",
+          "currency": "KRW",
+          "priceLabel": "₩4,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "蜜桃乌龙，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-060",
+        "title": "椰果奶茶",
+        "body": "饮品 · 模拟外卖商品",
+        "sender": "饮品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "饮品",
+          "price": "5500",
+          "currency": "KRW",
+          "priceLabel": "₩5,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "椰果奶茶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-061",
+        "title": "香蕉牛奶",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1800",
+          "currency": "KRW",
+          "priceLabel": "₩1,800",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "香蕉牛奶，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-062",
+        "title": "三角紫菜包饭",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1600",
+          "currency": "KRW",
+          "priceLabel": "₩1,600",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "三角紫菜包饭，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-063",
+        "title": "便利店鸡蛋三明治",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "3200",
+          "currency": "KRW",
+          "priceLabel": "₩3,200",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "便利店鸡蛋三明治，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-064",
+        "title": "火腿芝士三明治",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "3500",
+          "currency": "KRW",
+          "priceLabel": "₩3,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "火腿芝士三明治，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-065",
+        "title": "杯面",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1800",
+          "currency": "KRW",
+          "priceLabel": "₩1,800",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "杯面，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-066",
+        "title": "蜂蜜黄油薯片",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "2500",
+          "currency": "KRW",
+          "priceLabel": "₩2,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "蜂蜜黄油薯片，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-067",
+        "title": "巧克力棒",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1500",
+          "currency": "KRW",
+          "priceLabel": "₩1,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "巧克力棒，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-068",
+        "title": "矿泉水 500ml",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1000",
+          "currency": "KRW",
+          "priceLabel": "₩1,000",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "矿泉水 500ml，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-069",
+        "title": "可乐 500ml",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "2000",
+          "currency": "KRW",
+          "priceLabel": "₩2,000",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "可乐 500ml，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-070",
+        "title": "冰块杯",
+        "body": "便利店/超市 · 模拟外卖商品",
+        "sender": "便利店/超市",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "便利店/超市",
+          "price": "1200",
+          "currency": "KRW",
+          "priceLabel": "₩1,200",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "冰块杯，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-071",
+        "title": "纸巾 3包装",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "4500",
+          "currency": "KRW",
+          "priceLabel": "₩4,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "纸巾 3包装，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-072",
+        "title": "湿巾",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "2500",
+          "currency": "KRW",
+          "priceLabel": "₩2,500",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "湿巾，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-073",
+        "title": "洗发水",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "8900",
+          "currency": "KRW",
+          "priceLabel": "₩8,900",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "洗发水，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-074",
+        "title": "护发素",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "8500",
+          "currency": "KRW",
+          "priceLabel": "₩8,500",
+          "status": "可配送",
+          "rating": "4.9",
+          "description": "护发素，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-075",
+        "title": "沐浴露",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "7500",
+          "currency": "KRW",
+          "priceLabel": "₩7,500",
+          "status": "可配送",
+          "rating": "4.5",
+          "description": "沐浴露，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-076",
+        "title": "牙膏",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "3500",
+          "currency": "KRW",
+          "priceLabel": "₩3,500",
+          "status": "可配送",
+          "rating": "4.6",
+          "description": "牙膏，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-077",
+        "title": "牙刷双支装",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "2800",
+          "currency": "KRW",
+          "priceLabel": "₩2,800",
+          "status": "可配送",
+          "rating": "4.7",
+          "description": "牙刷双支装，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      },
+      {
+        "id": "delivery-078",
+        "title": "洗衣液",
+        "body": "日用品 · 模拟外卖商品",
+        "sender": "生活用品",
+        "time": "2026-10-27 14:30",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "category": "日用品",
+          "price": "9900",
+          "currency": "KRW",
+          "priceLabel": "₩9,900",
+          "status": "可配送",
+          "rating": "4.8",
+          "description": "洗衣液，模拟外卖商品。价格以韩元（KRW）计。",
+          "image": ""
+        }
+      }
+    ],
     "forum": [],
     "instagram": [],
     "tiktok": [],
