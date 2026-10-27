@@ -926,6 +926,7 @@ export function WalletSkin(p: Props) {
               <div style={{ height: 24, width: 34, borderRadius: 5, marginTop: 17, background: "linear-gradient(135deg,#d9d4bd,#8f8a7c)", border: "1px solid #eee5c8" }} />
               <strong style={{ display: "block", marginTop: 14, fontSize: 15, letterSpacing: 1 }}>{i.title}</strong>
               <span style={{ display: "block", marginTop: 3, fontSize: 12, letterSpacing: 2, color: "#d4d4d4" }}>{meta(i, "number", "••••  ••••")}</span>
+              <span style={{ display: "block", marginTop: 7, fontSize: 13, fontWeight: 600, color: "#e4d5ac" }}>₩1,000,000,000 KRW</span>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginTop: 12, gap: 8 }}>
                 <div><small style={{ display: "block", color: "#d9c99f", fontSize: 10, letterSpacing: 1 }}>CARD LIMIT · 카드 한도</small><b style={{ display: "block", fontSize: 19, lineHeight: 1.4, marginTop: 2, color: "#fff" }}>{meta(i, "amount", "₩1,000,000,000 KRW")}</b></div>
                 <span style={{ fontSize: 10, color: "#d9c99f", letterSpacing: 1 }}>KRW</span>
