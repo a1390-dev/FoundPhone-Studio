@@ -6,8 +6,8 @@
   "revision": 8,
   "phone": {
     "owner": "机主",
-    "date": "2026-10-25",
-    "time": "09:41",
+    "date": "2026-10-27",
+    "time": "17:04",
     "battery": 94,
     "network": "5G",
     "wallpaper": "dog",
@@ -4149,12 +4149,17 @@
     ],
     "calendar": [
       {
-        "id": "test-item-calendar",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "calendar-seoul-static",
+        "title": "首尔日程",
+        "body": "模拟器固定日期：2026年10月27日。手机日期与时间按固定设定显示，不随现实日期变化。",
+        "sender": "个人日历",
+        "time": "2026-10-27 17:04",
         "kind": "text",
-        "meta": {}
+        "folder": "日历",
+        "meta": {
+          "date": "2026-10-27",
+          "location": "首尔"
+        }
       }
     ],
     "mail": [
@@ -4169,12 +4174,30 @@
     ],
     "clock": [
       {
-        "id": "test-item-clock",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "world-clock-seoul",
+        "title": "首尔",
+        "body": "世界时钟 · 首尔",
+        "sender": "首尔",
+        "time": "2026-10-27 17:04",
         "kind": "text",
-        "meta": {}
+        "folder": "世界时钟",
+        "meta": {
+          "city": "首尔",
+          "clock": "17:04",
+          "timezone": "Asia/Seoul"
+        }
+      },
+      {
+        "id": "alarm-0900",
+        "title": "早上",
+        "body": "",
+        "sender": "",
+        "time": "2026-10-27 09:00",
+        "kind": "text",
+        "folder": "闹钟",
+        "meta": {
+          "clock": "09:00"
+        }
       }
     ],
     "reminders": [
@@ -4388,22 +4411,42 @@
     ],
     "maps": [
       {
-        "id": "test-item-maps",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "seoul-map-static",
+        "title": "首尔",
+        "body": "首尔特别市 · 大韩民国。地图为模拟器内的静态首尔地点，不获取实时定位。",
+        "sender": "首尔特别市",
+        "time": "2026-10-27 17:04",
         "kind": "text",
-        "meta": {}
+        "folder": "首尔",
+        "meta": {
+          "city": "首尔",
+          "location": "Seoul, South Korea",
+          "latitude": "37.5665",
+          "longitude": "126.9780",
+          "x": "48",
+          "y": "45",
+          "address": "首尔特别市"
+        }
       }
     ],
     "weather": [
       {
-        "id": "test-item-weather",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "seoul-weather-static",
+        "title": "首尔",
+        "body": "首尔天气：晴间多云，气温 18°。这是模拟器内固定显示的天气，不获取实时天气。",
+        "sender": "首尔",
+        "time": "2026-10-27 17:04",
         "kind": "text",
-        "meta": {}
+        "folder": "首尔",
+        "meta": {
+          "city": "首尔",
+          "temperature": "18°",
+          "condition": "晴间多云",
+          "humidity": "45%",
+          "wind": "微风",
+          "location": "Seoul, South Korea",
+          "date": "2026-10-27"
+        }
       }
     ],
     "wallet": [
