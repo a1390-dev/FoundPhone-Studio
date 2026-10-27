@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "仅用于界面测试，不含剧情",
-  "revision": 5,
+  "revision": 6,
   "phone": {
     "owner": "机主",
     "date": "2026-10-25",
@@ -462,11 +462,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-lin-jianguo-hello",
-          "body": "在吗？",
+          "id": "kakao-lin-jianguo-npc-1",
+          "body": "今晚回来吃饭吗？",
           "senderId": "lin-jianguo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-lin-jianguo-owner-1",
+          "body": "今天可能晚一点。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-lin-jianguo-npc-reply-1",
+          "body": "行，路上注意安全。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -480,11 +491,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-zhou-wanning-hello",
-          "body": "在吗？",
+          "id": "kakao-zhou-wanning-npc-1",
+          "body": "看到你发的消息了，记得按时吃饭。",
           "senderId": "zhou-wanning",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-zhou-wanning-owner-1",
+          "body": "知道啦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-zhou-wanning-npc-reply-1",
+          "body": "冰箱里有水果，回来记得拿。",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -498,11 +520,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-lin-zihao-hello",
-          "body": "在吗？",
+          "id": "kakao-lin-zihao-npc-1",
+          "body": "你上次落在我这的东西还要吗？",
           "senderId": "lin-zihao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-lin-zihao-owner-1",
+          "body": "要，周末拿。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-lin-zihao-npc-reply-1",
+          "body": "行，我给你放门口。",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -516,11 +549,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-lin-yutong-hello",
-          "body": "在吗？",
+          "id": "kakao-lin-yutong-npc-1",
+          "body": "周末要不要一起逛街？",
           "senderId": "lin-yutong",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-lin-yutong-owner-1",
+          "body": "可以啊，几点？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-lin-yutong-npc-reply-1",
+          "body": "下午两点左右吧。",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -534,11 +578,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-xu-jiaqi-hello",
-          "body": "在吗？",
+          "id": "kakao-xu-jiaqi-npc-1",
+          "body": "你到宿舍了吗？",
           "senderId": "xu-jiaqi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-xu-jiaqi-owner-1",
+          "body": "刚到，累死了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-xu-jiaqi-npc-reply-1",
+          "body": "哈哈哈快休息，晚点跟你说个事。",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -552,11 +607,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-chen-yinuo-hello",
-          "body": "在吗？",
+          "id": "kakao-chen-yinuo-npc-1",
+          "body": "刚刚那家店我收藏了。",
           "senderId": "chen-yinuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-chen-yinuo-owner-1",
+          "body": "发我看看！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-chen-yinuo-npc-reply-1",
+          "body": "发你了，感觉你会喜欢。",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -570,11 +636,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-wang-chenxi-hello",
-          "body": "在吗？",
+          "id": "kakao-wang-chenxi-npc-1",
+          "body": "今天的笔记你有吗？",
           "senderId": "wang-chenxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-wang-chenxi-owner-1",
+          "body": "有，我整理一下发群里。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-wang-chenxi-npc-reply-1",
+          "body": "救命谢谢你。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -588,11 +665,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-zhao-yuchen-hello",
-          "body": "在吗？",
+          "id": "kakao-zhao-yuchen-npc-1",
+          "body": "作业是周五交对吧？",
           "senderId": "zhao-yuchen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-zhao-yuchen-owner-1",
+          "body": "对，老师刚刚又提醒了一次。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-zhao-yuchen-npc-reply-1",
+          "body": "收到，我差点忘了。",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -606,11 +694,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-sun-ruoxi-hello",
-          "body": "在吗？",
+          "id": "kakao-sun-ruoxi-npc-1",
+          "body": "明天第一节在哪栋楼？",
           "senderId": "sun-ruoxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-sun-ruoxi-owner-1",
+          "body": "好像是三号楼，我再确认下。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-sun-ruoxi-npc-reply-1",
+          "body": "好，确认了告诉我一下。",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -624,11 +723,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-li-minghui-hello",
-          "body": "在吗？",
+          "id": "kakao-li-minghui-npc-1",
+          "body": "这周的材料记得按时提交。",
           "senderId": "li-minghui",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-li-minghui-owner-1",
+          "body": "好的老师，请问格式有要求吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-li-minghui-npc-reply-1",
+          "body": "按群里发的模板即可。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -642,11 +752,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-gao-ziyang-hello",
-          "body": "在吗？",
+          "id": "kakao-gao-ziyang-npc-1",
+          "body": "周末有空打球吗？",
           "senderId": "gao-ziyang",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-gao-ziyang-owner-1",
+          "body": "看天气吧，别下雨就去。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-gao-ziyang-npc-reply-1",
+          "body": "那我周六再问你。",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -660,11 +781,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-tang-xinyi-hello",
-          "body": "在吗？",
+          "id": "kakao-tang-xinyi-npc-1",
+          "body": "你上次推荐的歌我听了。",
           "senderId": "tang-xinyi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-tang-xinyi-owner-1",
+          "body": "是不是很好听！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-tang-xinyi-npc-reply-1",
+          "body": "副歌真的好洗脑。",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -678,11 +810,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-he-junhao-hello",
-          "body": "在吗？",
+          "id": "kakao-he-junhao-npc-1",
+          "body": "你选好选修课了吗？",
           "senderId": "he-junhao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-he-junhao-owner-1",
+          "body": "还没，在纠结两门。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-he-junhao-npc-reply-1",
+          "body": "我选了第二个，听说作业少点。",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -696,11 +839,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-song-yiran-hello",
-          "body": "在吗？",
+          "id": "kakao-song-yiran-npc-1",
+          "body": "今天食堂人也太多了。",
           "senderId": "song-yiran",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-song-yiran-owner-1",
+          "body": "我们下次错开饭点吧。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-song-yiran-npc-reply-1",
+          "body": "同意，十二点去根本没位置。",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -714,11 +868,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-luo-jiayi-hello",
-          "body": "在吗？",
+          "id": "kakao-luo-jiayi-npc-1",
+          "body": "我拍的照片修好了。",
           "senderId": "luo-jiayi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-luo-jiayi-owner-1",
+          "body": "发我发我！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-luo-jiayi-npc-reply-1",
+          "body": "等下，正在导出。",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -732,11 +897,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-fang-zheng-hello",
-          "body": "在吗？",
+          "id": "kakao-fang-zheng-npc-1",
+          "body": "你那个充电器是不是落在教室了？",
           "senderId": "fang-zheng",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-fang-zheng-owner-1",
+          "body": "可能是，我下课去找找。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-fang-zheng-npc-reply-1",
+          "body": "我帮你看见的话先收着。",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -750,11 +926,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-wu-xiaoyu-hello",
-          "body": "在吗？",
+          "id": "kakao-wu-xiaoyu-npc-1",
+          "body": "明天小组讨论别忘了。",
           "senderId": "wu-xiaoyu",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-wu-xiaoyu-owner-1",
+          "body": "没忘，我把资料也准备好了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-wu-xiaoyu-npc-reply-1",
+          "body": "太好了，到时候一起对一下。",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -768,11 +955,22 @@
       ],
       "messages": [
         {
-          "id": "kakao-jiang-chen-hello",
-          "body": "在吗？",
+          "id": "kakao-jiang-chen-npc-1",
+          "body": "附近新开了家咖啡店。",
           "senderId": "jiang-chen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "kakao-jiang-chen-owner-1",
+          "body": "环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "kakao-jiang-chen-npc-reply-1",
+          "body": "看照片还不错，周末去试试？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -959,11 +1157,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-lin-jianguo-hello",
-          "body": "在吗？",
+          "id": "wechat-lin-jianguo-npc-1",
+          "body": "今晚回来吃饭吗？",
           "senderId": "lin-jianguo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-lin-jianguo-owner-1",
+          "body": "今天可能晚一点。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-lin-jianguo-npc-reply-1",
+          "body": "行，路上注意安全。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -977,11 +1186,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-zhou-wanning-hello",
-          "body": "在吗？",
+          "id": "wechat-zhou-wanning-npc-1",
+          "body": "看到你发的消息了，记得按时吃饭。",
           "senderId": "zhou-wanning",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-zhou-wanning-owner-1",
+          "body": "知道啦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-zhou-wanning-npc-reply-1",
+          "body": "冰箱里有水果，回来记得拿。",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -995,11 +1215,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-lin-zihao-hello",
-          "body": "在吗？",
+          "id": "wechat-lin-zihao-npc-1",
+          "body": "你上次落在我这的东西还要吗？",
           "senderId": "lin-zihao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-lin-zihao-owner-1",
+          "body": "要，周末拿。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-lin-zihao-npc-reply-1",
+          "body": "行，我给你放门口。",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1013,11 +1244,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-lin-yutong-hello",
-          "body": "在吗？",
+          "id": "wechat-lin-yutong-npc-1",
+          "body": "周末要不要一起逛街？",
           "senderId": "lin-yutong",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-lin-yutong-owner-1",
+          "body": "可以啊，几点？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-lin-yutong-npc-reply-1",
+          "body": "下午两点左右吧。",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1031,11 +1273,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-xu-jiaqi-hello",
-          "body": "在吗？",
+          "id": "wechat-xu-jiaqi-npc-1",
+          "body": "你到宿舍了吗？",
           "senderId": "xu-jiaqi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-xu-jiaqi-owner-1",
+          "body": "刚到，累死了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-xu-jiaqi-npc-reply-1",
+          "body": "哈哈哈快休息，晚点跟你说个事。",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1049,11 +1302,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-chen-yinuo-hello",
-          "body": "在吗？",
+          "id": "wechat-chen-yinuo-npc-1",
+          "body": "刚刚那家店我收藏了。",
           "senderId": "chen-yinuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-chen-yinuo-owner-1",
+          "body": "发我看看！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-chen-yinuo-npc-reply-1",
+          "body": "发你了，感觉你会喜欢。",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1067,11 +1331,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-wang-chenxi-hello",
-          "body": "在吗？",
+          "id": "wechat-wang-chenxi-npc-1",
+          "body": "今天的笔记你有吗？",
           "senderId": "wang-chenxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-wang-chenxi-owner-1",
+          "body": "有，我整理一下发群里。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-wang-chenxi-npc-reply-1",
+          "body": "救命谢谢你。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1085,11 +1360,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-zhao-yuchen-hello",
-          "body": "在吗？",
+          "id": "wechat-zhao-yuchen-npc-1",
+          "body": "作业是周五交对吧？",
           "senderId": "zhao-yuchen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-zhao-yuchen-owner-1",
+          "body": "对，老师刚刚又提醒了一次。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-zhao-yuchen-npc-reply-1",
+          "body": "收到，我差点忘了。",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1103,11 +1389,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-sun-ruoxi-hello",
-          "body": "在吗？",
+          "id": "wechat-sun-ruoxi-npc-1",
+          "body": "明天第一节在哪栋楼？",
           "senderId": "sun-ruoxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-sun-ruoxi-owner-1",
+          "body": "好像是三号楼，我再确认下。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-sun-ruoxi-npc-reply-1",
+          "body": "好，确认了告诉我一下。",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1121,11 +1418,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-li-minghui-hello",
-          "body": "在吗？",
+          "id": "wechat-li-minghui-npc-1",
+          "body": "这周的材料记得按时提交。",
           "senderId": "li-minghui",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-li-minghui-owner-1",
+          "body": "好的老师，请问格式有要求吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-li-minghui-npc-reply-1",
+          "body": "按群里发的模板即可。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1139,11 +1447,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-gao-ziyang-hello",
-          "body": "在吗？",
+          "id": "wechat-gao-ziyang-npc-1",
+          "body": "周末有空打球吗？",
           "senderId": "gao-ziyang",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-gao-ziyang-owner-1",
+          "body": "看天气吧，别下雨就去。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-gao-ziyang-npc-reply-1",
+          "body": "那我周六再问你。",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1157,11 +1476,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-tang-xinyi-hello",
-          "body": "在吗？",
+          "id": "wechat-tang-xinyi-npc-1",
+          "body": "你上次推荐的歌我听了。",
           "senderId": "tang-xinyi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-tang-xinyi-owner-1",
+          "body": "是不是很好听！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-tang-xinyi-npc-reply-1",
+          "body": "副歌真的好洗脑。",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1175,11 +1505,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-he-junhao-hello",
-          "body": "在吗？",
+          "id": "wechat-he-junhao-npc-1",
+          "body": "你选好选修课了吗？",
           "senderId": "he-junhao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-he-junhao-owner-1",
+          "body": "还没，在纠结两门。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-he-junhao-npc-reply-1",
+          "body": "我选了第二个，听说作业少点。",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1193,11 +1534,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-song-yiran-hello",
-          "body": "在吗？",
+          "id": "wechat-song-yiran-npc-1",
+          "body": "今天食堂人也太多了。",
           "senderId": "song-yiran",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-song-yiran-owner-1",
+          "body": "我们下次错开饭点吧。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-song-yiran-npc-reply-1",
+          "body": "同意，十二点去根本没位置。",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1211,11 +1563,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-luo-jiayi-hello",
-          "body": "在吗？",
+          "id": "wechat-luo-jiayi-npc-1",
+          "body": "我拍的照片修好了。",
           "senderId": "luo-jiayi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-luo-jiayi-owner-1",
+          "body": "发我发我！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-luo-jiayi-npc-reply-1",
+          "body": "等下，正在导出。",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1229,11 +1592,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-fang-zheng-hello",
-          "body": "在吗？",
+          "id": "wechat-fang-zheng-npc-1",
+          "body": "你那个充电器是不是落在教室了？",
           "senderId": "fang-zheng",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-fang-zheng-owner-1",
+          "body": "可能是，我下课去找找。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-fang-zheng-npc-reply-1",
+          "body": "我帮你看见的话先收着。",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1247,11 +1621,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-wu-xiaoyu-hello",
-          "body": "在吗？",
+          "id": "wechat-wu-xiaoyu-npc-1",
+          "body": "明天小组讨论别忘了。",
           "senderId": "wu-xiaoyu",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-wu-xiaoyu-owner-1",
+          "body": "没忘，我把资料也准备好了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-wu-xiaoyu-npc-reply-1",
+          "body": "太好了，到时候一起对一下。",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1265,11 +1650,22 @@
       ],
       "messages": [
         {
-          "id": "wechat-jiang-chen-hello",
-          "body": "在吗？",
+          "id": "wechat-jiang-chen-npc-1",
+          "body": "附近新开了家咖啡店。",
           "senderId": "jiang-chen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "wechat-jiang-chen-owner-1",
+          "body": "环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "wechat-jiang-chen-npc-reply-1",
+          "body": "看照片还不错，周末去试试？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1456,11 +1852,22 @@
       ],
       "messages": [
         {
-          "id": "line-lin-jianguo-hello",
-          "body": "在吗？",
+          "id": "line-lin-jianguo-npc-1",
+          "body": "今晚回来吃饭吗？",
           "senderId": "lin-jianguo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-lin-jianguo-owner-1",
+          "body": "今天可能晚一点。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-lin-jianguo-npc-reply-1",
+          "body": "行，路上注意安全。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1474,11 +1881,22 @@
       ],
       "messages": [
         {
-          "id": "line-zhou-wanning-hello",
-          "body": "在吗？",
+          "id": "line-zhou-wanning-npc-1",
+          "body": "看到你发的消息了，记得按时吃饭。",
           "senderId": "zhou-wanning",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-zhou-wanning-owner-1",
+          "body": "知道啦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-zhou-wanning-npc-reply-1",
+          "body": "冰箱里有水果，回来记得拿。",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1492,11 +1910,22 @@
       ],
       "messages": [
         {
-          "id": "line-lin-zihao-hello",
-          "body": "在吗？",
+          "id": "line-lin-zihao-npc-1",
+          "body": "你上次落在我这的东西还要吗？",
           "senderId": "lin-zihao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-lin-zihao-owner-1",
+          "body": "要，周末拿。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-lin-zihao-npc-reply-1",
+          "body": "行，我给你放门口。",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1510,11 +1939,22 @@
       ],
       "messages": [
         {
-          "id": "line-lin-yutong-hello",
-          "body": "在吗？",
+          "id": "line-lin-yutong-npc-1",
+          "body": "周末要不要一起逛街？",
           "senderId": "lin-yutong",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-lin-yutong-owner-1",
+          "body": "可以啊，几点？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-lin-yutong-npc-reply-1",
+          "body": "下午两点左右吧。",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1528,11 +1968,22 @@
       ],
       "messages": [
         {
-          "id": "line-xu-jiaqi-hello",
-          "body": "在吗？",
+          "id": "line-xu-jiaqi-npc-1",
+          "body": "你到宿舍了吗？",
           "senderId": "xu-jiaqi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-xu-jiaqi-owner-1",
+          "body": "刚到，累死了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-xu-jiaqi-npc-reply-1",
+          "body": "哈哈哈快休息，晚点跟你说个事。",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1546,11 +1997,22 @@
       ],
       "messages": [
         {
-          "id": "line-chen-yinuo-hello",
-          "body": "在吗？",
+          "id": "line-chen-yinuo-npc-1",
+          "body": "刚刚那家店我收藏了。",
           "senderId": "chen-yinuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-chen-yinuo-owner-1",
+          "body": "发我看看！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-chen-yinuo-npc-reply-1",
+          "body": "发你了，感觉你会喜欢。",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1564,11 +2026,22 @@
       ],
       "messages": [
         {
-          "id": "line-wang-chenxi-hello",
-          "body": "在吗？",
+          "id": "line-wang-chenxi-npc-1",
+          "body": "今天的笔记你有吗？",
           "senderId": "wang-chenxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-wang-chenxi-owner-1",
+          "body": "有，我整理一下发群里。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-wang-chenxi-npc-reply-1",
+          "body": "救命谢谢你。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1582,11 +2055,22 @@
       ],
       "messages": [
         {
-          "id": "line-zhao-yuchen-hello",
-          "body": "在吗？",
+          "id": "line-zhao-yuchen-npc-1",
+          "body": "作业是周五交对吧？",
           "senderId": "zhao-yuchen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-zhao-yuchen-owner-1",
+          "body": "对，老师刚刚又提醒了一次。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-zhao-yuchen-npc-reply-1",
+          "body": "收到，我差点忘了。",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1600,11 +2084,22 @@
       ],
       "messages": [
         {
-          "id": "line-sun-ruoxi-hello",
-          "body": "在吗？",
+          "id": "line-sun-ruoxi-npc-1",
+          "body": "明天第一节在哪栋楼？",
           "senderId": "sun-ruoxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-sun-ruoxi-owner-1",
+          "body": "好像是三号楼，我再确认下。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-sun-ruoxi-npc-reply-1",
+          "body": "好，确认了告诉我一下。",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1618,11 +2113,22 @@
       ],
       "messages": [
         {
-          "id": "line-li-minghui-hello",
-          "body": "在吗？",
+          "id": "line-li-minghui-npc-1",
+          "body": "这周的材料记得按时提交。",
           "senderId": "li-minghui",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-li-minghui-owner-1",
+          "body": "好的老师，请问格式有要求吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-li-minghui-npc-reply-1",
+          "body": "按群里发的模板即可。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1636,11 +2142,22 @@
       ],
       "messages": [
         {
-          "id": "line-gao-ziyang-hello",
-          "body": "在吗？",
+          "id": "line-gao-ziyang-npc-1",
+          "body": "周末有空打球吗？",
           "senderId": "gao-ziyang",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-gao-ziyang-owner-1",
+          "body": "看天气吧，别下雨就去。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-gao-ziyang-npc-reply-1",
+          "body": "那我周六再问你。",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1654,11 +2171,22 @@
       ],
       "messages": [
         {
-          "id": "line-tang-xinyi-hello",
-          "body": "在吗？",
+          "id": "line-tang-xinyi-npc-1",
+          "body": "你上次推荐的歌我听了。",
           "senderId": "tang-xinyi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-tang-xinyi-owner-1",
+          "body": "是不是很好听！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-tang-xinyi-npc-reply-1",
+          "body": "副歌真的好洗脑。",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1672,11 +2200,22 @@
       ],
       "messages": [
         {
-          "id": "line-he-junhao-hello",
-          "body": "在吗？",
+          "id": "line-he-junhao-npc-1",
+          "body": "你选好选修课了吗？",
           "senderId": "he-junhao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-he-junhao-owner-1",
+          "body": "还没，在纠结两门。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-he-junhao-npc-reply-1",
+          "body": "我选了第二个，听说作业少点。",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1690,11 +2229,22 @@
       ],
       "messages": [
         {
-          "id": "line-song-yiran-hello",
-          "body": "在吗？",
+          "id": "line-song-yiran-npc-1",
+          "body": "今天食堂人也太多了。",
           "senderId": "song-yiran",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-song-yiran-owner-1",
+          "body": "我们下次错开饭点吧。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-song-yiran-npc-reply-1",
+          "body": "同意，十二点去根本没位置。",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1708,11 +2258,22 @@
       ],
       "messages": [
         {
-          "id": "line-luo-jiayi-hello",
-          "body": "在吗？",
+          "id": "line-luo-jiayi-npc-1",
+          "body": "我拍的照片修好了。",
           "senderId": "luo-jiayi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-luo-jiayi-owner-1",
+          "body": "发我发我！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-luo-jiayi-npc-reply-1",
+          "body": "等下，正在导出。",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1726,11 +2287,22 @@
       ],
       "messages": [
         {
-          "id": "line-fang-zheng-hello",
-          "body": "在吗？",
+          "id": "line-fang-zheng-npc-1",
+          "body": "你那个充电器是不是落在教室了？",
           "senderId": "fang-zheng",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-fang-zheng-owner-1",
+          "body": "可能是，我下课去找找。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-fang-zheng-npc-reply-1",
+          "body": "我帮你看见的话先收着。",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1744,11 +2316,22 @@
       ],
       "messages": [
         {
-          "id": "line-wu-xiaoyu-hello",
-          "body": "在吗？",
+          "id": "line-wu-xiaoyu-npc-1",
+          "body": "明天小组讨论别忘了。",
           "senderId": "wu-xiaoyu",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-wu-xiaoyu-owner-1",
+          "body": "没忘，我把资料也准备好了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-wu-xiaoyu-npc-reply-1",
+          "body": "太好了，到时候一起对一下。",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1762,11 +2345,22 @@
       ],
       "messages": [
         {
-          "id": "line-jiang-chen-hello",
-          "body": "在吗？",
+          "id": "line-jiang-chen-npc-1",
+          "body": "附近新开了家咖啡店。",
           "senderId": "jiang-chen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "line-jiang-chen-owner-1",
+          "body": "环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "line-jiang-chen-npc-reply-1",
+          "body": "看照片还不错，周末去试试？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1953,11 +2547,22 @@
       ],
       "messages": [
         {
-          "id": "qq-lin-jianguo-hello",
-          "body": "在吗？",
+          "id": "qq-lin-jianguo-npc-1",
+          "body": "今晚回来吃饭吗？",
           "senderId": "lin-jianguo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-lin-jianguo-owner-1",
+          "body": "今天可能晚一点。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-lin-jianguo-npc-reply-1",
+          "body": "行，路上注意安全。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1971,11 +2576,22 @@
       ],
       "messages": [
         {
-          "id": "qq-zhou-wanning-hello",
-          "body": "在吗？",
+          "id": "qq-zhou-wanning-npc-1",
+          "body": "看到你发的消息了，记得按时吃饭。",
           "senderId": "zhou-wanning",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-zhou-wanning-owner-1",
+          "body": "知道啦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-zhou-wanning-npc-reply-1",
+          "body": "冰箱里有水果，回来记得拿。",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -1989,11 +2605,22 @@
       ],
       "messages": [
         {
-          "id": "qq-lin-zihao-hello",
-          "body": "在吗？",
+          "id": "qq-lin-zihao-npc-1",
+          "body": "你上次落在我这的东西还要吗？",
           "senderId": "lin-zihao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-lin-zihao-owner-1",
+          "body": "要，周末拿。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-lin-zihao-npc-reply-1",
+          "body": "行，我给你放门口。",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2007,11 +2634,22 @@
       ],
       "messages": [
         {
-          "id": "qq-lin-yutong-hello",
-          "body": "在吗？",
+          "id": "qq-lin-yutong-npc-1",
+          "body": "周末要不要一起逛街？",
           "senderId": "lin-yutong",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-lin-yutong-owner-1",
+          "body": "可以啊，几点？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-lin-yutong-npc-reply-1",
+          "body": "下午两点左右吧。",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2025,11 +2663,22 @@
       ],
       "messages": [
         {
-          "id": "qq-xu-jiaqi-hello",
-          "body": "在吗？",
+          "id": "qq-xu-jiaqi-npc-1",
+          "body": "你到宿舍了吗？",
           "senderId": "xu-jiaqi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-xu-jiaqi-owner-1",
+          "body": "刚到，累死了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-xu-jiaqi-npc-reply-1",
+          "body": "哈哈哈快休息，晚点跟你说个事。",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2043,11 +2692,22 @@
       ],
       "messages": [
         {
-          "id": "qq-chen-yinuo-hello",
-          "body": "在吗？",
+          "id": "qq-chen-yinuo-npc-1",
+          "body": "刚刚那家店我收藏了。",
           "senderId": "chen-yinuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-chen-yinuo-owner-1",
+          "body": "发我看看！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-chen-yinuo-npc-reply-1",
+          "body": "发你了，感觉你会喜欢。",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2061,11 +2721,22 @@
       ],
       "messages": [
         {
-          "id": "qq-wang-chenxi-hello",
-          "body": "在吗？",
+          "id": "qq-wang-chenxi-npc-1",
+          "body": "今天的笔记你有吗？",
           "senderId": "wang-chenxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-wang-chenxi-owner-1",
+          "body": "有，我整理一下发群里。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-wang-chenxi-npc-reply-1",
+          "body": "救命谢谢你。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2079,11 +2750,22 @@
       ],
       "messages": [
         {
-          "id": "qq-zhao-yuchen-hello",
-          "body": "在吗？",
+          "id": "qq-zhao-yuchen-npc-1",
+          "body": "作业是周五交对吧？",
           "senderId": "zhao-yuchen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-zhao-yuchen-owner-1",
+          "body": "对，老师刚刚又提醒了一次。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-zhao-yuchen-npc-reply-1",
+          "body": "收到，我差点忘了。",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2097,11 +2779,22 @@
       ],
       "messages": [
         {
-          "id": "qq-sun-ruoxi-hello",
-          "body": "在吗？",
+          "id": "qq-sun-ruoxi-npc-1",
+          "body": "明天第一节在哪栋楼？",
           "senderId": "sun-ruoxi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-sun-ruoxi-owner-1",
+          "body": "好像是三号楼，我再确认下。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-sun-ruoxi-npc-reply-1",
+          "body": "好，确认了告诉我一下。",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2115,11 +2808,22 @@
       ],
       "messages": [
         {
-          "id": "qq-li-minghui-hello",
-          "body": "在吗？",
+          "id": "qq-li-minghui-npc-1",
+          "body": "这周的材料记得按时提交。",
           "senderId": "li-minghui",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-li-minghui-owner-1",
+          "body": "好的老师，请问格式有要求吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-li-minghui-npc-reply-1",
+          "body": "按群里发的模板即可。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2133,11 +2837,22 @@
       ],
       "messages": [
         {
-          "id": "qq-gao-ziyang-hello",
-          "body": "在吗？",
+          "id": "qq-gao-ziyang-npc-1",
+          "body": "周末有空打球吗？",
           "senderId": "gao-ziyang",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-gao-ziyang-owner-1",
+          "body": "看天气吧，别下雨就去。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-gao-ziyang-npc-reply-1",
+          "body": "那我周六再问你。",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2151,11 +2866,22 @@
       ],
       "messages": [
         {
-          "id": "qq-tang-xinyi-hello",
-          "body": "在吗？",
+          "id": "qq-tang-xinyi-npc-1",
+          "body": "你上次推荐的歌我听了。",
           "senderId": "tang-xinyi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-tang-xinyi-owner-1",
+          "body": "是不是很好听！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-tang-xinyi-npc-reply-1",
+          "body": "副歌真的好洗脑。",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2169,11 +2895,22 @@
       ],
       "messages": [
         {
-          "id": "qq-he-junhao-hello",
-          "body": "在吗？",
+          "id": "qq-he-junhao-npc-1",
+          "body": "你选好选修课了吗？",
           "senderId": "he-junhao",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-he-junhao-owner-1",
+          "body": "还没，在纠结两门。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-he-junhao-npc-reply-1",
+          "body": "我选了第二个，听说作业少点。",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2187,11 +2924,22 @@
       ],
       "messages": [
         {
-          "id": "qq-song-yiran-hello",
-          "body": "在吗？",
+          "id": "qq-song-yiran-npc-1",
+          "body": "今天食堂人也太多了。",
           "senderId": "song-yiran",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-song-yiran-owner-1",
+          "body": "我们下次错开饭点吧。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-song-yiran-npc-reply-1",
+          "body": "同意，十二点去根本没位置。",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2205,11 +2953,22 @@
       ],
       "messages": [
         {
-          "id": "qq-luo-jiayi-hello",
-          "body": "在吗？",
+          "id": "qq-luo-jiayi-npc-1",
+          "body": "我拍的照片修好了。",
           "senderId": "luo-jiayi",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-luo-jiayi-owner-1",
+          "body": "发我发我！",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-luo-jiayi-npc-reply-1",
+          "body": "等下，正在导出。",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2223,11 +2982,22 @@
       ],
       "messages": [
         {
-          "id": "qq-fang-zheng-hello",
-          "body": "在吗？",
+          "id": "qq-fang-zheng-npc-1",
+          "body": "你那个充电器是不是落在教室了？",
           "senderId": "fang-zheng",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-fang-zheng-owner-1",
+          "body": "可能是，我下课去找找。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-fang-zheng-npc-reply-1",
+          "body": "我帮你看见的话先收着。",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2241,11 +3011,22 @@
       ],
       "messages": [
         {
-          "id": "qq-wu-xiaoyu-hello",
-          "body": "在吗？",
+          "id": "qq-wu-xiaoyu-npc-1",
+          "body": "明天小组讨论别忘了。",
           "senderId": "wu-xiaoyu",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-wu-xiaoyu-owner-1",
+          "body": "没忘，我把资料也准备好了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-wu-xiaoyu-npc-reply-1",
+          "body": "太好了，到时候一起对一下。",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
@@ -2259,11 +3040,22 @@
       ],
       "messages": [
         {
-          "id": "qq-jiang-chen-hello",
-          "body": "在吗？",
+          "id": "qq-jiang-chen-npc-1",
+          "body": "附近新开了家咖啡店。",
           "senderId": "jiang-chen",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 18:12"
+        },
+        {
+          "id": "qq-jiang-chen-owner-1",
+          "body": "环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 18:14"
+        },
+        {
+          "id": "qq-jiang-chen-npc-reply-1",
+          "body": "看照片还不错，周末去试试？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 18:16"
         }
       ]
     },
