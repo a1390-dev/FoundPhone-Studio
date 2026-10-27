@@ -324,7 +324,6 @@ export function MymyInstagram(p: SkinProps) {
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
-    [reelDragY, setReelDragY] = useState(0),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
@@ -513,21 +512,27 @@ export function MymyInstagram(p: SkinProps) {
             </>
           )}
           {!selected && tab === "Reels" && (
-            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); setReelDragY(0); }} onTouchMove={(e) => {
+            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); const v = (e.currentTarget as HTMLDivElement).querySelector("video"); if (v) v.style.transition = "none"; }} onTouchMove={(e) => {
               const el = e.currentTarget as HTMLDivElement;
               const start = Number(el.dataset.touchY || 0);
               const delta = (e.touches[0]?.clientY ?? start) - start;
-              setReelDragY(Math.max(-180, Math.min(180, delta)));
+              const v = el.querySelector("video");
+              if (v) v.style.transform = `translateY(${Math.max(-180, Math.min(180, delta))}px)`;
             }} onTouchEnd={(e) => {
-              const start = Number((e.currentTarget as HTMLDivElement).dataset.touchY || 0);
+              const el = e.currentTarget as HTMLDivElement;
+              const start = Number(el.dataset.touchY || 0);
               const delta = (e.changedTouches[0]?.clientY ?? start) - start;
-              setReelDragY(0);
-              if (Math.abs(delta) > 55 && reels.length) { setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); }
-            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { setReelIndex((n) => (n + (e.deltaY > 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); } }}>
+              const v = el.querySelector("video");
+              if (v) { v.style.transform = ""; v.style.transition = "transform 140ms ease-out"; }
+              if (Math.abs(delta) > 55 && reels.length) {
+                if (delta < 0 && reelIndex < reels.length - 1) { setReelIndex(reelIndex + 1); setPlaying(true); }
+                else if (delta > 0 && reelIndex > 0) { setReelIndex(reelIndex - 1); setPlaying(true); }
+              }
+            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { if (e.deltaY > 0 && reelIndex < reels.length - 1) { setReelIndex(reelIndex + 1); setPlaying(true); } else if (e.deltaY < 0 && reelIndex > 0) { setReelIndex(reelIndex - 1); setPlaying(true); } } }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
-                    <video key={reel.id} className="ig-reel-media" style={{ transform: `translateY(${reelDragY}px)`, transition: reelDragY === 0 ? "transform 140ms ease-out" : "none" }} src={reel.media} autoPlay muted={muted} loop playsInline preload="metadata" onClick={(e) => {
+                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} playsInline preload="metadata" onEnded={() => setPlaying(false)} onClick={(e) => {
                       const v = e.currentTarget;
                       if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
                     }} />
