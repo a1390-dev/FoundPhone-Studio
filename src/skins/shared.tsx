@@ -84,6 +84,13 @@ export function SearchBox({
     </label>
   );
 }
+const CONTACT_AVATARS: Record<string, string> = {
+  "刘知珉": "/avatars/p1.jpg",
+  "内永绘里": "/avatars/p2.jpg",
+  "金旼炡": "/avatars/p3.jpg",
+  "宁艺卓": "/avatars/p4.jpg",
+};
+
 export function Avatar({
   name,
   round = true,
@@ -93,10 +100,13 @@ export function Avatar({
   round?: boolean;
   src?: string;
 }) {
+  const media = safeMedia(src);
+  const avatarSrc =
+    media?.startsWith("data:image/") ? media : CONTACT_AVATARS[name] || "";
   return (
     <span className={`catalog-avatar ${round ? "round" : ""}`}>
-      {safeMedia(src)?.startsWith("data:image/") ? (
-        <img src={safeMedia(src)} loading="lazy" decoding="async" alt="" />
+      {avatarSrc ? (
+        <img src={avatarSrc} loading="lazy" decoding="async" alt={name} />
       ) : (
         name.slice(0, 1) || "人"
       )}
