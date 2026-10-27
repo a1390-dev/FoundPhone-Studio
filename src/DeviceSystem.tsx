@@ -80,10 +80,16 @@ export function DeviceLock({
   onUnlock: (v: string) => void;
   onCamera: () => void;
   onLight: () => void;
+  canContinue: boolean;
+  onNewPlayer: (id: string) => void;
 }) {
   const [code, setCode] = useState("");
-  const [playerId, setPlayerId] = useState(() => { try { return localStorage.getItem("foundphone.player-id.v1") || ""; } catch { return ""; } });
-  const [idDraft, setIdDraft] = useState(playerId);
+  const [playerId, setPlayerId] = useState(() => { try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || ""; } catch { return ""; } });
+  const [idDraft, setIdDraft] = useState("");
+  const [resumeChoice, setResumeChoice] = useState<"choice" | "new" | "hidden">(() => {
+    try { return localStorage.getItem("foundphone.player-id.v1")?.trim() ? "choice" : "new"; }
+    catch { return "new"; }
+  });
   useEffect(() => {
     if (error) setCode("");
   }, [error]);
@@ -126,23 +132,67 @@ export function DeviceLock({
             </p>
             <h1>{time}</h1>
           </div>
-          {!playerId ? (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const value = idDraft.trim().slice(0, 24);
-                if (!value) return;
-                setPlayerId(value);
-                try { localStorage.setItem("foundphone.player-id.v1", value); } catch {}
-                if (work.phone.passcode) setPinOpen(true); else onUnlock("");
-              }}
-              style={{ position: "absolute", left: 24, right: 24, bottom: 158, display: "grid", gap: 7, textAlign: "left" }}
-            >
-              <label htmlFor="foundphone-player-id" style={{ fontSize: 11, color: "white", textShadow: "0 1px 5px #0008" }}>设置你的玩家 ID / 昵称</label>
-              <input id="foundphone-player-id" value={idDraft} onChange={(e) => setIdDraft(e.target.value)} maxLength={24} autoComplete="nickname" placeholder="输入你想使用的名字" required style={{ width: "100%", boxSizing: "border-box", minWidth: 0, padding: "10px 11px", borderRadius: 10, background: "#ffffffdf", color: "#191919", fontSize: 18 }} />
-              <button type="submit" style={{ justifySelf: "start", padding: "8px 18px", borderRadius: 10, background: "#fee500", color: "#191919", fontWeight: 700, fontSize: 13 }}>确认 ID</button>
-            </form>
-          ) : null}
+          {resumeChoice !== "hidden" && (
+            <div className="player-session-shade">
+              <section className="player-session-modal" role="dialog" aria-modal="true" aria-labelledby="player-session-title">
+                {resumeChoice === "choice" ? (
+                  <>
+                    <h2 id="player-session-title">欢迎回来</h2>
+                    <p>继续使用玩家 ID「{playerId}」读取上次进度，或开始一段全新的游戏。</p>
+                    <button
+                      type="button"
+                      className="player-session-primary"
+                      disabled={!canContinue}
+                      onClick={() => setResumeChoice("hidden")}
+                    >
+                      {canContinue ? "继续游戏" : "正在读取存档…"}
+                    </button>
+                    <button
+                      type="button"
+                      className="player-session-secondary"
+                      onClick={() => { setIdDraft(""); setResumeChoice("new"); }}
+                    >
+                      新 ID，从头开始
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h2 id="player-session-title">{playerId ? "开始新游戏" : "设置玩家 ID"}</h2>
+                    <p>{playerId ? "新进度会单独保存，之前的存档不会被删除。" : "先设置你的玩家 ID / 昵称。"}</p>
+                    <form
+                      className="player-session-form"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const value = idDraft.trim().slice(0, 24);
+                        if (!value) return;
+                        setPlayerId(value);
+                        onNewPlayer(value);
+                        setResumeChoice("hidden");
+                        if (work.phone.passcode) setPinOpen(true); else onUnlock("");
+                      }}
+                    >
+                      <input
+                        id="foundphone-player-id"
+                        value={idDraft}
+                        onChange={(e) => setIdDraft(e.target.value)}
+                        maxLength={24}
+                        autoComplete="nickname"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        placeholder="输入你想使用的名字"
+                        required
+                      />
+                      <button type="submit" className="player-session-primary">开始新游戏</button>
+                      {playerId ? (
+                        <button type="button" className="player-session-secondary" onClick={() => setResumeChoice("choice")}>返回</button>
+                      ) : null}
+                    </form>
+                  </>
+                )}
+              </section>
+            </div>
+          )}
           <div className="lock-notifications">
             {work.phone.notifications && (
               <SystemNotifications
@@ -154,7 +204,7 @@ export function DeviceLock({
               />
             )}
           </div>
-          {playerId ? <UnlockHandle onUnlock={open} /> : null}
+          {playerId && resumeChoice === "hidden" ? <UnlockHandle onUnlock={open} /> : null}
 
           <div className="lock-tools">
             <button onClick={onLight} aria-label="手电筒">
