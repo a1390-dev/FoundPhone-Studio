@@ -162,6 +162,7 @@ function PhoneRuntime({
   const [folder, setFolder] = useState("");
   const [panel, setPanel] = useState("");
   const [own, setOwn] = useState(() => initialRuntime(work));
+  const [saveSlots, setSaveSlots] = useState<Array<{ id: string; state: Runtime } | undefined>>([undefined, undefined, undefined]);
   const [ready, setReady] = useState(creator || !!external);
   const [loadError, setLoadError] = useState("");
   useEffect(() => {
