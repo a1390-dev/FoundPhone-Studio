@@ -323,10 +323,7 @@ export function MymyInstagram(p: SkinProps) {
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
     [reposted, setReposted] = useSkinState<string[]>(p, "mymyReposted", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
-    [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []),
-    [profileId, setProfileId] = useSkinState<string>(p, "mymyInstagramProfileId", p.owner || "机主"),
-    [profileAvatar, setProfileAvatar] = useSkinState<string>(p, "mymyInstagramProfileAvatar", "");
-  const profileAvatarInput = useRef<HTMLInputElement | null>(null);
+    [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
@@ -830,58 +827,14 @@ export function MymyInstagram(p: SkinProps) {
           {!selected && tab === "个人主页" && (
             <section className="ig-profile-settings">
               <div className="pf">
-                <button className="ig-profile-avatar-button" onClick={() => profileAvatarInput.current?.click()} aria-label="上传头像">
-                  {profileAvatar ? <img className="ig-profile-avatar-image" src={profileAvatar} alt="个人头像" /> : <Avatar name={profileId || "机主"} />}
-                </button>
-                <input
-                  ref={profileAvatarInput}
-                  className="ig-profile-avatar-input"
-                  type="file"
-                  accept="image/*"
-                  aria-label="选择头像图片"
-                  onChange={(e) => {
-                    const file = e.currentTarget.files?.[0];
-                    if (!file) return;
-                    if (!file.type.startsWith("image/")) return;
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      if (typeof reader.result !== "string") return;
-                      const image = new Image();
-                      image.onload = () => {
-                        const maxSide = 320;
-                        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
-                        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
-                        const context = canvas.getContext("2d");
-                        if (!context) return;
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        setProfileAvatar(canvas.toDataURL("image/jpeg", 0.78));
-                        image.src = "";
-                      };
-                      image.src = reader.result;
-                    };
-                    reader.readAsDataURL(file);
-                    e.currentTarget.value = "";
-                  }}
-                />
+                <Avatar name={p.owner || "机主"} />
                 <div className="ps">
                   <div><b>0</b><small>帖子</small></div>
                   <div><b>—</b><small>粉丝</small></div>
                   <div><b>—</b><small>关注</small></div>
                 </div>
               </div>
-              <label className="ig-profile-id-label">
-                <span>ID</span>
-                <input
-                  aria-label="设置个人主页ID"
-                  value={profileId}
-                  maxLength={30}
-                  placeholder="输入你的ID"
-                  onChange={(e) => setProfileId(e.target.value.replace(/^@/, ""))}
-                />
-              </label>
-              <p className="ig-profile-hint">点击头像可上传自己的图片</p>
+              <p className="ig-profile-hint">{p.owner || "机主"}</p>
             </section>
           )}
           {!selected && tab === "私信" && (
