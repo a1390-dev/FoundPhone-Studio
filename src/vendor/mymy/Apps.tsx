@@ -440,7 +440,7 @@ export function MymyInstagram(p: SkinProps) {
     avatar: "/media/reels/aespa-official-avatar.jpg",
     media,
     kind: "video",
-    likes: [2240000, 2840000, 1470000, 2670000][n],
+    likes: [2240000, 3180000, 1470000, 2670000][n],
     comments: reelComments[n],
     meta: { ...officialAccount.meta, handle: "aespa_official", verified: "true" },
     body: "",
