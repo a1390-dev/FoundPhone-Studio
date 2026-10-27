@@ -39,7 +39,8 @@ export type AppConfig = Work["apps"][number];
 const ICON_TEST_REMOVED_APPS = new Set([
   "qq", "weibo", "redbook", "bilibili", "alipay", "netease", "forum",
   "tiktok", "telegram", "discord", "snapchat", "facebook", "reddit",
-  "spotify", "netflix", "pinterest",
+  "spotify", "netflix", "pinterest", "douyin", "reminders", "files",
+  "mail", "find",
 ]);
 function removeAppsForIconTest(layout: DeviceLayout): DeviceLayout {
   for (const app of layout.apps) {
