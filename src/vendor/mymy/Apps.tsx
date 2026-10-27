@@ -519,7 +519,7 @@ export function MymyInstagram(p: SkinProps) {
       <article className={"igp " + (isCarouselPost ? "ig-first-post" : "")} key={i.id}>
         <header className="igph">
           {isCarouselPost ? (
-            <img className="ig-first-avatar" src={i.avatar} alt="" />
+            <img className="ig-first-avatar" src={i.avatar} loading="lazy" decoding="async" alt="" />
           ) : (
             <Avatar name={i.sender} src={i.avatar} />
           )}
@@ -563,7 +563,8 @@ export function MymyInstagram(p: SkinProps) {
               <img
                 src={carouselImage}
                 alt={caption}
-                loading={currentCarouselIndex === 0 ? "eager" : "lazy"}
+                loading="lazy"
+                decoding="async"
                 draggable={false}
               />
               <span className="ig-first-count">{currentCarouselIndex + 1}/{currentCarouselImages.length}</span>
@@ -813,7 +814,7 @@ export function MymyInstagram(p: SkinProps) {
                     <button aria-label="收藏 Reels" onClick={() => toggle(reel.id, reelSaved, setReelSaved)}><Bookmark fill={reelSaved.includes(reel.id) ? "white" : "none"} /><small>{shortCount(reelCounts(reel.id).saves)}</small></button>
                   </div>
                   <div className="ig-reel-caption">
-                    <div className="ig-reel-account"><span className="ig-reel-account-avatar"><img src="/media/reels/aespa-official-avatar.jpg" alt="" /></span><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
+                    <div className="ig-reel-account"><span className="ig-reel-account-avatar"><img src="/media/reels/aespa-official-avatar.jpg" loading="lazy" decoding="async" alt="" /></span><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
                     {reel.body && <p>{reel.body}</p>}
                     <small>♪ aespa_official · 原声</small>
                   </div>
