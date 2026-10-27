@@ -841,51 +841,6 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
 
 const originalsEnabled = import.meta.env.VITE_ORIGINAL_ICONS === "true";
 
-// Preload original assets for smoother swaps, but never gate visible icons on the batch.
-let originalIconPreloadPromise: Promise<void> | undefined;
-
-export function preloadOriginalIcons(): Promise<void> {
-  if (!originalsEnabled) return Promise.resolve();
-  if (originalIconPreloadPromise) return originalIconPreloadPromise;
-
-  const files = [...new Set(Object.values(originalIconFiles))];
-  let nextIndex = 0;
-  const loadFile = (file: string) =>
-    new Promise<void>((resolve) => {
-      const image = new Image();
-      let settled = false;
-      const finish = async (decode: boolean) => {
-        if (settled) return;
-        settled = true;
-        image.onload = null;
-        image.onerror = null;
-        if (decode && typeof image.decode === "function") {
-          try {
-            await image.decode();
-          } catch {
-            // A successful load is still usable if decode() is unavailable.
-          }
-        }
-        resolve();
-      };
-      image.onload = () => { void finish(true); };
-      image.onerror = () => { void finish(false); };
-      image.src = import.meta.env.BASE_URL + "icon-assets/" + file;
-      if (image.complete) void finish(image.naturalWidth > 0);
-    });
-
-  const worker = async () => {
-    while (nextIndex < files.length) {
-      const file = files[nextIndex++];
-      await loadFile(file);
-    }
-  };
-  const workers = Math.min(8, files.length);
-  originalIconPreloadPromise = Promise.all(
-    Array.from({ length: workers }, () => worker()),
-  ).then(() => undefined);
-  return originalIconPreloadPromise;
-}
 export function AppArtwork({
   id,
   date,
@@ -899,14 +854,8 @@ export function AppArtwork({
   const file = originalIconFiles[id];
   if (!originalsEnabled) return <DrawnArtwork id={id} date={date} />;
   if (!file || failed) {
-    return (
-      <span
-        className="original-icon-wrap original-icon-fallback"
-        style={{ opacity: 1 }}
-      >
-        <DrawnArtwork id={id} date={date} />
-      </span>
-    );
+    // Never replace a missing original asset with a hand-drawn substitute.
+    return <span className="original-icon-wrap original-icon-unavailable" data-original-icon-unavailable={id} aria-hidden="true" />;
   }
   const d = /^\d{4}-\d{2}-\d{2}$/.test(date || "")
     ? new Date(date + "T12:00:00Z")
@@ -924,7 +873,7 @@ export function AppArtwork({
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
         alt=""
-        loading="eager"
+        loading="lazy"
         decoding="async"
         draggable={false}
         style={{ position: "absolute", inset: 0 }}
