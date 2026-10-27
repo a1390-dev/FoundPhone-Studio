@@ -922,6 +922,10 @@
 .mymy-ui .ig-reel-video-previous { transform: translate3d(0, -100%, 0); }
 .mymy-ui .ig-reel-video-exiting-up { z-index: 1; opacity: 1; transform: translate3d(0, -100%, 0); pointer-events: none; }
 .mymy-ui .ig-reel-video-exiting-down { z-index: 1; opacity: 1; transform: translate3d(0, 100%, 0); pointer-events: none; }
+.mymy-ui .ig-reel-enter-next { animation: igReelEnterNext 280ms cubic-bezier(.22, .61, .36, 1) both; }
+.mymy-ui .ig-reel-enter-previous { animation: igReelEnterPrevious 280ms cubic-bezier(.22, .61, .36, 1) both; }
+@keyframes igReelEnterNext { from { transform: translate3d(0, 100%, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes igReelEnterPrevious { from { transform: translate3d(0, -100%, 0); } to { transform: translate3d(0, 0, 0); } }
 @media (prefers-reduced-motion: reduce) {
   .mymy-ui .ig-reel-media { transition-duration: 1ms; }
 }
