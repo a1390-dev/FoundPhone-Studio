@@ -27,7 +27,7 @@ export default defineConfig(({ command }) => ({
         // Cache an icon only after it is actually requested by a visible screen.
         runtimeCaching: [
           {
-            urlPattern: /\\/icon-assets\\/[^/]+\\.(?:png|jpe?g|svg)$/i,
+            urlPattern: /icon-assets/,
             handler: "CacheFirst",
             options: {
               cacheName: "foundphone-app-icons",
