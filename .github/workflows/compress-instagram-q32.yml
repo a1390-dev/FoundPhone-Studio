@@ -1,0 +1,62 @@
+name: Compress Instagram images quality 32
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/compress-instagram-q32.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save sharp
+      - name: Compress 21 Instagram images to JPEG quality 32
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const sharp = require('sharp');
+          const files = [
+            ...Array.from({length:7}, (_,i)=>`public/media/instagram/post-01/slide-${String(i+1).padStart(2,'0')}.jpg`),
+            ...Array.from({length:4}, (_,i)=>`public/media/instagram/post-03/slide-${String(i+1).padStart(2,'0')}.jpg`),
+            ...Array.from({length:6}, (_,i)=>`public/media/instagram/post-04/slide-${String(i+1).padStart(2,'0')}.jpg`),
+            ...Array.from({length:4}, (_,i)=>`public/media/instagram/slide-${String(i+1).padStart(2,'0')}.jpg`)
+          ];
+          (async()=>{
+            let before=0, after=0;
+            for (const file of files) {
+              if (!fs.existsSync(file)) throw new Error('Missing image: '+file);
+              const input=fs.readFileSync(file);
+              const output=await sharp(input).jpeg({quality:32, mozjpeg:true, progressive:true}).toBuffer();
+              before += input.length;
+              // Always apply quality 32 output, even if marginally larger, as explicitly requested.
+              fs.writeFileSync(file, output);
+              after += output.length;
+              console.log(file+': '+input.length+' -> '+output.length);
+            }
+            console.log(`TOTAL: ${before} -> ${after} bytes; ${files.length} images`);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Update image cache version
+        run: |
+          sed -i 's/20261027-q46/20261027-q32/g' src/vendor/mymy/Apps.tsx
+      - name: Commit compressed assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/instagram src/vendor/mymy/Apps.tsx
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Compress 21 Instagram images to JPEG quality 32"
+            git push origin main
+          fi
