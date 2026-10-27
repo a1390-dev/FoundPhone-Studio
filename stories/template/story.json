@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "仅用于界面测试，不含剧情",
-  "revision": 6,
+  "revision": 7,
   "phone": {
     "owner": "机主",
     "date": "2026-10-25",
@@ -388,11 +388,94 @@
       ],
       "messages": [
         {
-          "id": "kakao-liu-zhimin-hello",
-          "body": "在吗？",
+          "id": "kakao-liu-zhimin-conversation-1",
+          "body": "你今天是不是又忙到很晚？",
           "senderId": "liu-zhimin",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-2",
+          "body": "还好，刚结束行程。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-3",
+          "body": "那你回去先吃点东西。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-4",
+          "body": "知道啦，你也别熬夜。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-5",
+          "body": "我刚看到一家新开的甜品店。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-6",
+          "body": "哪一家？下次一起去。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-7",
+          "body": "我把照片发你，装修很漂亮。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-8",
+          "body": "看到了，感觉你会喜欢那里的蛋糕。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-9",
+          "body": "那就约周末？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-10",
+          "body": "周六下午可以。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-11",
+          "body": "我先看看天气再定。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-12",
+          "body": "好呀，别临时放我鸽子。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-13",
+          "body": "不会的，我记着呢。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-14",
+          "body": "那我先去洗漱了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "kakao-liu-zhimin-conversation-15",
+          "body": "晚安，明天再聊。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -406,11 +489,94 @@
       ],
       "messages": [
         {
-          "id": "kakao-u-nae-ri-hello",
-          "body": "在吗？",
+          "id": "kakao-u-nae-ri-conversation-1",
+          "body": "你看今天那个视频了吗？",
           "senderId": "u-nae-ri",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-2",
+          "body": "看了，真的很好笑。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-3",
+          "body": "我反复看了好几遍。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-4",
+          "body": "那个表情太有梗了。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-5",
+          "body": "你最近有在听什么歌吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-6",
+          "body": "我最近一直循环一首轻快的歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-7",
+          "body": "发给我，我等下听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-8",
+          "body": "已经发啦，副歌很容易记住。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-9",
+          "body": "听完了！很适合开车的时候听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-10",
+          "body": "对吧，心情会变好。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-11",
+          "body": "下次一起去唱歌怎么样？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-12",
+          "body": "可以，我负责点歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-13",
+          "body": "那我负责找一家好吃的店。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-14",
+          "body": "说定了，别忘记哦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "kakao-u-nae-ri-conversation-15",
+          "body": "我怎么会忘，等你安排。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -444,11 +610,94 @@
       ],
       "messages": [
         {
-          "id": "kakao-ning-yizhuo-hello",
-          "body": "在吗？",
+          "id": "kakao-ning-yizhuo-conversation-1",
+          "body": "我刚刚发现一家很不错的咖啡店。",
           "senderId": "ning-yizhuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-2",
+          "body": "在哪儿？离我们近吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-3",
+          "body": "在地铁站旁边，走几分钟就到。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-4",
+          "body": "那听起来不错，环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-5",
+          "body": "有落地窗，下午的光应该很好看。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-6",
+          "body": "你拍照给我看看。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-7",
+          "body": "给你发了，桌子也很宽敞。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-8",
+          "body": "看起来适合坐一下午。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-9",
+          "body": "要不找天去那里写东西？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-10",
+          "body": "好啊，我带电脑，你带耳机。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-11",
+          "body": "附近好像还有一家面包店。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-12",
+          "body": "那我们可以顺便买点吃的。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-13",
+          "body": "我已经开始期待了。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-14",
+          "body": "我查一下这周哪天有空。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "kakao-ning-yizhuo-conversation-15",
+          "body": "好，确定时间再告诉我。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1083,11 +1332,94 @@
       ],
       "messages": [
         {
-          "id": "wechat-liu-zhimin-hello",
-          "body": "在吗？",
+          "id": "wechat-liu-zhimin-conversation-1",
+          "body": "你今天是不是又忙到很晚？",
           "senderId": "liu-zhimin",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-2",
+          "body": "还好，刚结束行程。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-3",
+          "body": "那你回去先吃点东西。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-4",
+          "body": "知道啦，你也别熬夜。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-5",
+          "body": "我刚看到一家新开的甜品店。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-6",
+          "body": "哪一家？下次一起去。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-7",
+          "body": "我把照片发你，装修很漂亮。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-8",
+          "body": "看到了，感觉你会喜欢那里的蛋糕。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-9",
+          "body": "那就约周末？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-10",
+          "body": "周六下午可以。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-11",
+          "body": "我先看看天气再定。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-12",
+          "body": "好呀，别临时放我鸽子。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-13",
+          "body": "不会的，我记着呢。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-14",
+          "body": "那我先去洗漱了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "wechat-liu-zhimin-conversation-15",
+          "body": "晚安，明天再聊。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1101,11 +1433,94 @@
       ],
       "messages": [
         {
-          "id": "wechat-u-nae-ri-hello",
-          "body": "在吗？",
+          "id": "wechat-u-nae-ri-conversation-1",
+          "body": "你看今天那个视频了吗？",
           "senderId": "u-nae-ri",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-2",
+          "body": "看了，真的很好笑。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-3",
+          "body": "我反复看了好几遍。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-4",
+          "body": "那个表情太有梗了。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-5",
+          "body": "你最近有在听什么歌吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-6",
+          "body": "我最近一直循环一首轻快的歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-7",
+          "body": "发给我，我等下听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-8",
+          "body": "已经发啦，副歌很容易记住。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-9",
+          "body": "听完了！很适合开车的时候听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-10",
+          "body": "对吧，心情会变好。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-11",
+          "body": "下次一起去唱歌怎么样？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-12",
+          "body": "可以，我负责点歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-13",
+          "body": "那我负责找一家好吃的店。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-14",
+          "body": "说定了，别忘记哦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "wechat-u-nae-ri-conversation-15",
+          "body": "我怎么会忘，等你安排。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1139,11 +1554,94 @@
       ],
       "messages": [
         {
-          "id": "wechat-ning-yizhuo-hello",
-          "body": "在吗？",
+          "id": "wechat-ning-yizhuo-conversation-1",
+          "body": "我刚刚发现一家很不错的咖啡店。",
           "senderId": "ning-yizhuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-2",
+          "body": "在哪儿？离我们近吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-3",
+          "body": "在地铁站旁边，走几分钟就到。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-4",
+          "body": "那听起来不错，环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-5",
+          "body": "有落地窗，下午的光应该很好看。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-6",
+          "body": "你拍照给我看看。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-7",
+          "body": "给你发了，桌子也很宽敞。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-8",
+          "body": "看起来适合坐一下午。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-9",
+          "body": "要不找天去那里写东西？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-10",
+          "body": "好啊，我带电脑，你带耳机。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-11",
+          "body": "附近好像还有一家面包店。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-12",
+          "body": "那我们可以顺便买点吃的。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-13",
+          "body": "我已经开始期待了。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-14",
+          "body": "我查一下这周哪天有空。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "wechat-ning-yizhuo-conversation-15",
+          "body": "好，确定时间再告诉我。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1778,11 +2276,94 @@
       ],
       "messages": [
         {
-          "id": "line-liu-zhimin-hello",
-          "body": "在吗？",
+          "id": "line-liu-zhimin-conversation-1",
+          "body": "你今天是不是又忙到很晚？",
           "senderId": "liu-zhimin",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-2",
+          "body": "还好，刚结束行程。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-3",
+          "body": "那你回去先吃点东西。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-4",
+          "body": "知道啦，你也别熬夜。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-5",
+          "body": "我刚看到一家新开的甜品店。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-6",
+          "body": "哪一家？下次一起去。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-7",
+          "body": "我把照片发你，装修很漂亮。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-8",
+          "body": "看到了，感觉你会喜欢那里的蛋糕。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-9",
+          "body": "那就约周末？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-10",
+          "body": "周六下午可以。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-11",
+          "body": "我先看看天气再定。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-12",
+          "body": "好呀，别临时放我鸽子。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-13",
+          "body": "不会的，我记着呢。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-14",
+          "body": "那我先去洗漱了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "line-liu-zhimin-conversation-15",
+          "body": "晚安，明天再聊。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1796,11 +2377,94 @@
       ],
       "messages": [
         {
-          "id": "line-u-nae-ri-hello",
-          "body": "在吗？",
+          "id": "line-u-nae-ri-conversation-1",
+          "body": "你看今天那个视频了吗？",
           "senderId": "u-nae-ri",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-2",
+          "body": "看了，真的很好笑。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-3",
+          "body": "我反复看了好几遍。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-4",
+          "body": "那个表情太有梗了。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-5",
+          "body": "你最近有在听什么歌吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-6",
+          "body": "我最近一直循环一首轻快的歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-7",
+          "body": "发给我，我等下听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-8",
+          "body": "已经发啦，副歌很容易记住。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-9",
+          "body": "听完了！很适合开车的时候听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-10",
+          "body": "对吧，心情会变好。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-11",
+          "body": "下次一起去唱歌怎么样？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-12",
+          "body": "可以，我负责点歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-13",
+          "body": "那我负责找一家好吃的店。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-14",
+          "body": "说定了，别忘记哦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "line-u-nae-ri-conversation-15",
+          "body": "我怎么会忘，等你安排。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -1834,11 +2498,94 @@
       ],
       "messages": [
         {
-          "id": "line-ning-yizhuo-hello",
-          "body": "在吗？",
+          "id": "line-ning-yizhuo-conversation-1",
+          "body": "我刚刚发现一家很不错的咖啡店。",
           "senderId": "ning-yizhuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-2",
+          "body": "在哪儿？离我们近吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-3",
+          "body": "在地铁站旁边，走几分钟就到。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-4",
+          "body": "那听起来不错，环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-5",
+          "body": "有落地窗，下午的光应该很好看。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-6",
+          "body": "你拍照给我看看。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-7",
+          "body": "给你发了，桌子也很宽敞。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-8",
+          "body": "看起来适合坐一下午。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-9",
+          "body": "要不找天去那里写东西？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-10",
+          "body": "好啊，我带电脑，你带耳机。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-11",
+          "body": "附近好像还有一家面包店。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-12",
+          "body": "那我们可以顺便买点吃的。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-13",
+          "body": "我已经开始期待了。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-14",
+          "body": "我查一下这周哪天有空。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "line-ning-yizhuo-conversation-15",
+          "body": "好，确定时间再告诉我。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -2473,11 +3220,94 @@
       ],
       "messages": [
         {
-          "id": "qq-liu-zhimin-hello",
-          "body": "在吗？",
+          "id": "qq-liu-zhimin-conversation-1",
+          "body": "你今天是不是又忙到很晚？",
           "senderId": "liu-zhimin",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-2",
+          "body": "还好，刚结束行程。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-3",
+          "body": "那你回去先吃点东西。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-4",
+          "body": "知道啦，你也别熬夜。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-5",
+          "body": "我刚看到一家新开的甜品店。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-6",
+          "body": "哪一家？下次一起去。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-7",
+          "body": "我把照片发你，装修很漂亮。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-8",
+          "body": "看到了，感觉你会喜欢那里的蛋糕。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-9",
+          "body": "那就约周末？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-10",
+          "body": "周六下午可以。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-11",
+          "body": "我先看看天气再定。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-12",
+          "body": "好呀，别临时放我鸽子。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-13",
+          "body": "不会的，我记着呢。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-14",
+          "body": "那我先去洗漱了。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "qq-liu-zhimin-conversation-15",
+          "body": "晚安，明天再聊。",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -2491,11 +3321,94 @@
       ],
       "messages": [
         {
-          "id": "qq-u-nae-ri-hello",
-          "body": "在吗？",
+          "id": "qq-u-nae-ri-conversation-1",
+          "body": "你看今天那个视频了吗？",
           "senderId": "u-nae-ri",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-2",
+          "body": "看了，真的很好笑。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-3",
+          "body": "我反复看了好几遍。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-4",
+          "body": "那个表情太有梗了。",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-5",
+          "body": "你最近有在听什么歌吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-6",
+          "body": "我最近一直循环一首轻快的歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-7",
+          "body": "发给我，我等下听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-8",
+          "body": "已经发啦，副歌很容易记住。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-9",
+          "body": "听完了！很适合开车的时候听。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-10",
+          "body": "对吧，心情会变好。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-11",
+          "body": "下次一起去唱歌怎么样？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-12",
+          "body": "可以，我负责点歌。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-13",
+          "body": "那我负责找一家好吃的店。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-14",
+          "body": "说定了，别忘记哦。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "qq-u-nae-ri-conversation-15",
+          "body": "我怎么会忘，等你安排。",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
@@ -2529,11 +3442,94 @@
       ],
       "messages": [
         {
-          "id": "qq-ning-yizhuo-hello",
-          "body": "在吗？",
+          "id": "qq-ning-yizhuo-conversation-1",
+          "body": "我刚刚发现一家很不错的咖啡店。",
           "senderId": "ning-yizhuo",
-          "time": "2026-10-27 20:18",
-          "meta": {}
+          "time": "2026-10-27 15:11"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-2",
+          "body": "在哪儿？离我们近吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:18"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-3",
+          "body": "在地铁站旁边，走几分钟就到。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 15:25"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-4",
+          "body": "那听起来不错，环境怎么样？",
+          "senderId": "owner",
+          "time": "2026-10-27 15:32"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-5",
+          "body": "有落地窗，下午的光应该很好看。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:39"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-6",
+          "body": "你拍照给我看看。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:46"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-7",
+          "body": "给你发了，桌子也很宽敞。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 16:53"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-8",
+          "body": "看起来适合坐一下午。",
+          "senderId": "owner",
+          "time": "2026-10-27 16:00"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-9",
+          "body": "要不找天去那里写东西？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:07"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-10",
+          "body": "好啊，我带电脑，你带耳机。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:14"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-11",
+          "body": "附近好像还有一家面包店。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 17:21"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-12",
+          "body": "那我们可以顺便买点吃的。",
+          "senderId": "owner",
+          "time": "2026-10-27 17:28"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-13",
+          "body": "我已经开始期待了。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:35"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-14",
+          "body": "我查一下这周哪天有空。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:42"
+        },
+        {
+          "id": "qq-ning-yizhuo-conversation-15",
+          "body": "好，确定时间再告诉我。",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 18:49"
         }
       ]
     },
