@@ -229,7 +229,8 @@ export function DeliverySkin(p: Props) {
   const [savedAddresses, setSavedAddresses] = useState(["首尔特别市麻浦区杨花路 12号 101室", "首尔特别市城东区圣水一路 25号 302室"]);
   const [addressEditing, setAddressEditing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("KakaoPay");
-  const [orders, setOrders] = useState<Array<{id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; status:string; time:string}>>([]);
+  const [payer, setPayer] = useState("我自己");
+  const [orders, setOrders] = useState<Array<{id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; payer:string; status:string; time:string}>>([]);
   const [notice, setNotice] = useState("");
   const products = [...DELIVERY_PRODUCTS, ...DELIVERY_DRINKS, ...DELIVERY_GROCERIES, ...DELIVERY_EXTRAS];
   const visibleProducts = products.filter((item) =>
@@ -245,7 +246,7 @@ export function DeliverySkin(p: Props) {
   const checkout = () => {
     if (!cartItems.length) { setNotice("购物车还是空的，先选择菜品吧"); return; }
     if (!address.trim() || address.includes("请编辑")) { setAddressEditing(true); setNotice("请先填写配送地址"); return; }
-    setOrders(prev => [{id:"FD-"+Date.now().toString().slice(-6),items:cartItems,total,address,paymentMethod,status:"制作中",time:new Date().toLocaleString("zh-CN",{hour12:false})},...prev]);
+    setOrders(prev => [{id:"FD-"+Date.now().toString().slice(-6),items:cartItems,total,address,paymentMethod,payer,status:"制作中",time:new Date().toLocaleString("zh-CN",{hour12:false})},...prev]);
     setCart({});
     setTab("订单");
     setNotice("下单成功！这是模拟订单，不会真实扣款。");
@@ -289,6 +290,7 @@ export function DeliverySkin(p: Props) {
           <div style={{padding:12,background:"#faf7ec",borderRadius:12,marginTop:12}}>
             <strong style={{display:"block",marginBottom:8}}>配送地址</strong>
             <select aria-label="结账配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{width:"100%",padding:10,borderRadius:10,border:"1px solid #e3d69f",background:"#fff"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>
+            <strong style={{display:"block",margin:"14px 0 8px"}}>选择付款人</strong><select aria-label="选择付款人" value={payer} onChange={e=>setPayer(e.target.value)} style={{width:"100%",padding:10,borderRadius:10,border:"1px solid #e3d69f",background:"#fff",marginBottom:12}}>{["我自己","家人代付","朋友代付"].map(person=><option key={person} value={person}>{person}</option>)}</select>
             <strong style={{display:"block",margin:"14px 0 8px"}}>选择付款方式</strong>
             <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8}}>{["KakaoPay","Naver Pay","信用卡","货到付款"].map(method=><button key={method} onClick={()=>setPaymentMethod(method)} style={{padding:10,borderRadius:10,border:paymentMethod===method?"2px solid #b99a30":"1px solid #ddd",background:paymentMethod===method?"#fff0b5":"#fff",fontWeight:paymentMethod===method?700:400}}>{paymentMethod===method?"✓ ":""}{method}</button>)}</div>
             <p>商品金额 <b style={{float:"right"}}>{money(subtotal)}</b></p><p>配送费 <b style={{float:"right"}}>{deliveryFee ? money(deliveryFee) : "免配送费"}</b></p><p>合计 <b style={{float:"right",color:"#8c6d00"}}>{money(total)}</b></p><small style={{color:"#888"}}>满 ₩30,000 免配送费 · 模拟付款，不会真实扣款</small><button onClick={checkout} style={{width:"100%",padding:13,marginTop:12,border:0,borderRadius:12,background:"#f5dc7d",fontWeight:700}}>提交订单 · {money(total)}</button>
@@ -299,7 +301,7 @@ export function DeliverySkin(p: Props) {
             <div style={{display:"flex",justifyContent:"space-between",gap:8}}><strong>订单 {order.id}</strong><b style={{color:"#8c6d00"}}>{order.status}</b></div>
             <small style={{display:"block",color:"#888",marginTop:4}}>{order.time}</small>
             {order.items.map(({product,qty})=><p key={product.id} style={{margin:"8px 0"}}>{product.emoji} {product.name} × {qty} <span style={{float:"right"}}>{money(product.price*qty)}</span></p>)}
-            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
+            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款人：{order.payer}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
           </article>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>还没有订单</p>}
         </div>}
       </div>
