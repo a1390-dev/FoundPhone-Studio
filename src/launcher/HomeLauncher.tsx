@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode, type PointerEvent } from "react";
+import { useMemo, useRef, useState, type ReactNode, type PointerEvent } from "react";
 import {
   Search,
   Plus,
@@ -153,10 +153,13 @@ export function HomeLauncher(p: Props) {
       started: number;
       active: boolean;
     } | null>(null);
-  const pages = packHome(homeEntries(p.layout), p.layout.positions),
+  const packedPages = useMemo(
+      () => packHome(homeEntries(p.layout), p.layout.positions),
+      [p.layout],
+    ),
+    pages = editing && packedPages.length < 20 ? [...packedPages, []] : packedPages,
     apps = p.layout.apps,
     active = apps.find((a) => a.id === selected);
-  if (editing && pages.length < 20) pages.push([]);
   const beginSwipe = (e: PointerEvent<HTMLDivElement>) => {
     if (
       editing ||
@@ -524,7 +527,7 @@ export function HomeLauncher(p: Props) {
       className={
         "home-screen interactive-home " + (editing ? "home-editing" : "")
       }
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       onPointerDownCapture={beginSwipe}
       onPointerMoveCapture={moveSwipe}
@@ -581,7 +584,7 @@ export function HomeLauncher(p: Props) {
                   gridRow: `${y + 1} / span ${h}`,
                 }}
               >
-                {cell(entry)}
+                {Math.abs(n - page) <= 1 ? cell(entry) : null}
               </div>
             ))}
           </div>
