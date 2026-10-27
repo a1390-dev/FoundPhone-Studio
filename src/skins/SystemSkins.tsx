@@ -732,11 +732,12 @@ export function MusicSkin(p: Props) {
   const [progress, setProgress] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const currentId = song ? meta(song, "appleTrackId") : "";
+  const trackIds = items.map((i) => meta(i, "appleTrackId")).filter(Boolean).join(",");
   useEffect(() => {
     let alive = true;
-    const ids = items.map((i) => meta(i, "appleTrackId")).filter(Boolean);
-    if (!ids.length) return;
-    fetch("https://itunes.apple.com/lookup?id=" + ids.join(",") + "&entity=song&country=cn")
+    const ids = trackIds;
+    if (!ids) return;
+    fetch("https://itunes.apple.com/lookup?id=" + ids + "&entity=song&country=cn")
       .then((r) => r.ok ? r.json() : Promise.reject(new Error("lookup failed")))
       .then((data: { results?: Array<{ trackId?: number; previewUrl?: string; artworkUrl100?: string; collectionName?: string; trackTimeMillis?: number }> }) => {
         if (!alive) return;
@@ -748,7 +749,7 @@ export function MusicSkin(p: Props) {
       })
       .catch(() => {});
     return () => { alive = false; };
-  }, [items]);
+  }, [trackIds]);
   useEffect(() => {
     setPlaying(false);
     setProgress(0);
