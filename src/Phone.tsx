@@ -254,54 +254,32 @@ function PhoneRuntime({
   }, [own, creator, work.id, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    let cancelled = false;
+    const interval = setInterval(() => {
+      const previous = runtimeRef.current;
+      const next = advance(work, previous, 1000);
+      runtimeRef.current = next;
 
-    const scheduleNextTick = () => {
-      if (cancelled) return;
-      const current = runtimeRef.current;
-      const untilMinute = Math.max(1, 60000 - (current.clockRemainderMs ?? 0));
-      const dueTimes =
-        work.mode === "explore"
-          ? []
-          : (current.scheduled ?? []).map((entry) => entry.due - (current.elapsedMs ?? 0));
-      const nextDue = dueTimes.length ? Math.max(1, Math.min(...dueTimes)) : Number.POSITIVE_INFINITY;
-      const wait = Math.max(1, Math.min(untilMinute, nextDue));
+      const changed =
+        next.time !== previous.time ||
+        next.trace.join() !== previous.trace.join() ||
+        (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
 
-      timer = setTimeout(() => {
-        if (cancelled) return;
-        const previous = runtimeRef.current;
-        const next = advance(work, previous, wait);
-        runtimeRef.current = next;
-
-        const changed =
-          next.time !== previous.time ||
-          next.trace.join() !== previous.trace.join() ||
-          (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
-
-        if (changed) {
-          update(next);
-        } else if (
-          work.mode !== "explore" &&
-          (next.scheduled?.length ?? 0) > 0 &&
-          Math.floor((next.elapsedMs ?? 0) / 5000) !==
-            Math.floor((previous.elapsedMs ?? 0) / 5000)
-        ) {
-          // Checkpoint pending timer progress without rerendering the phone or saving every second.
-          void db.saves
-            .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
-            .catch(() => {});
-        }
-        scheduleNextTick();
-      }, wait);
-    };
-
-    scheduleNextTick();
-    return () => {
-      cancelled = true;
-      if (timer !== undefined) clearTimeout(timer);
-    };
-  }, [creator, ready, work.id, work.updatedAt, work.mode, own.scheduled]);
+      if (changed) {
+        update(next);
+      } else if (
+        work.mode !== "explore" &&
+        (next.scheduled?.length ?? 0) > 0 &&
+        Math.floor((next.elapsedMs ?? 0) / 5000) !==
+          Math.floor((previous.elapsedMs ?? 0) / 5000)
+      ) {
+        // Preserve timer progress without forcing a full phone rerender every second.
+        void db.saves
+          .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
+          .catch(() => {});
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [creator, ready, work.id, work.updatedAt, work.mode]);
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, runtimeRef.current, event, target));
   };
