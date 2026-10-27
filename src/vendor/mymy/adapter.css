@@ -177,21 +177,22 @@
   padding: 3px 14px 12px;
 }
 .mymy-ui .carw {
-  min-height: 240px;
-  background: #f2f2f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 0;
+  background: #fff;
+  display: block;
+  width: 100%;
+  overflow: hidden;
 }
 .mymy-ui .carw .catalog-media {
   width: 100%;
   margin: 0;
 }
 .mymy-ui .carw img {
-  width: 100%;
-  max-height: 490px;
-  object-fit: cover;
   display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
 }
 .mymy-ui .carw .media-placeholder {
   min-height: 240px;
@@ -627,4 +628,28 @@
 .x-detail-bottom svg {
   width: 25px;
   height: 25px;
+}
+
+.mymy-ui .iga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 8px 14px 4px;
+}
+.mymy-ui .iga .ig-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  white-space: nowrap;
+}
+.mymy-ui .iga .ig-action b {
+  font-size: 12px;
+  font-weight: 650;
+}
+.mymy-ui .iga > button {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
 }
