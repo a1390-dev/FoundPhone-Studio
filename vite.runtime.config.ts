@@ -21,9 +21,20 @@ export default defineConfig(({ command }) => ({
       workbox: {
         clientsClaim: true,
         globPatterns: ["**/*.{js,css,html,svg,json,txt,png,jpg}"],
-        // Media is loaded on demand; precaching every image competes with video streaming
-        // and slows first launch on mobile connections.
-        globIgnores: ["**/media/**"],
+        // Media and app icons should load on demand instead of competing with the
+        // app shell during first launch on mobile connections.
+        globIgnores: ["**/media/**", "**/icon-assets/**"],
+        // Cache an icon only after it is actually requested by a visible screen.
+        runtimeCaching: [
+          {
+            urlPattern: /\\/icon-assets\\/[^/]+\\.(?:png|jpe?g|svg)$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "foundphone-app-icons",
+              expiration: { maxEntries: 60, maxAgeSeconds: 31536000 },
+            },
+          },
+        ],
         maximumFileSizeToCacheInBytes: 4000000,
       },
     }),
