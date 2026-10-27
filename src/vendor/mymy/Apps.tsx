@@ -325,24 +325,18 @@ export function MymyInstagram(p: SkinProps) {
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
-    [pendingReelIndex, setPendingReelIndex] = useState<number | null>(null),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
-    [playing, setPlaying] = useState(true),
-    [reelSessionKey, setReelSessionKey] = useState(0);
+    [playing, setPlaying] = useState(true);
   const reelStageRef = useRef<HTMLDivElement | null>(null);
   const lastReelSwipeAt = useRef(0);
   const lastReelNavigationAt = useRef(0);
-  const previousReelTab = useRef(tab);
-  const justEnteredReels = useRef(false);
-  const reelPlayAttempt = useRef(0);
   const reelRecoveryCount = useRef<Record<string, number>>({});
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
   const [thirdCarouselIndex, setThirdCarouselIndex] = useState(0);
   const [fourthCarouselIndex, setFourthCarouselIndex] = useState(0);
-  const [leavingReelIndex, setLeavingReelIndex] = useState<number | null>(null);
   const [reelSwipeDirection, setReelSwipeDirection] = useState<"next" | "previous">("next");
   const carouselTouchStart = useRef<number | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
@@ -432,13 +426,6 @@ export function MymyInstagram(p: SkinProps) {
     body: "",
   })) : [];
   const reel = reels[reelIndex];
-  const preloadReel = leavingReelIndex !== null ? undefined : pendingReelIndex !== null ? reels[pendingReelIndex] : reelIndex < reels.length - 1 ? reels[reelIndex + 1] : reelIndex > 0 ? reels[reelIndex - 1] : undefined;
-  const leavingReel = leavingReelIndex !== null ? reels[leavingReelIndex] : undefined;
-  const reelMediaItems = [
-    reel,
-    ...(leavingReel && leavingReel.id !== reel?.id ? [leavingReel] : []),
-    ...(preloadReel && preloadReel.id !== reel?.id && preloadReel.id !== leavingReel?.id ? [preloadReel] : []),
-  ].filter((item): item is Item => item !== undefined);
   const reelCounts = (id: string) => {
     const index = Math.max(0, Number(id.split("-").pop()) - 1);
     const counts = [
@@ -452,125 +439,46 @@ export function MymyInstagram(p: SkinProps) {
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   const formatIgCount = (n: number) => n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "万" : n.toLocaleString("en-US");
   const attemptReelPlayback = (video: HTMLVideoElement) => {
-    // Explicitly set iOS inline/muted state before play().
+    // iPhone Safari is most reliable with inline muted playback set before play().
     video.playsInline = true;
-    if (muted) video.muted = true;
-    const attempt = ++reelPlayAttempt.current;
+    video.muted = muted;
     try {
-      const playRequest = video.play();
-      if (playRequest && typeof playRequest.catch === "function") {
-        playRequest.catch((error: unknown) => {
-          // Safari may reject an older play request with AbortError when load()/tab switches race.
-          // That is not a user pause, so never turn the whole Reel into a paused state for it.
-          if (error && typeof error === "object" && "name" in error && error.name === "AbortError") return;
-          if (attempt !== reelPlayAttempt.current || tab !== "Reels") return;
-          // Do not translate an autoplay denial into a persistent paused UI state.
-          // A later loadeddata/canplay event, or re-entry to Reels, will retry play().
+      const result = video.play();
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {
+          // Keep the player ready to retry on loadeddata/canplay or an explicit tap.
         });
       }
     } catch {
-      // Playback can be retried on loadeddata/canplay; do not leave the player stuck on a false pause.
+      // A media readiness event or an explicit tap can retry playback.
     }
   };
-  const finishReelSwitch = (nextIndex: number) => {
-    if (nextIndex < 0 || nextIndex >= reels.length) return;
-    const stage = reelStageRef.current;
-    const targetId = reels[nextIndex].id;
-    if (stage) {
-      stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
-        // Keep the outgoing active video alive until its slide-out transition finishes.
-        if (video.dataset.reelId !== targetId && video.dataset.reelId !== reels[reelIndex]?.id) video.pause();
-      });
-      delete stage.dataset.pendingIndex;
-    }
-    setPendingReelIndex(null);
-    setLeavingReelIndex(reelIndex);
-    setReelSwipeDirection(nextIndex > reelIndex ? "next" : "previous");
-    setReelIndex(nextIndex);
-    setPlaying(true);
-  };
+
   const requestReel = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
     const now = Date.now();
     if (now - lastReelNavigationAt.current < 280) return;
     lastReelNavigationAt.current = now;
-    // Switch immediately; waiting for a hidden video's readyState can trap Safari in
-    // a pending state forever and block both upward and downward swipes.
-    finishReelSwitch(nextIndex);
+    setReelSwipeDirection(nextIndex > reelIndex ? "next" : "previous");
+    setPlaying(true);
+    setReelIndex(nextIndex);
   };
-  useEffect(() => {
-    const previous = previousReelTab.current;
-    previousReelTab.current = tab;
-    if (tab === "Reels" && previous !== "Reels") {
-      // Re-entering Reels must not inherit a stale pending slide or stale paused state.
-      justEnteredReels.current = true;
-      setReelSessionKey((key) => key + 1);
-      setPendingReelIndex(null);
-      setLeavingReelIndex(null);
-      setPlaying(true);
-      const stage = reelStageRef.current;
-      if (stage) {
-        delete stage.dataset.pendingIndex;
-        stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
-          video.pause();
-          if (video.dataset.reelId !== reel?.id) {
-            // Keep the React-managed src intact; only pause inactive videos.
-          }
-        });
-        const activeVideo = stage.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel?.id}"]`);
-        if (activeVideo) {
-          activeVideo.muted = true;
-          activeVideo.playsInline = true;
-          if (activeVideo.networkState === 0) activeVideo.load();
-        }
-      }
-    }
-    if (previous === "Reels" && tab !== "Reels") {
-      // A later visit starts from a clean transition state.
-      setPendingReelIndex(null);
-      setLeavingReelIndex(null);
-    }
-  }, [tab]);
 
+  // Only one current video exists. Switching tabs unmounts it; entering Reels
+  // creates a fresh video element rather than reusing stale Safari decoders.
   useEffect(() => {
     if (tab !== "Reels" || !reel) return;
-    const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel.id}"]`);
-    if (!activeVideo) return;
-    activeVideo.muted = muted;
-    activeVideo.playsInline = true;
-    if (playing) {
-      justEnteredReels.current = false;
-      attemptReelPlayback(activeVideo);
-    } else if (justEnteredReels.current) {
-      // The tab-entry effect is already changing playing back to true; do not race it with pause().
-      justEnteredReels.current = false;
-    } else {
-      activeVideo.pause();
-    }
+    const video = reelStageRef.current?.querySelector<HTMLVideoElement>("video[data-reel-id]");
+    if (!video) return;
+    video.playsInline = true;
+    video.muted = muted;
+    if (playing) attemptReelPlayback(video);
+    else video.pause();
+    return () => {
+      video.pause();
+    };
   }, [reelIndex, tab, muted, playing, reel?.id]);
 
-  // A preloaded video can fire canplay just before the swipe sets pendingReelIndex.
-  // Re-check readiness after React commits the pending target so upward swipes cannot get stuck.
-  useEffect(() => {
-    if (tab !== "Reels" || pendingReelIndex === null) return;
-    const stage = reelStageRef.current;
-    const targetItem = reels[pendingReelIndex];
-    if (!stage || !targetItem) return;
-    const targetVideo = stage.querySelector<HTMLVideoElement>(
-      'video[data-reel-id="' + targetItem.id + '"]',
-    );
-    if (!targetVideo) return;
-    if (targetVideo.readyState >= 2) {
-      finishReelSwitch(pendingReelIndex);
-      return;
-    }
-    // Keep the pending/off-screen reel buffered but do not call play() until it is active.
-    // A rejected hidden-video play() promise can race with the active index switch.
-    targetVideo.muted = true;
-    targetVideo.playsInline = true;
-    targetVideo.preload = "auto";
-    if (targetVideo.networkState === 0) targetVideo.load();
-  }, [pendingReelIndex, reelIndex, tab, reels.length]);
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(
@@ -853,52 +761,43 @@ export function MymyInstagram(p: SkinProps) {
                 <>
                   {reel.kind === "video" ? (
                     <div className="ig-reel-video-stage" ref={reelStageRef}>
-                      {reelMediaItems.map((item) => {
-                        const activeVideo = item.id === reel.id;
-                        const finishIfPending = (video: HTMLVideoElement) => {
-                          if (video.readyState < 2) return;
-                          const stage = reelStageRef.current;
-                          const targetIndex = reels.findIndex((candidate) => candidate.id === item.id);
-                          if (stage && Number(stage.dataset.pendingIndex) === targetIndex) {
-                            finishReelSwitch(targetIndex);
+                      <video
+                        key={reel.id}
+                        data-reel-id={reel.id}
+                        className={"ig-reel-media ig-reel-video-active " + (reelSwipeDirection === "next" ? "ig-reel-enter-next" : "ig-reel-enter-previous")}
+                        src={reel.media}
+                        autoPlay={playing}
+                        muted={muted}
+                        playsInline
+                        preload="auto"
+                        onLoadedData={(e) => { if (tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }}
+                        onCanPlay={(e) => { if (tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }}
+                        onEnded={() => setPlaying(false)}
+                        onError={(e) => {
+                          const failedVideo = e.currentTarget;
+                          const attempts = reelRecoveryCount.current[reel.id] ?? 0;
+                          if (attempts < 1 && tab === "Reels") {
+                            reelRecoveryCount.current[reel.id] = attempts + 1;
+                            window.setTimeout(() => {
+                              if (reelStageRef.current?.querySelector("video[data-reel-id]") === failedVideo && tab === "Reels") {
+                                failedVideo.load();
+                                if (playing) attemptReelPlayback(failedVideo);
+                              }
+                            }, 250);
                           }
-                        };
-                        const itemIndex = reels.findIndex((candidate) => candidate.id === item.id);
-                        const isLeavingVideo = !activeVideo && item.id === leavingReel?.id;
-                        const preloadPosition = itemIndex > reelIndex ? "ig-reel-video-next" : "ig-reel-video-previous";
-                        const videoPositionClass = activeVideo ? "ig-reel-video-active" : isLeavingVideo ? "ig-reel-video-exiting-" + (reelSwipeDirection === "next" ? "up" : "down") : "ig-reel-video-preload " + preloadPosition;
-                        return <video key={item.id + "-" + reelSessionKey} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload={activeVideo || isLeavingVideo ? "auto" : "metadata"} onLoadedData={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onCanPlay={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
-                          const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
-                          const stage = reelStageRef.current;
-                          if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
-                            delete stage.dataset.pendingIndex;
-                            setPendingReelIndex(null);
-                          }
-                          if (activeVideo) {
-                            const failedVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${item.id}"]`);
-                            const tries = reelRecoveryCount.current[item.id] ?? 0;
-                            if (failedVideo && tries < 1 && tab === "Reels") {
-                              reelRecoveryCount.current[item.id] = tries + 1;
-                              window.setTimeout(() => {
-                                const currentActive = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
-                                if (currentActive === failedVideo && tab === "Reels") {
-                                  failedVideo.load();
-                                  if (playing) attemptReelPlayback(failedVideo);
-                                }
-                              }, 180);
-                            } else {
-                              // Keep Reels mounted after a transient Safari decode/network error.
-                              // Re-entry and media readiness events can recover playback.
-                              setPlaying(true);
-                            }
-                          }
-                        }} onClick={activeVideo ? (e) => {
-                          // iOS can synthesize a click after a swipe changes the active video.
+                        }}
+                        onClick={(e) => {
                           if (Date.now() - lastReelSwipeAt.current < 450) return;
-                          const v = e.currentTarget;
-                          if (v.paused) { setPlaying(true); attemptReelPlayback(v); } else { v.pause(); setPlaying(false); }
-                        } : undefined} />;
-                      })}
+                          const video = e.currentTarget;
+                          if (video.paused) {
+                            setPlaying(true);
+                            attemptReelPlayback(video);
+                          } else {
+                            video.pause();
+                            setPlaying(false);
+                          }
+                        }}
+                      />
                     </div>
                   ) : <Media item={reel} className="ig-reel-media" />}
                   <div className="ig-reel-top">
