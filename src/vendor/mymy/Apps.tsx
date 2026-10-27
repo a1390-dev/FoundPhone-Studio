@@ -892,9 +892,10 @@ export function MymyInstagram(p: SkinProps) {
                   <Bookmark size={27} />
                 </span>
               </div>
-              {posts
-                .filter((i) => (i.title + i.body + i.sender).includes(draft))
-                .map(post)}
+              {draft.trim() ? posts
+                .filter((i) => (i.title + i.body + i.sender).toLowerCase().includes(draft.trim().toLowerCase()))
+                .slice(0, 12)
+                .map(post) : null}
             </>
           )}
         </div>
