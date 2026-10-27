@@ -333,6 +333,9 @@ export function MymyInstagram(p: SkinProps) {
   const reelStageRef = useRef<HTMLDivElement | null>(null);
   const lastReelSwipeAt = useRef(0);
   const lastReelNavigationAt = useRef(0);
+  const previousReelTab = useRef(tab);
+  const reelPlayAttempt = useRef(0);
+  const reelRecoveryCount = useRef<Record<string, number>>({});
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
   const [thirdCarouselIndex, setThirdCarouselIndex] = useState(0);
@@ -447,12 +450,26 @@ export function MymyInstagram(p: SkinProps) {
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   const formatIgCount = (n: number) => n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "万" : n.toLocaleString("en-US");
   const attemptReelPlayback = (video: HTMLVideoElement) => {
-    const playRequest = video.play();
-    if (playRequest && typeof playRequest.catch === "function") {
-      playRequest.catch(() => {
-        const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
-        if (activeVideo === video) setPlaying(false);
-      });
+    // Explicitly set iOS inline/muted state before play().
+    video.playsInline = true;
+    if (muted) video.muted = true;
+    const attempt = ++reelPlayAttempt.current;
+    try {
+      const playRequest = video.play();
+      if (playRequest && typeof playRequest.catch === "function") {
+        playRequest.catch((error: unknown) => {
+          // Safari may reject an older play request with AbortError when load()/tab switches race.
+          // That is not a user pause, so never turn the whole Reel into a paused state for it.
+          if (error && typeof error === "object" && "name" in error && error.name === "AbortError") return;
+          if (attempt !== reelPlayAttempt.current || tab !== "Reels") return;
+          const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
+          if (activeVideo === video && error && typeof error === "object" && "name" in error && error.name === "NotAllowedError") {
+            setPlaying(false);
+          }
+        });
+      }
+    } catch {
+      // Playback can be retried on loadeddata/canplay; do not leave the player stuck on a false pause.
     }
   };
   const finishReelSwitch = (nextIndex: number) => {
@@ -497,10 +514,41 @@ export function MymyInstagram(p: SkinProps) {
     }
   };
   useEffect(() => {
+    const previous = previousReelTab.current;
+    previousReelTab.current = tab;
+    if (tab === "Reels" && previous !== "Reels") {
+      // Re-entering Reels must not inherit a stale pending slide or stale paused state.
+      setPendingReelIndex(null);
+      setLeavingReelIndex(null);
+      setPlaying(true);
+      const stage = reelStageRef.current;
+      if (stage) {
+        delete stage.dataset.pendingIndex;
+        stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
+          if (video.dataset.reelId !== reel?.id) video.pause();
+        });
+        const activeVideo = stage.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel?.id}"]`);
+        if (activeVideo) {
+          activeVideo.muted = true;
+          activeVideo.playsInline = true;
+          if (activeVideo.networkState === 0) activeVideo.load();
+          attemptReelPlayback(activeVideo);
+        }
+      }
+    }
+    if (previous === "Reels" && tab !== "Reels") {
+      // A later visit starts from a clean transition state.
+      setPendingReelIndex(null);
+      setLeavingReelIndex(null);
+    }
+  }, [tab]);
+
+  useEffect(() => {
     if (tab !== "Reels" || !reel) return;
     const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel.id}"]`);
     if (!activeVideo) return;
     activeVideo.muted = muted;
+    activeVideo.playsInline = true;
     if (playing) attemptReelPlayback(activeVideo);
     else activeVideo.pause();
   }, [reelIndex, tab, muted, playing, reel?.id]);
@@ -823,14 +871,29 @@ export function MymyInstagram(p: SkinProps) {
                         const isLeavingVideo = !activeVideo && item.id === leavingReel?.id;
                         const preloadPosition = itemIndex > reelIndex ? "ig-reel-video-next" : "ig-reel-video-previous";
                         const videoPositionClass = activeVideo ? "ig-reel-video-active" : isLeavingVideo ? "ig-reel-video-exiting-" + (reelSwipeDirection === "next" ? "up" : "down") : "ig-reel-video-preload " + preloadPosition;
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => finishIfPending(e.currentTarget)} onCanPlay={(e) => finishIfPending(e.currentTarget)} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onCanPlay={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
                           const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
                           const stage = reelStageRef.current;
                           if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
                             delete stage.dataset.pendingIndex;
                             setPendingReelIndex(null);
                           }
-                          if (activeVideo) setPlaying(false);
+                          if (activeVideo) {
+                            const failedVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${item.id}"]`);
+                            const tries = reelRecoveryCount.current[item.id] ?? 0;
+                            if (failedVideo && tries < 1 && tab === "Reels") {
+                              reelRecoveryCount.current[item.id] = tries + 1;
+                              window.setTimeout(() => {
+                                const currentActive = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
+                                if (currentActive === failedVideo && tab === "Reels") {
+                                  failedVideo.load();
+                                  if (playing) attemptReelPlayback(failedVideo);
+                                }
+                              }, 180);
+                            } else {
+                              setPlaying(false);
+                            }
+                          }
                         }} onClick={activeVideo ? (e) => {
                           // iOS can synthesize a click after a swipe changes the active video.
                           if (Date.now() - lastReelSwipeAt.current < 450) return;
