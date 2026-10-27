@@ -354,23 +354,23 @@ export function MymyInstagram(p: SkinProps) {
   const secondCarouselPostId = "imwinter-carousel-post-02";
   const thirdCarouselPostId = "imwinter-carousel-post-03";
   const fourthCarouselPostId = "imwinter-carousel-post-04";
-  const secondCarouselImages = ["/media/instagram/slide-01.jpg?v=20261027-q32", "/media/instagram/slide-02.jpg?v=20261027-q32", "/media/instagram/slide-03.jpg?v=20261027-q32", "/media/instagram/slide-04.jpg?v=20261027-q32"];
+  const secondCarouselImages = ["/media/instagram/slide-01.jpg?v=20261027-q26", "/media/instagram/slide-02.jpg?v=20261027-q26", "/media/instagram/slide-03.jpg?v=20261027-q26", "/media/instagram/slide-04.jpg?v=20261027-q26"];
   const secondCarouselCounts = { likes: 1847293, comments: 28641, reposts: 17382, shares: 42816, saves: 31957 };
-  const thirdCarouselImages = ["/media/instagram/post-03/slide-01.jpg?v=20261027-q32", "/media/instagram/post-03/slide-02.jpg?v=20261027-q32", "/media/instagram/post-03/slide-03.jpg?v=20261027-q32", "/media/instagram/post-03/slide-04.jpg?v=20261027-q32"];
+  const thirdCarouselImages = ["/media/instagram/post-03/slide-01.jpg?v=20261027-q26", "/media/instagram/post-03/slide-02.jpg?v=20261027-q26", "/media/instagram/post-03/slide-03.jpg?v=20261027-q26", "/media/instagram/post-03/slide-04.jpg?v=20261027-q26"];
   const thirdCarouselCounts = { likes: 2376418, comments: 19382, reposts: 29471, shares: 51608, saves: 64729 };
-  const fourthCarouselImages = ["/media/instagram/post-04/slide-01.jpg?v=20261027-q32", "/media/instagram/post-04/slide-02.jpg?v=20261027-q32", "/media/instagram/post-04/slide-03.jpg?v=20261027-q32", "/media/instagram/post-04/slide-04.jpg?v=20261027-q32", "/media/instagram/post-04/slide-05.jpg?v=20261027-q32", "/media/instagram/post-04/slide-06.jpg?v=20261027-q32"];
+  const fourthCarouselImages = ["/media/instagram/post-04/slide-01.jpg?v=20261027-q26", "/media/instagram/post-04/slide-02.jpg?v=20261027-q26", "/media/instagram/post-04/slide-03.jpg?v=20261027-q26", "/media/instagram/post-04/slide-04.jpg?v=20261027-q26", "/media/instagram/post-04/slide-05.jpg?v=20261027-q26", "/media/instagram/post-04/slide-06.jpg?v=20261027-q26"];
   const fourthCarouselCounts = { likes: 1965832, comments: 24817, reposts: 21864, shares: 39725, saves: 58241 };
   const fourthCarouselPost = makeItem({ id: fourthCarouselPostId, title: "imwinter", body: "🌻", time: "1天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: fourthCarouselImages[0], likes: fourthCarouselCounts.likes, comments: ["🌻🌻🌻", "너무 예뻐요 🤍", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
   const thirdCarouselPost = makeItem({ id: thirdCarouselPostId, title: "imwinter", body: "🕶️", time: "1天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: thirdCarouselImages[0], likes: thirdCarouselCounts.likes, comments: ["🕶️🕶️🕶️", "너무 예뻐요 🤍", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
   const secondCarouselPost = makeItem({ id: secondCarouselPostId, title: "imwinter", body: "🫠", time: "2天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: secondCarouselImages[0], likes: secondCarouselCounts.likes, comments: ["너무 예뻐요 🤍", "🫠🫠🫠", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
   const firstCarouselImages = [
-    "/media/instagram/post-01/slide-01.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-02.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-03.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-04.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-05.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-06.jpg?v=20261027-q32",
-    "/media/instagram/post-01/slide-07.jpg?v=20261027-q32",
+    "/media/instagram/post-01/slide-01.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-02.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-03.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-04.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-05.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-06.jpg?v=20261027-q26",
+    "/media/instagram/post-01/slide-07.jpg?v=20261027-q26",
   ];
   const firstCarouselCaptions = [
     "뽀아나",
@@ -410,10 +410,10 @@ export function MymyInstagram(p: SkinProps) {
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
   const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0];
   const reelVideos = [
-    "/media/reels/ig-reel-01.mp4?v=20261027-q32-video",
-    "/media/reels/ig-reel-02.mp4?v=20261027-q32-video",
-    "/media/reels/ig-reel-03.mp4?v=20261027-q32-video",
-    "/media/reels/ig-reel-05.mp4?v=20261027-q32-video",
+    "/media/reels/ig-reel-01.mp4?v=20261027-q26-video",
+    "/media/reels/ig-reel-02.mp4?v=20261027-q26-video",
+    "/media/reels/ig-reel-03.mp4?v=20261027-q26-video",
+    "/media/reels/ig-reel-05.mp4?v=20261027-q26-video",
   ];
   const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
     ...officialAccount,
