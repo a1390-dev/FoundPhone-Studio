@@ -6899,7 +6899,43 @@
       "once": true,
       "x": 240,
       "y": 120
+    },
+    {
+      "id": "kkt-opening-test-ending",
+      "label": "KKT 开局通知测试完成",
+      "type": "ending",
+      "event": "start",
+      "target": "",
+      "conditions": [],
+      "logic": "and",
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "KKT opening verified"
+        }
+      ],
+      "next": [],
+      "once": true,
+      "x": 440,
+      "y": 120
     }
   ],
-  "tests": []
+  "tests": [
+    {
+      "name": "解锁后收到金旼炡的第一条 KKT 消息",
+      "steps": [
+        {
+          "event": "password",
+          "target": "0101"
+        },
+        {
+          "event": "start",
+          "target": ""
+        }
+      ],
+      "ending": "KKT opening verified",
+      "expectUnlocked": []
+    }
+  ]
 }
