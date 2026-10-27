@@ -3,17 +3,13 @@ import {
   MapPin,
   Receipt,
   ShoppingBag,
-  Star,
   Ticket,
-  Utensils,
   Wallet,
 } from "lucide-react";
 import { useState } from "react";
-import type { Item } from "../schema";
 import {
   Empty,
   Header,
-  Media,
   meta,
   SearchBox,
   Tabs,
@@ -270,7 +266,7 @@ export function DeliverySkin(p: Props) {
       {tab === "商家" && <div style={{display:"flex",gap:8,overflowX:"auto",padding:"10px 12px",background:"#fff",borderBottom:"1px solid #eee",flexShrink:0}}>
         {DELIVERY_CATEGORIES.map(c=><button key={c} onClick={()=>setCategory(c)} style={{whiteSpace:"nowrap",border:0,borderRadius:18,padding:"8px 12px",background:category===c?"#f5dc7d":"#f4f4f4",fontWeight:category===c?700:400}}>{c}</button>)}
       </div>}
-      {notice && <button onClick={()=>setNotice("")} style={{border:0,background:"#fff6d8",padding:8,textAlign:"left",color:"#705b12"}}>{notice}　×</button>}
+      {notice && <button onClick={()=>setNotice("")} style={{border:0,background:"#fff6d8",padding:8,textAlign:"left",color:"#705b12"}}>{notice}{" ×"}</button>}
       <div className="catalog-scroll" style={{flex:1,minHeight:0,overflowY:"auto",padding:"10px 12px 16px"}}>
         {tab === "商家" && <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:10}}>
           {visibleProducts.map(item=><article key={item.id} style={{border:"1px solid #eee",borderRadius:14,overflow:"hidden",background:"#fff",minWidth:0}}>
