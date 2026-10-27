@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "解锁手机后，KakaoTalk 自动弹出金旼炡发来的第一条消息。",
-  "revision": 8,
+  "revision": 9,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
