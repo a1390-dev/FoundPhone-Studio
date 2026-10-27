@@ -29,6 +29,29 @@ export function testCondition(c: Condition, s: Runtime): boolean {
       return String(actual ?? "").includes(String(c.value));
   }
 }
+// Runtime updates are copy-on-write. Histories can contain large media strings;
+ // clone only collections that the engine may mutate instead of recursively copying
+ // every message and UI value for each tap or clock tick.
+function cloneRuntime(previous: Runtime): Runtime {
+  return {
+    ...previous,
+    scheduled: previous.scheduled?.map((entry) => ({ ...entry })),
+    incomingCall: previous.incomingCall ? { ...previous.incomingCall } : previous.incomingCall,
+    ui: previous.ui,
+    variables: { ...previous.variables },
+    visited: [...previous.visited],
+    read: [...previous.read],
+    clues: [...previous.clues],
+    unlocked: [...previous.unlocked],
+    hidden: [...previous.hidden],
+    completed: [...previous.completed],
+    notifications: [...previous.notifications],
+    endings: [...previous.endings],
+    choices: previous.choices.map((choice) => ({ ...choice })),
+    messages: { ...previous.messages },
+    trace: [...previous.trace],
+  };
+}
 function apply(a: Action, s: Runtime, w: Work) {
   switch (a.type) {
     case "date":
@@ -166,7 +189,7 @@ export function dispatch(
   event: string,
   target = "",
 ): Runtime {
-  const s = structuredClone(previous);
+  const s = cloneRuntime(previous);
   if (event === "choose") s.choices = [];
   if (event === "openApp" && !s.visited.includes(target))
     s.visited.push(target);
@@ -207,7 +230,7 @@ export function advance(
     };
   }
 
-  const s = structuredClone(previous);
+  const s = cloneRuntime(previous);
   s.elapsedMs ??= 0;
   s.clockRemainderMs ??= 0;
   s.scheduled ??= [];

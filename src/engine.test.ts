@@ -6,6 +6,7 @@ import {
   testCondition,
   visible,
   validateGraph,
+  advance,
 } from "./engine";
 import { initialRuntime, validateWork, safeMedia } from "./schema";
 import { parseChat, parseCsv } from "./chat";
@@ -71,6 +72,25 @@ describe("story progression", () => {
     const w = createWork();
     w.mode = "explore";
     expect(dispatch(w, initialRuntime(w), "start").notifications).toEqual([]);
+  });
+  it("preserves immutable message histories without deep-cloning them", () => {
+    const w = createWork();
+    w.mode = "explore";
+    const previous = initialRuntime(w);
+    const history = w.data.messages.slice();
+    previous.messages.messages = history;
+
+    const opened = dispatch(w, previous, "openApp", "instagram");
+    expect(opened).not.toBe(previous);
+    expect(opened.visited).not.toBe(previous.visited);
+    expect(opened.messages).not.toBe(previous.messages);
+    expect(opened.messages.messages).toBe(history);
+    expect(previous.visited).toEqual([]);
+
+    const ticked = advance(w, previous, 60000);
+    expect(ticked.messages.messages).toBe(history);
+    expect(previous.time).toBe(w.phone.time);
+    expect(ticked.time).not.toBe(previous.time);
   });
   it("preserves save state through JSON roundtrip", () => {
     const w = createWork();

@@ -36,6 +36,8 @@ import { RichText } from "./RichText";
 import {
   useEffect,
   memo,
+  useCallback,
+  useMemo,
   useState,
   useRef,
   Suspense,
@@ -101,6 +103,49 @@ export const AppIcon = memo(function AppIcon({
     </span>
   );
 });
+const EMPTY_ITEMS: Item[] = [];
+function createLightAppSnapshot(source: HTMLElement): HTMLElement {
+  const budget = { remaining: 220, imageSources: 0 };
+  const cloneLimited = (node: Node, depth: number): Node | null => {
+    if (budget.remaining <= 0) return null;
+    budget.remaining -= 1;
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent ?? "";
+      return document.createTextNode(text.length > 320 ? text.slice(0, 317) + "…" : text);
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+    const original = node as HTMLElement;
+    const clone = original.cloneNode(false) as HTMLElement;
+    clone.removeAttribute("id");
+    const tag = original.tagName.toLowerCase();
+    if (tag === "video" || tag === "audio") {
+      clone.removeAttribute("src");
+      clone.removeAttribute("autoplay");
+      clone.removeAttribute("poster");
+      clone.removeAttribute("controls");
+      return clone;
+    }
+    if (tag === "img") {
+      budget.imageSources += 1;
+      if (budget.imageSources > 5) clone.removeAttribute("src");
+      clone.setAttribute("loading", "lazy");
+      clone.setAttribute("decoding", "async");
+      return clone;
+    }
+    if (depth >= 12) return clone;
+    for (let child = node.firstChild; child && budget.remaining > 0; child = child.nextSibling) {
+      const childClone = cloneLimited(child, depth + 1);
+      if (childClone) clone.appendChild(childClone);
+    }
+    return clone;
+  };
+  const snapshot = cloneLimited(source, 0) as HTMLElement;
+  snapshot.style.transform = "none";
+  snapshot.style.opacity = "1";
+  snapshot.style.filter = "none";
+  snapshot.style.borderRadius = "0";
+  return snapshot;
+}
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
@@ -202,12 +247,12 @@ function PhoneRuntime({
       .catch(() => {});
     return () => { active = false; };
   }, [work.id, creator, external]);
-  const saveToSlot = async (index: number) => {
+  const saveToSlot = useCallback(async (index: number) => {
     const entry = { id: slotId(index), state: { ...runtimeRef.current, workId: work.id, revision: work.updatedAt } };
     await db.saves.put(entry);
     setSaveSlots((previous) => previous.map((slot, i) => i === index ? entry : slot));
-  };
-  const loadFromSlot = async (index: number) => {
+  }, [work.id, work.updatedAt]);
+  const loadFromSlot = useCallback(async (index: number) => {
     const entry = saveSlots[index] ?? await db.saves.get(slotId(index));
     if (!entry) return;
     const restored = { ...entry.state, workId: work.id, revision: work.updatedAt };
@@ -217,12 +262,12 @@ function PhoneRuntime({
     setApp("");
     setPanel("");
     setFolder("");
-  };
-  const update = (next: Runtime) => {
+  }, [saveSlots, work.id, work.updatedAt, onRuntime]);
+  const update = useCallback((next: Runtime) => {
     runtimeRef.current = next;
     setOwn(next);
     onRuntime?.(next);
-  };
+  }, [onRuntime]);
   useEffect(() => {
     let active = true;
     if (creator || external) return;
@@ -281,25 +326,16 @@ function PhoneRuntime({
     }, 1000);
     return () => clearInterval(interval);
   }, [creator, ready, work.id, work.updatedAt, work.mode]);
-  const event = (event: string, target: string) => {
-    if (!creator) update(dispatch(work, runtimeRef.current, event, target));
-  };
+  const event = useCallback((eventName: string, target: string) => {
+    if (!creator) update(dispatch(work, runtimeRef.current, eventName, target));
+  }, [creator, update, work]);
   const captureApp = () => {
     if (!app) return;
     const current = shell.current?.querySelector<HTMLElement>(".app-screen");
     if (!current) return;
-    const snapshot = current.cloneNode(true) as HTMLElement;
-    snapshot.style.transform = "none";
-    snapshot.style.opacity = "1";
-    snapshot.style.filter = "none";
-    snapshot.style.borderRadius = "0";
-    snapshot.querySelectorAll("audio").forEach((el) => el.remove());
-    snapshot.querySelectorAll("video").forEach((el) => {
-      el.removeAttribute("autoplay");
-      el.removeAttribute("src");
-    });
-    snapshot.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
-    appSnapshots.current.set(app, snapshot);
+    // App-switcher cards are previews, not live pages. Bound each snapshot to
+    // a small DOM budget so media-heavy feeds cannot duplicate entire app trees.
+    appSnapshots.current.set(app, createLightAppSnapshot(current));
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
@@ -330,6 +366,31 @@ function PhoneRuntime({
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
   const plugin = getApp(app);
+  const baseAppItems = work.data[app] ?? EMPTY_ITEMS;
+  const messageItems = s.messages[app] ?? EMPTY_ITEMS;
+  const appItems = useMemo(
+    () => [...baseAppItems, ...messageItems],
+    [baseAppItems, messageItems],
+  );
+  const onAppRead = useCallback((id: string) => event("read", id), [event]);
+  const onAppEdit = useCallback((item: Item) => onEdit?.(app, item), [app, onEdit]);
+  const onAppAdd = useCallback(() => onAdd?.(app), [app, onAdd]);
+  const onAppBack = useCallback(() => setApp(""), []);
+  const onAppUi = useCallback((key: string, value: UiValue) => {
+    const current = runtimeRef.current;
+    update(dispatch(
+      work,
+      {
+        ...current,
+        ui: {
+          ...current.ui,
+          [app]: { ...current.ui?.[app], [key]: value },
+        },
+      },
+      "variable",
+      `ui:${app}:${key}`,
+    ));
+  }, [app, update, work]);
   useEffect(() => {
     const count = s.notifications.length;
     if (!locked && work.phone.notifications && count > noticesSeen.current) {
@@ -402,7 +463,6 @@ function PhoneRuntime({
               } else if (locked) {
                 beginUnlock();
               } else if (g.zone === "bottom" && Date.now() - g.time > 450) {
-                captureApp();
                 setPanel("switcher");
               } else {
                 setApp("");
@@ -484,37 +544,18 @@ function PhoneRuntime({
                   name={
                     work.apps.find((a) => a.id === app)?.name ?? plugin.name
                   }
-                  items={[
-                    ...(work.data[app] ?? []),
-                    ...(s.messages[app] ?? []),
-                  ]}
+                  items={appItems}
                   creator={creator}
                   state={s}
-                  onRead={(id) => event("read", id)}
-                  onEdit={(item) => onEdit?.(app, item)}
-                  onAdd={() => onAdd?.(app)}
-                  onBack={() => setApp("")}
+                  onRead={onAppRead}
+                  onEdit={onAppEdit}
+                  onAdd={onAppAdd}
+                  onBack={onAppBack}
                   onSettings={onSettings}
                   saveSlots={saveSlots}
                   onSaveSlot={saveToSlot}
                   onLoadSlot={loadFromSlot}
-                  onUi={(key, value) => {
-                    const current = runtimeRef.current;
-                    update(
-                      dispatch(
-                        work,
-                        {
-                          ...current,
-                          ui: {
-                            ...current.ui,
-                            [app]: { ...current.ui?.[app], [key]: value },
-                          },
-                        },
-                        "variable",
-                        `ui:${app}:${key}`,
-                      ),
-                    );
-                  }}
+                  onUi={onAppUi}
                   work={work}
                 />
               </AppWindow>
@@ -869,7 +910,7 @@ function AppSearch({
     </>
   );
 }
-function Media({ item }: { item: Item }) {
+const Media = memo(function Media({ item }: { item: Item }) {
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
@@ -894,8 +935,8 @@ function Media({ item }: { item: Item }) {
       </small>
     </div>
   );
-}
-function AppContent({
+});
+const AppContent = memo(function AppContent({
   app,
   name,
   items,
@@ -936,17 +977,24 @@ function AppContent({
   const [unlocks, setUnlocks] = useState<string[]>([]);
   const [pwError, setPwError] = useState("");
   const [likes, setLikes] = useState<string[]>([]);
-  const shown = items
-    .filter((i) => creator || visible(i, state))
-    .filter((i) =>
-      (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
-    );
-  const filtered =
-    tab === "收藏"
-      ? shown.filter((i) => i.favorite)
-      : tab === app.tabs[0]
-        ? shown
-        : shown.filter((i) => i.folder === tab);
+  const shown = useMemo(
+    () =>
+      items
+        .filter((i) => creator || visible(i, state))
+        .filter((i) =>
+          (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
+        ),
+    [items, creator, state, q],
+  );
+  const filtered = useMemo(
+    () =>
+      tab === "收藏"
+        ? shown.filter((i) => i.favorite)
+        : tab === app.tabs[0]
+          ? shown
+          : shown.filter((i) => i.folder === tab),
+    [tab, app.tabs, shown],
+  );
   const read = (i: Item) => {
     if (creator) {
       onEdit(i);
@@ -955,7 +1003,7 @@ function AppContent({
     setDetail(i);
     if (!i.password || unlocks.includes(i.id)) onRead(i.id);
   };
-  const chats = [...new Set(shown.map((i) => i.title))];
+  const chats = useMemo(() => [...new Set(shown.map((i) => i.title))], [shown]);
   const back = () => {
     if (detail) setDetail(null);
     else if (thread) setThread("");
@@ -1348,7 +1396,7 @@ function AppContent({
         )}
     </>
   );
-}
+});
 function UsersIcon() {
   return <PhoneIcon size={17} />;
 }

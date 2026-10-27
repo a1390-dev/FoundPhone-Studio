@@ -189,73 +189,106 @@ export function TaobaoSkin(p: Props) {
 }
 
 export function DeliverySkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "商家");
-  const list = items.filter((i) =>
-    tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
+  const { q, setQ, items } = useContent(p, "商家");
+  const [tab, setTab] = useState("商家");
+  const [category, setCategory] = useState("全部");
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const [payer, setPayer] = useState("我");
+  const [address, setAddress] = useState("我家 · 首尔江南区");
+  const [orders, setOrders] = useState<Array<{ id: string; payer: string; address: string; total: number; lines: Array<{ title: string; count: number; price: number }>; time: string }>>([]);
+  const products = items.filter((i) => i.folder === "商品");
+  const categories = ["全部", "韩食", "日料", "中餐", "饮品", "便利店/超市", "日用品"];
+  const filtered = products.filter((i) =>
+    (category === "全部" || meta(i, "category") === category) &&
+    (i.title + " " + i.sender + " " + i.body).toLowerCase().includes(q.toLowerCase())
   );
+  const cartProducts = products.filter((i) => (cart[i.id] || 0) > 0);
+  const totalCount = Object.values(cart).reduce((sum, n) => sum + n, 0);
+  const priceOf = (i: typeof products[number]) => Number(meta(i, "price", "0").replace(/,/g, ""));
+  const total = cartProducts.reduce((sum, i) => sum + priceOf(i) * (cart[i.id] || 0), 0);
+  const money = (n: number) => "₩" + Math.round(n).toLocaleString("en-US");
+  const add = (id: string) => setCart((old) => ({ ...old, [id]: (old[id] || 0) + 1 }));
+  const change = (id: string, delta: number) => setCart((old) => {
+    const next = { ...old, [id]: Math.max(0, (old[id] || 0) + delta) };
+    if (!next[id]) delete next[id];
+    return next;
+  });
+  const checkout = () => {
+    if (!cartProducts.length) return;
+    setOrders((old) => [{
+      id: "FD" + Date.now().toString().slice(-8), payer, address, total,
+      lines: cartProducts.map((i) => ({ title: i.title, count: cart[i.id] || 0, price: priceOf(i) })),
+      time: new Date().toLocaleString("ko-KR", { hour12: false })
+    }, ...old]);
+    setCart({});
+    setTab("订单");
+  };
+  const buttonStyle = (active: boolean): React.CSSProperties => ({
+    flex: "0 0 auto", borderRadius: 18, padding: "7px 12px",
+    background: active ? "#ffdf36" : "#fff", color: "#252525",
+    border: active ? "1px solid #f2d327" : "1px solid #eee", fontWeight: 600
+  });
   return (
-    <div className="catalog-skin delivery-ui">
+    <div className="catalog-skin delivery-ui" style={{ background: "#f7f7f7", color: "#222" }}>
       <Header p={p} />
-      <div className="delivery-location">
-        <MapPin size={18} />
-        <strong>{meta(items[0], "address", "作品配送地址")}</strong>
+      <div style={{ padding: "10px 12px", background: "#fff" }}>
+        <div className="delivery-location"><MapPin size={18} /><strong>{address}</strong></div>
+        <SearchBox value={q} set={setQ} placeholder="搜索料理、饮品或日用品" />
+        <div style={{ display: "flex", gap: 7, overflowX: "auto", paddingTop: 9 }}>
+          {["商家", "购物车", "结账", "订单"].map((t) => <button key={t} onClick={() => setTab(t)} style={buttonStyle(tab === t)}>{t}{t === "购物车" && totalCount ? " " + totalCount : ""}</button>)}
+        </div>
       </div>
-      <SearchBox value={q} set={setQ} placeholder="搜索商家或订单" />
-      <div className="catalog-scroll">
-        {tab === "商家"
-          ? list.map((i) => (
-              <button
-                className="delivery-merchant"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
-                <Media item={i} />
-                <div>
-                  <h3>{i.title}</h3>
-                  <p>
-                    <Star size={12} />
-                    {meta(i, "rating", "—")}
-                    <span>{meta(i, "duration")}</span>
-                  </p>
-                  <small>{i.body.split("\n")[0]}</small>
-                  <strong>¥ {meta(i, "price", "—")}</strong>
-                </div>
-              </button>
-            ))
-          : list.map((i) => (
-              <button
-                className="delivery-order"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
-                <header>
-                  <Utensils size={18} />
-                  <strong>{i.sender}</strong>
-                  <span>{meta(i, "status", "配送记录")}</span>
-                </header>
-                <section>
-                  <Media item={i} />
-                  <div>
-                    <strong>{i.title}</strong>
-                    <p>{i.body}</p>
-                    <small>{i.time}</small>
-                  </div>
-                  <b>¥ {meta(i, "price", "—")}</b>
-                </section>
-                <footer>
-                  <MapPin size={13} />
-                  {meta(i, "address")}
-                </footer>
-              </button>
-            ))}
-        <Empty items={list} />
+      <div className="catalog-scroll" style={{ padding: "10px 12px 88px" }}>
+        {tab === "商家" && <>
+          <div style={{ display: "flex", gap: 7, overflowX: "auto", padding: "2px 0 12px" }}>
+            {categories.map((c) => <button key={c} onClick={() => setCategory(c)} style={buttonStyle(category === c)}>{c}</button>)}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,minmax(0,1fr))", gap: 10 }}>
+            {filtered.map((i) => <article key={i.id} style={{ background: "#fff", borderRadius: 12, padding: 11, border: "1px solid #eee" }}>
+              <div style={{ height: 74, borderRadius: 9, background: "#fff5c2", display: "grid", placeItems: "center", fontSize: 32 }}>{meta(i, "category") === "饮品" ? "🧋" : meta(i, "category") === "日用品" ? "🧴" : meta(i, "category") === "便利店/超市" ? "🛒" : "🍱"}</div>
+              <strong style={{ display: "block", marginTop: 8, fontSize: 13, minHeight: 34 }}>{i.title}</strong>
+              <small style={{ color: "#777" }}>{meta(i, "category")}</small>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, gap: 4 }}>
+                <b style={{ color: "#e34d35", fontSize: 14 }}>{money(priceOf(i))}</b>
+                <button onClick={() => add(i.id)} aria-label={"添加 " + i.title} style={{ border: 0, borderRadius: 16, background: "#ffdf36", width: 30, height: 30, fontSize: 20 }}>+</button>
+              </div>
+            </article>)}
+          </div>
+          {!filtered.length && <Empty items={filtered} />}
+        </>}
+        {tab === "购物车" && <section style={{ background: "#fff", borderRadius: 12, padding: 12 }}>
+          <h3>购物车 · {totalCount} 件</h3>
+          {!cartProducts.length && <p>购物车还是空的，去商家页选些吃的吧。</p>}
+          {cartProducts.map((i) => <div key={i.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 0", borderBottom: "1px solid #eee" }}>
+            <div style={{ flex: 1 }}><strong>{i.title}</strong><div style={{ color: "#e34d35", marginTop: 4 }}>{money(priceOf(i))}</div></div>
+            <button onClick={() => change(i.id, -1)} style={buttonStyle(false)}>−</button><b>{cart[i.id]}</b><button onClick={() => change(i.id, 1)} style={buttonStyle(false)}>+</button>
+          </div>)}
+          <div style={{ textAlign: "right", paddingTop: 12, fontWeight: 700 }}>合计：{money(total)}</div>
+          <button onClick={() => setTab("结账")} disabled={!cartProducts.length} style={{ ...buttonStyle(true), width: "100%", marginTop: 10, padding: 12 }}>去结账</button>
+        </section>}
+        {tab === "结账" && <section style={{ background: "#fff", borderRadius: 12, padding: 14 }}>
+          <h3>确认订单</h3>
+          {!cartProducts.length ? <p>购物车为空，请先选择商品。</p> : <>
+            {cartProducts.map((i) => <div key={i.id} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0" }}><span>{i.title} × {cart[i.id]}</span><b>{money(priceOf(i) * cart[i.id])}</b></div>)}
+            <hr />
+            <strong>付款人</strong><div style={{ display: "flex", flexWrap: "wrap", gap: 7, margin: "8px 0 16px" }}>{["我", "刘知珉", "内永绘里", "金旼炡", "宁艺卓"].map(x => <button key={x} onClick={() => setPayer(x)} style={buttonStyle(payer === x)}>{x}</button>)}</div>
+            <strong>配送地址</strong><div style={{ display: "grid", gap: 7, margin: "8px 0 16px" }}>{["我家 · 首尔江南区", "我学校 · 首尔", "刘知珉家", "内永绘里家", "金旼炡家", "宁艺卓家"].map(x => <button key={x} onClick={() => setAddress(x)} style={{ ...buttonStyle(address === x), textAlign: "left" }}>{x}</button>)}</div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 18, margin: "14px 0" }}><b>应付总额</b><b style={{ color: "#e34d35" }}>{money(total)}</b></div>
+            <button onClick={checkout} style={{ ...buttonStyle(true), width: "100%", padding: 13 }}>确认下单 · {money(total)}</button>
+            <small style={{ display: "block", color: "#777", marginTop: 8 }}>模拟订单，不会进行真实支付。所有金额均为韩元（KRW）。</small>
+          </>}
+        </section>}
+        {tab === "订单" && <section style={{ display: "grid", gap: 10 }}>
+          {!orders.length && <div style={{ background: "#fff", borderRadius: 12, padding: 18, textAlign: "center" }}>还没有订单记录</div>}
+          {orders.map(o => <article key={o.id} style={{ background: "#fff", borderRadius: 12, padding: 13 }}>
+            <header style={{ display: "flex", justifyContent: "space-between", gap: 8 }}><strong>外卖订单 {o.id}</strong><span style={{ color: "#278b58" }}>已下单</span></header>
+            <small style={{ color: "#777" }}>{o.time}</small>
+            {o.lines.map((l, n) => <div key={n} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}><span>{l.title} × {l.count}</span><b>{money(l.price * l.count)}</b></div>)}
+            <div style={{ borderTop: "1px solid #eee", paddingTop: 9 }}>付款人：{o.payer}</div><div style={{ marginTop: 4 }}>配送至：{o.address}</div><div style={{ textAlign: "right", fontWeight: 700, marginTop: 8 }}>合计 {money(o.total)}</div>
+          </article>)}
+        </section>}
       </div>
-      <Tabs
-        tabs={["商家", "订单"]}
-        value={tab}
-        set={setTab}
-        icons={[<Utensils />, <Receipt />]}
-      />
+      <Tabs tabs={["商家", "购物车", "结账", "订单"]} value={tab} set={setTab} icons={[<Utensils />, <ShoppingBag />, <Wallet />, <Receipt />]} />
     </div>
   );
 }
