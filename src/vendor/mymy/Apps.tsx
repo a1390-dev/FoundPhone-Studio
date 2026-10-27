@@ -490,28 +490,13 @@ export function MymyInstagram(p: SkinProps) {
     setPlaying(true);
   };
   const requestReel = (nextIndex: number) => {
-    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex || pendingReelIndex !== null) return;
+    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
     const now = Date.now();
     if (now - lastReelNavigationAt.current < 280) return;
     lastReelNavigationAt.current = now;
-    const stage = reelStageRef.current;
-    const selector = 'video[data-reel-id="' + reels[nextIndex].id + '"]';
-    const target = stage?.querySelector<HTMLVideoElement>(selector);
-    if (target && target.readyState >= 2) {
-      finishReelSwitch(nextIndex);
-    } else {
-      if (stage) stage.dataset.pendingIndex = String(nextIndex);
-      setPendingReelIndex(nextIndex);
-      // Do not play an off-screen preload video. Its rejected play() promise can race
-      // with the index switch and incorrectly pause the newly active reel on iOS Safari.
-      // Buffer it while hidden, then play it only after it becomes the active video.
-      if (target) {
-        target.muted = true;
-        target.playsInline = true;
-        target.preload = "auto";
-        if (target.networkState === 0) target.load();
-      }
-    }
+    // Switch immediately; waiting for a hidden video's readyState can trap Safari in
+    // a pending state forever and block both upward and downward swipes.
+    finishReelSwitch(nextIndex);
   };
   useEffect(() => {
     const previous = previousReelTab.current;
@@ -529,8 +514,7 @@ export function MymyInstagram(p: SkinProps) {
         stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
           video.pause();
           if (video.dataset.reelId !== reel?.id) {
-            video.removeAttribute("src");
-            video.load();
+            // Keep the React-managed src intact; only pause inactive videos.
           }
         });
         const activeVideo = stage.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel?.id}"]`);
