@@ -905,35 +905,53 @@ export function WalletSkin(p: Props) {
       <div className="catalog-scroll" style={{ padding: "12px 16px 32px" }}>
         <h1 style={{ fontSize: 30, margin: "8px 0 4px", letterSpacing: "-1px" }}>钱包</h1>
         <p style={{ color: "#777", margin: "0 0 18px", fontSize: 13 }}>银行卡 · 5 张卡片</p>
-        <div className="wallet-stack" style={{ display: "grid", gap: 14 }}>
-          {cards.map((i) => (
-            <button
-              key={i.id}
-              className={selected === i.id ? "selected" : ""}
-              onClick={() => { setSelected(i.id); p.onItem(i); }}
-              style={{
-                minHeight: 178, padding: 18, textAlign: "left", color: "#fff",
-                borderRadius: 20, position: "relative", overflow: "hidden",
-                background: "linear-gradient(135deg,#292929 0%,#080808 58%,#333 100%)",
-                border: selected === i.id ? "2px solid #d8c18a" : "1px solid #555",
-                boxShadow: "0 8px 18px #00000020",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 10, letterSpacing: 2, color: "#d9c99f" }}>PRIVATE BANKING</span>
-                <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: -1 }}> Pay</span>
-              </div>
-              <div style={{ height: 24, width: 34, borderRadius: 5, marginTop: 17, background: "linear-gradient(135deg,#d9d4bd,#8f8a7c)", border: "1px solid #eee5c8" }} />
-              <strong style={{ display: "block", marginTop: 14, fontSize: 15, letterSpacing: 1 }}>{i.title}</strong>
-              <span style={{ display: "block", marginTop: 3, fontSize: 12, letterSpacing: 2, color: "#d4d4d4" }}>{meta(i, "number", "••••  ••••")}</span>
-              <span style={{ display: "block", marginTop: 7, fontSize: 13, fontWeight: 600, color: "#e4d5ac" }}>₩1,000,000,000 KRW</span>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginTop: 12, gap: 8 }}>
-                <div><small style={{ display: "block", color: "#d9c99f", fontSize: 10, letterSpacing: 1 }}>CARD LIMIT · 카드 한도</small><b style={{ display: "block", fontSize: 19, lineHeight: 1.4, marginTop: 2, color: "#fff" }}>{meta(i, "amount", "₩1,000,000,000 KRW")}</b></div>
-                <span style={{ fontSize: 10, color: "#d9c99f", letterSpacing: 1 }}>KRW</span>
-              </div>
-              <span aria-hidden="true" style={{ position: "absolute", right: -18, bottom: -40, width: 150, height: 150, borderRadius: "50%", border: "1px solid #ffffff16" }} />
-            </button>
-          ))}
+        <div className="wallet-stack" style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+          {cards.map((i) => {
+            const expanded = selected === i.id;
+            return (
+              <button
+                key={i.id}
+                className={expanded ? "selected" : ""}
+                aria-expanded={expanded}
+                onClick={() => setSelected(expanded ? "" : i.id)}
+                style={{
+                  height: expanded ? 250 : 26,
+                  minHeight: expanded ? 250 : 26,
+                  flex: "0 0 auto",
+                  padding: expanded ? "18px" : "0 18px",
+                  textAlign: "left",
+                  color: "#fff",
+                  borderRadius: expanded ? 20 : 14,
+                  position: "relative",
+                  overflow: "hidden",
+                  background: "linear-gradient(135deg,#292929 0%,#080808 58%,#333 100%)",
+                  border: expanded ? "2px solid #d8c18a" : "1px solid #555",
+                  boxShadow: "0 5px 14px #00000018",
+                  transition: "height 180ms ease, min-height 180ms ease, padding 180ms ease",
+                }}
+              >
+                {!expanded ? (
+                  <span aria-hidden="true" style={{ display: "block", width: 34, height: 3, borderRadius: 3, background: "#d9c99f", marginTop: 0 }} />
+                ) : (
+                  <>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: 10, letterSpacing: 2, color: "#d9c99f" }}>PRIVATE BANKING</span>
+                      <span style={{ fontSize: 18, fontWeight: 800, letterSpacing: -1 }}> Pay</span>
+                    </div>
+                    <div style={{ height: 24, width: 34, borderRadius: 5, marginTop: 17, background: "linear-gradient(135deg,#d9d4bd,#8f8a7c)", border: "1px solid #eee5c8" }} />
+                    <strong style={{ display: "block", marginTop: 14, fontSize: 15, letterSpacing: 1 }}>{i.title}</strong>
+                    <span style={{ display: "block", marginTop: 3, fontSize: 12, letterSpacing: 2, color: "#d4d4d4" }}>{meta(i, "number", "••••  ••••")}</span>
+                    <span style={{ display: "block", marginTop: 7, fontSize: 13, fontWeight: 600, color: "#e4d5ac" }}>₩1,000,000,000 KRW</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginTop: 12, gap: 8 }}>
+                      <div><small style={{ display: "block", color: "#d9c99f", fontSize: 10, letterSpacing: 1 }}>CARD LIMIT · 카드 한도</small><b style={{ display: "block", fontSize: 19, lineHeight: 1.4, marginTop: 2, color: "#fff" }}>{meta(i, "amount", "₩1,000,000,000 KRW")}</b></div>
+                      <span style={{ fontSize: 10, color: "#d9c99f", letterSpacing: 1 }}>KRW</span>
+                    </div>
+                    <span aria-hidden="true" style={{ position: "absolute", right: -18, bottom: -40, width: 150, height: 150, borderRadius: "50%", border: "1px solid #ffffff16" }} />
+                  </>
+                )}
+              </button>
+            );
+          })}
         </div>
         <h4 className="native-section" style={{ marginTop: 24 }}>交易记录</h4>
         {transactions.map((i) => (
