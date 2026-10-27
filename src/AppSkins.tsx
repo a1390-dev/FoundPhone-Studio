@@ -799,6 +799,7 @@ function ReelVideo({
       playsInline
       preload={preload}
       src={src}
+      onPlay={() => setPreload("auto")}
       onClick={(event) => event.stopPropagation()}
     />
   );
