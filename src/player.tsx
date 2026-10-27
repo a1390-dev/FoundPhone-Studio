@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import customWallpaper from "./assets/custom/wallpaper.jpeg";
 import { createRoot } from "react-dom/client";
 import { Phone } from "./Phone";
 import { validateWork, type Work } from "./schema";
@@ -12,9 +13,20 @@ function Player() {
         if (!r.ok) throw Error("缺少 work.json");
         return r.json();
       })
-      .then((x) => {
+      .then(async (x) => {
         const w = validateWork(x);
         document.title = w.title;
+        // Preload the custom wallpaper before mounting the phone so its
+        // fallback gradient is not shown while the background image downloads.
+        if (w.phone.wallpaper === "dog") {
+          const image = new Image();
+          image.src = customWallpaper;
+          try {
+            await image.decode();
+          } catch {
+            // Keep the player usable if the image cannot be decoded.
+          }
+        }
         setWork(w);
       })
       .catch((e) => setError(String(e)));
