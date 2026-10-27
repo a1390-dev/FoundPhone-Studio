@@ -650,65 +650,77 @@
 
 /* Keep icon and count on the same horizontal line, like the supplied Instagram reference. */
 .mymy-ui .iga.ig-first-actions {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 28px;
   align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  padding: 8px 14px 4px;
+  justify-content: stretch;
+  column-gap: 3px;
+  padding: 8px 10px 4px;
   flex-wrap: nowrap;
 }
 .mymy-ui .iga.ig-first-actions button {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
+  justify-content: center;
+  gap: 3px;
   min-width: 0;
+  width: 100%;
+  padding: 0;
   white-space: nowrap;
 }
 .mymy-ui .iga.ig-first-actions button:nth-child(1) svg,
 .mymy-ui .iga.ig-first-actions button:nth-child(2) svg,
 .mymy-ui .iga.ig-first-actions button:nth-child(3) svg,
 .mymy-ui .iga.ig-first-actions button:nth-child(5) svg {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
 }
 .mymy-ui .iga.ig-first-actions button:nth-child(4) svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
 }
 .mymy-ui .iga.ig-first-actions button b {
-  display: inline;
-  font-size: 17px;
+  display: inline-block;
+  min-width: 0;
+  font-size: 14px;
   line-height: 1;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
 }
 .mymy-ui .iga.ig-first-actions button:nth-child(5) {
-  margin-left: 8px;
+  margin-left: 0;
 }
 @media (max-width: 360px) {
   .mymy-ui .iga.ig-first-actions {
-    gap: 3px;
-    padding-left: 8px;
-    padding-right: 8px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) 25px;
+    column-gap: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
   }
   .mymy-ui .iga.ig-first-actions button {
-    gap: 3px;
+    gap: 2px;
   }
   .mymy-ui .iga.ig-first-actions button:nth-child(1) svg,
   .mymy-ui .iga.ig-first-actions button:nth-child(2) svg,
-  .mymy-ui .iga.ig-first-actions button:nth-child(3) svg,
-  .mymy-ui .iga.ig-first-actions button:nth-child(5) svg {
-    width: 26px;
-    height: 26px;
+  .mymy-ui .iga.ig-first-actions button:nth-child(3) svg {
+    width: 23px;
+    height: 23px;
+    flex-basis: 23px;
   }
   .mymy-ui .iga.ig-first-actions button:nth-child(4) svg {
-    width: 21px;
-    height: 21px;
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+  .mymy-ui .iga.ig-first-actions button:nth-child(5) svg {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
   }
   .mymy-ui .iga.ig-first-actions button b {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
