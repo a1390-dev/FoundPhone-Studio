@@ -498,7 +498,7 @@ export function MymyInstagram(p: SkinProps) {
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
-                    <video className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline onClick={(e) => {
+                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline onClick={(e) => {
                       const v = e.currentTarget;
                       if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
                     }} />
@@ -522,6 +522,7 @@ export function MymyInstagram(p: SkinProps) {
                     <small>♪ 原声 · {reel.sender}</small>
                   </div>
                   <div className="ig-reel-progress"><span /></div>
+                  <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
                   {!playing && <div className="ig-reel-paused"><span>▶</span></div>}
                 </>
               ) : <div className="ig-reels-empty"><CirclePlay size={44} /><b>Reels</b><span>上传视频内容后会在这里显示</span></div>}
