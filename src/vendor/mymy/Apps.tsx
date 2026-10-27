@@ -772,7 +772,11 @@ export function MymyInstagram(p: SkinProps) {
               <div className="pg2">
                 {posts.map((i) => (
                   <button key={i.id} onClick={() => openPost(i)}>
-                    <Media item={i} />
+                    {i.id === firstCarouselPostId ? (
+                      <img src={firstCarouselImages[0]} alt="imwinter carousel post" loading="lazy" />
+                    ) : (
+                      <Media item={i} />
+                    )}
                   </button>
                 ))}
               </div>
