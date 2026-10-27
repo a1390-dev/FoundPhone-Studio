@@ -249,6 +249,7 @@ function PhoneRuntime({
     } catch { /* This session can still start if storage is unavailable. */ }
     setReady(false);
     setLoadError("");
+    setSaveSlots([undefined, undefined, undefined]);
     setPlayerId(value);
     setSaveGeneration(generation);
     setOwn(dispatch(work, initialRuntime(work), "start"));
