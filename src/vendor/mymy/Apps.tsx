@@ -663,7 +663,7 @@ export function MymyInstagram(p: SkinProps) {
             </button>
           </div>
         )}
-        {!isFirstCarouselPost && <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>}
+        {!isCarouselPost && <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>}
         <button
           className="igc"
           onClick={() => {
@@ -672,14 +672,14 @@ export function MymyInstagram(p: SkinProps) {
         >
           <b>{i.sender}</b> {caption}
         </button>
-        {!isFirstCarouselPost && (
+        {!isCarouselPost && (
           <button className="cmall" onClick={() => setSheet(i)}>
             查看评论{" "}
             {i.comments.length +
               replies.filter((r) => r.startsWith(i.id + "\t")).length}
           </button>
         )}
-        <p className="igt">{isFirstCarouselPost ? "5天前 · 查看翻译" : i.time}</p>
+        <p className="igt">{isCarouselPost ? (isFirstCarouselPost ? "5天前 · 查看翻译" : "2天前") : i.time}</p>
       </article>
     );
   };
