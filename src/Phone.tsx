@@ -483,6 +483,9 @@ function PhoneRuntime({
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
                   onSettings={onSettings}
+                  saveSlots={saveSlots}
+                  onSaveSlot={saveToSlot}
+                  onLoadSlot={loadFromSlot}
                   onUi={(key, value) => {
                     const current = runtimeRef.current;
                     update(
@@ -892,6 +895,9 @@ function AppContent({
   onBack,
   onSettings,
   onUi,
+  saveSlots,
+  onSaveSlot,
+  onLoadSlot,
   work,
 }: {
   app: AppPlugin;
@@ -905,6 +911,9 @@ function AppContent({
   onBack: () => void;
   onSettings?: () => void;
   onUi?: (key: string, value: UiValue) => void;
+  saveSlots?: Array<{ id: string; state: Runtime } | undefined>;
+  onSaveSlot?: (index: number) => void | Promise<void>;
+  onLoadSlot?: (index: number) => void | Promise<void>;
   work: Work;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
@@ -1088,6 +1097,9 @@ function AppContent({
           creator={creator}
           onItem={read}
           onSettings={onSettings}
+          saveSlots={saveSlots ?? [undefined, undefined, undefined]}
+          onSaveSlot={onSaveSlot ?? (() => {})}
+          onLoadSlot={onLoadSlot ?? (() => {})}
         />
       ) : app.id === "calculator" && !detail ? (
         <NativeCalculator
