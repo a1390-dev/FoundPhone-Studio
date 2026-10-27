@@ -1,5 +1,5 @@
 import { DetailedArtwork, detailedIcons } from "./ios/DetailedArtwork";
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { originalIconFiles } from "./ios/originalIconFiles";
 import "./ios/original-icons.css";
 import { getApp } from "./registry";
@@ -841,19 +841,57 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
 
 const originalsEnabled = import.meta.env.VITE_ORIGINAL_ICONS === "true";
 
-// Warm the icon cache while the lock screen is visible so the home screen
-// does not have to wait for dozens of image requests after unlocking.
-let originalIconPreloadStarted = false;
-const originalIconPreloadImages: HTMLImageElement[] = [];
-export function preloadOriginalIcons() {
-  if (!originalsEnabled || originalIconPreloadStarted) return;
-  originalIconPreloadStarted = true;
-  for (const file of new Set(Object.values(originalIconFiles))) {
-    const image = new Image();
-    image.decoding = "async";
-    image.src = import.meta.env.BASE_URL + "icon-assets/" + file;
-    originalIconPreloadImages.push(image);
-  }
+// Preload and decode the original icons as a batch while the lock screen is visible.
+// AppArtwork keeps the entire icon set hidden until the batch is ready, avoiding
+// the one-by-one appearance caused by individual image load events.
+let originalIconsReady = false;
+let originalIconPreloadPromise: Promise<void> | undefined;
+const originalIconReadyListeners = new Set<() => void>();
+
+export function preloadOriginalIcons(): Promise<void> {
+  if (!originalsEnabled) return Promise.resolve();
+  if (originalIconPreloadPromise) return originalIconPreloadPromise;
+
+  const files = [...new Set(Object.values(originalIconFiles))];
+  let nextIndex = 0;
+  const loadFile = (file: string) =>
+    new Promise<void>((resolve) => {
+      const image = new Image();
+      let settled = false;
+      const finish = async (decode: boolean) => {
+        if (settled) return;
+        settled = true;
+        image.onload = null;
+        image.onerror = null;
+        if (decode && typeof image.decode === "function") {
+          try {
+            await image.decode();
+          } catch {
+            // A successful load is still usable if decode() is unavailable.
+          }
+        }
+        resolve();
+      };
+      image.onload = () => { void finish(true); };
+      image.onerror = () => { void finish(false); };
+      image.src = import.meta.env.BASE_URL + "icon-assets/" + file;
+      if (image.complete) void finish(image.naturalWidth > 0);
+    });
+
+  const worker = async () => {
+    while (nextIndex < files.length) {
+      const file = files[nextIndex++];
+      await loadFile(file);
+    }
+  };
+  const workers = Math.min(8, files.length);
+  originalIconPreloadPromise = Promise.all(
+    Array.from({ length: workers }, () => worker()),
+  ).then(() => {
+    originalIconsReady = true;
+    originalIconReadyListeners.forEach((listener) => listener());
+  });
+  return originalIconPreloadPromise;
 }
 export function AppArtwork({
   id,
@@ -865,7 +903,15 @@ export function AppArtwork({
   time?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [iconsReady, setIconsReady] = useState(originalIconsReady);
+  useEffect(() => {
+    const syncReady = () => setIconsReady(originalIconsReady);
+    originalIconReadyListeners.add(syncReady);
+    syncReady();
+    return () => {
+      originalIconReadyListeners.delete(syncReady);
+    };
+  }, []);
   const file = originalIconFiles[id];
   if (!originalsEnabled || !file || failed)
     return <DrawnArtwork id={id} date={date} />;
@@ -884,8 +930,7 @@ export function AppArtwork({
         loading="eager"
         decoding="async"
         draggable={false}
-        style={{ position: "absolute", inset: 0, opacity: loaded ? 1 : 0 }}
-        onLoad={() => setLoaded(true)}
+        style={{ position: "absolute", inset: 0, opacity: iconsReady ? 1 : 0 }}
         onError={() => setFailed(true)}
       />
       {id === "calendar" && (
