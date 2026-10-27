@@ -1,0 +1,66 @@
+name: Compress Instagram media
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/compress-instagram-media.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg imagemagick
+      - name: Compress Instagram images and Reels
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed=0
+          while IFS= read -r -d '' file; do
+            tmp="${file%.*}.compressed.jpg"
+            magick "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"
+            old_size=$(stat -c%s "$file")
+            new_size=$(stat -c%s "$tmp")
+            if [ "$new_size" -lt "$old_size" ]; then
+              mv "$tmp" "$file"
+              echo "Compressed image: $file ($old_size -> $new_size bytes)"
+              changed=1
+            else
+              rm -f "$tmp"
+              echo "Kept image (already smaller): $file"
+            fi
+          done < <(find public/media/instagram -type f -iname '*.jpg' -print0)
+          while IFS= read -r -d '' file; do
+            tmp="${file%.mp4}.compressed.mp4"
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -map '0:a?' -c:v libx264 -preset fast -crf 25 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$tmp"
+            old_size=$(stat -c%s "$file")
+            new_size=$(stat -c%s "$tmp")
+            if [ "$new_size" -lt "$old_size" ]; then
+              mv "$tmp" "$file"
+              echo "Compressed video: $file ($old_size -> $new_size bytes)"
+              changed=1
+            else
+              rm -f "$tmp"
+              echo "Kept video (already smaller): $file"
+            fi
+          done < <(find public/media/reels -type f -iname '*.mp4' -print0)
+          if [ "$changed" -eq 0 ]; then
+            echo "No media files needed compression."
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/instagram public/media/reels
+          if ! git diff --cached --quiet; then
+            git commit -m "Compress Instagram images and lightly optimize Reels"
+            git push
+          fi
