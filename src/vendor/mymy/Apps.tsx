@@ -591,7 +591,7 @@ export function MymyInstagram(p: SkinProps) {
               <img
                 src={carouselImage}
                 alt={caption}
-                loading={carouselIndex === 0 ? "eager" : "lazy"}
+                loading={currentCarouselIndex === 0 ? "eager" : "lazy"}
                 draggable={false}
               />
               <span className="ig-first-count">{currentCarouselIndex + 1}/{currentCarouselImages.length}</span>
@@ -693,7 +693,7 @@ export function MymyInstagram(p: SkinProps) {
               replies.filter((r) => r.startsWith(i.id + "\t")).length}
           </button>
         )}
-        <p className="igt">{isCarouselPost ? (isFirstCarouselPost ? "5天前 · 查看翻译" : "2天前") : i.time}</p>
+        <p className="igt">{isCarouselPost ? (isFirstCarouselPost ? "5天前 · 查看翻译" : isSecondCarouselPost ? "2天前" : "1天前") : i.time}</p>
       </article>
     );
   };
@@ -707,7 +707,7 @@ export function MymyInstagram(p: SkinProps) {
           >
             <ArrowLeft />
           </button>
-          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
+          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
             <span className="igl2 ig-first-detail-title">
               <b>帖子</b>
               <small>imwinter</small>
@@ -853,7 +853,7 @@ export function MymyInstagram(p: SkinProps) {
               <div className="pg2">
                 {posts.map((i) => (
                   <button key={i.id} onClick={() => openPost(i)}>
-                    {i.id === firstCarouselPostId || i.id === secondCarouselPostId || i.id === thirdCarouselPostId ? (
+                    {i.id === firstCarouselPostId || i.id === secondCarouselPostId || i.id === thirdCarouselPostId || i.id === fourthCarouselPostId ? (
                       <img src={i.id === firstCarouselPostId ? firstCarouselImages[0] : i.id === secondCarouselPostId ? secondCarouselImages[0] : i.id === thirdCarouselPostId ? thirdCarouselImages[0] : fourthCarouselImages[0]} alt="imwinter carousel post" loading="lazy" />
                     ) : (
                       <Media item={i} />
