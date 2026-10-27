@@ -25,7 +25,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { download } from "../io";
 import { safeMedia, type Item } from "../schema";
 import {
@@ -725,84 +725,113 @@ export function FilesSkin(p: Props) {
   );
 }
 export function MusicSkin(p: Props) {
-  const { tab, setTab, items } = useContent(p, "资料库");
+  const { tab, setTab, q, setQ, items } = useContent(p, "歌曲排行");
   const [song, setSong] = useTrack(p, items);
+  const [tracks, setTracks] = useState<Record<string, { previewUrl?: string; artworkUrl100?: string; collectionName?: string; trackTimeMillis?: number }>>({});
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const currentId = song ? meta(song, "appleTrackId") : "";
+  useEffect(() => {
+    let alive = true;
+    const ids = items.map((i) => meta(i, "appleTrackId")).filter(Boolean);
+    if (!ids.length) return;
+    fetch("https://itunes.apple.com/lookup?id=" + ids.join(",") + "&entity=song&country=cn")
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error("lookup failed")))
+      .then((data: { results?: Array<{ trackId?: number; previewUrl?: string; artworkUrl100?: string; collectionName?: string; trackTimeMillis?: number }> }) => {
+        if (!alive) return;
+        const next: Record<string, { previewUrl?: string; artworkUrl100?: string; collectionName?: string; trackTimeMillis?: number }> = {};
+        for (const result of data.results || []) {
+          if (result.trackId) next[String(result.trackId)] = result;
+        }
+        setTracks(next);
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [items]);
+  useEffect(() => {
+    setPlaying(false);
+    setProgress(0);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current.load();
+    }
+  }, [currentId, tracks]);
+  const currentTrack = currentId ? tracks[currentId] : undefined;
+  const togglePlayback = async () => {
+    const audio = audioRef.current;
+    if (!audio || !currentTrack?.previewUrl) return;
+    try {
+      if (audio.paused) {
+        await audio.play();
+        setPlaying(true);
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
+    } catch {
+      setPlaying(false);
+    }
+  };
+  const fmt = (seconds: number) => {
+    if (!Number.isFinite(seconds)) return "0:00";
+    return Math.floor(seconds / 60) + ":" + String(Math.floor(seconds % 60)).padStart(2, "0");
+  };
+  const visibleItems = items.filter((i) => !q || (i.title + " " + i.sender + " " + meta(i, "album")).toLowerCase().includes(q.toLowerCase()));
   return (
-    <div className="catalog-skin native-music">
-      <Header p={p} />
-      <div className="catalog-scroll">
-        <h1>{tab}</h1>
-        {tab === "歌单" ? (
-          <div className="music-albums">
-            {groupItems(items, "我的音乐").map((g) => (
-              <button
-                key={g}
-                onClick={() => {
-                  const i = items.find((i) => (i.folder || "我的音乐") === g);
-                  if (i) setSong(i);
-                }}
-              >
-                <Music size={51} />
-                <strong>{g}</strong>
-              </button>
-            ))}
-          </div>
-        ) : (
-          items.map((i, n) => (
-            <button
-              className="music-track"
-              key={i.id}
-              onClick={() => {
-                setSong(i);
-              }}
-            >
-              <small>{n + 1}</small>
-              <span>
-                <strong>{i.title}</strong>
-                <small>
-                  {i.sender} · {meta(i, "album")}
-                </small>
+    <div className="catalog-skin native-music" style={{ background: "#fff", color: "#111", position: "relative" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 8px" }}>
+        <button aria-label="返回" onClick={p.onBack} style={{ border: "1px solid #eee", borderRadius: 28, width: 42, height: 42, fontSize: 24, background: "#fff" }}>‹</button>
+        <strong style={{ fontSize: 20 }}>歌曲排行</strong>
+        <span style={{ width: 42 }} />
+      </div>
+      <div className="catalog-scroll" style={{ padding: "0 14px 155px" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "8px 4px 14px" }}>
+          <Search size={18} color="#999" />
+          <input aria-label="搜索歌曲" value={q} onChange={(e) => setQ(e.target.value)} placeholder="搜索歌曲、艺人或专辑" style={{ border: 0, outline: 0, flex: 1, fontSize: 15, background: "transparent" }} />
+        </div>
+        {visibleItems.map((i, n) => {
+          const id = meta(i, "appleTrackId");
+          const track = tracks[id];
+          return (
+            <button key={i.id} className="music-track" onClick={() => setSong(i)} style={{ display: "flex", width: "100%", alignItems: "center", gap: 12, padding: "9px 2px", minHeight: 76, borderBottom: "1px solid #e7e7e7", textAlign: "left", background: song?.id === i.id ? "#f7f7f7" : "#fff", color: "#111" }}>
+              <span style={{ width: 64, height: 64, flex: "0 0 64px", borderRadius: 8, overflow: "hidden", background: "#eee", display: "grid", placeItems: "center" }}>
+                {track?.artworkUrl100 ? <img src={track.artworkUrl100.replace("100x100", "300x300")} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <Music size={24} color="#999" />}
               </span>
-              <span>{meta(i, "duration")}</span>
+              <span style={{ flex: 1, minWidth: 0 }}>
+                <strong style={{ display: "block", fontSize: 16, lineHeight: 1.35, fontWeight: 600 }}>{i.title}</strong>
+                <small style={{ display: "block", color: "#85858a", fontSize: 13, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginTop: 3 }}>{track?.collectionName || meta(i, "album")} · {i.sender}</small>
+              </span>
+              <span aria-hidden="true" style={{ color: "#929292", fontSize: 22, padding: "0 6px" }}>•••</span>
             </button>
-          ))
-        )}
-        <Empty items={items} />
+          );
+        })}
+        <p style={{ color: "#999", textAlign: "center", fontSize: 11, padding: "10px 0" }}>歌曲试听由 iTunes 提供 · 每首为试听片段</p>
+        <Empty items={visibleItems} />
       </div>
       {song && (
-        <div className="native-now-playing">
-          <button onClick={() => p.onItem(song)}>
-            <Music size={20} />
-            {song.title}
-          </button>
-          {song.kind === "audio" && safeMedia(song.media) ? (
-            <AudioPlayer p={p} item={song} />
-          ) : (
-            <button onClick={() => p.onItem(song)}>查看歌曲内容</button>
-          )}
-          <button
-            aria-label="下一首"
-            onClick={() =>
-              setSong(
-                items[
-                  (items.findIndex((i) => i.id === song.id) + 1) % items.length
-                ],
-              )
-            }
-          >
-            <SkipForward size={18} />
-          </button>
+        <div style={{ position: "absolute", left: 12, right: 12, bottom: 70, zIndex: 3, border: "1px solid #e7e7e7", borderRadius: 24, background: "rgba(255,255,255,.97)", boxShadow: "0 3px 14px #00000012", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px" }}>
+            <span style={{ width: 42, height: 42, flex: "0 0 42px", borderRadius: 6, overflow: "hidden", background: "#eee" }}>
+              {currentTrack?.artworkUrl100 ? <img src={currentTrack.artworkUrl100} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <Music size={20} />}
+            </span>
+            <button onClick={() => togglePlayback()} style={{ flex: 1, minWidth: 0, textAlign: "left", background: "transparent", color: "#111" }}>
+              <strong style={{ display: "block", fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</strong>
+              <small style={{ color: "#777" }}>{song.sender} · {playing ? "正在播放试听" : currentTrack?.previewUrl ? "点击播放试听" : "正在获取试听资源…"}</small>
+            </button>
+            <button aria-label={playing ? "暂停" : "播放"} onClick={togglePlayback} style={{ fontSize: 24, padding: "0 5px", background: "transparent", color: "#111" }}>{playing ? "Ⅱ" : "▶"}</button>
+            <button aria-label="下一首" onClick={() => { const n = items.findIndex((x) => x.id === song.id); setSong(items[(n + 1) % items.length]); }} style={{ fontSize: 22, background: "transparent", color: "#111" }}>▶▶</button>
+          </div>
+          <div style={{ height: 3, background: "#e5e5e5" }}><div style={{ height: "100%", width: (currentTrack?.trackTimeMillis ? Math.min(100, progress / (currentTrack.trackTimeMillis / 1000) * 100) : 0) + "%", background: "#d7a3b3" }} /></div>
+          {currentTrack?.previewUrl && <audio ref={audioRef} src={currentTrack.previewUrl} preload="none" onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)} onEnded={() => setPlaying(false)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} style={{ display: "none" }} />}
         </div>
       )}
-      <Tabs
-        tabs={["资料库", "歌单"]}
-        value={tab}
-        set={setTab}
-        icons={[<Music />, <Folder />]}
-      />
+      <Tabs tabs={["歌曲排行", "歌单"]} value={tab} set={setTab} icons={[<Music />, <Folder />]} />
     </div>
   );
 }
+
 function LocationMap({
   items,
   onItem,
