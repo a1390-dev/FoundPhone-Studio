@@ -911,9 +911,20 @@
 .mymy-ui .ig-reel-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; background: #090909; display: block;
+  transform: translate3d(0, 0, 0);
+  transition: transform 280ms cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+  backface-visibility: hidden;
 }
-.mymy-ui .ig-reel-video-active { z-index: 1; opacity: 1; pointer-events: auto; }
-.mymy-ui .ig-reel-video-preload { z-index: 0; opacity: 0; pointer-events: none; }
+.mymy-ui .ig-reel-video-active { z-index: 2; opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; }
+.mymy-ui .ig-reel-video-preload { z-index: 0; opacity: 1; pointer-events: none; }
+.mymy-ui .ig-reel-video-next { transform: translate3d(0, 100%, 0); }
+.mymy-ui .ig-reel-video-previous { transform: translate3d(0, -100%, 0); }
+.mymy-ui .ig-reel-video-exiting-up { z-index: 1; opacity: 1; transform: translate3d(0, -100%, 0); pointer-events: none; }
+.mymy-ui .ig-reel-video-exiting-down { z-index: 1; opacity: 1; transform: translate3d(0, 100%, 0); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .mymy-ui .ig-reel-media { transition-duration: 1ms; }
+}
 .mymy-ui .ig-reel-top {
   position: absolute; top: 0; left: 0; right: 0; z-index: 2;
   display: flex; align-items: center; justify-content: space-between;
