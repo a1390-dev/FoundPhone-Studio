@@ -16,16 +16,12 @@ function Player() {
       .then(async (x) => {
         const w = validateWork(x);
         document.title = w.title;
-        // Preload the custom wallpaper before mounting the phone so its
-        // fallback gradient is not shown while the background image downloads.
+        // Start wallpaper loading in the background; do not block the game
+        // from appearing while a large image downloads or decodes.
         if (w.phone.wallpaper === "dog") {
           const image = new Image();
           image.src = customWallpaper;
-          try {
-            await image.decode();
-          } catch {
-            // Keep the player usable if the image cannot be decoded.
-          }
+          void image.decode().catch(() => {});
         }
         setWork(w);
       })
