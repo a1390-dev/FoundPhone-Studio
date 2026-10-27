@@ -538,7 +538,11 @@ export function WhatsAppSkin(p: SkinProps) {
         .filter((i) => filter !== "未读" || !i.read)
         .map((i) => i.title),
     ),
-  ];
+  ].sort((a, b) => {
+    const aPinned = p.items.some((i) => i.title === a && i.meta.pinned === "true");
+    const bPinned = p.items.some((i) => i.title === b && i.meta.pinned === "true");
+    return Number(bPinned) - Number(aPinned);
+  });
   const name = tab === "聊天" ? p.name : tab;
   return (
     <div className="whatsapp-ui independent-skin">
