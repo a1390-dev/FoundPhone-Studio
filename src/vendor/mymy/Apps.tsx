@@ -319,7 +319,7 @@ export function MymyKakao(p: SkinProps) {
 }
 export function MymyInstagram(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "主页"),
-    [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", []),
+    [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", ["imwinter-carousel-post-01"]),
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
     [reposted, setReposted] = useSkinState<string[]>(p, "mymyReposted", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
@@ -552,7 +552,7 @@ export function MymyInstagram(p: SkinProps) {
         {isFirstCarouselPost ? (
           <div className="iga ig-first-actions">
             <button aria-label="点赞" aria-pressed={liked.includes(i.id)} onClick={() => toggle(i.id, liked, setLiked)}>
-              <Heart fill={liked.includes(i.id) ? "#ff3040" : "#ff3040"} color="#ff3040" />
+              <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} color={liked.includes(i.id) ? "#ff3040" : "#111111"} />
               <b>{formatIgCount(firstCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
             </button>
             <button aria-label="评论" onClick={() => setSheet(i)}>
