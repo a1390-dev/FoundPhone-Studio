@@ -21,6 +21,9 @@ export default defineConfig(({ command }) => ({
       workbox: {
         clientsClaim: true,
         globPatterns: ["**/*.{js,css,html,svg,json,txt,png,jpg}"],
+        // Media is loaded on demand; precaching every image competes with video streaming
+        // and slows first launch on mobile connections.
+        globIgnores: ["**/media/**"],
         maximumFileSizeToCacheInBytes: 4000000,
       },
     }),

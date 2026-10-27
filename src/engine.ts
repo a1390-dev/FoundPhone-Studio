@@ -186,14 +186,32 @@ export function advance(
   previous: Runtime,
   milliseconds: number,
 ): Runtime {
-  const s = structuredClone(previous);
   const delta = Number.isFinite(milliseconds)
     ? Math.max(0, Math.min(milliseconds, 86400000))
     : 0;
-  const end = (s.elapsedMs ?? 0) + delta;
+  const elapsed = previous.elapsedMs ?? 0;
+  const remainder = previous.clockRemainderMs ?? 0;
+  const scheduled = previous.scheduled ?? [];
+  const end = elapsed + delta;
+  const clockBoundaryReached = remainder + delta >= 60000;
+  const timerDue = w.mode !== "explore" && scheduled.some((entry) => entry.due <= end);
+
+  // Most runtime ticks only advance elapsed time. Avoid deep-cloning the entire
+  // runtime (including message histories) until a clock or story timer event is due.
+  if (!clockBoundaryReached && !timerDue) {
+    return {
+      ...previous,
+      elapsedMs: end,
+      clockRemainderMs: remainder + delta,
+      scheduled,
+    };
+  }
+
+  const s = structuredClone(previous);
   s.elapsedMs ??= 0;
   s.clockRemainderMs ??= 0;
   s.scheduled ??= [];
+  const eventEnd = (s.elapsedMs ?? 0) + delta;
   let resumes = 0;
   while (true) {
     s.scheduled.sort((a, b) => a.due - b.due);
@@ -201,7 +219,7 @@ export function advance(
       w.mode !== "explore" && resumes < 200 ? s.scheduled[0] : undefined;
     const clockAt = s.elapsedMs + 60000 - s.clockRemainderMs;
     const next = Math.min(
-      end,
+      eventEnd,
       clockAt,
       due ? Math.max(s.elapsedMs, due.due) : Infinity,
     );
@@ -236,7 +254,7 @@ export function advance(
       runQueue(w, s, "timer", due.nodeId, [due.nodeId], new Set([due.nodeId]));
       continue;
     }
-    if (s.elapsedMs >= end) break;
+    if (s.elapsedMs >= eventEnd) break;
   }
   return s;
 }

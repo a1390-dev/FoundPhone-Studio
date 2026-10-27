@@ -27,6 +27,7 @@ import {
   CirclePlay,
   Volume2,
   VolumeX,
+  BadgeCheck,
 } from "lucide-react";
 import type { SkinProps } from "../../AppSkins";
 import { Avatar, Media } from "../../skins/shared";
@@ -318,8 +319,9 @@ export function MymyKakao(p: SkinProps) {
 }
 export function MymyInstagram(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "主页"),
-    [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", []),
+    [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", ["imwinter-carousel-post-01"]),
     [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []),
+    [reposted, setReposted] = useSkinState<string[]>(p, "mymyReposted", []),
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
@@ -327,27 +329,164 @@ export function MymyInstagram(p: SkinProps) {
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
     [playing, setPlaying] = useState(true);
+  const reelStageRef = useRef<HTMLDivElement | null>(null);
+  const lastReelSwipeAt = useRef(0);
+  const lastReelNavigationAt = useRef(0);
+  const reelRecoveryCount = useRef<Record<string, number>>({});
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
+  const [thirdCarouselIndex, setThirdCarouselIndex] = useState(0);
+  const [fourthCarouselIndex, setFourthCarouselIndex] = useState(0);
+  const [reelSwipeDirection, setReelSwipeDirection] = useState<"next" | "previous">("next");
+  const carouselTouchStart = useRef<number | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
     [story, setStory] = useState(0),
     [draft, setDraft] = useState(""),
     [pop, setPop] = useState("");
-  const posts = p.items.filter(
+  const sourcePosts = p.items.filter(
       (i) => i.folder !== "私信" && i.meta.story !== "true",
     ),
     stories = p.items.filter((i) => i.meta.story === "true"),
     dms = p.items.filter((i) => i.folder === "私信"),
     active = stories[story - 1];
+  const firstCarouselPostId = "imwinter-carousel-post-01";
+  const secondCarouselPostId = "imwinter-carousel-post-02";
+  const thirdCarouselPostId = "imwinter-carousel-post-03";
+  const fourthCarouselPostId = "imwinter-carousel-post-04";
+  const secondCarouselImages = ["/media/instagram/slide-01.jpg", "/media/instagram/slide-02.jpg", "/media/instagram/slide-03.jpg", "/media/instagram/slide-04.jpg"];
+  const secondCarouselCounts = { likes: 1847293, comments: 28641, reposts: 17382, shares: 42816, saves: 31957 };
+  const thirdCarouselImages = ["/media/instagram/post-03/slide-01.jpg", "/media/instagram/post-03/slide-02.jpg", "/media/instagram/post-03/slide-03.jpg", "/media/instagram/post-03/slide-04.jpg"];
+  const thirdCarouselCounts = { likes: 2376418, comments: 19382, reposts: 29471, shares: 51608, saves: 64729 };
+  const fourthCarouselImages = ["/media/instagram/post-04/slide-01.jpg", "/media/instagram/post-04/slide-02.jpg", "/media/instagram/post-04/slide-03.jpg", "/media/instagram/post-04/slide-04.jpg", "/media/instagram/post-04/slide-05.jpg", "/media/instagram/post-04/slide-06.jpg"];
+  const fourthCarouselCounts = { likes: 1965832, comments: 24817, reposts: 21864, shares: 39725, saves: 58241 };
+  const fourthCarouselPost = makeItem({ id: fourthCarouselPostId, title: "imwinter", body: "🌻", time: "1天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: fourthCarouselImages[0], likes: fourthCarouselCounts.likes, comments: ["🌻🌻🌻", "너무 예뻐요 🤍", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
+  const thirdCarouselPost = makeItem({ id: thirdCarouselPostId, title: "imwinter", body: "🕶️", time: "1天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: thirdCarouselImages[0], likes: thirdCarouselCounts.likes, comments: ["🕶️🕶️🕶️", "너무 예뻐요 🤍", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
+  const secondCarouselPost = makeItem({ id: secondCarouselPostId, title: "imwinter", body: "🫠", time: "2天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: secondCarouselImages[0], likes: secondCarouselCounts.likes, comments: ["너무 예뻐요 🤍", "🫠🫠🫠", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
+  const firstCarouselImages = [
+    "/media/instagram/post-01/slide-01.jpg",
+    "/media/instagram/post-01/slide-02.jpg",
+    "/media/instagram/post-01/slide-03.jpg",
+    "/media/instagram/post-01/slide-04.jpg",
+    "/media/instagram/post-01/slide-05.jpg",
+    "/media/instagram/post-01/slide-06.jpg",
+    "/media/instagram/post-01/slide-07.jpg",
+  ];
+  const firstCarouselCaptions = [
+    "뽀아나",
+    "뽀졸려",
+    "마주찼다,눈",
+    "?",
+    "우구구구구구구구구구구궁",
+    "교✨감✨",
+    "시차이슈",
+  ];
+  const firstCarouselCounts = {
+    likes: 2864000,
+    comments: 4769,
+    reposts: 55000,
+    shares: 62000,
+    saves: 73800,
+  };
+  const firstCarouselPost = makeItem({
+    id: firstCarouselPostId,
+    title: "imwinter",
+    body: firstCarouselCaptions[0],
+    time: "5天前",
+    sender: "imwinter",
+    avatar: "/media/instagram/post-01/avatar.jpg",
+    kind: "image",
+    media: firstCarouselImages[0],
+    likes: firstCarouselCounts.likes,
+    comments: [
+      "MY: 너무 귀여워요 🥹",
+      "MY: 뽀아나 너무 귀여워 🤍",
+      "MY: 강아지랑 같이 있는 거 너무 좋아요",
+    ],
+    meta: { handle: "imwinter", verified: "true", carousel: "true" },
+  });
+  const posts = [firstCarouselPost, secondCarouselPost, thirdCarouselPost, fourthCarouselPost, ...sourcePosts];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
-  const reels = posts.filter((i) => !!i.media);
-  const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
+  const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0];
+  const reelVideos = [
+    "/media/reels/ig-reel-01.mp4",
+    "/media/reels/ig-reel-02.mp4",
+    "/media/reels/ig-reel-03.mp4",
+    "/media/reels/ig-reel-05.mp4",
+  ];
+  const reels: Item[] = officialAccount ? reelVideos.map((media, n) => ({
+    ...officialAccount,
+    id: "aespa-official-reel-" + (n + 1),
+    title: "aespa_official Reel " + (n + 1),
+    sender: "aespa_official",
+    media,
+    kind: "video",
+    meta: { ...officialAccount.meta, handle: "aespa_official" },
+    body: "",
+  })) : [];
+  const reel = reels[reelIndex];
   const reelCounts = (id: string) => {
-    let hash = 0;
-    for (let n = 0; n < id.length; n++) hash = (hash * 31 + id.charCodeAt(n)) >>> 0;
-    return { likes: 1000000 + (hash % 99000000), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
+    const index = Math.max(0, Number(id.split("-").pop()) - 1);
+    const counts = [
+      { likes: 2240000, comments: 79000, shares: 14000, saves: 15000 },
+      { likes: 3180000, comments: 63000, shares: 21000, saves: 27000 },
+      { likes: 1470000, comments: 42000, shares: 9800, saves: 18000 },
+      { likes: 2670000, comments: 56000, shares: 17300, saves: 32000 },
+    ];
+    return counts[index % counts.length];
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
+  const formatIgCount = (n: number) => n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "万" : n.toLocaleString("en-US");
+  const attemptReelPlayback = (video: HTMLVideoElement) => {
+    // iPhone Safari is most reliable with inline muted playback set before play().
+    video.playsInline = true;
+    video.muted = muted;
+    try {
+      const result = video.play();
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {
+          // Keep the player ready to retry on loadeddata/canplay or an explicit tap.
+        });
+      }
+    } catch {
+      // A media readiness event or an explicit tap can retry playback.
+    }
+  };
+
+  const requestReel = (nextIndex: number) => {
+    if (nextIndex < 0 || nextIndex >= reels.length || nextIndex === reelIndex) return;
+    const now = Date.now();
+    if (now - lastReelNavigationAt.current < 280) return;
+    lastReelNavigationAt.current = now;
+    setReelSwipeDirection(nextIndex > reelIndex ? "next" : "previous");
+    setPlaying(true);
+    setReelIndex(nextIndex);
+  };
+
+  // Keep playback controls separate from media disposal. On iOS Safari, changing
+  // tabs can leave the previous decoder alive unless its source is explicitly released.
+  useEffect(() => {
+    if (tab !== "Reels" || !reel) return;
+    const video = reelStageRef.current?.querySelector<HTMLVideoElement>("video[data-reel-id]");
+    if (!video) return;
+    video.playsInline = true;
+    video.muted = muted;
+    if (playing) attemptReelPlayback(video);
+    else video.pause();
+  }, [reelIndex, tab, muted, playing, reel?.id]);
+
+  useEffect(() => {
+    if (tab !== "Reels" || !reel) return;
+    const video = reelStageRef.current?.querySelector<HTMLVideoElement>("video[data-reel-id]");
+    if (!video) return;
+    return () => {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    };
+  }, [tab, reelIndex, reel?.id]);
+
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(
@@ -363,107 +502,209 @@ export function MymyInstagram(p: SkinProps) {
     setStory(i + 1);
   };
   const openPost = (i: Item) => {
+    if (i.id === firstCarouselPostId || i.id === secondCarouselPostId || i.id === thirdCarouselPostId || i.id === fourthCarouselPostId) {
+      setSelected(i);
+      return;
+    }
     if (p.creator || i.password) p.onItem(i);
     else {
       read(p, i);
       setSelected(i);
     }
   };
-  const post = (i: Item) => (
-    <article className="igp" key={i.id}>
-      <header className="igph">
-        <Avatar name={i.sender} src={i.avatar} />
-        <div className="igpn">
-          <button onClick={() => setTab("个人主页")}>
-            <b>{i.sender}</b>
+  const post = (i: Item) => {
+    const isFirstCarouselPost = i.id === firstCarouselPostId;
+    const isSecondCarouselPost = i.id === secondCarouselPostId;
+    const isThirdCarouselPost = i.id === thirdCarouselPostId;
+    const isFourthCarouselPost = i.id === fourthCarouselPostId;
+    const isCarouselPost = isFirstCarouselPost || isSecondCarouselPost || isThirdCarouselPost || isFourthCarouselPost;
+    const currentCarouselIndex = isFourthCarouselPost ? fourthCarouselIndex : isThirdCarouselPost ? thirdCarouselIndex : isSecondCarouselPost ? secondCarouselIndex : carouselIndex;
+    const currentCarouselImages = isFourthCarouselPost ? fourthCarouselImages : isThirdCarouselPost ? thirdCarouselImages : isSecondCarouselPost ? secondCarouselImages : firstCarouselImages;
+    const currentCarouselCounts = isFourthCarouselPost ? fourthCarouselCounts : isThirdCarouselPost ? thirdCarouselCounts : isSecondCarouselPost ? secondCarouselCounts : firstCarouselCounts;
+    const caption = isFirstCarouselPost ? firstCarouselCaptions[carouselIndex] : i.body;
+    const carouselImage = currentCarouselImages[currentCarouselIndex];
+    return (
+      <article className={"igp " + (isCarouselPost ? "ig-first-post" : "")} key={i.id}>
+        <header className="igph">
+          {isCarouselPost ? (
+            <img className="ig-first-avatar" src={i.avatar} loading="lazy" decoding="async" alt="" />
+          ) : (
+            <Avatar name={i.sender} src={i.avatar} />
+          )}
+          <div className="igpn">
+            <button className={isCarouselPost ? "ig-first-userrow" : ""} onClick={() => setTab("个人主页")}>
+              <b>{i.sender}</b>
+              {isCarouselPost && <BadgeCheck className="ig-first-verified" size={18} fill="#159CF4" color="#FFFFFF" />}
+            </button>
+            {!isCarouselPost && <small>{i.meta.location || i.time}</small>}
+          </div>
+          <button aria-label="帖子详情" onClick={() => openPost(i)}>
+            <MoreHorizontal />
           </button>
-          <small>{i.meta.location || i.time}</small>
-        </div>
-        <button aria-label="帖子详情" onClick={() => openPost(i)}>
-          <MoreHorizontal />
-        </button>
-      </header>
-      <div
-        className="carw"
-        onDoubleClick={() => {
-          if (!liked.includes(i.id)) setLiked([...liked, i.id]);
-          setPop(i.id);
-        }}
-      >
-        <Media item={i} />
-        {pop === i.id && (
-          <Heart
-            className="mymy-heart-pop"
-            fill="white"
-            onAnimationEnd={() => setPop("")}
-          />
-        )}
-      </div>
-      <div className="iga">
-        <button
-          aria-label={"点赞" + i.title}
-          aria-pressed={liked.includes(i.id)}
-          onClick={() => toggle(i.id, liked, setLiked)}
-        >
-          <Heart
-            fill={liked.includes(i.id) ? "#ff3040" : "none"}
-            color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
-          />
-        </button>
-        <button
-          aria-label={"评论" + i.title}
-          onClick={() => {
-            read(p, i);
-            setSheet(i);
+        </header>
+        <div
+          className="carw"
+          onDoubleClick={() => {
+            if (!liked.includes(i.id)) setLiked([...liked, i.id]);
+            setPop(i.id);
           }}
         >
-          <MessageCircle />
-        </button>
-        <button aria-label="分享帖子" onClick={() => setTab("私信")}>
-          <Send />
-        </button>
+          {isCarouselPost ? (
+            <div
+              className="ig-first-carousel"
+              onTouchStart={(e) => {
+                carouselTouchStart.current = e.touches[0]?.clientX ?? null;
+              }}
+              onTouchEnd={(e) => {
+                const start = carouselTouchStart.current;
+                const end = e.changedTouches[0]?.clientX;
+                carouselTouchStart.current = null;
+                if (start === null || end === undefined) return;
+                const delta = end - start;
+                if (Math.abs(delta) < 38) return;
+                if (isFourthCarouselPost) setFourthCarouselIndex((current) => Math.max(0, Math.min(fourthCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+                else if (isThirdCarouselPost) setThirdCarouselIndex((current) => Math.max(0, Math.min(thirdCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+                else if (isSecondCarouselPost) setSecondCarouselIndex((current) => Math.max(0, Math.min(secondCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+                else setCarouselIndex((current) => Math.max(0, Math.min(firstCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+              }}
+            >
+              <img
+                src={carouselImage}
+                alt={caption}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
+              <span className="ig-first-count">{currentCarouselIndex + 1}/{currentCarouselImages.length}</span>
+            </div>
+          ) : (
+            <Media item={i} />
+          )}
+          {pop === i.id && (
+            <Heart
+              className="mymy-heart-pop"
+              fill="white"
+              onAnimationEnd={() => setPop("")}
+            />
+          )}
+        </div>
+        {isCarouselPost && (
+          <div className="ig-first-dots" aria-label="贴文图片页码">
+            {currentCarouselImages.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                className={index === currentCarouselIndex ? "active" : ""}
+                aria-label={`第${index + 1}张图片`}
+                aria-pressed={index === currentCarouselIndex}
+                onClick={() => isFourthCarouselPost ? setFourthCarouselIndex(index) : isThirdCarouselPost ? setThirdCarouselIndex(index) : isSecondCarouselPost ? setSecondCarouselIndex(index) : setCarouselIndex(index)}
+              />
+            ))}
+          </div>
+        )}
+        {isCarouselPost ? (
+          <div className="iga ig-first-actions">
+            <button aria-label="点赞" aria-pressed={liked.includes(i.id)} onClick={() => toggle(i.id, liked, setLiked)}>
+              <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} color={liked.includes(i.id) ? "#ff3040" : "#111111"} />
+              <b>{formatIgCount(currentCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
+            </button>
+            <button aria-label="评论" onClick={() => setSheet(i)}>
+              <MessageCircle />
+              <b>{formatIgCount(currentCarouselCounts.comments)}</b>
+            </button>
+            <button aria-label="转发" aria-pressed={reposted.includes(i.id)} onClick={() => toggle(i.id, reposted, setReposted)}>
+              <Repeat2 color={reposted.includes(i.id) ? "#159CF4" : "#111111"} />
+              <b>{formatIgCount(currentCarouselCounts.reposts + (reposted.includes(i.id) ? 1 : 0))}</b>
+            </button>
+            <button aria-label="分享" onClick={() => setTab("私信")}>
+              <Send />
+              <b>{formatIgCount(currentCarouselCounts.shares)}</b>
+            </button>
+            <button aria-label="收藏" aria-pressed={saved.includes(i.id)} onClick={() => toggle(i.id, saved, setSaved)}>
+              <Bookmark fill={saved.includes(i.id) ? "#111111" : "none"} />
+            </button>
+          </div>
+        ) : (
+          <div className="iga">
+            <button
+              aria-label={"点赞" + i.title}
+              aria-pressed={liked.includes(i.id)}
+              onClick={() => toggle(i.id, liked, setLiked)}
+            >
+              <Heart
+                fill={liked.includes(i.id) ? "#ff3040" : "none"}
+                color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
+              />
+            </button>
+            <button
+              aria-label={"评论" + i.title}
+              onClick={() => {
+                read(p, i);
+                setSheet(i);
+              }}
+            >
+              <MessageCircle />
+            </button>
+            <button aria-label="分享帖子" onClick={() => setTab("私信")}>
+              <Send />
+            </button>
+            <button
+              className="mymy-save"
+              aria-label={"收藏" + i.title}
+              aria-pressed={saved.includes(i.id)}
+              onClick={() => toggle(i.id, saved, setSaved)}
+            >
+              <Bookmark fill={saved.includes(i.id) ? "currentColor" : "none"} />
+            </button>
+          </div>
+        )}
+        {!isCarouselPost && <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>}
         <button
-          className="mymy-save"
-          aria-label={"收藏" + i.title}
-          aria-pressed={saved.includes(i.id)}
-          onClick={() => toggle(i.id, saved, setSaved)}
+          className="igc"
+          onClick={() => {
+            openPost(i);
+          }}
         >
-          <Bookmark fill={saved.includes(i.id) ? "currentColor" : "none"} />
+          <b>{i.sender}</b> {caption}
         </button>
-      </div>
-      <p className="lk2">{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</p>
-      <button
-        className="igc"
-        onClick={() => {
-          openPost(i);
-        }}
-      >
-        <b>{i.sender}</b> {i.body}
-      </button>
-      <button className="cmall" onClick={() => setSheet(i)}>
-        查看评论{" "}
-        {i.comments.length +
-          replies.filter((r) => r.startsWith(i.id + "\t")).length}
-      </button>
-      <p className="igt">{i.time}</p>
-    </article>
-  );
+        {!isCarouselPost && (
+          <button className="cmall" onClick={() => setSheet(i)}>
+            查看评论{" "}
+            {i.comments.length +
+              replies.filter((r) => r.startsWith(i.id + "\t")).length}
+          </button>
+        )}
+        <p className="igt">{isCarouselPost ? (isFirstCarouselPost ? "5天前 · 查看翻译" : isSecondCarouselPost ? "2天前" : "1天前") : i.time}</p>
+      </article>
+    );
+  };
   return (
     <div className="mymy-ui mymy-instagram" data-mymy="instagram">
       <div className="ig">
-        <header className="igh">
+        <header className={"igh" + (!selected && tab === "搜索" ? " ig-search-header-hidden" : "")}>
           <button
             aria-label={selected ? "返回Instagram动态" : "关闭当前App"}
             onClick={() => (selected ? setSelected(null) : p.onBack())}
           >
             <ArrowLeft />
           </button>
-          <span className="igl2">
-            {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
-          </span>
-          <button aria-label="打开私信" onClick={() => setTab("私信")}>
-            <Send />
-          </button>
+          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
+            <span className="igl2 ig-first-detail-title">
+              <b>帖子</b>
+              <small>imwinter</small>
+            </span>
+          ) : (
+            <span className="igl2">
+              {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
+            </span>
+          )}
+          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
+            <span className="ig-first-header-space" aria-hidden="true" />
+          ) : (
+            <button aria-label="打开私信" onClick={() => setTab("私信")}>
+              <Send />
+            </button>
+          )}
         </header>
         <div className="igb">
           {selected && post(selected)}
@@ -490,18 +731,85 @@ export function MymyInstagram(p: SkinProps) {
             </>
           )}
           {!selected && tab === "Reels" && (
-            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); }} onTouchEnd={(e) => {
-              const start = Number((e.currentTarget as HTMLDivElement).dataset.touchY || 0);
-              const delta = (e.changedTouches[0]?.clientY ?? start) - start;
-              if (Math.abs(delta) > 45 && reels.length) setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length);
+            <div className="ig-reels" onTouchStartCapture={(e) => {
+              const touch = e.touches[0];
+              const el = e.currentTarget as HTMLDivElement;
+              el.dataset.touchY = String(touch?.clientY ?? 0);
+              el.dataset.touchX = String(touch?.clientX ?? 0);
+            }} onTouchEndCapture={(e) => {
+              const el = e.currentTarget as HTMLDivElement;
+              const start = Number(el.dataset.touchY ?? NaN);
+              const startX = Number(el.dataset.touchX ?? NaN);
+              const endTouch = e.changedTouches[0];
+              const end = endTouch?.clientY;
+              const endX = endTouch?.clientX;
+              delete el.dataset.touchY;
+              delete el.dataset.touchX;
+              if (!Number.isFinite(start) || !Number.isFinite(startX) || end === undefined || endX === undefined) return;
+              const delta = end - start;
+              const deltaX = endX - startX;
+              if (Math.abs(delta) >= 48 && Math.abs(delta) > Math.abs(deltaX) * 1.15 && reels.length) {
+                if (delta < 0 && reelIndex < reels.length - 1) {
+                  lastReelSwipeAt.current = Date.now();
+                  requestReel(reelIndex + 1);
+                } else if (delta > 0 && reelIndex > 0) {
+                  lastReelSwipeAt.current = Date.now();
+                  requestReel(reelIndex - 1);
+                }
+              }
+            }} onTouchCancelCapture={(e) => {
+              delete (e.currentTarget as HTMLDivElement).dataset.touchY;
+              delete (e.currentTarget as HTMLDivElement).dataset.touchX;
+            }} onWheel={(e) => {
+              if (Math.abs(e.deltaY) >= 25 && reels.length) {
+                if (e.deltaY > 0 && reelIndex < reels.length - 1) requestReel(reelIndex + 1);
+                else if (e.deltaY < 0 && reelIndex > 0) requestReel(reelIndex - 1);
+              }
             }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
-                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} loop playsInline onClick={(e) => {
-                      const v = e.currentTarget;
-                      if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
-                    }} />
+                    <div className="ig-reel-video-stage" ref={reelStageRef}>
+                      <video
+                        key={reel.id}
+                        data-reel-id={reel.id}
+                        className={"ig-reel-media ig-reel-video-active " + (reelSwipeDirection === "next" ? "ig-reel-enter-next" : "ig-reel-enter-previous")}
+                        src={reel.media}
+                        autoPlay={playing}
+                        muted={muted}
+                        playsInline
+                        preload="metadata"
+                        onCanPlay={(e) => {
+                          const video = e.currentTarget;
+                          if (tab === "Reels" && playing && video.paused) attemptReelPlayback(video);
+                        }}
+                        onEnded={() => setPlaying(false)}
+                        onError={(e) => {
+                          const failedVideo = e.currentTarget;
+                          const attempts = reelRecoveryCount.current[reel.id] ?? 0;
+                          if (attempts < 1 && tab === "Reels") {
+                            reelRecoveryCount.current[reel.id] = attempts + 1;
+                            window.setTimeout(() => {
+                              if (reelStageRef.current?.querySelector("video[data-reel-id]") === failedVideo && tab === "Reels") {
+                                failedVideo.load();
+                                if (playing) attemptReelPlayback(failedVideo);
+                              }
+                            }, 250);
+                          }
+                        }}
+                        onClick={(e) => {
+                          if (Date.now() - lastReelSwipeAt.current < 450) return;
+                          const video = e.currentTarget;
+                          if (video.paused) {
+                            setPlaying(true);
+                            attemptReelPlayback(video);
+                          } else {
+                            video.pause();
+                            setPlaying(false);
+                          }
+                        }}
+                      />
+                    </div>
                   ) : <Media item={reel} className="ig-reel-media" />}
                   <div className="ig-reel-top">
                     <button aria-label="返回动态" onClick={() => setTab("主页")}><ArrowLeft /></button>
@@ -514,53 +822,31 @@ export function MymyInstagram(p: SkinProps) {
                     <button aria-label="转发 Reels" onClick={() => setPop("已打开转发选项")}><Repeat2 /><small>{shortCount(reelCounts(reel.id).shares)}</small></button>
                     <button aria-label="分享 Reels" onClick={() => setTab("私信")}><Send /><small>{shortCount(reelCounts(reel.id).shares + 1000)}</small></button>
                     <button aria-label="收藏 Reels" onClick={() => toggle(reel.id, reelSaved, setReelSaved)}><Bookmark fill={reelSaved.includes(reel.id) ? "white" : "none"} /><small>{shortCount(reelCounts(reel.id).saves)}</small></button>
-                    <Avatar name={reel.sender || "creator"} src={reel.avatar} />
                   </div>
                   <div className="ig-reel-caption">
-                    <div><b>{reel.meta.handle ? "@" + reel.meta.handle : reel.sender}</b><button onClick={() => setTab("个人主页")}>追踪</button></div>
-                    <p>{reel.body}</p>
-                    <small>♪ 原声 · {reel.sender}</small>
+                    <div className="ig-reel-account"><span className="ig-reel-account-avatar"><img src="/media/reels/aespa-official-avatar.jpg" loading="lazy" decoding="async" alt="" /></span><b>@aespa_official</b><BadgeCheck className="ig-reel-verified" size={17} fill="white" /><button onClick={() => setTab("个人主页")}>追踪</button></div>
+                    {reel.body && <p>{reel.body}</p>}
+                    <small>♪ aespa_official · 原声</small>
                   </div>
                   <div className="ig-reel-progress"><span /></div>
-                  <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
+                  <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button className={n === 1 ? "active" : ""} key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
                   {!playing && <div className="ig-reel-paused"><span>▶</span></div>}
                 </>
               ) : <div className="ig-reels-empty"><CirclePlay size={44} /><b>Reels</b><span>上传视频内容后会在这里显示</span></div>}
             </div>
           )}
           {!selected && tab === "个人主页" && (
-            <>
+            <section className="ig-profile-settings">
               <div className="pf">
                 <Avatar name={p.owner || "机主"} />
                 <div className="ps">
-                  <div>
-                    <b>{posts.length}</b>
-                    <small>帖子</small>
-                  </div>
-                  <div>
-                    <b>—</b>
-                    <small>粉丝</small>
-                  </div>
-                  <div>
-                    <b>—</b>
-                    <small>关注</small>
-                  </div>
+                  <div><b>0</b><small>帖子</small></div>
+                  <div><b>—</b><small>粉丝</small></div>
+                  <div><b>—</b><small>关注</small></div>
                 </div>
               </div>
-              <p className="pn">{p.owner}</p>
-              <div className="ptab">
-                <div className="on">
-                  <Grid />
-                </div>
-              </div>
-              <div className="pg2">
-                {posts.map((i) => (
-                  <button key={i.id} onClick={() => openPost(i)}>
-                    <Media item={i} />
-                  </button>
-                ))}
-              </div>
-            </>
+              <p className="ig-profile-hint">{p.owner || "机主"}</p>
+            </section>
           )}
           {!selected && tab === "私信" && (
             <>
@@ -578,16 +864,21 @@ export function MymyInstagram(p: SkinProps) {
           )}
           {!selected && tab === "搜索" && (
             <>
-              <input
-                className="mymy-search"
-                aria-label="搜索Instagram"
-                placeholder="搜索"
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-              />
-              {posts
-                .filter((i) => (i.title + i.body + i.sender).includes(draft))
-                .map(post)}
+              <div className="ig-explore-search-row">
+                <label className="ig-explore-search">
+                  <Search size={22} aria-hidden="true" />
+                  <input
+                    aria-label="搜索Instagram"
+                    placeholder="搜索"
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                  />
+                </label>
+                <span className="ig-explore-bookmark" aria-hidden="true">
+                  <Bookmark size={27} />
+                </span>
+              </div>
+
             </>
           )}
         </div>

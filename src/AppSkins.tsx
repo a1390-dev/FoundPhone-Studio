@@ -60,7 +60,7 @@ function Avatar({
   return (
     <span className={`skin-avatar ${round ? "round" : ""}`}>
       {safeMedia(src)?.startsWith("data:image/") ? (
-        <img src={safeMedia(src)} alt="" />
+        <img src={safeMedia(src)} loading="lazy" decoding="async" alt="" />
       ) : (
         name.slice(0, 1)
       )}
@@ -71,11 +71,11 @@ function ItemMedia({ item }: { item: Item }) {
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
-      <audio controls src={src} />
+      <audio controls preload="none" src={src} />
     ) : item.kind === "video" ? (
-      <video controls playsInline src={src} />
+      <video controls playsInline preload="none" src={src} />
     ) : (
-      <img loading="lazy" alt={item.title} src={src} />
+      <img loading="lazy" decoding="async" alt={item.title} src={src} />
     )
   ) : (
     <div className="skin-photo">

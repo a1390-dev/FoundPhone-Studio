@@ -16,6 +16,59 @@
   padding: 52px 16px 8px;
   flex: none;
 }
+.mymy-ui .igh.ig-search-header-hidden {
+  display: none;
+}
+.mymy-ui .ig-explore-search-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px 16px;
+  flex: none;
+  background: #fff;
+}
+.mymy-ui .ig-explore-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  height: 48px;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: #efeff4;
+  color: #737780;
+}
+.mymy-ui .ig-explore-search input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111;
+  font: inherit;
+  font-size: 17px;
+  box-shadow: none;
+}
+.mymy-ui .ig-explore-search input::placeholder {
+  color: #737780;
+  opacity: 1;
+}
+.mymy-ui .ig-explore-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+}
 .mymy-ui .igh span:first-child {
   width: 28px;
 }
@@ -396,7 +449,7 @@
   padding-bottom: 92px;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  touch-action: pan-y;
+  touch-action: none;
 }
 .mymy-ui .kzksec {
   display: flex;
@@ -902,11 +955,32 @@
 .mymy-ui .ig { position: relative; min-height: 0; }
 .mymy-ui .ig-reels {
   position: absolute; inset: 0; z-index: 8; overflow: hidden;
-  background: #090909; color: #fff; touch-action: pan-y;
+  background: #090909; color: #fff; touch-action: none;
+  overscroll-behavior: contain;
+}
+.mymy-ui .ig-reel-video-stage {
+  position: absolute; inset: 0; overflow: hidden; background: #090909;
 }
 .mymy-ui .ig-reel-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; background: #090909; display: block;
+  transform: translate3d(0, 0, 0);
+  transition: transform 280ms cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.mymy-ui .ig-reel-video-active { z-index: 2; opacity: 1; transform: translate3d(0, 0, 0); pointer-events: auto; }
+.mymy-ui .ig-reel-video-preload { z-index: 0; opacity: 1; pointer-events: none; }
+.mymy-ui .ig-reel-video-next { transform: translate3d(0, 100%, 0); }
+.mymy-ui .ig-reel-video-previous { transform: translate3d(0, -100%, 0); }
+.mymy-ui .ig-reel-video-exiting-up { z-index: 1; opacity: 1; transform: translate3d(0, -100%, 0); pointer-events: none; }
+.mymy-ui .ig-reel-video-exiting-down { z-index: 1; opacity: 1; transform: translate3d(0, 100%, 0); pointer-events: none; }
+.mymy-ui .ig-reel-enter-next { animation: igReelEnterNext 280ms cubic-bezier(.22, .61, .36, 1) both; }
+.mymy-ui .ig-reel-enter-previous { animation: igReelEnterPrevious 280ms cubic-bezier(.22, .61, .36, 1) both; }
+@keyframes igReelEnterNext { from { transform: translate3d(0, 100%, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes igReelEnterPrevious { from { transform: translate3d(0, -100%, 0); } to { transform: translate3d(0, 0, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .mymy-ui .ig-reel-media { transition-duration: 1ms; }
 }
 .mymy-ui .ig-reel-top {
   position: absolute; top: 0; left: 0; right: 0; z-index: 2;
@@ -917,7 +991,7 @@
 .mymy-ui .ig-reel-top strong { font-size: 18px; font-weight: 700; }
 .mymy-ui .ig-reel-top button { color: #fff; display: flex; padding: 4px; }
 .mymy-ui .ig-reel-actions {
-  position: absolute; right: 10px; bottom: 128px; z-index: 3;
+  position: absolute; right: 10px; bottom: 8px; z-index: 3;
   display: flex; flex-direction: column; align-items: center; gap: 19px;
 }
 .mymy-ui .ig-reel-actions button {
@@ -937,7 +1011,12 @@
   color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65);
 }
 .mymy-ui .ig-reel-caption > div { display: flex; align-items: center; gap: 10px; }
+.mymy-ui .ig-reel-caption .ig-reel-account { gap: 7px; }
+.mymy-ui .ig-reel-account-avatar { width: 34px; height: 34px; flex: 0 0 34px; padding: 3px; border-radius: 50%; background: conic-gradient(#ffb900, #ff2d55, #d400ff, #ff2d55, #ffb900); box-sizing: border-box; }
+.mymy-ui .ig-reel-account-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; background: #fff; border: 2px solid #fff; box-sizing: border-box; }
+.mymy-ui .ig-reel-caption .ig-reel-account b { white-space: nowrap; }
 .mymy-ui .ig-reel-caption b { font-size: 14px; overflow-wrap: anywhere; }
+.mymy-ui .ig-reel-caption .ig-reel-verified { flex: 0 0 auto; color: #fff; stroke: #fff; margin-left: -5px; }
 .mymy-ui .ig-reel-caption button {
   color: #fff; border: 1px solid rgba(255,255,255,.8); border-radius: 6px;
   padding: 4px 8px; font-size: 11px; font-weight: 650;
@@ -967,7 +1046,266 @@
   border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(12px);
 }
 .mymy-ui .ig-reel-bottom-nav button { color: #fff; display: flex; align-items: center; justify-content: center; width: 20%; height: 100%; }
+.mymy-ui .ig-reel-bottom-nav button.active { background: rgba(255,255,255,.28); border-radius: 28px; }
+.mymy-ui .ig-reel-bottom-nav button.active svg { stroke-width: 2.8; }
 .mymy-ui .ig-reel-bottom-nav svg { width: 25px; height: 25px; stroke-width: 2; }
 .mymy-ui .ig-reel-progress { bottom: 72px; }
 .mymy-ui .ig-reel-caption { bottom: 112px; }
-.mymy-ui .ig-reel-actions { bottom: 180px; }
+.mymy-ui .ig-reel-actions { bottom: calc(180px - 14px); }
+
+/* First imwinter Instagram carousel post: scoped to this post only. */
+.mymy-ui .ig-first-avatar {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.mymy-ui .ig-first-userrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.mymy-ui .ig-first-userrow b {
+  font-size: 14px;
+  font-weight: 700;
+}
+.mymy-ui .ig-first-verified {
+  flex: none;
+}
+.mymy-ui .ig-first-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #fff;
+  touch-action: pan-y;
+  user-select: none;
+}
+.mymy-ui .ig-first-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  -webkit-user-drag: none;
+}
+.mymy-ui .ig-first-count {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 10px;
+  border-radius: 18px;
+  background: rgba(30, 30, 30, 0.58);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.mymy-ui .ig-first-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 24px;
+  padding: 3px 0 0;
+}
+.mymy-ui .ig-first-dots button {
+  display: block;
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  min-height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d9dce2;
+}
+.mymy-ui .ig-first-dots button.active {
+  background: #a6adff;
+  transform: scale(1.12);
+}
+.mymy-ui .iga.ig-first-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px 4px;
+  flex-wrap: nowrap;
+}
+.mymy-ui .ig-first-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  white-space: nowrap;
+}
+.mymy-ui .ig-first-actions button svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+}
+.mymy-ui .ig-first-actions button b {
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.mymy-ui .ig-first-post .igc {
+  padding-top: 3px;
+  padding-bottom: 2px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.mymy-ui .ig-first-post .igt {
+  padding-top: 3px;
+}
+.mymy-ui .ig-first-detail-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: inherit;
+  font-style: normal;
+  line-height: 1.05;
+}
+.mymy-ui .ig-first-detail-title b {
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 750;
+}
+.mymy-ui .ig-first-detail-title small {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+}
+.mymy-ui .ig-first-header-space {
+  display: block;
+  width: 28px;
+  flex: none;
+}
+@media (max-width: 360px) {
+  .mymy-ui .iga.ig-first-actions {
+    gap: 5px;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+  .mymy-ui .ig-first-actions button {
+    gap: 3px;
+  }
+  .mymy-ui .ig-first-actions button svg {
+    width: 21px;
+    height: 21px;
+  }
+  .mymy-ui .ig-first-actions button b {
+    font-size: 11px;
+  }
+}
+
+/* First Instagram post action row tuned to the supplied real Instagram reference. */
+.mymy-ui .ig-first-actions {
+  gap: 6px;
+}
+.mymy-ui .ig-first-actions button {
+  gap: 6px;
+}
+.mymy-ui .ig-first-actions button:nth-child(1) svg,
+.mymy-ui .ig-first-actions button:nth-child(2) svg,
+.mymy-ui .ig-first-actions button:nth-child(3) svg,
+.mymy-ui .ig-first-actions button:nth-child(5) svg {
+  width: 30px;
+  height: 30px;
+}
+.mymy-ui .ig-first-actions button:nth-child(4) svg {
+  width: 24px;
+  height: 24px;
+}
+.mymy-ui .ig-first-actions button b {
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 750;
+}
+@media (max-width: 360px) {
+  .mymy-ui .iga.ig-first-actions {
+    gap: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .mymy-ui .ig-first-actions button {
+    gap: 3px;
+  }
+  .mymy-ui .ig-first-actions button:nth-child(1) svg,
+  .mymy-ui .ig-first-actions button:nth-child(2) svg,
+  .mymy-ui .ig-first-actions button:nth-child(3) svg,
+  .mymy-ui .ig-first-actions button:nth-child(5) svg {
+    width: 26px;
+    height: 26px;
+  }
+  .mymy-ui .ig-first-actions button:nth-child(4) svg {
+    width: 21px;
+    height: 21px;
+  }
+  .mymy-ui .ig-first-actions button b {
+    font-size: 14px;
+  }
+}
+
+
+/* Editable Instagram profile */
+.mymy-ui .ig-profile-settings {
+  padding: 18px 18px 24px;
+  flex: none;
+}
+.mymy-ui .ig-profile-avatar-button {
+  width: 104px;
+  height: 104px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #eef0f2;
+  flex: none;
+}
+.mymy-ui .ig-profile-avatar-button > img,
+.mymy-ui .ig-profile-avatar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mymy-ui .ig-profile-avatar-input {
+  display: none;
+}
+.mymy-ui .ig-profile-id-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 13px 14px;
+  border: 1px solid #dedee3;
+  border-radius: 12px;
+  color: #737780;
+  font-size: 14px;
+}
+.mymy-ui .ig-profile-id-label input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111;
+  font: inherit;
+  font-size: 16px;
+}
+.mymy-ui .ig-profile-hint {
+  margin: 10px 2px;
+  color: #85858b;
+  font-size: 12px;
+}

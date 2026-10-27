@@ -1,0 +1,16 @@
+Instagram first carousel post — required image files
+
+Upload the 8 JPG files from the provided ZIP into this exact folder on branch feature/instagram-post-carousel-01.
+
+Required filenames:
+avatar.jpg
+slide-01.jpg
+slide-02.jpg
+slide-03.jpg
+slide-04.jpg
+slide-05.jpg
+slide-06.jpg
+slide-07.jpg
+
+Do not rename the files. The application code already references these exact paths.
+Image mapping: avatar.jpg = p2; slide-01.jpg through slide-07.jpg = p3 through p9 in the order provided.

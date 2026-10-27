@@ -1,0 +1,49 @@
+name: Compress existing Reels videos
+
+on:
+  push:
+    branches:
+      - feature/instagram-post-carousel-01
+    paths:
+      - '.github/workflows/compress-reels.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/instagram-post-carousel-01
+          fetch-depth: 0
+      - name: Compress Reels while preserving 512x910 and 30 fps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          set -e
+          for f in public/media/reels/ig-reel-0{1..6}.mp4; do
+            [ -f "$f" ] || continue
+            tmp="${f%.mp4}.compressed.mp4"
+            ffmpeg -hide_banner -loglevel error -y -i "$f" \
+              -map 0:v:0 -map '0:a?' \
+              -vf "scale=512:910:flags=lanczos,fps=30,format=yuv420p" \
+              -c:v libx264 -preset medium -crf 25 -profile:v main -level 3.1 \
+              -c:a aac -b:a 96k -movflags +faststart "$tmp"
+            mv "$tmp" "$f"
+          done
+      - name: Commit compressed videos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/reels/*.mp4
+          if git diff --cached --quiet; then
+            echo "No video changes to commit"
+            exit 0
+          fi
+          git commit -m "Compress Reels videos for smoother mobile playback"
+          git push origin HEAD:feature/instagram-post-carousel-01
+
+# Trigger compression run.

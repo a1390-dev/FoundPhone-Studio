@@ -258,17 +258,28 @@ function PhoneRuntime({
       const previous = runtimeRef.current;
       const next = advance(work, previous, 1000);
       runtimeRef.current = next;
+
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
-        (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0) ||
-        (next.scheduled?.length ?? 0) > 0 ||
+        (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
+
+      if (changed) {
+        update(next);
+      } else if (
+        work.mode !== "explore" &&
+        (next.scheduled?.length ?? 0) > 0 &&
         Math.floor((next.elapsedMs ?? 0) / 5000) !==
-          Math.floor((previous.elapsedMs ?? 0) / 5000);
-      if (changed) update(next);
+          Math.floor((previous.elapsedMs ?? 0) / 5000)
+      ) {
+        // Preserve timer progress without forcing a full phone rerender every second.
+        void db.saves
+          .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
+          .catch(() => {});
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, [creator, ready, work.id, work.updatedAt]);
+  }, [creator, ready, work.id, work.updatedAt, work.mode]);
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, runtimeRef.current, event, target));
   };
