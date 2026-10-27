@@ -258,13 +258,13 @@ function PhoneRuntime({
       const previous = runtimeRef.current;
       const next = advance(work, previous, 1000);
       runtimeRef.current = next;
+      // Keep elapsed time advancing in runtimeRef, but avoid rerendering the entire
+      // phone every 5 seconds (or every second while a delay is scheduled). UI/storage
+      // only need an update when visible story state actually changes.
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
-        (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0) ||
-        (next.scheduled?.length ?? 0) > 0 ||
-        Math.floor((next.elapsedMs ?? 0) / 5000) !==
-          Math.floor((previous.elapsedMs ?? 0) / 5000);
+        (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
       if (changed) update(next);
     }, 1000);
     return () => clearInterval(interval);
