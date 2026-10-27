@@ -91,88 +91,101 @@ export function AlipaySkin(p: Props) {
   );
 }
 export function TaobaoSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "商品");
-  const [status, setStatus] = useState("全部");
-  const list = items
-    .filter((i) =>
-      tab === "商品"
-        ? i.folder !== "订单" && i.folder !== "物流"
-        : i.folder === tab,
-    )
-    .filter((i) => status === "全部" || meta(i, "status") === status);
+  const { q, setQ, items } = useContent(p, "商品");
+  const [tab, setTab] = useState("商品");
+  const [category, setCategory] = useState("全部");
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const [detail, setDetail] = useState<string>("");
+  const [payer, setPayer] = useState("金旼炡");
+  const [address, setAddress] = useState("我家 · 首尔江南区");
+  const [orderDone, setOrderDone] = useState(false);
+  const products = items.filter((i) => i.folder === "商品");
+  const addresses = items.filter((i) => i.folder === "地址");
+  const categories = ["全部", "包包", "项链", "手表", "衣服", "鞋子"];
+  const filtered = products.filter((i) =>
+    (category === "全部" || meta(i, "category") === category) &&
+    (i.title + " " + i.sender + " " + i.body).toLowerCase().includes(q.toLowerCase())
+  );
+  const cartProducts = products.filter((i) => (cart[i.id] || 0) > 0);
+  const totalCount = Object.values(cart).reduce((sum, n) => sum + n, 0);
+  const total = cartProducts.reduce((sum, i) => sum + Number(meta(i, "price", "0").replace(/,/g, "")) * (cart[i.id] || 0), 0);
+  const money = (n: number) => "₩" + Math.round(n).toLocaleString("en-US");
+  const add = (id: string) => setCart((old) => ({ ...old, [id]: (old[id] || 0) + 1 }));
+  const change = (id: string, delta: number) => setCart((old) => {
+    const next = { ...old, [id]: Math.max(0, (old[id] || 0) + delta) };
+    if (!next[id]) delete next[id];
+    return next;
+  });
+  const openCheckout = () => { setOrderDone(false); setTab("结账"); };
   return (
-    <div className="catalog-skin taobao-ui">
+    <div className="catalog-skin taobao-ui" style={{ background: "#f6f6f6", color: "#222" }}>
       <Header p={p} />
-      <div className="taobao-search">
-        <SearchBox value={q} set={setQ} placeholder="搜索商品或订单" />
+      <div style={{ padding: "8px 12px 10px", background: "#fff" }}>
+        <div className="taobao-search"><SearchBox value={q} set={setQ} placeholder="搜索包包、珠宝、手表、服饰" /></div>
+        <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingTop: 10 }}>
+          {["商品", "购物车", "订单"].map((t) => (
+            <button key={t} onClick={() => { setTab(t); setOrderDone(false); }} style={{ whiteSpace: "nowrap", borderRadius: 18, padding: "8px 14px", background: tab === t ? "#f7a31b" : "#f2f2f2", color: tab === t ? "#fff" : "#444", fontWeight: 600 }}>
+              {t}{t === "购物车" && totalCount > 0 ? ` ${totalCount}` : ""}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="catalog-scroll">
-        {tab === "商品" ? (
-          <div className="taobao-products">
-            {list.map((i) => (
-              <button key={i.id} onClick={() => p.onItem(i)}>
-                <Media item={i} />
-                <strong>{i.title}</strong>
-                <p>
-                  ¥ <b>{meta(i, "price", "—")}</b>
-                </p>
-                <small>{i.sender}</small>
-              </button>
-            ))}
+      <div className="catalog-scroll" style={{ padding: "10px 12px 90px" }}>
+        {tab === "商品" && <>
+          <div style={{ display: "flex", gap: 7, overflowX: "auto", padding: "2px 0 12px" }}>
+            {categories.map((cat) => <button key={cat} onClick={() => setCategory(cat)} style={{ flex: "0 0 auto", borderRadius: 16, padding: "6px 12px", background: category === cat ? "#222" : "#fff", color: category === cat ? "#fff" : "#444", border: "1px solid #eee" }}>{cat}</button>)}
           </div>
-        ) : (
-          <>
-            <div className="taobao-status">
-              {["全部", "待付款", "待发货", "待收货", "已完成"].map((s) => (
-                <button
-                  className={s === status ? "selected" : ""}
-                  key={s}
-                  onClick={() => setStatus(s)}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-            {list.map((i) => (
-              <button
-                className="taobao-order"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
-                <div>
-                  <ShoppingBag size={16} />
-                  <strong>{i.sender}</strong>
-                  <small>{meta(i, "status", "订单记录")}</small>
+          <div className="taobao-products" style={{ display: "grid", gridTemplateColumns: "repeat(2,minmax(0,1fr))", gap: 10 }}>
+            {filtered.map((i, n) => <article key={i.id} style={{ background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 1px 4px #00000008" }}>
+              <button onClick={() => setDetail(i.id)} style={{ display: "block", width: "100%", textAlign: "left", background: "transparent", color: "#222", padding: 10 }}>
+                <div style={{ height: 110, borderRadius: 8, display: "grid", placeItems: "center", background: ["#eee7e2","#e9e9e9","#e7e4df","#f0e8e4","#e8ecea"][n%5], color: "#222", fontSize: 32, marginBottom: 8 }}>
+                  {({ "包包":"👜", "项链":"📿", "手表":"⌚", "衣服":"🧥", "鞋子":"👟"} as Record<string,string>)[meta(i,"category","包包")]}
                 </div>
-                <section>
-                  <Media item={i} />
-                  <span>
-                    <strong>{i.title}</strong>
-                    <p>
-                      {tab === "物流" ? meta(i, "tracking", i.body) : i.body}
-                    </p>
-                    <b>¥ {meta(i, "price", "—")}</b>
-                  </span>
-                </section>
-                <footer>{meta(i, "number", i.time)}</footer>
+                <small style={{ color: "#8a7b6d", fontWeight: 700 }}>{meta(i,"brand")}</small>
+                <strong style={{ display: "block", minHeight: 38, fontSize: 13, lineHeight: 1.4, marginTop: 3 }}>{i.title}</strong>
+                <b style={{ display: "block", color: "#c62828", fontSize: 16, marginTop: 6 }}>{money(Number(meta(i,"price","0").replace(/,/g,"")))}</b>
+                <small style={{ color: "#999" }}>{meta(i,"sales")}</small>
               </button>
-            ))}
-          </>
-        )}
-        <Empty items={list} />
+              <button onClick={() => add(i.id)} style={{ width: "calc(100% - 16px)", margin: "0 8px 8px", borderRadius: 18, padding: "7px 4px", background: "#f7a31b", color: "#fff", fontWeight: 700 }}>加入购物车</button>
+            </article>)}
+          </div>
+          <p style={{ textAlign: "center", color: "#999", fontSize: 11, padding: 12 }}>共 {products.length} 件模拟商品 · 价格以韩元显示</p>
+        </>}
+        {tab === "购物车" && <>
+          <h3>购物车 · {totalCount} 件</h3>
+          {cartProducts.map((i) => <div key={i.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: 12, marginBottom: 8, background: "#fff", borderRadius: 12 }}>
+            <div style={{ fontSize: 28 }}>{({ "包包":"👜", "项链":"📿", "手表":"⌚", "衣服":"🧥", "鞋子":"👟"} as Record<string,string>)[meta(i,"category","包包")]}</div>
+            <div style={{ flex: 1, minWidth: 0 }}><strong>{i.title}</strong><small style={{ display: "block", color: "#888" }}>{meta(i,"brand")}</small><b style={{ color: "#c62828" }}>{money(Number(meta(i,"price","0").replace(/,/g,"")))}</b></div>
+            <button onClick={() => change(i.id,-1)} aria-label="减少数量" style={{ padding: 6 }}>−</button><span>{cart[i.id]}</span><button onClick={() => change(i.id,1)} aria-label="增加数量" style={{ padding: 6 }}>＋</button>
+          </div>)}
+          {!cartProducts.length && <p style={{ padding: 30, textAlign: "center", color: "#888" }}>购物车还是空的，去挑选喜欢的商品吧。</p>}
+          <div style={{ position: "sticky", bottom: 0, background: "#fff", borderRadius: 12, padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div><small>合计</small><strong style={{ display: "block", color: "#c62828", fontSize: 18 }}>{money(total)}</strong></div>
+            <button disabled={!totalCount} onClick={openCheckout} style={{ background: totalCount ? "#f04438" : "#ccc", color: "#fff", padding: "11px 22px", borderRadius: 24, fontWeight: 700 }}>结账</button>
+          </div>
+        </>}
+        {tab === "结账" && <>
+          {orderDone ? <div style={{ background: "#fff", padding: 24, borderRadius: 14, textAlign: "center" }}><strong style={{ fontSize: 20 }}>订单已创建</strong><p>付款人：{payer}</p><p>收货地址：{address}</p><p style={{ color: "#c62828", fontWeight: 700 }}>{money(total)}</p><small>这是模拟器内的虚构订单，不会产生真实付款。</small><button onClick={() => { setCart({}); setTab("订单"); }} style={{ display: "block", width: "100%", marginTop: 18, padding: 12, borderRadius: 22, background: "#f7a31b", color: "#fff" }}>完成</button></div> : <>
+            <h3>确认订单</h3>
+            <section style={{ background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12 }}><strong>选择付款人</strong>
+              {["刘知珉","内永绘里","金旼炡","宁艺卓"].map(n => <button key={n} onClick={() => setPayer(n)} style={{ display: "inline-block", margin: "10px 6px 0 0", padding: "8px 12px", borderRadius: 18, background: payer === n ? "#222" : "#f2f2f2", color: payer === n ? "#fff" : "#333" }}>{n}{payer === n ? " ✓" : ""}</button>)}
+            </section>
+            <section style={{ background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12 }}><strong>收货地址</strong>
+              {(addresses.length ? addresses.map(a => meta(a,"address",a.title)) : ["我家 · 首尔江南区","刘知珉家","内永绘里家","金旼炡家","宁艺卓家","我学校 · 首尔","刘知珉公司","内永绘里公司","金旼炡公司","宁艺卓公司"]).map(a => <button key={a} onClick={() => setAddress(a)} style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 4px", borderBottom: "1px solid #eee", background: "transparent", color: "#222" }}>{address === a ? "🔘 " : "◯ "}{a}</button>)}
+            </section>
+            <section style={{ background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12 }}><strong>商品清单</strong>{cartProducts.map(i => <p key={i.id} style={{ fontSize: 13 }}>{i.title} × {cart[i.id]} <span style={{ float: "right" }}>{money(Number(meta(i,"price","0").replace(/,/g,""))*(cart[i.id]||0))}</span></p>)}<hr/><strong>应付总额：<span style={{ color: "#c62828" }}>{money(total)}</span></strong></section>
+            <button disabled={!totalCount} onClick={() => setOrderDone(true)} style={{ width: "100%", padding: 14, borderRadius: 24, background: totalCount ? "#f04438" : "#ccc", color: "#fff", fontWeight: 700 }}>确认下单（模拟）</button>
+            <p style={{ color: "#999", fontSize: 11, textAlign: "center" }}>仅为剧情模拟，不会进行真实扣款或发货。</p>
+          </>}
+        </>}
+        {tab === "订单" && <section style={{ background: "#fff", borderRadius: 12, padding: 16 }}><h3>我的订单</h3><p style={{ color: "#888" }}>模拟订单会在结账完成后显示。</p><button onClick={() => setTab("商品")} style={{ padding: 10, borderRadius: 20, background: "#f7a31b", color: "#fff" }}>继续逛逛</button></section>}
+        {detail && (() => { const i = products.find(x => x.id === detail); if (!i) return null; return <div style={{ position: "absolute", inset: 0, zIndex: 20, background: "#0007", display: "grid", placeItems: "center", padding: 18 }}><section style={{ background: "#fff", borderRadius: 18, padding: 20, width: "100%", maxWidth: 340, color: "#222" }}><button onClick={() => setDetail("")} style={{ float: "right" }}>✕</button><div style={{ fontSize: 54, textAlign: "center", padding: 20 }}>{({ "包包":"👜", "项链":"📿", "手表":"⌚", "衣服":"🧥", "鞋子":"👟"} as Record<string,string>)[meta(i,"category","包包")]}</div><small>{meta(i,"brand")} · {meta(i,"category")}</small><h3>{i.title}</h3><strong style={{ color: "#c62828", fontSize: 22 }}>{money(Number(meta(i,"price","0").replace(/,/g,"")))}</strong><p>{meta(i,"description",i.body)}</p><button onClick={() => { add(i.id); setDetail(""); }} style={{ width: "100%", padding: 12, borderRadius: 22, background: "#f7a31b", color: "#fff", fontWeight: 700 }}>加入购物车</button></section></div>; })()}
       </div>
-      <Tabs
-        tabs={["商品", "订单", "物流"]}
-        value={tab}
-        set={(t) => {
-          setTab(t);
-          setStatus("全部");
-        }}
-        icons={[<Home />, <ShoppingBag />, <Truck />]}
-      />
+      <Tabs tabs={["商品", "购物车", "订单"]} value={tab === "结账" ? "购物车" : tab} set={(t) => { setTab(t); setOrderDone(false); }} icons={[<Home />, <ShoppingBag />, <Receipt />]} />
     </div>
   );
 }
+
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
   const list = items.filter((i) =>
