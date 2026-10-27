@@ -1,12 +1,10 @@
-import { localIconPlugin } from "./scripts/local-icon-plugin";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-export default defineConfig(({ command }) => ({
+export default defineConfig(() => ({
   base: "./",
   optimizeDeps: { entries: ["index.html"] },
   plugins: [
-    localIconPlugin(command),
     react(),
     VitePWA({
       registerType: "autoUpdate",
@@ -21,16 +19,20 @@ export default defineConfig(({ command }) => ({
       workbox: {
         clientsClaim: true,
         globPatterns: ["**/*.{js,css,html,svg,json,txt,png,jpg}"],
-        // Media and app icons should load on demand instead of competing with the
-        // app shell during first launch on mobile connections.
-        globIgnores: ["**/media/**", "**/icon-assets/**"],
-        // Cache an icon only after it is actually requested by a visible screen.
+        // Do not precache image assets with the app shell. Load visible icons on demand
+        // and cache them after their first request, so image downloads do not delay launch.
+        globIgnores: [
+          "**/media/**",
+          "**/icon-assets/**",
+          "**/assets/*.{png,jpg,jpeg,svg}",
+        ],
+        // Cache an icon/image only after it is actually requested by a visible screen.
         runtimeCaching: [
           {
-            urlPattern: /icon-assets/,
+            urlPattern: /\/assets\/[^/]+\.(?:png|jpe?g|svg)$/i,
             handler: "CacheFirst",
             options: {
-              cacheName: "foundphone-app-icons-v2",
+              cacheName: "foundphone-app-icons-v3",
               expiration: { maxEntries: 60, maxAgeSeconds: 31536000 },
             },
           },
