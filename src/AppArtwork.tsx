@@ -918,7 +918,7 @@ export function AppArtwork({
     return (
       <span
         className="original-icon-wrap original-icon-fallback"
-        style={{ opacity: iconsReady ? 1 : 0 }}
+        style={{ opacity: 1 }}
       >
         <DrawnArtwork id={id} date={date} />
       </span>
