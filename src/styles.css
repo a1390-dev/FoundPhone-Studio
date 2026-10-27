@@ -4924,3 +4924,12 @@ label {
   background: #e34f58;
   transform: rotate(135deg);
 }
+
+
+.save-slots-group { padding-top: 8px; }
+.save-slot-row { gap: 8px; }
+.save-slot-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.save-slot-copy strong { font-size: 14px; font-weight: 600; }
+.save-slot-copy small { color: #8e8e93; font-size: 11px; }
+.save-slot-action { border-radius: 8px; background: #e8f2ff; color: #007aff; padding: 8px 10px; font-size: 12px; white-space: nowrap; }
+.save-slot-action:disabled { opacity: .35; }
