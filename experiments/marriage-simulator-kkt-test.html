@@ -62,7 +62,10 @@
 (()=>{
 const $=s=>document.querySelector(s);
 const STORAGE_PREFIX="marriageSim.defaultSave.v1:"; // 独立默认自动存档命名空间，不读取或覆盖设置里的手动存档
+const PLAYER_ID_KEY="foundphone.player-id.v1";
 let playerId="",unlocked=false,step=0,currentView="home",pendingNotice=null;
+try{playerId=(localStorage.getItem(PLAYER_ID_KEY)||"").trim();if(playerId)$("#playerId").value=playerId}catch(e){}
+function personalize(text){return String(text).replaceAll("{{playerId}}",playerId||"你");}
 const history=[];
 const rounds=[
  {time:"20:17",npc:[["아직 안 잤어?","还没睡？"]],choices:[
@@ -101,7 +104,7 @@ const rounds=[
  ["그럼 오늘은 따뜻한 국이랑 네가 좋아하는 것도 조금 준비할게.","那今天准备热汤，再做一点你喜欢的东西。"],
  ["나 때문에 걱정해 주는 거 알아. 나도 무리하지 않을게.","我知道你是在担心我。我也不会勉强自己的。"]
  ]},
- {time:"20:22",npc:[["뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.","干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。"],["오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.","今天再稍微等我一下嘛。我一忙完就马上回去。"],["집에 가면 네 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.","回家以后我要一直黏着你。今天要多抱抱我。"]],choices:[
+ {time:"20:22",npc:[["뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.","干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。"],["오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.","今天再稍微等我一下嘛。我一忙完就马上回去。"],["집에 가면 {{playerId}} 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.","回家以后我要一直黏在{{playerId}}身边。今天要多抱抱我。"]],choices:[
  ["당연하지. 오늘은 내가 꼭 안아 줄게. 빨리 와, 보고 싶어.","当然啦。今天我会好好抱着你。快点回来，我想你了。"],
  ["우리 민정이 오늘 많이 힘들었구나. 집에 오면 꼭 안아 줄 테니까 조금만 더 힘내.","我们旼炡今天很辛苦吧。回家以后我一定抱抱你，再坚持一下下。"],
  ["많이 안아 달라고? 그럼 오늘은 내가 먼저 안 놔줄 거야.","想让我多抱抱你呀？那今天我可要先抱着你不放了。"],
@@ -114,7 +117,7 @@ const rounds=[
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active")}
 function save(){if(!playerId)return;try{localStorage.setItem(STORAGE_PREFIX+encodeURIComponent(playerId),JSON.stringify({playerId,step,history,unlocked:true,updatedAt:Date.now()}))}catch(e){}}
 function loadSave(id){try{const raw=localStorage.getItem(STORAGE_PREFIX+encodeURIComponent(id));return raw?JSON.parse(raw):null}catch(e){return null}}
-$("#idForm").addEventListener("submit",e=>{e.preventDefault();playerId=$("#playerId").value.trim();if(!playerId){$("#idHint").textContent="请先输入你的 ID 或昵称";return}$("#passError").textContent="";$("#idHint").textContent="ID 已确认："+playerId+"。请输入密码解锁。";show("passScreen")});
+$("#idForm").addEventListener("submit",e=>{e.preventDefault();playerId=$("#playerId").value.trim();if(!playerId){$("#idHint").textContent="请先输入你的 ID 或昵称";return}try{localStorage.setItem(PLAYER_ID_KEY,playerId)}catch(e){}$("#passError").textContent="";$("#idHint").textContent="ID 已确认："+playerId+"。请输入密码解锁。";show("passScreen")});
 $("#backToId").addEventListener("click",()=>show("lockScreen"));
 let pin="";
 function drawPin(){$$("#dots .dot").forEach((d,i)=>d.classList.toggle("filled",i<pin.length))}
@@ -123,7 +126,7 @@ function makeKeypad(){const keys=["1","2","3","4","5","6","7","8","9","⌫","0",
 function startAfterUnlock(){const old=loadSave(playerId);if(old&&old.unlocked&&Array.isArray(old.history)&&old.history.length>0){step=old.step||0;history.splice(0,history.length,...old.history);renderHistory();$("#homeNotice").style.display="none";$("#toast").textContent="已读取该 ID 的默认自动存档。";show("homeScreen");return}step=0;history.length=0;const first=rounds[0].npc[0];history.push({time:rounds[0].time,ko:first[0],zh:first[1],me:false});renderHistory();show("homeScreen");$("#homeNotice").style.display="block";$("#toast").textContent="剧情已开始：金旼炡发来了第一条消息。";save()}
 makeKeypad();
 function renderHistory(){const box=$("#messages");box.innerHTML="";let lastTime="";history.forEach(m=>{if(m.time&&m.time!==lastTime){const t=document.createElement("div");t.className="time";t.textContent=m.time;box.append(t);lastTime=m.time}const node=document.createElement("div");node.className="msg"+(m.me?" me":"");node.append(document.createTextNode(m.ko));const cn=document.createElement("div");cn.className="cn";cn.textContent=m.zh;node.append(cn);box.append(node)});box.scrollTop=box.scrollHeight}
-function append(m){history.push(m);renderHistory();save()}
+function append(m){history.push({...m,ko:personalize(m.ko),zh:personalize(m.zh)});renderHistory();save()}
 function openChat(){show("chatScreen");$("#homeNotice").style.display="none";currentView="chat";renderCandidates();$("#candidatePanel").classList.add("collapsed");}
 $("#openKkt").addEventListener("click",openChat);$("#openNotice").addEventListener("click",openChat);$("#backHome").addEventListener("click",()=>{currentView="home";show("homeScreen")});
 function renderCandidates(){const round=rounds[Math.min(step,rounds.length-1)];const box=$("#candidates");box.innerHTML="";round.choices.forEach(([ko,zh],i)=>{const b=document.createElement("button");b.className="candidate";b.innerHTML="";const koNode=document.createElement("span");koNode.textContent=ko;const zhNode=document.createElement("span");zhNode.className="zh";zhNode.textContent=zh;b.append(koNode,zhNode);b.addEventListener("click",()=>{$("#messageInput").value=ko;$("#messageInput").dataset.zh=zh;box.querySelectorAll(".candidate").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");$("#messageInput").focus();$("#toast").textContent="已填入输入框。点击发送才会真正发送。"});box.append(b)})}
