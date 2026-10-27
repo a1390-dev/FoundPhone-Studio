@@ -3,106 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>先婚后爱模拟器 · KKT 独立测试</title>
+<title>先婚后爱模拟器 · 独立测试</title>
 <style>
-:root{color-scheme:light;--yellow:#fee500;--ink:#191919}
-*{box-sizing:border-box}body{margin:0;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#e9edf1;color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:12px}
-.phone{width:min(100%,390px);height:min(900px,96vh);min-height:650px;border:8px solid #202124;border-radius:36px;overflow:hidden;background:#abc0d1;position:relative;box-shadow:0 16px 50px #0002;display:flex;flex-direction:column}
-.status{height:30px;flex-shrink:0;padding:7px 18px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:700}
-.top{height:56px;flex-shrink:0;background:#f8f8f8;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #ddd}.back{font-size:24px}.avatar{width:36px;height:36px;border-radius:50%;background:#e5c5d0;display:grid;place-items:center;font-weight:700}.name{font-weight:700}.sub{font-size:11px;color:#777;margin-top:3px}
+:root{color-scheme:light;--yellow:#fee500;--ink:#191919;--wall:#dce5ed}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}body{min-height:100dvh;background:#e9edf1;display:grid;place-items:center;padding:10px}
+.phone{width:min(100%,390px);height:min(850px,96dvh);min-height:620px;border:7px solid #202124;border-radius:36px;overflow:hidden;background:var(--wall);position:relative;box-shadow:0 16px 50px #0002;display:flex;flex-direction:column}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}.screen.active{display:flex}
+.status{height:31px;flex-shrink:0;padding:7px 19px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:700;z-index:2}
+.lock-screen{background:linear-gradient(160deg,#879eaf,#d5dce2 54%,#a9bdc9);color:white}
+.lock-clock{padding:28px 0 0 25px;font-size:62px;font-weight:300;letter-spacing:-3px;line-height:1}.lock-date{padding-left:28px;margin-top:8px;font-size:14px}
+.id-area{margin-top:auto;margin-bottom:112px;padding:0 26px;display:grid;gap:8px;max-width:310px}.id-area label{font-size:12px;text-shadow:0 1px 5px #0003}.id-area input{width:100%;border:1px solid #ffffffa8;border-radius:11px;background:#ffffffdc;padding:11px 12px;font-size:14px;outline:none}.id-area button,.primary{border:0;border-radius:11px;padding:11px 14px;background:var(--yellow);font-weight:700;color:#191919}.lock-hint{font-size:11px;color:#fff;text-shadow:0 1px 5px #0005;min-height:14px}
+.pass-screen{background:linear-gradient(160deg,#263747,#687e8e 55%,#bdcbd4);color:white;align-items:center}.pass-content{margin:auto 0;display:grid;justify-items:center;gap:17px;width:100%;padding:20px}.pass-content h2{font-size:21px;font-weight:500;margin:0}.pass-content p{font-size:12px;color:#e5edf2;margin:0}.dots{display:flex;gap:13px;margin:6px}.dot{width:11px;height:11px;border:1px solid white;border-radius:50%}.dot.filled{background:white}.keypad{display:grid;grid-template-columns:repeat(3,64px);gap:12px}.key{height:54px;border:0;border-radius:50%;background:#ffffff24;color:white;font-size:21px}.pass-error{height:16px;font-size:12px;color:#ffe1e1}
+.home-screen{background:linear-gradient(160deg,#9fb6c4,#e3e9ed 58%,#9eb4c3)}.home-clock{padding:27px 22px 0;color:#fff;text-shadow:0 1px 8px #0004}.home-clock strong{display:block;font-size:49px;font-weight:300}.home-clock span{font-size:13px}.app-grid{padding:36px 25px;display:grid;grid-template-columns:repeat(4,1fr);gap:25px 14px}.app{border:0;background:transparent;color:#fff;text-shadow:0 1px 4px #0005;display:grid;justify-items:center;gap:6px;font-size:11px}.app-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:26px;text-shadow:none;box-shadow:0 3px 8px #0002}.kkt-icon{background:#fee500;color:#292929}.other-icon{background:#f7f7f7;color:#333}.dock{margin:auto 14px 12px;padding:12px;background:#ffffff70;border-radius:24px;display:flex;justify-content:space-around}
+.notice{position:absolute;top:38px;left:10px;right:10px;background:#f7f7f7ed;backdrop-filter:blur(18px);border:1px solid #fff;border-radius:17px;padding:12px;box-shadow:0 8px 28px #0003;z-index:5;display:none;text-align:left;color:#191919}.notice button{width:100%;border:0;background:transparent;text-align:left;padding:0;color:inherit}.notice strong{display:block;font-size:13px;margin-bottom:4px}.notice small{display:block;color:#444;line-height:1.4}
+.chat-screen{background:#abc0d1}.chat-top{height:56px;flex-shrink:0;background:#f8f8f8;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #ddd}.avatar{width:36px;height:36px;border-radius:50%;background:#e5c5d0;display:grid;place-items:center;font-weight:700}.name{font-weight:700}.sub{font-size:11px;color:#777;margin-top:3px}.back{border:0;background:transparent;font-size:24px;padding:0 3px}
 .messages{flex:1;min-height:0;overflow:auto;padding:14px 12px;display:flex;flex-direction:column;gap:9px}.time{text-align:center;font-size:11px;color:#4f5d69;margin:5px 0}.msg{max-width:86%;padding:9px 11px;border-radius:4px 14px 14px 14px;background:#fff;align-self:flex-start;box-shadow:0 1px 1px #0001;white-space:pre-wrap;line-height:1.4;overflow-wrap:anywhere}.msg.me{align-self:flex-end;background:#fee500;border-radius:14px 4px 14px 14px}.cn{font-size:12px;color:#6b6b6b;margin-top:5px}
-.composer{background:#f6f6f6;padding:9px;display:flex;gap:8px;flex-shrink:0}.composer input{min-width:0;flex:1;border:0;border-radius:20px;padding:11px;background:white}.composer button,.controls button{border:0;border-radius:12px;padding:10px 12px;background:#fee500;font-weight:700}
-.controls{width:min(100%,650px);padding:13px;background:#fff;display:grid;gap:9px;margin-top:12px;border-radius:16px}.controls p{font-size:12px;color:#555;margin:0;line-height:1.5}.controls select{padding:10px;border:1px solid #ddd;border-radius:10px;background:white}
-.notice{position:absolute;top:40px;left:10px;right:10px;background:#f7f7f7ed;backdrop-filter:blur(18px);border:1px solid #fff;border-radius:17px;padding:12px;box-shadow:0 8px 28px #0003;z-index:5;display:none;text-align:left}.notice strong{display:block;font-size:13px;margin-bottom:4px}.notice small{display:block;color:#444;line-height:1.4}.notice button{width:100%;border:0;background:transparent;text-align:left;padding:0;color:inherit}.toast{font-size:12px;color:#37623b;min-height:16px}
-.choice-panel{background:#fff;padding:12px;border-top:1px solid #ddd;max-height:34%;overflow:auto;flex-shrink:0}.choice-head{font-size:13px;font-weight:700;margin-bottom:5px}.hint{font-size:11px;color:#666;line-height:1.4;margin-bottom:8px}.choice{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eee;font-size:12px;line-height:1.4}.choice input{margin-top:3px;accent-color:#d6bd00}.choice .zh{display:block;color:#666;margin-top:3px}.choice-actions{display:flex;gap:8px;align-items:center;margin-top:9px}.choice-actions button{border:0;border-radius:10px;background:#fee500;padding:10px;font-weight:700}.count{font-size:11px;color:#555}
-@media(min-width:700px){body{grid-template-columns:minmax(320px,390px) minmax(280px,650px);align-items:center;gap:18px}.phone{height:min(900px,94vh)}.controls{margin-top:0}}
+.composer{background:#f6f6f6;padding:8px;display:flex;gap:7px;flex-shrink:0;align-items:center}.composer input{min-width:0;flex:1;border:0;border-radius:20px;padding:11px;background:white;font-size:14px}.composer button{border:0;border-radius:18px;padding:10px 12px;background:#fee500;font-weight:700}.candidate-panel{background:#fff;padding:9px 11px 10px;border-top:1px solid #ddd;max-height:36%;overflow:auto;flex-shrink:0}.candidate-title{font-size:12px;font-weight:700;margin-bottom:3px}.candidate-hint{font-size:10px;color:#777;margin-bottom:6px}.candidate{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #eee;background:white;padding:8px 2px;font-size:12px;line-height:1.4;color:#222}.candidate .zh{display:block;color:#777;font-size:11px;margin-top:3px}.candidate.selected{background:#fff9c9}.candidate.selected:before{content:"✓ ";color:#9b8500;font-weight:700}.hidden{display:none!important}.toast{font-size:11px;color:#47634b;min-height:14px;padding:2px 10px;background:#f6f6f6}
+@media(max-height:690px){.lock-clock{padding-top:20px;font-size:54px}.id-area{margin-bottom:76px}.candidate-panel{max-height:39%}.app-grid{padding-top:22px;gap:18px 12px}}
 </style>
 </head>
 <body>
-<main class="phone" aria-label="KakaoTalk 剧情测试手机">
-<div class="status"><span>20:22</span><span>●●● ▰</span></div>
-<header class="top"><span class="back">‹</span><div class="avatar">민</div><div><div class="name">김민정 · 金旼炡</div><div class="sub">先婚后爱 · 独立测试分支</div></div></header>
-<section class="messages" id="messages" aria-live="polite">
-<div class="time">20:17</div>
-<div class="msg">아직 안 잤어?<div class="cn">还没睡？</div></div>
-<div class="msg">나 오늘 집에 좀 늦게 들어갈 것 같아.<div class="cn">我今天可能会晚点回家。</div></div>
-<div class="time">20:18</div>
-<div class="msg me">몇 시쯤 들어올 것 같아?<div class="cn">你大概几点回来？</div></div>
-<div class="time">20:19</div>
-<div class="msg">음… 아마 열한 시쯤?<div class="cn">嗯……大概十一点左右？</div></div>
-<div class="msg">아직 마무리할 게 조금 남았어.<div class="cn">还有一点事情要收尾。</div></div>
-<div class="msg">너무 늦으면 먼저 자도 돼.<div class="cn">如果太晚的话，你可以先睡。</div></div>
-<div class="time">20:20</div>
-<div class="msg me">내가 뭐 준비해 놓을까? 먹고 싶은 거 있어?<div class="cn">要不要我提前准备点吃的？你想吃什么？</div></div>
-<div class="msg">음… 따뜻한 거 먹고 싶어.<div class="cn">嗯……我想吃点热乎的。</div></div>
-<div class="msg">네가 해 주는 거면 아무거나 좋아.<div class="cn">只要是你做的，什么都好。</div></div>
-<div class="msg">근데 너무 무리하지는 마. 나 때문에 늦게까지 기다리거나 요리하지 말고.<div class="cn">不过别太勉强自己。别因为我就一直等到很晚，也别特意熬夜做饭。</div></div>
-<div class="msg me">자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.<div class="cn">我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。</div></div>
-<div class="time">20:22</div>
-<div class="msg">뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.<div class="cn">干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。</div></div>
-<div class="msg">오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.<div class="cn">今天再稍微等我一下嘛。我一忙完就马上回去。</div></div>
-<div class="msg">집에 가면 네 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.<div class="cn">回家以后我要一直黏着你。今天要多抱抱我。</div></div>
+<main class="phone" aria-label="先婚后爱模拟器测试手机">
+<section class="screen lock-screen active" id="lockScreen">
+ <div class="status"><span>20:17</span><span>●●● ▰</span></div>
+ <div class="lock-clock">20:17</div><div class="lock-date">星期二 · 10月27日</div>
+ <form class="id-area" id="idForm">
+  <label for="playerId">设置你的玩家 ID / 昵称</label>
+  <input id="playerId" maxlength="24" autocomplete="nickname" placeholder="输入你想使用的名字" required>
+  <button type="submit">确认</button>
+  <div class="lock-hint" id="idHint">设置后将显示在你发送的 KKT 消息旁</div>
+ </form>
+ <div class="notice" id="lockNotice" style="display:none"></div>
 </section>
-<section class="choice-panel">
-<div class="choice-head">下一条玩家回复 · 候选池</div>
-<div class="hint">当前是检查用候选池。勾选 3–4 条可作为本轮正式选项的候选；这一步不会发送消息，也不会把未选内容记成已发送。</div>
-<div id="choices">
-<label class="choice"><input type="checkbox" value="0"><span>당연하지. 오늘은 내가 꼭 안아 줄게. 빨리 와, 보고 싶어.<span class="zh">当然啦。今天我会好好抱着你。快点回来，我想你了。</span></span></label>
-<label class="choice"><input type="checkbox" value="1"><span>우리 민정이 오늘 많이 힘들었구나. 집에 오면 꼭 안아 줄 테니까 조금만 더 힘내.<span class="zh">我们旼炡今天很辛苦吧。回家以后我一定抱抱你，再坚持一下下。</span></span></label>
-<label class="choice"><input type="checkbox" value="2"><span>많이 안아 달라고? 그럼 오늘은 내가 먼저 안 놔줄 거야.<span class="zh">想让我多抱抱你呀？那今天我可要先抱着你不放了。</span></span></label>
-<label class="choice"><input type="checkbox" value="3"><span>알았어, 자기야. 따뜻한 거 준비해 놓고 꼭 안아 줄게. 그러니까 조심해서 와.<span class="zh">知道啦，亲爱的。我会准备好热乎的东西，再好好抱抱你。所以路上要小心哦。</span></span></label>
-<label class="choice"><input type="checkbox" value="4"><span>나도 네가 빨리 왔으면 좋겠어. 오늘은 내 옆에 꼭 붙어 있어도 돼.<span class="zh">我也希望你能早点回来。今天你可以一直黏在我身边哦。</span></span></label>
-<label class="choice"><input type="checkbox" value="5"><span>그렇게 말하니까 나도 벌써 안아 주고 싶잖아. 일 끝나면 바로 와, 응?<span class="zh">你这么一说，我现在就想抱抱你了。忙完就马上回来，好不好？</span></span></label>
-<label class="choice"><input type="checkbox" value="6"><span>오늘 고생 많았어, 우리 자기. 집에 오면 아무 생각 말고 나한테 기대 있어.<span class="zh">今天辛苦啦，我的宝贝。回家以后什么都别想，就靠在我身边吧。</span></span></label>
-</div>
-<div class="choice-actions"><button id="confirmChoices">确认候选（仅测试）</button><span class="count" id="count">已选 0 条</span></div>
+<section class="screen pass-screen" id="passScreen">
+ <div class="status"><span>20:17</span><span>●●● ▰</span></div>
+ <div class="pass-content"><div style="font-size:34px">🔒</div><h2>输入密码以解锁</h2><p>输入手机密码继续</p><div class="dots" id="dots"><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div><div class="keypad" id="keypad"></div><div class="pass-error" id="passError"></div><button id="backToId" style="border:0;background:transparent;color:#fff;text-decoration:underline">返回修改 ID</button></div>
 </section>
-<div class="notice" id="notice"><button id="openNotice"><strong>🟡 KakaoTalk · 金旼炡 · 刚刚</strong><small id="noticeText">新消息</small><small style="margin-top:7px;color:#777">点击打开聊天</small></button></div>
+<section class="screen home-screen" id="homeScreen">
+ <div class="status"><span>20:17</span><span>●●● ▰</span></div>
+ <div class="home-clock"><strong>20:17</strong><span>星期二，10月27日</span></div>
+ <div class="app-grid"><button class="app" id="openKkt"><span class="app-icon kkt-icon">💬</span><span>KakaoTalk</span></button><button class="app"><span class="app-icon other-icon">📷</span><span>照片</span></button><button class="app"><span class="app-icon other-icon">🎵</span><span>音乐</span></button><button class="app"><span class="app-icon other-icon">⚙️</span><span>设置</span></button></div>
+ <div class="dock"><span>📞</span><span>🌐</span><span>🎧</span><span>✉️</span></div>
+ <div class="notice" id="homeNotice"><button id="openNotice"><strong>🟡 KakaoTalk · 김민정</strong><small>아직 안 잤어?</small><small style="margin-top:7px;color:#777">点击打开聊天</small></button></div>
+</section>
+<section class="screen chat-screen" id="chatScreen">
+ <div class="status"><span>20:17</span><span>●●● ▰</span></div>
+ <header class="chat-top"><button class="back" id="backHome">‹</button><div class="avatar">민</div><div><div class="name">김민정 · 金旼炡</div><div class="sub">先婚后爱 · 独立测试分支</div></div></header>
+ <section class="messages" id="messages" aria-live="polite"></section>
+ <div class="composer"><input id="messageInput" placeholder="输入消息…" autocomplete="off"><button id="sendButton">发送</button></div>
+ <section class="candidate-panel" id="candidatePanel">
+  <div class="candidate-title">选择一条回复</div><div class="candidate-hint">点选后会填入上方输入框；检查后再点“发送”，不会自动替你发送。</div>
+  <div id="candidates"></div>
+ </section>
+ <div class="toast" id="toast">点击候选回复填入输入框，或自行输入。</div>
+</section>
 </main>
-<aside class="controls">
-<p><b>通知行为测试</b>：在金旼炡聊天窗口收到消息时直接加入聊天记录，不弹通知；在手机桌面或其他 App 时显示通知样式，点击后再进入聊天。此页面是独立测试文件，不接入主模拟器。</p>
-<select id="location"><option value="chat">当前在金旼炡的聊天窗口</option><option value="home">当前在手机桌面</option><option value="other">当前正在使用其他 App</option></select>
-<button id="simulate">模拟金旼炡发来一条新消息</button>
-<div class="toast" id="toast" role="status">历史消息已载入。当前候选尚未发送。</div>
-</aside>
 <script>
+(()=>{
 const $=s=>document.querySelector(s);
-let currentView="chat";
-const storyMessage={ko:"금방 끝내고 갈게. 조금만 기다려 줘.",zh:"我很快就忙完回去，再等我一下哦。"};
-function addMessage({ko,zh,me=false,time="刚刚"}) {
-  const node=document.createElement("div");node.className="msg"+(me?" me":"");
-  node.append(document.createTextNode(ko));
-  const translation=document.createElement("div");translation.className="cn";translation.textContent=zh;node.append(translation);
-  $("#messages").append(node);$("#messages").scrollTop=$("#messages").scrollHeight;
-}
-function receiveFromWinter(message) {
-  if(currentView==="chat") {
-    addMessage(message);$("#toast").textContent="已加入聊天记录：当前在对话框内，不弹通知。";return;
-  }
-  $("#noticeText").textContent=message.ko+" · "+message.zh;
-  $("#notice").style.display="block";$("#notice").dataset.message=JSON.stringify(message);
-  $("#toast").textContent="通知已显示；点击通知后才会把这条新消息加入可见聊天记录。";
-}
-function openChatFromNotice(){
-  const message=JSON.parse($("#notice").dataset.message||"null");
-  $("#notice").style.display="none";currentView="chat";$("#location").value="chat";
-  if(message)addMessage(message);
-  $("#toast").textContent="已打开聊天；通知中的消息已加入聊天记录。";
-}
-$("#location").addEventListener("change",e=>{
- currentView=e.target.value;
- $("#toast").textContent=currentView==="chat"?"当前在聊天窗口：新消息不弹通知。":"当前不在聊天窗口：新消息将显示通知。";
-});
-$("#simulate").addEventListener("click",()=>receiveFromWinter(storyMessage));
-$("#openNotice").addEventListener("click",openChatFromNotice);
-const checks=[...document.querySelectorAll('#choices input[type="checkbox"]')];
-function updateCount(){const n=checks.filter(c=>c.checked).length;$("#count").textContent="已选 "+n+" 条";$("#confirmChoices").disabled=n<3||n>4;$("#confirmChoices").style.opacity=$("#confirmChoices").disabled?".5":"1";}
-checks.forEach(c=>c.addEventListener("change",updateCount));updateCount();
-$("#confirmChoices").addEventListener("click",()=>{
- const n=checks.filter(c=>c.checked).length;
- if(n<3||n>4){$("#toast").textContent="请勾选 3–4 条候选。";return;}
- $("#toast").textContent="已暂存 "+n+" 条候选供你检查；没有发送任何玩家消息。";
-});
+const STORAGE_PREFIX="marriageSim.defaultSave.v1:";
+let playerId="",unlocked=false,step=0,currentView="home",pendingNotice=null;
+const history=[];
+const rounds=[
+ {time:"20:17",npc:[["아직 안 잤어?","还没睡？"]],choices:[
+ ["응, 아직 안 잤어. 무슨 일이야?","嗯，还没睡。怎么啦？"],
+ ["아직. 자기 기다리고 있었지.","还没睡呀，在等你呢。"],
+ ["응, 이제 자려고 했어. 자기는 아직 일하는 중이야?","嗯，正准备睡了。你还在工作吗？"],
+ ["왜, 보고 싶어서 전화라도 하려고?","怎么啦，是想我了，准备给我打电话吗？"],
+ ["안 잤어. 오늘은 몇 시쯤 들어와?","还没睡。你今天大概几点回来？"],
+ ["응, 자기 메시지 기다렸어. 오늘 많이 바빠?","嗯，在等你的消息。今天很忙吗？"],
+ ["아직 안 자. 무슨 일 있으면 나한테 바로 말해.","还没睡。有事的话就直接跟我说。"]
+ ]},
+ {time:"20:17",npc:[["나 오늘 집에 좀 늦게 들어갈 것 같아.","我今天可能会晚点回家。"]],choices:[
+ ["몇 시쯤 들어올 것 같아?","你大概几点回来？"],
+ ["알았어. 너무 무리하지 말고 천천히 마무리해.","知道啦。别太勉强，慢慢收尾。"],
+ ["오늘 많이 바쁜가 보네. 끝나면 연락해 줘.","今天好像很忙呀。结束后联系我。"],
+ ["기다릴 수는 있는데, 너무 늦으면 꼭 말해 줘.","我可以等你，不过太晚的话一定告诉我。"],
+ ["집에 오면 바로 쉴 수 있게 미리 준비해 둘게.","我会提前准备好，让你回家就能休息。"],
+ ["아쉽다. 오늘은 조금 일찍 보고 싶었는데.","有点可惜，本来今天想早点见到你。"],
+ ["무슨 일인지는 괜찮아? 힘든 건 아니지?","事情还顺利吗？不是遇到什么难事了吧？"]
+ ]},
+ {time:"20:19",npc:[["음… 아마 열한 시쯤?","嗯……大概十一点左右？"],["아직 마무리할 게 조금 남았어.","还有一点事情要收尾。"],["너무 늦으면 먼저 자도 돼.","如果太晚的话，你可以先睡。"]],choices:[
+ ["내가 뭐 준비해 놓을까? 먹고 싶은 거 있어?","要不要我提前准备点吃的？你想吃什么？"],
+ ["알았어. 끝나는 대로 연락해 줘.","好，忙完就联系我。"],
+ ["기다릴게. 그래도 너무 무리하지는 마.","我会等你，不过别太勉强自己。"],
+ ["자기 피곤할 텐데, 집에 오면 내가 챙겨 줄게.","你应该很累了，回家我照顾你。"],
+ ["먼저 자라고 해도 아마 기다릴 것 같은데?","就算你让我先睡，我大概还是会等你吧？"],
+ ["열한 시쯤이면 따뜻한 거 준비해 둘 수 있겠다.","十一点左右的话，我可以提前准备点热乎的。"],
+ ["응, 알겠어. 조심해서 와.","嗯，知道了。路上小心。"]
+ ]},
+ {time:"20:20",npc:[["음… 따뜻한 거 먹고 싶어.","嗯……我想吃点热乎的。"],["네가 해 주는 거면 아무거나 좋아.","只要是你做的，什么都好。"],["근데 너무 무리하지는 마. 나 때문에 늦게까지 기다리거나 요리하지 말고.","不过别太勉强自己。别因为我就一直等到很晚，也别特意熬夜做饭。"]],choices:[
+ ["자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.","我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。"],
+ ["따뜻한 거 준비해 둘게. 자기는 걱정 말고 일부터 마무리해.","我会准备热乎的东西，你别操心，先把工作忙完。"],
+ ["알았어. 무리하지 않고 준비할게. 그래도 같이 먹고 싶어.","知道啦，我不会勉强自己的。不过还是想和你一起吃。"],
+ ["우리 민정이 먹고 싶은 거라면 해 줘야지. 빨리 보고 싶다.","是我们旼炡想吃的，当然要做呀。好想快点见到你。"],
+ ["걱정 마. 나도 이제 쉬면서 준비할 거야. 천천히 와.","别担心，我也会一边休息一边准备。慢慢回来就好。"],
+ ["그럼 오늘은 따뜻한 국이랑 네가 좋아하는 것도 조금 준비할게.","那今天准备热汤，再做一点你喜欢的东西。"],
+ ["나 때문에 걱정해 주는 거 알아. 나도 무리하지 않을게.","我知道你是在担心我。我也不会勉强自己的。"]
+ ]},
+ {time:"20:22",npc:[["뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.","干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。"],["오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.","今天再稍微等我一下嘛。我一忙完就马上回去。"],["집에 가면 네 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.","回家以后我要一直黏着你。今天要多抱抱我。"]],choices:[
+ ["당연하지. 오늘은 내가 꼭 안아 줄게. 빨리 와, 보고 싶어.","当然啦。今天我会好好抱着你。快点回来，我想你了。"],
+ ["우리 민정이 오늘 많이 힘들었구나. 집에 오면 꼭 안아 줄 테니까 조금만 더 힘내.","我们旼炡今天很辛苦吧。回家以后我一定抱抱你，再坚持一下下。"],
+ ["많이 안아 달라고? 그럼 오늘은 내가 먼저 안 놔줄 거야.","想让我多抱抱你呀？那今天我可要先抱着你不放了。"],
+ ["알았어, 자기야. 따뜻한 거 준비해 놓고 꼭 안아 줄게. 그러니까 조심해서 와.","知道啦，亲爱的。我会准备好热乎的东西，再好好抱抱你。所以路上要小心哦。"],
+ ["나도 네가 빨리 왔으면 좋겠어. 오늘은 내 옆에 꼭 붙어 있어도 돼.","我也希望你能早点回来。今天你可以一直黏在我身边哦。"],
+ ["그렇게 말하니까 나도 벌써 안아 주고 싶잖아. 일 끝나면 바로 와, 응?","你这么一说，我现在就想抱抱你了。忙完就马上回来，好不好？"],
+ ["오늘 고생 많았어, 우리 자기. 집에 오면 아무 생각 말고 나한테 기대 있어.","今天辛苦啦，我的宝贝。回家以后什么都别想，就靠在我身边吧。"]
+ ]}
+];
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active")}
+function save(){if(!playerId)return;try{localStorage.setItem(STORAGE_PREFIX+playerId,JSON.stringify({playerId,step,history,unlocked:true,updatedAt:Date.now()}))}catch(e){}}
+function loadSave(id){try{const raw=localStorage.getItem(STORAGE_PREFIX+id);return raw?JSON.parse(raw):null}catch(e){return null}}
+$("#idForm").addEventListener("submit",e=>{e.preventDefault();playerId=$("#playerId").value.trim();if(!playerId){$("#idHint").textContent="请先输入你的 ID 或昵称";return}$("#passError").textContent="";$("#idHint").textContent="ID 已确认："+playerId+"。请输入密码解锁。";show("passScreen")});
+$("#backToId").addEventListener("click",()=>show("lockScreen"));
+let pin="";
+function drawPin(){$$("#dots .dot").forEach((d,i)=>d.classList.toggle("filled",i<pin.length))}
+function $$(s){return [...document.querySelectorAll(s)]}
+function makeKeypad(){const keys=["1","2","3","4","5","6","7","8","9","⌫","0","确认"];keys.forEach(k=>{const b=document.createElement("button");b.className="key";b.textContent=k;b.addEventListener("click",()=>{if(k==="⌫")pin=pin.slice(0,-1);else if(k==="确认"){if(pin==="0101"){unlocked=true;startAfterUnlock()}else{$("#passError").textContent="密码不正确，请重试。";pin=""}}else if(pin.length<4)pin+=k;drawPin()});$("#keypad").append(b)})}
+function startAfterUnlock(){const old=loadSave(playerId);if(old&&old.unlocked){step=old.step||0;history.splice(0,history.length,...(old.history||[]));renderHistory();$("#toast").textContent="已读取该 ID 的默认自动存档。";show("homeScreen");return}step=0;history.length=0;renderHistory();show("homeScreen");$("#homeNotice").style.display="block";$("#toast").textContent="剧情开始：金旼炡发来了第一条消息。";save()}
+makeKeypad();
+function renderHistory(){const box=$("#messages");box.innerHTML="";let lastTime="";history.forEach(m=>{if(m.time&&m.time!==lastTime){const t=document.createElement("div");t.className="time";t.textContent=m.time;box.append(t);lastTime=m.time}const node=document.createElement("div");node.className="msg"+(m.me?" me":"");node.append(document.createTextNode(m.ko));const cn=document.createElement("div");cn.className="cn";cn.textContent=m.zh;node.append(cn);box.append(node)});box.scrollTop=box.scrollHeight}
+function append(m){history.push(m);renderHistory();save()}
+function openChat(){show("chatScreen");$("#homeNotice").style.display="none";currentView="chat";if(history.length===0&&step===0){const m=rounds[0].npc[0];append({time:"20:17",ko:m[0],zh:m[1],me:false});renderCandidates()}else renderCandidates()}
+$("#openKkt").addEventListener("click",openChat);$("#openNotice").addEventListener("click",openChat);$("#backHome").addEventListener("click",()=>{currentView="home";show("homeScreen")});
+function renderCandidates(){const round=rounds[Math.min(step,rounds.length-1)];const box=$("#candidates");box.innerHTML="";round.choices.forEach(([ko,zh],i)=>{const b=document.createElement("button");b.className="candidate";b.innerHTML="";const koNode=document.createElement("span");koNode.textContent=ko;const zhNode=document.createElement("span");zhNode.className="zh";zhNode.textContent=zh;b.append(koNode,zhNode);b.addEventListener("click",()=>{$("#messageInput").value=ko;$("#messageInput").dataset.zh=zh;box.querySelectorAll(".candidate").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");$("#messageInput").focus();$("#toast").textContent="已填入输入框。点击发送才会真正发送。"});box.append(b)})}
+function sendMessage(){const ko=$("#messageInput").value.trim();if(!ko){$("#toast").textContent="请先输入消息，或从下方选择一条回复。";return}const chosenZh=$("#messageInput").dataset.zh||"（自定义消息）";append({time:step===0?"20:18":"20:23",ko,zh:chosenZh,me:true});$("#messageInput").value="";delete $("#messageInput").dataset.zh;$("#toast").textContent="消息已发送。";const current=rounds[Math.min(step,rounds.length-1)];if(step===0){step=1;setTimeout(()=>{current.npc.slice(1).forEach((m,i)=>append({time:"20:17",ko:m[0],zh:m[1],me:false}));renderCandidates();save()},250)}else{step=Math.min(step+1,rounds.length-1);const next=rounds[step];setTimeout(()=>{next.npc.forEach(m=>append({time:next.time,ko:m[0],zh:m[1],me:false}));renderCandidates();save()},250)}save()}
+$("#sendButton").addEventListener("click",sendMessage);$("#messageInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendMessage()});
+})();
 </script>
 </body>
 </html>
