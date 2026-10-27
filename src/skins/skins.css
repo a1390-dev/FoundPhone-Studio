@@ -4141,3 +4141,25 @@
 .catalog-slot[hidden] {
   display: none;
 }
+
+
+/* Reliable touch scrolling for messaging/contact lists on iOS. */
+.catalog-skin,
+.catalog-skin.native-messages,
+.catalog-skin.kakao-ui,
+.catalog-skin.wechat-ui,
+.catalog-skin.line-ui,
+.catalog-skin.qq-ui {
+  min-height: 0;
+  height: 100%;
+}
+.catalog-skin .catalog-scroll {
+  min-height: 0;
+  flex: 1 1 0;
+  height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}

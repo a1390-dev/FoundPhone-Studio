@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "仅用于界面测试，不含剧情",
-  "revision": 7,
+  "revision": 8,
   "phone": {
     "owner": "机主",
     "date": "2026-10-25",
@@ -704,7 +704,7 @@
     {
       "id": "kakao-lin-jianguo-chat",
       "app": "kakao",
-      "title": "김도윤",
+      "title": "金道允",
       "participants": [
         "owner",
         "lin-jianguo"
@@ -733,7 +733,7 @@
     {
       "id": "kakao-zhou-wanning-chat",
       "app": "kakao",
-      "title": "박서연",
+      "title": "朴瑞妍",
       "participants": [
         "owner",
         "zhou-wanning"
@@ -762,7 +762,7 @@
     {
       "id": "kakao-lin-zihao-chat",
       "app": "kakao",
-      "title": "이준호",
+      "title": "李俊昊",
       "participants": [
         "owner",
         "lin-zihao"
@@ -791,7 +791,7 @@
     {
       "id": "kakao-lin-yutong-chat",
       "app": "kakao",
-      "title": "최유진",
+      "title": "崔有真",
       "participants": [
         "owner",
         "lin-yutong"
@@ -820,7 +820,7 @@
     {
       "id": "kakao-xu-jiaqi-chat",
       "app": "kakao",
-      "title": "정하린",
+      "title": "郑夏凛",
       "participants": [
         "owner",
         "xu-jiaqi"
@@ -849,7 +849,7 @@
     {
       "id": "kakao-chen-yinuo-chat",
       "app": "kakao",
-      "title": "강민서",
+      "title": "姜敏书",
       "participants": [
         "owner",
         "chen-yinuo"
@@ -878,7 +878,7 @@
     {
       "id": "kakao-wang-chenxi-chat",
       "app": "kakao",
-      "title": "윤지호",
+      "title": "尹志浩",
       "participants": [
         "owner",
         "wang-chenxi"
@@ -907,7 +907,7 @@
     {
       "id": "kakao-zhao-yuchen-chat",
       "app": "kakao",
-      "title": "한서준",
+      "title": "韩瑞俊",
       "participants": [
         "owner",
         "zhao-yuchen"
@@ -936,7 +936,7 @@
     {
       "id": "kakao-sun-ruoxi-chat",
       "app": "kakao",
-      "title": "오지우",
+      "title": "吴知友",
       "participants": [
         "owner",
         "sun-ruoxi"
@@ -965,7 +965,7 @@
     {
       "id": "kakao-li-minghui-chat",
       "app": "kakao",
-      "title": "김수현",
+      "title": "金秀贤",
       "participants": [
         "owner",
         "li-minghui"
@@ -994,7 +994,7 @@
     {
       "id": "kakao-gao-ziyang-chat",
       "app": "kakao",
-      "title": "임도현",
+      "title": "林道贤",
       "participants": [
         "owner",
         "gao-ziyang"
@@ -1023,7 +1023,7 @@
     {
       "id": "kakao-tang-xinyi-chat",
       "app": "kakao",
-      "title": "신예은",
+      "title": "申叡恩",
       "participants": [
         "owner",
         "tang-xinyi"
@@ -1052,7 +1052,7 @@
     {
       "id": "kakao-he-junhao-chat",
       "app": "kakao",
-      "title": "장민재",
+      "title": "张珉载",
       "participants": [
         "owner",
         "he-junhao"
@@ -1081,7 +1081,7 @@
     {
       "id": "kakao-song-yiran-chat",
       "app": "kakao",
-      "title": "배수빈",
+      "title": "裴秀彬",
       "participants": [
         "owner",
         "song-yiran"
@@ -1110,7 +1110,7 @@
     {
       "id": "kakao-luo-jiayi-chat",
       "app": "kakao",
-      "title": "권나연",
+      "title": "权娜妍",
       "participants": [
         "owner",
         "luo-jiayi"
@@ -1139,7 +1139,7 @@
     {
       "id": "kakao-fang-zheng-chat",
       "app": "kakao",
-      "title": "조현우",
+      "title": "赵贤宇",
       "participants": [
         "owner",
         "fang-zheng"
@@ -1168,7 +1168,7 @@
     {
       "id": "kakao-wu-xiaoyu-chat",
       "app": "kakao",
-      "title": "문채원",
+      "title": "文彩元",
       "participants": [
         "owner",
         "wu-xiaoyu"
@@ -1197,7 +1197,7 @@
     {
       "id": "kakao-jiang-chen-chat",
       "app": "kakao",
-      "title": "유건우",
+      "title": "柳建宇",
       "participants": [
         "owner",
         "jiang-chen"
@@ -1648,7 +1648,7 @@
     {
       "id": "wechat-lin-jianguo-chat",
       "app": "wechat",
-      "title": "김도윤",
+      "title": "金道允",
       "participants": [
         "owner",
         "lin-jianguo"
@@ -1677,7 +1677,7 @@
     {
       "id": "wechat-zhou-wanning-chat",
       "app": "wechat",
-      "title": "박서연",
+      "title": "朴瑞妍",
       "participants": [
         "owner",
         "zhou-wanning"
@@ -1706,7 +1706,7 @@
     {
       "id": "wechat-lin-zihao-chat",
       "app": "wechat",
-      "title": "이준호",
+      "title": "李俊昊",
       "participants": [
         "owner",
         "lin-zihao"
@@ -1735,7 +1735,7 @@
     {
       "id": "wechat-lin-yutong-chat",
       "app": "wechat",
-      "title": "최유진",
+      "title": "崔有真",
       "participants": [
         "owner",
         "lin-yutong"
@@ -1764,7 +1764,7 @@
     {
       "id": "wechat-xu-jiaqi-chat",
       "app": "wechat",
-      "title": "정하린",
+      "title": "郑夏凛",
       "participants": [
         "owner",
         "xu-jiaqi"
@@ -1793,7 +1793,7 @@
     {
       "id": "wechat-chen-yinuo-chat",
       "app": "wechat",
-      "title": "강민서",
+      "title": "姜敏书",
       "participants": [
         "owner",
         "chen-yinuo"
@@ -1822,7 +1822,7 @@
     {
       "id": "wechat-wang-chenxi-chat",
       "app": "wechat",
-      "title": "윤지호",
+      "title": "尹志浩",
       "participants": [
         "owner",
         "wang-chenxi"
@@ -1851,7 +1851,7 @@
     {
       "id": "wechat-zhao-yuchen-chat",
       "app": "wechat",
-      "title": "한서준",
+      "title": "韩瑞俊",
       "participants": [
         "owner",
         "zhao-yuchen"
@@ -1880,7 +1880,7 @@
     {
       "id": "wechat-sun-ruoxi-chat",
       "app": "wechat",
-      "title": "오지우",
+      "title": "吴知友",
       "participants": [
         "owner",
         "sun-ruoxi"
@@ -1909,7 +1909,7 @@
     {
       "id": "wechat-li-minghui-chat",
       "app": "wechat",
-      "title": "김수현",
+      "title": "金秀贤",
       "participants": [
         "owner",
         "li-minghui"
@@ -1938,7 +1938,7 @@
     {
       "id": "wechat-gao-ziyang-chat",
       "app": "wechat",
-      "title": "임도현",
+      "title": "林道贤",
       "participants": [
         "owner",
         "gao-ziyang"
@@ -1967,7 +1967,7 @@
     {
       "id": "wechat-tang-xinyi-chat",
       "app": "wechat",
-      "title": "신예은",
+      "title": "申叡恩",
       "participants": [
         "owner",
         "tang-xinyi"
@@ -1996,7 +1996,7 @@
     {
       "id": "wechat-he-junhao-chat",
       "app": "wechat",
-      "title": "장민재",
+      "title": "张珉载",
       "participants": [
         "owner",
         "he-junhao"
@@ -2025,7 +2025,7 @@
     {
       "id": "wechat-song-yiran-chat",
       "app": "wechat",
-      "title": "배수빈",
+      "title": "裴秀彬",
       "participants": [
         "owner",
         "song-yiran"
@@ -2054,7 +2054,7 @@
     {
       "id": "wechat-luo-jiayi-chat",
       "app": "wechat",
-      "title": "권나연",
+      "title": "权娜妍",
       "participants": [
         "owner",
         "luo-jiayi"
@@ -2083,7 +2083,7 @@
     {
       "id": "wechat-fang-zheng-chat",
       "app": "wechat",
-      "title": "조현우",
+      "title": "赵贤宇",
       "participants": [
         "owner",
         "fang-zheng"
@@ -2112,7 +2112,7 @@
     {
       "id": "wechat-wu-xiaoyu-chat",
       "app": "wechat",
-      "title": "문채원",
+      "title": "文彩元",
       "participants": [
         "owner",
         "wu-xiaoyu"
@@ -2141,7 +2141,7 @@
     {
       "id": "wechat-jiang-chen-chat",
       "app": "wechat",
-      "title": "유건우",
+      "title": "柳建宇",
       "participants": [
         "owner",
         "jiang-chen"
@@ -2592,7 +2592,7 @@
     {
       "id": "line-lin-jianguo-chat",
       "app": "line",
-      "title": "김도윤",
+      "title": "金道允",
       "participants": [
         "owner",
         "lin-jianguo"
@@ -2621,7 +2621,7 @@
     {
       "id": "line-zhou-wanning-chat",
       "app": "line",
-      "title": "박서연",
+      "title": "朴瑞妍",
       "participants": [
         "owner",
         "zhou-wanning"
@@ -2650,7 +2650,7 @@
     {
       "id": "line-lin-zihao-chat",
       "app": "line",
-      "title": "이준호",
+      "title": "李俊昊",
       "participants": [
         "owner",
         "lin-zihao"
@@ -2679,7 +2679,7 @@
     {
       "id": "line-lin-yutong-chat",
       "app": "line",
-      "title": "최유진",
+      "title": "崔有真",
       "participants": [
         "owner",
         "lin-yutong"
@@ -2708,7 +2708,7 @@
     {
       "id": "line-xu-jiaqi-chat",
       "app": "line",
-      "title": "정하린",
+      "title": "郑夏凛",
       "participants": [
         "owner",
         "xu-jiaqi"
@@ -2737,7 +2737,7 @@
     {
       "id": "line-chen-yinuo-chat",
       "app": "line",
-      "title": "강민서",
+      "title": "姜敏书",
       "participants": [
         "owner",
         "chen-yinuo"
@@ -2766,7 +2766,7 @@
     {
       "id": "line-wang-chenxi-chat",
       "app": "line",
-      "title": "윤지호",
+      "title": "尹志浩",
       "participants": [
         "owner",
         "wang-chenxi"
@@ -2795,7 +2795,7 @@
     {
       "id": "line-zhao-yuchen-chat",
       "app": "line",
-      "title": "한서준",
+      "title": "韩瑞俊",
       "participants": [
         "owner",
         "zhao-yuchen"
@@ -2824,7 +2824,7 @@
     {
       "id": "line-sun-ruoxi-chat",
       "app": "line",
-      "title": "오지우",
+      "title": "吴知友",
       "participants": [
         "owner",
         "sun-ruoxi"
@@ -2853,7 +2853,7 @@
     {
       "id": "line-li-minghui-chat",
       "app": "line",
-      "title": "김수현",
+      "title": "金秀贤",
       "participants": [
         "owner",
         "li-minghui"
@@ -2882,7 +2882,7 @@
     {
       "id": "line-gao-ziyang-chat",
       "app": "line",
-      "title": "임도현",
+      "title": "林道贤",
       "participants": [
         "owner",
         "gao-ziyang"
@@ -2911,7 +2911,7 @@
     {
       "id": "line-tang-xinyi-chat",
       "app": "line",
-      "title": "신예은",
+      "title": "申叡恩",
       "participants": [
         "owner",
         "tang-xinyi"
@@ -2940,7 +2940,7 @@
     {
       "id": "line-he-junhao-chat",
       "app": "line",
-      "title": "장민재",
+      "title": "张珉载",
       "participants": [
         "owner",
         "he-junhao"
@@ -2969,7 +2969,7 @@
     {
       "id": "line-song-yiran-chat",
       "app": "line",
-      "title": "배수빈",
+      "title": "裴秀彬",
       "participants": [
         "owner",
         "song-yiran"
@@ -2998,7 +2998,7 @@
     {
       "id": "line-luo-jiayi-chat",
       "app": "line",
-      "title": "권나연",
+      "title": "权娜妍",
       "participants": [
         "owner",
         "luo-jiayi"
@@ -3027,7 +3027,7 @@
     {
       "id": "line-fang-zheng-chat",
       "app": "line",
-      "title": "조현우",
+      "title": "赵贤宇",
       "participants": [
         "owner",
         "fang-zheng"
@@ -3056,7 +3056,7 @@
     {
       "id": "line-wu-xiaoyu-chat",
       "app": "line",
-      "title": "문채원",
+      "title": "文彩元",
       "participants": [
         "owner",
         "wu-xiaoyu"
@@ -3085,7 +3085,7 @@
     {
       "id": "line-jiang-chen-chat",
       "app": "line",
-      "title": "유건우",
+      "title": "柳建宇",
       "participants": [
         "owner",
         "jiang-chen"
@@ -3536,7 +3536,7 @@
     {
       "id": "qq-lin-jianguo-chat",
       "app": "qq",
-      "title": "김도윤",
+      "title": "金道允",
       "participants": [
         "owner",
         "lin-jianguo"
@@ -3565,7 +3565,7 @@
     {
       "id": "qq-zhou-wanning-chat",
       "app": "qq",
-      "title": "박서연",
+      "title": "朴瑞妍",
       "participants": [
         "owner",
         "zhou-wanning"
@@ -3594,7 +3594,7 @@
     {
       "id": "qq-lin-zihao-chat",
       "app": "qq",
-      "title": "이준호",
+      "title": "李俊昊",
       "participants": [
         "owner",
         "lin-zihao"
@@ -3623,7 +3623,7 @@
     {
       "id": "qq-lin-yutong-chat",
       "app": "qq",
-      "title": "최유진",
+      "title": "崔有真",
       "participants": [
         "owner",
         "lin-yutong"
@@ -3652,7 +3652,7 @@
     {
       "id": "qq-xu-jiaqi-chat",
       "app": "qq",
-      "title": "정하린",
+      "title": "郑夏凛",
       "participants": [
         "owner",
         "xu-jiaqi"
@@ -3681,7 +3681,7 @@
     {
       "id": "qq-chen-yinuo-chat",
       "app": "qq",
-      "title": "강민서",
+      "title": "姜敏书",
       "participants": [
         "owner",
         "chen-yinuo"
@@ -3710,7 +3710,7 @@
     {
       "id": "qq-wang-chenxi-chat",
       "app": "qq",
-      "title": "윤지호",
+      "title": "尹志浩",
       "participants": [
         "owner",
         "wang-chenxi"
@@ -3739,7 +3739,7 @@
     {
       "id": "qq-zhao-yuchen-chat",
       "app": "qq",
-      "title": "한서준",
+      "title": "韩瑞俊",
       "participants": [
         "owner",
         "zhao-yuchen"
@@ -3768,7 +3768,7 @@
     {
       "id": "qq-sun-ruoxi-chat",
       "app": "qq",
-      "title": "오지우",
+      "title": "吴知友",
       "participants": [
         "owner",
         "sun-ruoxi"
@@ -3797,7 +3797,7 @@
     {
       "id": "qq-li-minghui-chat",
       "app": "qq",
-      "title": "김수현",
+      "title": "金秀贤",
       "participants": [
         "owner",
         "li-minghui"
@@ -3826,7 +3826,7 @@
     {
       "id": "qq-gao-ziyang-chat",
       "app": "qq",
-      "title": "임도현",
+      "title": "林道贤",
       "participants": [
         "owner",
         "gao-ziyang"
@@ -3855,7 +3855,7 @@
     {
       "id": "qq-tang-xinyi-chat",
       "app": "qq",
-      "title": "신예은",
+      "title": "申叡恩",
       "participants": [
         "owner",
         "tang-xinyi"
@@ -3884,7 +3884,7 @@
     {
       "id": "qq-he-junhao-chat",
       "app": "qq",
-      "title": "장민재",
+      "title": "张珉载",
       "participants": [
         "owner",
         "he-junhao"
@@ -3913,7 +3913,7 @@
     {
       "id": "qq-song-yiran-chat",
       "app": "qq",
-      "title": "배수빈",
+      "title": "裴秀彬",
       "participants": [
         "owner",
         "song-yiran"
@@ -3942,7 +3942,7 @@
     {
       "id": "qq-luo-jiayi-chat",
       "app": "qq",
-      "title": "권나연",
+      "title": "权娜妍",
       "participants": [
         "owner",
         "luo-jiayi"
@@ -3971,7 +3971,7 @@
     {
       "id": "qq-fang-zheng-chat",
       "app": "qq",
-      "title": "조현우",
+      "title": "赵贤宇",
       "participants": [
         "owner",
         "fang-zheng"
@@ -4000,7 +4000,7 @@
     {
       "id": "qq-wu-xiaoyu-chat",
       "app": "qq",
-      "title": "문채원",
+      "title": "文彩元",
       "participants": [
         "owner",
         "wu-xiaoyu"
@@ -4029,7 +4029,7 @@
     {
       "id": "qq-jiang-chen-chat",
       "app": "qq",
-      "title": "유건우",
+      "title": "柳建宇",
       "participants": [
         "owner",
         "jiang-chen"
