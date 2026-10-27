@@ -2,8 +2,8 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "解锁手机后，KakaoTalk 自动弹出金旼炡发来的第一条消息。",
-  "revision": 9,
+  "description": "解锁手机后，主屏幕上方弹出金旼炡发来的 KKT 通知，点击可直接进入原生 KKT 聊天。",
+  "revision": 10,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
@@ -380,7 +380,8 @@
           "senderId": "kim-minjeong",
           "time": "2026-10-27 20:17",
           "meta": {
-            "pinned": "true"
+            "pinned": "true",
+            "translation": "还没睡？"
           }
         }
       ]
@@ -6902,10 +6903,10 @@
     },
     {
       "id": "kkt-opening-test-ending",
-      "label": "KKT 开局通知测试完成",
+      "label": "自动化测试专用：验证 KKT 开局路径",
       "type": "ending",
-      "event": "start",
-      "target": "",
+      "event": "storyTest",
+      "target": "verifyKktOpen",
       "conditions": [],
       "logic": "and",
       "actions": [
@@ -6923,15 +6924,15 @@
   ],
   "tests": [
     {
-      "name": "解锁后收到金旼炡的第一条 KKT 消息",
+      "name": "解锁后收到金旼炡 KKT 通知（测试专用结尾，不显示给玩家）",
       "steps": [
         {
           "event": "password",
           "target": "0101"
         },
         {
-          "event": "start",
-          "target": ""
+          "event": "storyTest",
+          "target": "verifyKktOpen"
         }
       ],
       "ending": "KKT opening verified",
