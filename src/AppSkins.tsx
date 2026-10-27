@@ -38,6 +38,7 @@ export type SkinProps = {
   appId?: string;
   owner?: string;
   virtualTime?: string;
+  playerId?: string;
   name: string;
   items: Item[];
   creator: boolean;
