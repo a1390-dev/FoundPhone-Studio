@@ -431,7 +431,7 @@ export function MymyInstagram(p: SkinProps) {
     body: "",
   })) : [];
   const reel = reels[reelIndex];
-  const preloadReel = pendingReelIndex !== null ? reels[pendingReelIndex] : reelIndex < reels.length - 1 ? reels[reelIndex + 1] : reelIndex > 0 ? reels[reelIndex - 1] : undefined;
+  const preloadReel = leavingReelIndex !== null ? undefined : pendingReelIndex !== null ? reels[pendingReelIndex] : reelIndex < reels.length - 1 ? reels[reelIndex + 1] : reelIndex > 0 ? reels[reelIndex - 1] : undefined;
   const leavingReel = leavingReelIndex !== null ? reels[leavingReelIndex] : undefined;
   const reelMediaItems = [
     reel,
