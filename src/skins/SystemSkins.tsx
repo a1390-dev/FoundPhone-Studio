@@ -791,7 +791,7 @@ export function MusicSkin(p: Props) {
           <Search size={18} color="#999" />
           <input aria-label="搜索歌曲" value={q} onChange={(e) => setQ(e.target.value)} placeholder="搜索歌曲、艺人或专辑" style={{ border: 0, outline: 0, flex: 1, fontSize: 15, background: "transparent" }} />
         </div>
-        {visibleItems.map((i, n) => {
+        {visibleItems.map((i) => {
           const id = meta(i, "appleTrackId");
           const track = tracks[id];
           return (
