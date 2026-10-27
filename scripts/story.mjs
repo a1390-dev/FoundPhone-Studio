@@ -4,6 +4,20 @@ const [
   mode = "validate",
   file = process.env.STORY_FILE || "stories/template/story.json",
 ] = process.argv.slice(2);
+
+// The player build omits these test-removed apps and their content entirely.
+// Keep the authoring source untouched; this only trims generated runtime JSON.
+const playerRemovedApps = new Set([
+  "qq", "weibo", "redbook", "bilibili", "alipay", "netease", "forum",
+  "tiktok", "telegram", "discord", "snapchat", "facebook", "reddit",
+  "spotify", "netflix", "pinterest", "douyin", "reminders", "files",
+  "mail", "find",
+]);
+function stripRemovedPlayerApps(work) {
+  work.apps = work.apps.filter((app) => !playerRemovedApps.has(app.id));
+  for (const id of playerRemovedApps) delete work.data[id];
+  return work;
+}
 const server = await createServer({
   configFile: false,
   optimizeDeps: { noDiscovery: true, entries: [] },
@@ -102,18 +116,18 @@ try {
     );
   } else if (mode === "build") {
     await mkdir("public", { recursive: true });
-    await writeFile("public/work.json", JSON.stringify(work, null, 2) + "\n");
-    const blank = compileStory(
+    await writeFile("public/work.json", JSON.stringify(stripRemovedPlayerApps(work), null, 2) + "\n");
+    const blank = stripRemovedPlayerApps(compileStory(
       JSON.parse(await readFile("stories/blank/story.json", "utf8")),
-    ).work;
+    ).work);
     await writeFile(
       "public/blank-work.json",
       JSON.stringify(blank, null, 2) + "\n",
     );
     {
-      const preview = compileStory(
+      const preview = stripRemovedPlayerApps(compileStory(
         JSON.parse(await readFile("stories/test-preview/story.json", "utf8")),
-      ).work;
+      ).work);
       await writeFile(
         "public/test-work.json",
         JSON.stringify(preview, null, 2) + "\n",
