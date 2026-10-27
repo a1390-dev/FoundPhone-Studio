@@ -324,6 +324,7 @@ export function MymyInstagram(p: SkinProps) {
     [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []),
     [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [reelIndex, setReelIndex] = useState(0),
+    [reelDirection, setReelDirection] = useState<"up" | "down">("up"),
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
@@ -509,11 +510,11 @@ export function MymyInstagram(p: SkinProps) {
             </>
           )}
           {!selected && tab === "Reels" && (
-            <div className="ig-reels" onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); }} onTouchEnd={(e) => {
+            <div className={"ig-reels ig-reels-slide-" + reelDirection} onTouchStart={(e) => { (e.currentTarget as HTMLDivElement).dataset.touchY = String(e.touches[0]?.clientY ?? 0); }} onTouchEnd={(e) => {
               const start = Number((e.currentTarget as HTMLDivElement).dataset.touchY || 0);
               const delta = (e.changedTouches[0]?.clientY ?? start) - start;
-              if (Math.abs(delta) > 35 && reels.length) { setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); }
-            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 20 && reels.length) { setReelIndex((n) => (n + (e.deltaY > 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); } }}>
+              if (Math.abs(delta) > 55 && reels.length) { setReelDirection(delta < 0 ? "up" : "down"); setReelIndex((n) => (n + (delta < 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); }
+            }} onWheel={(e) => { if (Math.abs(e.deltaY) > 25 && reels.length) { setReelDirection(e.deltaY > 0 ? "up" : "down"); setReelIndex((n) => (n + (e.deltaY > 0 ? 1 : -1) + reels.length) % reels.length); setPlaying(true); } }}>
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
