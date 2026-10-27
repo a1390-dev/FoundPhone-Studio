@@ -9,6 +9,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { useState } from "react";
+import type { Item } from "../schema";
 import {
   Empty,
   Header,
@@ -197,11 +198,11 @@ const DEFAULT_DELIVERY_MERCHANTS = [
   { id: "delivery-cafe", title: "메가커피 · 咖啡饮品", body: "冰美式、拿铁、奶茶\n咖啡与日常饮品", sender: "메가커피", time: "约15–25分钟", folder: "商家", meta: { price: "3,500", rating: "4.8", duration: "15–25分钟", address: "首尔配送地址" } },
   { id: "delivery-bakery", title: "파리바게뜨 · 面包甜点", body: "面包、蛋糕、三明治\n早餐与下午茶", sender: "파리바게뜨", time: "约20–30分钟", folder: "商家", meta: { price: "5,800", rating: "4.7", duration: "20–30分钟", address: "首尔配送地址" } },
   { id: "delivery-convenience", title: "편의점 · 便利店", body: "饮料、零食、日用品\n日常急需用品配送", sender: "편의점", time: "约15–25分钟", folder: "商家", meta: { price: "2,000", rating: "4.6", duration: "15–25分钟", address: "首尔配送地址" } },
-] as const;
+] as unknown as Item[];
 
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
-  const source = items.length ? items : DEFAULT_DELIVERY_MERCHANTS;
+  const source = items.length ? items : DEFAULT_DELIVERY_MERCHANTS.filter((i) => (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()));
   const list = source.filter((i) =>
     tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
   );
