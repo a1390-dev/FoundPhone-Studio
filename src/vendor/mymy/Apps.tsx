@@ -328,6 +328,7 @@ export function MymyInstagram(p: SkinProps) {
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
     [playing, setPlaying] = useState(true);
+  const reelStageRef = useRef<HTMLDivElement | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
     [story, setStory] = useState(0),
@@ -358,7 +359,8 @@ export function MymyInstagram(p: SkinProps) {
     meta: { ...officialAccount.meta, handle: "aespa_official" },
     body: "",
   })) : [];
-  const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
+  const reel = reels[reelIndex];
+  const reelMediaItems = [reel, reelIndex < reels.length - 1 ? reels[reelIndex + 1] : undefined].filter((item): item is Item => item !== undefined);
   const reelCounts = (id: string) => {
     const index = Math.max(0, Number(id.split("-").pop()) - 1);
     const counts = [
@@ -370,6 +372,14 @@ export function MymyInstagram(p: SkinProps) {
     return counts[index % counts.length];
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
+  useEffect(() => {
+    if (tab !== "Reels" || !reel) return;
+    const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel.id}"]`);
+    if (!activeVideo) return;
+    activeVideo.muted = muted;
+    if (playing) { const result = activeVideo.play(); if (result && typeof result.catch === "function") result.catch(() => {}); }
+    else activeVideo.pause();
+  }, [reelIndex, tab, muted, playing, reel?.id]);
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(
@@ -532,10 +542,15 @@ export function MymyInstagram(p: SkinProps) {
               {reel ? (
                 <>
                   {reel.kind === "video" ? (
-                    <video key={reel.id} className="ig-reel-media" src={reel.media} autoPlay muted={muted} playsInline preload="metadata" onEnded={() => setPlaying(false)} onClick={(e) => {
-                      const v = e.currentTarget;
-                      if (v.paused) { void v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
-                    }} />
+                    <div className="ig-reel-video-stage" ref={reelStageRef}>
+                      {reelMediaItems.map((item) => {
+                        const activeVideo = item.id === reel.id;
+                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + (activeVideo ? "ig-reel-video-active" : "ig-reel-video-preload")} src={item.media} autoPlay={activeVideo && playing} muted={muted} playsInline preload="auto" onEnded={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
+                          const v = e.currentTarget;
+                          if (v.paused) { const result = v.play(); if (result && typeof result.catch === "function") result.catch(() => {}); setPlaying(true); } else { v.pause(); setPlaying(false); }
+                        } : undefined} />;
+                      })}
+                    </div>
                   ) : <Media item={reel} className="ig-reel-media" />}
                   <div className="ig-reel-top">
                     <button aria-label="返回动态" onClick={() => setTab("主页")}><ArrowLeft /></button>
