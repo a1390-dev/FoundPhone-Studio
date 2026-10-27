@@ -27,16 +27,12 @@ function StoryPlayer() {
         document.title =
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
 
-        // Decode the configured custom wallpaper before mounting the phone.
-        // This prevents the temporary gradient wallpaper from flashing first.
+        // Mount the phone immediately after the work JSON is ready.
+        // Wallpaper decoding must never block startup on mobile Safari.
         if (w.phone.wallpaper === "dog") {
           const image = new Image();
           image.src = customWallpaper;
-          try {
-            await image.decode();
-          } catch {
-            // Keep the player usable if decoding is unavailable or fails.
-          }
+          void image.decode().catch(() => {});
         }
         setWork(w);
       })
