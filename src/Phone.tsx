@@ -1019,6 +1019,7 @@ function AppContent({
   onSaveSlot,
   onLoadSlot,
   work,
+  initialThread = "",
 }: {
   app: AppPlugin;
   name: string;
