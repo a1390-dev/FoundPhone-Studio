@@ -845,7 +845,21 @@ export function MymyInstagram(p: SkinProps) {
                     if (!file.type.startsWith("image/")) return;
                     const reader = new FileReader();
                     reader.onload = () => {
-                      if (typeof reader.result === "string") setProfileAvatar(reader.result);
+                      if (typeof reader.result !== "string") return;
+                      const image = new Image();
+                      image.onload = () => {
+                        const maxSide = 320;
+                        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+                        const canvas = document.createElement("canvas");
+                        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+                        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+                        const context = canvas.getContext("2d");
+                        if (!context) return;
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        setProfileAvatar(canvas.toDataURL("image/jpeg", 0.78));
+                        image.src = "";
+                      };
+                      image.src = reader.result;
                     };
                     reader.readAsDataURL(file);
                     e.currentTarget.value = "";
