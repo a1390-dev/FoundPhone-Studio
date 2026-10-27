@@ -332,6 +332,7 @@ export function MymyInstagram(p: SkinProps) {
     [playing, setPlaying] = useState(true);
   const reelStageRef = useRef<HTMLDivElement | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [secondCarouselIndex, setSecondCarouselIndex] = useState(0);
   const carouselTouchStart = useRef<number | null>(null);
   const [sheet, setSheet] = useState<Item | null>(null),
     [selected, setSelected] = useState<Item | null>(null),
@@ -345,6 +346,10 @@ export function MymyInstagram(p: SkinProps) {
     dms = p.items.filter((i) => i.folder === "私信"),
     active = stories[story - 1];
   const firstCarouselPostId = "imwinter-carousel-post-01";
+  const secondCarouselPostId = "imwinter-carousel-post-02";
+  const secondCarouselImages = ["/media/instagram/slide-01.jpg", "/media/instagram/slide-02.jpg", "/media/instagram/slide-03.jpg", "/media/instagram/slide-04.jpg"];
+  const secondCarouselCounts = { likes: 1847293, comments: 28641, reposts: 17382, shares: 42816, saves: 31957 };
+  const secondCarouselPost = makeItem({ id: secondCarouselPostId, title: "imwinter", body: "🫠", time: "2天前", sender: "imwinter", avatar: "/media/instagram/post-01/avatar.jpg", kind: "image", media: secondCarouselImages[0], likes: secondCarouselCounts.likes, comments: ["너무 예뻐요 🤍", "🫠🫠🫠", "민정아 사랑해"], meta: { handle: "imwinter", verified: "true", carousel: "true" } });
   const firstCarouselImages = [
     "/media/instagram/post-01/slide-01.jpg",
     "/media/instagram/post-01/slide-02.jpg",
@@ -387,7 +392,7 @@ export function MymyInstagram(p: SkinProps) {
     ],
     meta: { handle: "imwinter", verified: "true", carousel: "true" },
   });
-  const posts = [firstCarouselPost, ...sourcePosts];
+  const posts = [firstCarouselPost, secondCarouselPost, ...sourcePosts];
   const toggle = (id: string, values: string[], set: (v: string[]) => void) =>
     set(values.includes(id) ? values.filter((v) => v !== id) : [...values, id]);
   const officialAccount = sourcePosts.find((i) => /aespa_official/i.test(i.sender) || /aespa_official/i.test(i.meta.handle || "")) || sourcePosts[0];
@@ -507,7 +512,7 @@ export function MymyInstagram(p: SkinProps) {
     setStory(i + 1);
   };
   const openPost = (i: Item) => {
-    if (i.id === firstCarouselPostId) {
+    if (i.id === firstCarouselPostId || i.id === secondCarouselPostId) {
       setSelected(i);
       return;
     }
@@ -519,10 +524,15 @@ export function MymyInstagram(p: SkinProps) {
   };
   const post = (i: Item) => {
     const isFirstCarouselPost = i.id === firstCarouselPostId;
+    const isSecondCarouselPost = i.id === secondCarouselPostId;
+    const isCarouselPost = isFirstCarouselPost || isSecondCarouselPost;
+    const currentCarouselIndex = isSecondCarouselPost ? secondCarouselIndex : carouselIndex;
+    const currentCarouselImages = isSecondCarouselPost ? secondCarouselImages : firstCarouselImages;
+    const currentCarouselCounts = isSecondCarouselPost ? secondCarouselCounts : firstCarouselCounts;
     const caption = isFirstCarouselPost ? firstCarouselCaptions[carouselIndex] : i.body;
-    const carouselImage = firstCarouselImages[carouselIndex];
+    const carouselImage = currentCarouselImages[currentCarouselIndex];
     return (
-      <article className={"igp " + (isFirstCarouselPost ? "ig-first-post" : "")} key={i.id}>
+      <article className={"igp " + (isCarouselPost ? "ig-first-post" : "")} key={i.id}>
         <header className="igph">
           {isFirstCarouselPost ? (
             <img className="ig-first-avatar" src={i.avatar} alt="" />
@@ -547,7 +557,7 @@ export function MymyInstagram(p: SkinProps) {
             setPop(i.id);
           }}
         >
-          {isFirstCarouselPost ? (
+          {isCarouselPost ? (
             <div
               className="ig-first-carousel"
               onTouchStart={(e) => {
@@ -560,7 +570,8 @@ export function MymyInstagram(p: SkinProps) {
                 if (start === null || end === undefined) return;
                 const delta = end - start;
                 if (Math.abs(delta) < 38) return;
-                setCarouselIndex((current) => Math.max(0, Math.min(firstCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+                if (isSecondCarouselPost) setSecondCarouselIndex((current) => Math.max(0, Math.min(secondCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
+                else setCarouselIndex((current) => Math.max(0, Math.min(firstCarouselImages.length - 1, current + (delta < 0 ? 1 : -1))));
               }}
             >
               <img
@@ -569,7 +580,7 @@ export function MymyInstagram(p: SkinProps) {
                 loading={carouselIndex === 0 ? "eager" : "lazy"}
                 draggable={false}
               />
-              <span className="ig-first-count">{carouselIndex + 1}/7</span>
+              <span className="ig-first-count">{currentCarouselIndex + 1}/{currentCarouselImages.length}</span>
             </div>
           ) : (
             <Media item={i} />
@@ -582,37 +593,37 @@ export function MymyInstagram(p: SkinProps) {
             />
           )}
         </div>
-        {isFirstCarouselPost && (
+        {isCarouselPost && (
           <div className="ig-first-dots" aria-label="贴文图片页码">
-            {firstCarouselImages.map((_, index) => (
+            {currentCarouselImages.map((_, index) => (
               <button
                 key={index}
                 type="button"
-                className={index === carouselIndex ? "active" : ""}
+                className={index === currentCarouselIndex ? "active" : ""}
                 aria-label={`第${index + 1}张图片`}
-                aria-pressed={index === carouselIndex}
-                onClick={() => setCarouselIndex(index)}
+                aria-pressed={index === currentCarouselIndex}
+                onClick={() => isSecondCarouselPost ? setSecondCarouselIndex(index) : setCarouselIndex(index)}
               />
             ))}
           </div>
         )}
-        {isFirstCarouselPost ? (
+        {isCarouselPost ? (
           <div className="iga ig-first-actions">
             <button aria-label="点赞" aria-pressed={liked.includes(i.id)} onClick={() => toggle(i.id, liked, setLiked)}>
               <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} color={liked.includes(i.id) ? "#ff3040" : "#111111"} />
-              <b>{formatIgCount(firstCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
+              <b>{formatIgCount(currentCarouselCounts.likes + (liked.includes(i.id) ? 1 : 0))}</b>
             </button>
             <button aria-label="评论" onClick={() => setSheet(i)}>
               <MessageCircle />
-              <b>{formatIgCount(firstCarouselCounts.comments)}</b>
+              <b>{formatIgCount(currentCarouselCounts.comments)}</b>
             </button>
             <button aria-label="转发" aria-pressed={reposted.includes(i.id)} onClick={() => toggle(i.id, reposted, setReposted)}>
               <Repeat2 color={reposted.includes(i.id) ? "#159CF4" : "#111111"} />
-              <b>{formatIgCount(firstCarouselCounts.reposts + (reposted.includes(i.id) ? 1 : 0))}</b>
+              <b>{formatIgCount(currentCarouselCounts.reposts + (reposted.includes(i.id) ? 1 : 0))}</b>
             </button>
             <button aria-label="分享" onClick={() => setTab("私信")}>
               <Send />
-              <b>{formatIgCount(firstCarouselCounts.shares)}</b>
+              <b>{formatIgCount(currentCarouselCounts.shares)}</b>
             </button>
             <button aria-label="收藏" aria-pressed={saved.includes(i.id)} onClick={() => toggle(i.id, saved, setSaved)}>
               <Bookmark fill={saved.includes(i.id) ? "#111111" : "none"} />
@@ -682,7 +693,7 @@ export function MymyInstagram(p: SkinProps) {
           >
             <ArrowLeft />
           </button>
-          {selected?.id === firstCarouselPostId ? (
+          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId) ? (
             <span className="igl2 ig-first-detail-title">
               <b>帖子</b>
               <small>imwinter</small>
@@ -828,8 +839,8 @@ export function MymyInstagram(p: SkinProps) {
               <div className="pg2">
                 {posts.map((i) => (
                   <button key={i.id} onClick={() => openPost(i)}>
-                    {i.id === firstCarouselPostId ? (
-                      <img src={firstCarouselImages[0]} alt="imwinter carousel post" loading="lazy" />
+                    {i.id === firstCarouselPostId || i.id === secondCarouselPostId ? (
+                      <img src={i.id === firstCarouselPostId ? firstCarouselImages[0] : secondCarouselImages[0]} alt="imwinter carousel post" loading="lazy" />
                     ) : (
                       <Media item={i} />
                     )}
