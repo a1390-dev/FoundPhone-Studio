@@ -21,7 +21,8 @@
 .ios18 .phone-screen {
   width: 390px;
   height: 844px;
-  zoom: var(--phone-scale);
+  /* The outer .phone-shell owns scaling; scaling the screen again makes it
+     detach from the frame on mobile Safari. */
   border: 0;
   border-radius: 47px;
   font-family:
