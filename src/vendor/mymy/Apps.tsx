@@ -329,7 +329,8 @@ export function MymyInstagram(p: SkinProps) {
     [reelLiked, setReelLiked] = useState<string[]>([]),
     [reelSaved, setReelSaved] = useState<string[]>([]),
     [muted, setMuted] = useState(true),
-    [playing, setPlaying] = useState(true);
+    [playing, setPlaying] = useState(true),
+    [reelSessionKey, setReelSessionKey] = useState(0);
   const reelStageRef = useRef<HTMLDivElement | null>(null);
   const lastReelSwipeAt = useRef(0);
   const lastReelNavigationAt = useRef(0);
@@ -518,6 +519,7 @@ export function MymyInstagram(p: SkinProps) {
     if (tab === "Reels" && previous !== "Reels") {
       // Re-entering Reels must not inherit a stale pending slide or stale paused state.
       justEnteredReels.current = true;
+      setReelSessionKey((key) => key + 1);
       setPendingReelIndex(null);
       setLeavingReelIndex(null);
       setPlaying(true);
@@ -525,7 +527,11 @@ export function MymyInstagram(p: SkinProps) {
       if (stage) {
         delete stage.dataset.pendingIndex;
         stage.querySelectorAll<HTMLVideoElement>("video[data-reel-id]").forEach((video) => {
-          if (video.dataset.reelId !== reel?.id) video.pause();
+          video.pause();
+          if (video.dataset.reelId !== reel?.id) {
+            video.removeAttribute("src");
+            video.load();
+          }
         });
         const activeVideo = stage.querySelector<HTMLVideoElement>(`video[data-reel-id="${reel?.id}"]`);
         if (activeVideo) {
@@ -877,7 +883,7 @@ export function MymyInstagram(p: SkinProps) {
                         const isLeavingVideo = !activeVideo && item.id === leavingReel?.id;
                         const preloadPosition = itemIndex > reelIndex ? "ig-reel-video-next" : "ig-reel-video-previous";
                         const videoPositionClass = activeVideo ? "ig-reel-video-active" : isLeavingVideo ? "ig-reel-video-exiting-" + (reelSwipeDirection === "next" ? "up" : "down") : "ig-reel-video-preload " + preloadPosition;
-                        return <video key={item.id} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload="auto" onLoadedData={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onCanPlay={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
+                        return <video key={item.id + "-" + reelSessionKey} data-reel-id={item.id} className={"ig-reel-media " + videoPositionClass} src={item.media} autoPlay={activeVideo && playing} muted={activeVideo ? muted : true} playsInline preload={activeVideo || isLeavingVideo ? "auto" : "metadata"} onLoadedData={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onCanPlay={(e) => { finishIfPending(e.currentTarget); if (activeVideo && tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onTransitionEnd={isLeavingVideo ? (e) => { if (e.propertyName === "transform") { e.currentTarget.pause(); setLeavingReelIndex((current) => current === itemIndex ? null : current); } } : undefined} onError={() => {
                           const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
                           const stage = reelStageRef.current;
                           if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
@@ -897,7 +903,9 @@ export function MymyInstagram(p: SkinProps) {
                                 }
                               }, 180);
                             } else {
-                              setPlaying(false);
+                              // Keep Reels mounted after a transient Safari decode/network error.
+                              // Re-entry and media readiness events can recover playback.
+                              setPlaying(true);
                             }
                           }
                         }} onClick={activeVideo ? (e) => {
