@@ -35,6 +35,7 @@ import { WeChatSkin, WhatsAppSkin } from "./AppSkins";
 import { RichText } from "./RichText";
 import {
   useEffect,
+  memo,
   useState,
   useRef,
   Suspense,
@@ -64,7 +65,7 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
-export function AppIcon({
+export const AppIcon = memo(function AppIcon({
   id,
   name,
   small = false,
@@ -99,7 +100,7 @@ export function AppIcon({
       {name && <span className="app-name">{name}</span>}
     </span>
   );
-}
+});
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
@@ -540,8 +541,8 @@ function PhoneRuntime({
                     name={small ? undefined : a.name}
                     small={small}
                     custom={a.icon}
-                    date={s.date || work.phone.date}
-                    time={s.time}
+                    date={a.id === "calendar" ? s.date || work.phone.date : undefined}
+                    time={a.id === "clock" ? s.time : undefined}
                   />
                 )}
                 clearApp={(id) =>
