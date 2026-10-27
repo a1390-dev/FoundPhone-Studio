@@ -82,6 +82,8 @@ export function DeviceLock({
   onLight: () => void;
 }) {
   const [code, setCode] = useState("");
+  const [playerId, setPlayerId] = useState(() => { try { return localStorage.getItem("foundphone.player-id.v1") || ""; } catch { return ""; } });
+  const [idDraft, setIdDraft] = useState(playerId);
   useEffect(() => {
     if (error) setCode("");
   }, [error]);
@@ -124,6 +126,23 @@ export function DeviceLock({
             </p>
             <h1>{time}</h1>
           </div>
+          {!playerId ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const value = idDraft.trim().slice(0, 24);
+                if (!value) return;
+                setPlayerId(value);
+                try { localStorage.setItem("foundphone.player-id.v1", value); } catch {}
+                if (work.phone.passcode) setPinOpen(true); else onUnlock("");
+              }}
+              style={{ position: "absolute", left: 24, right: 24, bottom: 86, display: "grid", gap: 7, textAlign: "left" }}
+            >
+              <label htmlFor="foundphone-player-id" style={{ fontSize: 11, color: "white", textShadow: "0 1px 5px #0008" }}>设置你的玩家 ID / 昵称</label>
+              <input id="foundphone-player-id" value={idDraft} onChange={(e) => setIdDraft(e.target.value)} maxLength={24} autoComplete="nickname" placeholder="输入你想使用的名字" required style={{ width: "100%", padding: "9px 11px", borderRadius: 10, background: "#ffffffdf", color: "#191919", fontSize: 13 }} />
+              <button type="submit" style={{ justifySelf: "start", padding: "8px 18px", borderRadius: 10, background: "#fee500", color: "#191919", fontWeight: 700, fontSize: 13 }}>确认 ID</button>
+            </form>
+          ) : null}
           <div className="lock-notifications">
             {work.phone.notifications && (
               <SystemNotifications
@@ -135,7 +154,7 @@ export function DeviceLock({
               />
             )}
           </div>
-          <UnlockHandle onUnlock={open} />
+          {playerId ? <UnlockHandle onUnlock={open} /> : null}
 
           <div className="lock-tools">
             <button onClick={onLight} aria-label="手电筒">
