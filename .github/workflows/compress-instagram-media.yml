@@ -34,69 +34,69 @@ jobs:
           ffmpeg -version | head -n 1
           convert -version | head -n 1
 
-      - name: Compress Instagram images and Reels
+      - name: Second-pass compress Instagram post images and Reels video 2
         shell: bash
         run: |
           set -euo pipefail
           changed=0
 
-          # Capture the file lists BEFORE creating temporary files. Otherwise find
-          # may discover *.compressed.jpg / *.compressed.mp4 while the loop runs.
-          mapfile -d '' image_files < <(find public/media/instagram -type f -iname '*.jpg' ! -name '*.compressed.jpg' -print0)
-          mapfile -d '' video_files < <(find public/media/reels -type f -iname '*.mp4' ! -name '*.compressed.mp4' -print0)
-
-          echo "Found ${#image_files[@]} Instagram JPG images."
+          # Re-compress post images only; leave account avatars untouched.
+          # Collect filenames before writing temporary output files.
+          mapfile -d '' image_files < <(find public/media/instagram -type f -iname '*.jpg' ! -name 'avatar.jpg' ! -name '*.second-pass.jpg' -print0)
+          echo "Found ${#image_files[@]} Instagram post JPG images for second-pass compression."
           index=0
           for file in "${image_files[@]}"; do
             index=$((index + 1))
-            tmp="${file%.*}.compressed.jpg"
-            echo "Compressing image ${index}/${#image_files[@]}: $file"
-            if ! timeout 90s convert "$file" -auto-orient -strip -resize '1200x1200>' -sampling-factor 4:2:0 -quality 80 "$tmp"; then
+            tmp="${file%.*}.second-pass.jpg"
+            echo "Second-pass image ${index}/${#image_files[@]}: $file"
+            if ! timeout 90s convert "$file" -auto-orient -strip -resize '1080x1080>' -sampling-factor 4:2:0 -quality 72 "$tmp"; then
               rm -f "$tmp"
-              echo "::warning::Could not compress image: $file"
+              echo "::warning::Could not second-pass compress image: $file"
               continue
             fi
             old_size=$(stat -c%s "$file")
             new_size=$(stat -c%s "$tmp")
             if [ "$new_size" -lt "$old_size" ]; then
               mv "$tmp" "$file"
-              echo "Compressed image: $file ($old_size -> $new_size bytes)"
+              echo "Reduced image: $file ($old_size -> $new_size bytes)"
               changed=1
             else
               rm -f "$tmp"
-              echo "Kept image (already smaller): $file"
+              echo "Kept image (second pass was not smaller): $file"
             fi
           done
 
-          echo "Found ${#video_files[@]} Reels MP4 videos."
-          index=0
-          for file in "${video_files[@]}"; do
-            index=$((index + 1))
-            tmp="${file%.mp4}.compressed.mp4"
-            echo "Compressing video ${index}/${#video_files[@]}: $file"
-            if ! timeout 240s ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -map '0:a?' -c:v libx264 -preset fast -crf 25 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "$tmp"; then
-              rm -f "$tmp"
-              echo "::warning::Could not compress video: $file"
-              continue
-            fi
-            old_size=$(stat -c%s "$file")
-            new_size=$(stat -c%s "$tmp")
-            if [ "$new_size" -lt "$old_size" ]; then
-              mv "$tmp" "$file"
-              echo "Compressed video: $file ($old_size -> $new_size bytes)"
-              changed=1
+          # Re-compress only the second Reel. Do not scale/crop: original dimensions
+          # and filename remain unchanged. CRF 28 + medium preset targets a smaller file.
+          file="public/media/reels/ig-reel-02.mp4"
+          if [ -f "$file" ]; then
+            tmp="${file%.mp4}.second-pass.mp4"
+            echo "Second-pass video: $file"
+            if timeout 240s ffmpeg -hide_banner -loglevel error -y -i "$file" -map 0:v:0 -map '0:a?' -c:v libx264 -preset medium -crf 28 -pix_fmt yuv420p -c:a aac -b:a 80k -movflags +faststart "$tmp"; then
+              old_size=$(stat -c%s "$file")
+              new_size=$(stat -c%s "$tmp")
+              if [ "$new_size" -lt "$old_size" ]; then
+                mv "$tmp" "$file"
+                echo "Reduced video: $file ($old_size -> $new_size bytes)"
+                changed=1
+              else
+                rm -f "$tmp"
+                echo "Kept video (second pass was not smaller): $file"
+              fi
             else
               rm -f "$tmp"
-              echo "Kept video (already smaller): $file"
+              echo "::warning::Could not second-pass compress video: $file"
             fi
-          done
+          else
+            echo "::warning::Target Reel not found: $file"
+          fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/media/instagram public/media/reels
           if [ "$changed" -eq 1 ] && ! git diff --cached --quiet; then
-            git commit -m "Compress Instagram images and lightly optimize Reels"
+            git commit -m "Second-pass compress Instagram images and Reel 2"
             git push origin HEAD:main
           else
-            echo "No media changes to commit."
+            echo "No second-pass media changes to commit."
           fi
