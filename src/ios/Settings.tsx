@@ -19,7 +19,7 @@ import {
   Globe,
   Mic,
 } from "lucide-react";
-import type { Work, Item } from "../schema";
+import type { Work, Item, Runtime } from "../schema";
 import { IOSToggle } from "../vendor/konsta/Toggle";
 import { NavigationPage, useNavigation } from "./Navigation";
 type Row = [ComponentType<{ size?: number }>, string, string];
@@ -51,12 +51,18 @@ export function NativeSettings({
   creator,
   onItem,
   onSettings,
+  saveSlots,
+  onSaveSlot,
+  onLoadSlot,
 }: {
   work: Work;
   items: Item[];
   creator: boolean;
   onItem: (i: Item) => void;
   onSettings?: () => void;
+  saveSlots: Array<{ id: string; state: Runtime } | undefined>;
+  onSaveSlot: (index: number) => void | Promise<void>;
+  onLoadSlot: (index: number) => void | Promise<void>;
 }) {
   const nav = useNavigation(),
     [query, setQuery] = useState(""),
@@ -79,9 +85,29 @@ export function NativeSettings({
   );
   const sub = () => {
     switch (nav.page) {
+      case "游戏存档":
+        return (
+          <div className="settings-group save-slots-group">
+            <p className="settings-page-caption">最多保存 3 个进度。读档会覆盖当前游玩进度。</p>
+            {[0, 1, 2].map((index) => {
+              const slot = saveSlots[index];
+              return (
+                <div className="settings-native-row save-slot-row" key={index}>
+                  <div className="save-slot-copy">
+                    <strong>存档位 {index + 1}</strong>
+                    <small>{slot ? `已存档 · 游戏时间 ${slot.state.time}` : "空存档位"}</small>
+                  </div>
+                  <button className="save-slot-action" onClick={() => void onSaveSlot(index)}>存档</button>
+                  <button className="save-slot-action" disabled={!slot} onClick={() => void onLoadSlot(index)}>读档</button>
+                </div>
+              );
+            })}
+          </div>
+        );
       case "通用":
         return (
           <div className="settings-group">
+            {row("游戏存档", "3 个存档位", () => nav.push("游戏存档"))}
             {row("关于本机", "", () => nav.push("关于本机"))}
             {row("软件更新", "iOS 18.0", () => nav.push("软件更新"))}
             {row("iPhone 储存空间", "", () => nav.push("iPhone 储存空间"))}
