@@ -1138,26 +1138,28 @@
   }
 }
 
-/* First Instagram carousel post: emphasize like/comment/repost; keep share smaller. */
+/* First Instagram carousel post: four interaction icons slightly larger; share icon smaller. */
 .mymy-ui .ig-first-actions button:nth-child(1) svg,
 .mymy-ui .ig-first-actions button:nth-child(2) svg,
-.mymy-ui .ig-first-actions button:nth-child(3) svg {
-  width: 27px;
-  height: 27px;
+.mymy-ui .ig-first-actions button:nth-child(3) svg,
+.mymy-ui .ig-first-actions button:nth-child(5) svg {
+  width: 26px;
+  height: 26px;
 }
 .mymy-ui .ig-first-actions button:nth-child(4) svg {
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
 }
 @media (max-width: 360px) {
   .mymy-ui .ig-first-actions button:nth-child(1) svg,
   .mymy-ui .ig-first-actions button:nth-child(2) svg,
-  .mymy-ui .ig-first-actions button:nth-child(3) svg {
-    width: 24px;
-    height: 24px;
+  .mymy-ui .ig-first-actions button:nth-child(3) svg,
+  .mymy-ui .ig-first-actions button:nth-child(5) svg {
+    width: 23px;
+    height: 23px;
   }
   .mymy-ui .ig-first-actions button:nth-child(4) svg {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
   }
 }
