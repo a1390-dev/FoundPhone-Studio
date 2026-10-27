@@ -1,5 +1,5 @@
 import { DetailedArtwork, detailedIcons } from "./ios/DetailedArtwork";
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { originalIconFiles } from "./ios/originalIconFiles";
 import "./ios/original-icons.css";
 import { getApp } from "./registry";
@@ -841,12 +841,8 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
 
 const originalsEnabled = import.meta.env.VITE_ORIGINAL_ICONS === "true";
 
-// Preload and decode the original icons as a batch while the lock screen is visible.
-// AppArtwork keeps the entire icon set hidden until the batch is ready, avoiding
-// the one-by-one appearance caused by individual image load events.
-let originalIconsReady = false;
+// Preload original assets for smoother swaps, but never gate visible icons on the batch.
 let originalIconPreloadPromise: Promise<void> | undefined;
-const originalIconReadyListeners = new Set<() => void>();
 
 export function preloadOriginalIcons(): Promise<void> {
   if (!originalsEnabled) return Promise.resolve();
@@ -887,10 +883,7 @@ export function preloadOriginalIcons(): Promise<void> {
   const workers = Math.min(8, files.length);
   originalIconPreloadPromise = Promise.all(
     Array.from({ length: workers }, () => worker()),
-  ).then(() => {
-    originalIconsReady = true;
-    originalIconReadyListeners.forEach((listener) => listener());
-  });
+  ).then(() => undefined);
   return originalIconPreloadPromise;
 }
 export function AppArtwork({
@@ -903,15 +896,6 @@ export function AppArtwork({
   time?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const [iconsReady, setIconsReady] = useState(originalIconsReady);
-  useEffect(() => {
-    const syncReady = () => setIconsReady(originalIconsReady);
-    originalIconReadyListeners.add(syncReady);
-    syncReady();
-    return () => {
-      originalIconReadyListeners.delete(syncReady);
-    };
-  }, []);
   const file = originalIconFiles[id];
   if (!originalsEnabled) return <DrawnArtwork id={id} date={date} />;
   if (!file || failed) {
@@ -934,8 +918,11 @@ export function AppArtwork({
     <span
       className="original-icon-wrap"
       data-original-icon={id}
-      style={{ opacity: iconsReady ? 1 : 0 }}
+      style={{ opacity: 1 }}
     >
+      <span className="original-icon-fallback" style={{ position: "absolute", inset: 0 }}>
+        <DrawnArtwork id={id} date={date} />
+      </span>
       <img
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
