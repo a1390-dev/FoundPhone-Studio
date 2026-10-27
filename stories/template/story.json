@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "仅用于界面测试，不含剧情",
-  "revision": 2,
+  "revision": 3,
   "phone": {
     "owner": "机主",
     "date": "2026-10-25",
@@ -94,6 +94,138 @@
       "name": "测试联系人",
       "phone": "",
       "bio": "这是一条测试内容。"
+    },
+    {
+      "id": "liu-zhimin",
+      "name": "刘知珉",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "u-nae-ri",
+      "name": "内永绘里",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "kim-minjeong",
+      "name": "金旼炡",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "ning-yizhuo",
+      "name": "宁艺卓",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "lin-jianguo",
+      "name": "林建国（爸爸）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "zhou-wanning",
+      "name": "周婉宁（妈妈）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "lin-zihao",
+      "name": "林子皓（哥哥）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "lin-yutong",
+      "name": "林雨桐（姐姐）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "xu-jiaqi",
+      "name": "许佳琪（好朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "chen-yinuo",
+      "name": "陈一诺（好朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "wang-chenxi",
+      "name": "王晨曦（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "zhao-yuchen",
+      "name": "赵宇辰（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "sun-ruoxi",
+      "name": "孙若溪（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "li-minghui",
+      "name": "李明辉（导员）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "gao-ziyang",
+      "name": "高子扬（朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "tang-xinyi",
+      "name": "唐欣怡（朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "he-junhao",
+      "name": "何俊豪（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "song-yiran",
+      "name": "宋依然（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "luo-jiayi",
+      "name": "罗佳怡（朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "fang-zheng",
+      "name": "方正（朋友）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "wu-xiaoyu",
+      "name": "吴晓雨（同学）",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "jiang-chen",
+      "name": "江晨（朋友）",
+      "phone": "",
+      "bio": ""
     }
   ],
   "chats": [
@@ -243,6 +375,1994 @@
           "id": "test-reply-kakao",
           "body": "这是一条测试回复。",
           "senderId": "owner"
+        }
+      ]
+    },
+    {
+      "id": "kakao-liu-zhimin-chat",
+      "app": "kakao",
+      "title": "刘知珉",
+      "participants": [
+        "owner",
+        "liu-zhimin"
+      ],
+      "messages": [
+        {
+          "id": "kakao-liu-zhimin-hello",
+          "body": "在吗？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-u-nae-ri-chat",
+      "app": "kakao",
+      "title": "内永绘里",
+      "participants": [
+        "owner",
+        "u-nae-ri"
+      ],
+      "messages": [
+        {
+          "id": "kakao-u-nae-ri-hello",
+          "body": "在吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-kim-minjeong-chat",
+      "app": "kakao",
+      "title": "金旼炡",
+      "participants": [
+        "owner",
+        "kim-minjeong"
+      ],
+      "messages": [
+        {
+          "id": "kakao-kim-minjeong-hello",
+          "body": "今天怎么样？",
+          "senderId": "kim-minjeong",
+          "time": "2026-10-27 20:18",
+          "meta": {
+            "pinned": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kakao-ning-yizhuo-chat",
+      "app": "kakao",
+      "title": "宁艺卓",
+      "participants": [
+        "owner",
+        "ning-yizhuo"
+      ],
+      "messages": [
+        {
+          "id": "kakao-ning-yizhuo-hello",
+          "body": "在吗？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-lin-jianguo-chat",
+      "app": "kakao",
+      "title": "林建国（爸爸）",
+      "participants": [
+        "owner",
+        "lin-jianguo"
+      ],
+      "messages": [
+        {
+          "id": "kakao-lin-jianguo-hello",
+          "body": "在吗？",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-zhou-wanning-chat",
+      "app": "kakao",
+      "title": "周婉宁（妈妈）",
+      "participants": [
+        "owner",
+        "zhou-wanning"
+      ],
+      "messages": [
+        {
+          "id": "kakao-zhou-wanning-hello",
+          "body": "在吗？",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-lin-zihao-chat",
+      "app": "kakao",
+      "title": "林子皓（哥哥）",
+      "participants": [
+        "owner",
+        "lin-zihao"
+      ],
+      "messages": [
+        {
+          "id": "kakao-lin-zihao-hello",
+          "body": "在吗？",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-lin-yutong-chat",
+      "app": "kakao",
+      "title": "林雨桐（姐姐）",
+      "participants": [
+        "owner",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "kakao-lin-yutong-hello",
+          "body": "在吗？",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-xu-jiaqi-chat",
+      "app": "kakao",
+      "title": "许佳琪（好朋友）",
+      "participants": [
+        "owner",
+        "xu-jiaqi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-xu-jiaqi-hello",
+          "body": "在吗？",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-chen-yinuo-chat",
+      "app": "kakao",
+      "title": "陈一诺（好朋友）",
+      "participants": [
+        "owner",
+        "chen-yinuo"
+      ],
+      "messages": [
+        {
+          "id": "kakao-chen-yinuo-hello",
+          "body": "在吗？",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-wang-chenxi-chat",
+      "app": "kakao",
+      "title": "王晨曦（同学）",
+      "participants": [
+        "owner",
+        "wang-chenxi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-wang-chenxi-hello",
+          "body": "在吗？",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-zhao-yuchen-chat",
+      "app": "kakao",
+      "title": "赵宇辰（同学）",
+      "participants": [
+        "owner",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "kakao-zhao-yuchen-hello",
+          "body": "在吗？",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-sun-ruoxi-chat",
+      "app": "kakao",
+      "title": "孙若溪（同学）",
+      "participants": [
+        "owner",
+        "sun-ruoxi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-sun-ruoxi-hello",
+          "body": "在吗？",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-li-minghui-chat",
+      "app": "kakao",
+      "title": "李明辉（导员）",
+      "participants": [
+        "owner",
+        "li-minghui"
+      ],
+      "messages": [
+        {
+          "id": "kakao-li-minghui-hello",
+          "body": "在吗？",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-gao-ziyang-chat",
+      "app": "kakao",
+      "title": "高子扬（朋友）",
+      "participants": [
+        "owner",
+        "gao-ziyang"
+      ],
+      "messages": [
+        {
+          "id": "kakao-gao-ziyang-hello",
+          "body": "在吗？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-tang-xinyi-chat",
+      "app": "kakao",
+      "title": "唐欣怡（朋友）",
+      "participants": [
+        "owner",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-tang-xinyi-hello",
+          "body": "在吗？",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-he-junhao-chat",
+      "app": "kakao",
+      "title": "何俊豪（同学）",
+      "participants": [
+        "owner",
+        "he-junhao"
+      ],
+      "messages": [
+        {
+          "id": "kakao-he-junhao-hello",
+          "body": "在吗？",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-song-yiran-chat",
+      "app": "kakao",
+      "title": "宋依然（同学）",
+      "participants": [
+        "owner",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "kakao-song-yiran-hello",
+          "body": "在吗？",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-luo-jiayi-chat",
+      "app": "kakao",
+      "title": "罗佳怡（朋友）",
+      "participants": [
+        "owner",
+        "luo-jiayi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-luo-jiayi-hello",
+          "body": "在吗？",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-fang-zheng-chat",
+      "app": "kakao",
+      "title": "方正（朋友）",
+      "participants": [
+        "owner",
+        "fang-zheng"
+      ],
+      "messages": [
+        {
+          "id": "kakao-fang-zheng-hello",
+          "body": "在吗？",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-wu-xiaoyu-chat",
+      "app": "kakao",
+      "title": "吴晓雨（同学）",
+      "participants": [
+        "owner",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "kakao-wu-xiaoyu-hello",
+          "body": "在吗？",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-jiang-chen-chat",
+      "app": "kakao",
+      "title": "江晨（朋友）",
+      "participants": [
+        "owner",
+        "jiang-chen"
+      ],
+      "messages": [
+        {
+          "id": "kakao-jiang-chen-hello",
+          "body": "在吗？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "kakao-family-chat",
+      "app": "kakao",
+      "title": "相亲相爱一家人",
+      "participants": [
+        "owner",
+        "lin-jianguo",
+        "zhou-wanning",
+        "lin-zihao",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "kakao-family-chat-msg",
+          "body": "到家记得说一声。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "kakao-besties-chat",
+      "app": "kakao",
+      "title": "今天也要开心",
+      "participants": [
+        "owner",
+        "xu-jiaqi",
+        "chen-yinuo",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "kakao-besties-chat-msg",
+          "body": "周末有空一起出来玩！",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "kakao-class-chat",
+      "app": "kakao",
+      "title": "2026级班级群",
+      "participants": [
+        "owner",
+        "wang-chenxi",
+        "zhao-yuchen",
+        "sun-ruoxi",
+        "he-junhao",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "kakao-class-chat-msg",
+          "body": "大家看一下群消息。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "kakao-advisor-chat",
+      "app": "kakao",
+      "title": "辅导员通知群",
+      "participants": [
+        "owner",
+        "li-minghui",
+        "wang-chenxi",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "kakao-advisor-chat-msg",
+          "body": "请同学们留意通知。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "kakao-friends-chat",
+      "app": "kakao",
+      "title": "周末去哪玩",
+      "participants": [
+        "owner",
+        "gao-ziyang",
+        "luo-jiayi",
+        "fang-zheng",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "kakao-friends-chat-msg",
+          "body": "大家什么时候有空？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "wechat-liu-zhimin-chat",
+      "app": "wechat",
+      "title": "刘知珉",
+      "participants": [
+        "owner",
+        "liu-zhimin"
+      ],
+      "messages": [
+        {
+          "id": "wechat-liu-zhimin-hello",
+          "body": "在吗？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-u-nae-ri-chat",
+      "app": "wechat",
+      "title": "内永绘里",
+      "participants": [
+        "owner",
+        "u-nae-ri"
+      ],
+      "messages": [
+        {
+          "id": "wechat-u-nae-ri-hello",
+          "body": "在吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-kim-minjeong-chat",
+      "app": "wechat",
+      "title": "金旼炡",
+      "participants": [
+        "owner",
+        "kim-minjeong"
+      ],
+      "messages": [
+        {
+          "id": "wechat-kim-minjeong-hello",
+          "body": "今天怎么样？",
+          "senderId": "kim-minjeong",
+          "time": "2026-10-27 20:18",
+          "meta": {
+            "pinned": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wechat-ning-yizhuo-chat",
+      "app": "wechat",
+      "title": "宁艺卓",
+      "participants": [
+        "owner",
+        "ning-yizhuo"
+      ],
+      "messages": [
+        {
+          "id": "wechat-ning-yizhuo-hello",
+          "body": "在吗？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-lin-jianguo-chat",
+      "app": "wechat",
+      "title": "林建国（爸爸）",
+      "participants": [
+        "owner",
+        "lin-jianguo"
+      ],
+      "messages": [
+        {
+          "id": "wechat-lin-jianguo-hello",
+          "body": "在吗？",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-zhou-wanning-chat",
+      "app": "wechat",
+      "title": "周婉宁（妈妈）",
+      "participants": [
+        "owner",
+        "zhou-wanning"
+      ],
+      "messages": [
+        {
+          "id": "wechat-zhou-wanning-hello",
+          "body": "在吗？",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-lin-zihao-chat",
+      "app": "wechat",
+      "title": "林子皓（哥哥）",
+      "participants": [
+        "owner",
+        "lin-zihao"
+      ],
+      "messages": [
+        {
+          "id": "wechat-lin-zihao-hello",
+          "body": "在吗？",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-lin-yutong-chat",
+      "app": "wechat",
+      "title": "林雨桐（姐姐）",
+      "participants": [
+        "owner",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "wechat-lin-yutong-hello",
+          "body": "在吗？",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-xu-jiaqi-chat",
+      "app": "wechat",
+      "title": "许佳琪（好朋友）",
+      "participants": [
+        "owner",
+        "xu-jiaqi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-xu-jiaqi-hello",
+          "body": "在吗？",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-chen-yinuo-chat",
+      "app": "wechat",
+      "title": "陈一诺（好朋友）",
+      "participants": [
+        "owner",
+        "chen-yinuo"
+      ],
+      "messages": [
+        {
+          "id": "wechat-chen-yinuo-hello",
+          "body": "在吗？",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-wang-chenxi-chat",
+      "app": "wechat",
+      "title": "王晨曦（同学）",
+      "participants": [
+        "owner",
+        "wang-chenxi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-wang-chenxi-hello",
+          "body": "在吗？",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-zhao-yuchen-chat",
+      "app": "wechat",
+      "title": "赵宇辰（同学）",
+      "participants": [
+        "owner",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "wechat-zhao-yuchen-hello",
+          "body": "在吗？",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-sun-ruoxi-chat",
+      "app": "wechat",
+      "title": "孙若溪（同学）",
+      "participants": [
+        "owner",
+        "sun-ruoxi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-sun-ruoxi-hello",
+          "body": "在吗？",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-li-minghui-chat",
+      "app": "wechat",
+      "title": "李明辉（导员）",
+      "participants": [
+        "owner",
+        "li-minghui"
+      ],
+      "messages": [
+        {
+          "id": "wechat-li-minghui-hello",
+          "body": "在吗？",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-gao-ziyang-chat",
+      "app": "wechat",
+      "title": "高子扬（朋友）",
+      "participants": [
+        "owner",
+        "gao-ziyang"
+      ],
+      "messages": [
+        {
+          "id": "wechat-gao-ziyang-hello",
+          "body": "在吗？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-tang-xinyi-chat",
+      "app": "wechat",
+      "title": "唐欣怡（朋友）",
+      "participants": [
+        "owner",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-tang-xinyi-hello",
+          "body": "在吗？",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-he-junhao-chat",
+      "app": "wechat",
+      "title": "何俊豪（同学）",
+      "participants": [
+        "owner",
+        "he-junhao"
+      ],
+      "messages": [
+        {
+          "id": "wechat-he-junhao-hello",
+          "body": "在吗？",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-song-yiran-chat",
+      "app": "wechat",
+      "title": "宋依然（同学）",
+      "participants": [
+        "owner",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "wechat-song-yiran-hello",
+          "body": "在吗？",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-luo-jiayi-chat",
+      "app": "wechat",
+      "title": "罗佳怡（朋友）",
+      "participants": [
+        "owner",
+        "luo-jiayi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-luo-jiayi-hello",
+          "body": "在吗？",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-fang-zheng-chat",
+      "app": "wechat",
+      "title": "方正（朋友）",
+      "participants": [
+        "owner",
+        "fang-zheng"
+      ],
+      "messages": [
+        {
+          "id": "wechat-fang-zheng-hello",
+          "body": "在吗？",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-wu-xiaoyu-chat",
+      "app": "wechat",
+      "title": "吴晓雨（同学）",
+      "participants": [
+        "owner",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "wechat-wu-xiaoyu-hello",
+          "body": "在吗？",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-jiang-chen-chat",
+      "app": "wechat",
+      "title": "江晨（朋友）",
+      "participants": [
+        "owner",
+        "jiang-chen"
+      ],
+      "messages": [
+        {
+          "id": "wechat-jiang-chen-hello",
+          "body": "在吗？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "wechat-family-chat",
+      "app": "wechat",
+      "title": "相亲相爱一家人",
+      "participants": [
+        "owner",
+        "lin-jianguo",
+        "zhou-wanning",
+        "lin-zihao",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "wechat-family-chat-msg",
+          "body": "到家记得说一声。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "wechat-besties-chat",
+      "app": "wechat",
+      "title": "今天也要开心",
+      "participants": [
+        "owner",
+        "xu-jiaqi",
+        "chen-yinuo",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "wechat-besties-chat-msg",
+          "body": "周末有空一起出来玩！",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "wechat-class-chat",
+      "app": "wechat",
+      "title": "2026级班级群",
+      "participants": [
+        "owner",
+        "wang-chenxi",
+        "zhao-yuchen",
+        "sun-ruoxi",
+        "he-junhao",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "wechat-class-chat-msg",
+          "body": "大家看一下群消息。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "wechat-advisor-chat",
+      "app": "wechat",
+      "title": "辅导员通知群",
+      "participants": [
+        "owner",
+        "li-minghui",
+        "wang-chenxi",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "wechat-advisor-chat-msg",
+          "body": "请同学们留意通知。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "wechat-friends-chat",
+      "app": "wechat",
+      "title": "周末去哪玩",
+      "participants": [
+        "owner",
+        "gao-ziyang",
+        "luo-jiayi",
+        "fang-zheng",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "wechat-friends-chat-msg",
+          "body": "大家什么时候有空？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "line-liu-zhimin-chat",
+      "app": "line",
+      "title": "刘知珉",
+      "participants": [
+        "owner",
+        "liu-zhimin"
+      ],
+      "messages": [
+        {
+          "id": "line-liu-zhimin-hello",
+          "body": "在吗？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-u-nae-ri-chat",
+      "app": "line",
+      "title": "内永绘里",
+      "participants": [
+        "owner",
+        "u-nae-ri"
+      ],
+      "messages": [
+        {
+          "id": "line-u-nae-ri-hello",
+          "body": "在吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-kim-minjeong-chat",
+      "app": "line",
+      "title": "金旼炡",
+      "participants": [
+        "owner",
+        "kim-minjeong"
+      ],
+      "messages": [
+        {
+          "id": "line-kim-minjeong-hello",
+          "body": "今天怎么样？",
+          "senderId": "kim-minjeong",
+          "time": "2026-10-27 20:18",
+          "meta": {
+            "pinned": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "line-ning-yizhuo-chat",
+      "app": "line",
+      "title": "宁艺卓",
+      "participants": [
+        "owner",
+        "ning-yizhuo"
+      ],
+      "messages": [
+        {
+          "id": "line-ning-yizhuo-hello",
+          "body": "在吗？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-lin-jianguo-chat",
+      "app": "line",
+      "title": "林建国（爸爸）",
+      "participants": [
+        "owner",
+        "lin-jianguo"
+      ],
+      "messages": [
+        {
+          "id": "line-lin-jianguo-hello",
+          "body": "在吗？",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-zhou-wanning-chat",
+      "app": "line",
+      "title": "周婉宁（妈妈）",
+      "participants": [
+        "owner",
+        "zhou-wanning"
+      ],
+      "messages": [
+        {
+          "id": "line-zhou-wanning-hello",
+          "body": "在吗？",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-lin-zihao-chat",
+      "app": "line",
+      "title": "林子皓（哥哥）",
+      "participants": [
+        "owner",
+        "lin-zihao"
+      ],
+      "messages": [
+        {
+          "id": "line-lin-zihao-hello",
+          "body": "在吗？",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-lin-yutong-chat",
+      "app": "line",
+      "title": "林雨桐（姐姐）",
+      "participants": [
+        "owner",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "line-lin-yutong-hello",
+          "body": "在吗？",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-xu-jiaqi-chat",
+      "app": "line",
+      "title": "许佳琪（好朋友）",
+      "participants": [
+        "owner",
+        "xu-jiaqi"
+      ],
+      "messages": [
+        {
+          "id": "line-xu-jiaqi-hello",
+          "body": "在吗？",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-chen-yinuo-chat",
+      "app": "line",
+      "title": "陈一诺（好朋友）",
+      "participants": [
+        "owner",
+        "chen-yinuo"
+      ],
+      "messages": [
+        {
+          "id": "line-chen-yinuo-hello",
+          "body": "在吗？",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-wang-chenxi-chat",
+      "app": "line",
+      "title": "王晨曦（同学）",
+      "participants": [
+        "owner",
+        "wang-chenxi"
+      ],
+      "messages": [
+        {
+          "id": "line-wang-chenxi-hello",
+          "body": "在吗？",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-zhao-yuchen-chat",
+      "app": "line",
+      "title": "赵宇辰（同学）",
+      "participants": [
+        "owner",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "line-zhao-yuchen-hello",
+          "body": "在吗？",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-sun-ruoxi-chat",
+      "app": "line",
+      "title": "孙若溪（同学）",
+      "participants": [
+        "owner",
+        "sun-ruoxi"
+      ],
+      "messages": [
+        {
+          "id": "line-sun-ruoxi-hello",
+          "body": "在吗？",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-li-minghui-chat",
+      "app": "line",
+      "title": "李明辉（导员）",
+      "participants": [
+        "owner",
+        "li-minghui"
+      ],
+      "messages": [
+        {
+          "id": "line-li-minghui-hello",
+          "body": "在吗？",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-gao-ziyang-chat",
+      "app": "line",
+      "title": "高子扬（朋友）",
+      "participants": [
+        "owner",
+        "gao-ziyang"
+      ],
+      "messages": [
+        {
+          "id": "line-gao-ziyang-hello",
+          "body": "在吗？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-tang-xinyi-chat",
+      "app": "line",
+      "title": "唐欣怡（朋友）",
+      "participants": [
+        "owner",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "line-tang-xinyi-hello",
+          "body": "在吗？",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-he-junhao-chat",
+      "app": "line",
+      "title": "何俊豪（同学）",
+      "participants": [
+        "owner",
+        "he-junhao"
+      ],
+      "messages": [
+        {
+          "id": "line-he-junhao-hello",
+          "body": "在吗？",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-song-yiran-chat",
+      "app": "line",
+      "title": "宋依然（同学）",
+      "participants": [
+        "owner",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "line-song-yiran-hello",
+          "body": "在吗？",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-luo-jiayi-chat",
+      "app": "line",
+      "title": "罗佳怡（朋友）",
+      "participants": [
+        "owner",
+        "luo-jiayi"
+      ],
+      "messages": [
+        {
+          "id": "line-luo-jiayi-hello",
+          "body": "在吗？",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-fang-zheng-chat",
+      "app": "line",
+      "title": "方正（朋友）",
+      "participants": [
+        "owner",
+        "fang-zheng"
+      ],
+      "messages": [
+        {
+          "id": "line-fang-zheng-hello",
+          "body": "在吗？",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-wu-xiaoyu-chat",
+      "app": "line",
+      "title": "吴晓雨（同学）",
+      "participants": [
+        "owner",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "line-wu-xiaoyu-hello",
+          "body": "在吗？",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-jiang-chen-chat",
+      "app": "line",
+      "title": "江晨（朋友）",
+      "participants": [
+        "owner",
+        "jiang-chen"
+      ],
+      "messages": [
+        {
+          "id": "line-jiang-chen-hello",
+          "body": "在吗？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "line-family-chat",
+      "app": "line",
+      "title": "相亲相爱一家人",
+      "participants": [
+        "owner",
+        "lin-jianguo",
+        "zhou-wanning",
+        "lin-zihao",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "line-family-chat-msg",
+          "body": "到家记得说一声。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "line-besties-chat",
+      "app": "line",
+      "title": "今天也要开心",
+      "participants": [
+        "owner",
+        "xu-jiaqi",
+        "chen-yinuo",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "line-besties-chat-msg",
+          "body": "周末有空一起出来玩！",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "line-class-chat",
+      "app": "line",
+      "title": "2026级班级群",
+      "participants": [
+        "owner",
+        "wang-chenxi",
+        "zhao-yuchen",
+        "sun-ruoxi",
+        "he-junhao",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "line-class-chat-msg",
+          "body": "大家看一下群消息。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "line-advisor-chat",
+      "app": "line",
+      "title": "辅导员通知群",
+      "participants": [
+        "owner",
+        "li-minghui",
+        "wang-chenxi",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "line-advisor-chat-msg",
+          "body": "请同学们留意通知。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "line-friends-chat",
+      "app": "line",
+      "title": "周末去哪玩",
+      "participants": [
+        "owner",
+        "gao-ziyang",
+        "luo-jiayi",
+        "fang-zheng",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "line-friends-chat-msg",
+          "body": "大家什么时候有空？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "qq-liu-zhimin-chat",
+      "app": "qq",
+      "title": "刘知珉",
+      "participants": [
+        "owner",
+        "liu-zhimin"
+      ],
+      "messages": [
+        {
+          "id": "qq-liu-zhimin-hello",
+          "body": "在吗？",
+          "senderId": "liu-zhimin",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-u-nae-ri-chat",
+      "app": "qq",
+      "title": "内永绘里",
+      "participants": [
+        "owner",
+        "u-nae-ri"
+      ],
+      "messages": [
+        {
+          "id": "qq-u-nae-ri-hello",
+          "body": "在吗？",
+          "senderId": "u-nae-ri",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-kim-minjeong-chat",
+      "app": "qq",
+      "title": "金旼炡",
+      "participants": [
+        "owner",
+        "kim-minjeong"
+      ],
+      "messages": [
+        {
+          "id": "qq-kim-minjeong-hello",
+          "body": "今天怎么样？",
+          "senderId": "kim-minjeong",
+          "time": "2026-10-27 20:18",
+          "meta": {
+            "pinned": "true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "qq-ning-yizhuo-chat",
+      "app": "qq",
+      "title": "宁艺卓",
+      "participants": [
+        "owner",
+        "ning-yizhuo"
+      ],
+      "messages": [
+        {
+          "id": "qq-ning-yizhuo-hello",
+          "body": "在吗？",
+          "senderId": "ning-yizhuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-lin-jianguo-chat",
+      "app": "qq",
+      "title": "林建国（爸爸）",
+      "participants": [
+        "owner",
+        "lin-jianguo"
+      ],
+      "messages": [
+        {
+          "id": "qq-lin-jianguo-hello",
+          "body": "在吗？",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-zhou-wanning-chat",
+      "app": "qq",
+      "title": "周婉宁（妈妈）",
+      "participants": [
+        "owner",
+        "zhou-wanning"
+      ],
+      "messages": [
+        {
+          "id": "qq-zhou-wanning-hello",
+          "body": "在吗？",
+          "senderId": "zhou-wanning",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-lin-zihao-chat",
+      "app": "qq",
+      "title": "林子皓（哥哥）",
+      "participants": [
+        "owner",
+        "lin-zihao"
+      ],
+      "messages": [
+        {
+          "id": "qq-lin-zihao-hello",
+          "body": "在吗？",
+          "senderId": "lin-zihao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-lin-yutong-chat",
+      "app": "qq",
+      "title": "林雨桐（姐姐）",
+      "participants": [
+        "owner",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "qq-lin-yutong-hello",
+          "body": "在吗？",
+          "senderId": "lin-yutong",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-xu-jiaqi-chat",
+      "app": "qq",
+      "title": "许佳琪（好朋友）",
+      "participants": [
+        "owner",
+        "xu-jiaqi"
+      ],
+      "messages": [
+        {
+          "id": "qq-xu-jiaqi-hello",
+          "body": "在吗？",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-chen-yinuo-chat",
+      "app": "qq",
+      "title": "陈一诺（好朋友）",
+      "participants": [
+        "owner",
+        "chen-yinuo"
+      ],
+      "messages": [
+        {
+          "id": "qq-chen-yinuo-hello",
+          "body": "在吗？",
+          "senderId": "chen-yinuo",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-wang-chenxi-chat",
+      "app": "qq",
+      "title": "王晨曦（同学）",
+      "participants": [
+        "owner",
+        "wang-chenxi"
+      ],
+      "messages": [
+        {
+          "id": "qq-wang-chenxi-hello",
+          "body": "在吗？",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-zhao-yuchen-chat",
+      "app": "qq",
+      "title": "赵宇辰（同学）",
+      "participants": [
+        "owner",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "qq-zhao-yuchen-hello",
+          "body": "在吗？",
+          "senderId": "zhao-yuchen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-sun-ruoxi-chat",
+      "app": "qq",
+      "title": "孙若溪（同学）",
+      "participants": [
+        "owner",
+        "sun-ruoxi"
+      ],
+      "messages": [
+        {
+          "id": "qq-sun-ruoxi-hello",
+          "body": "在吗？",
+          "senderId": "sun-ruoxi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-li-minghui-chat",
+      "app": "qq",
+      "title": "李明辉（导员）",
+      "participants": [
+        "owner",
+        "li-minghui"
+      ],
+      "messages": [
+        {
+          "id": "qq-li-minghui-hello",
+          "body": "在吗？",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-gao-ziyang-chat",
+      "app": "qq",
+      "title": "高子扬（朋友）",
+      "participants": [
+        "owner",
+        "gao-ziyang"
+      ],
+      "messages": [
+        {
+          "id": "qq-gao-ziyang-hello",
+          "body": "在吗？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-tang-xinyi-chat",
+      "app": "qq",
+      "title": "唐欣怡（朋友）",
+      "participants": [
+        "owner",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "qq-tang-xinyi-hello",
+          "body": "在吗？",
+          "senderId": "tang-xinyi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-he-junhao-chat",
+      "app": "qq",
+      "title": "何俊豪（同学）",
+      "participants": [
+        "owner",
+        "he-junhao"
+      ],
+      "messages": [
+        {
+          "id": "qq-he-junhao-hello",
+          "body": "在吗？",
+          "senderId": "he-junhao",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-song-yiran-chat",
+      "app": "qq",
+      "title": "宋依然（同学）",
+      "participants": [
+        "owner",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "qq-song-yiran-hello",
+          "body": "在吗？",
+          "senderId": "song-yiran",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-luo-jiayi-chat",
+      "app": "qq",
+      "title": "罗佳怡（朋友）",
+      "participants": [
+        "owner",
+        "luo-jiayi"
+      ],
+      "messages": [
+        {
+          "id": "qq-luo-jiayi-hello",
+          "body": "在吗？",
+          "senderId": "luo-jiayi",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-fang-zheng-chat",
+      "app": "qq",
+      "title": "方正（朋友）",
+      "participants": [
+        "owner",
+        "fang-zheng"
+      ],
+      "messages": [
+        {
+          "id": "qq-fang-zheng-hello",
+          "body": "在吗？",
+          "senderId": "fang-zheng",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-wu-xiaoyu-chat",
+      "app": "qq",
+      "title": "吴晓雨（同学）",
+      "participants": [
+        "owner",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "qq-wu-xiaoyu-hello",
+          "body": "在吗？",
+          "senderId": "wu-xiaoyu",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-jiang-chen-chat",
+      "app": "qq",
+      "title": "江晨（朋友）",
+      "participants": [
+        "owner",
+        "jiang-chen"
+      ],
+      "messages": [
+        {
+          "id": "qq-jiang-chen-hello",
+          "body": "在吗？",
+          "senderId": "jiang-chen",
+          "time": "2026-10-27 20:18",
+          "meta": {}
+        }
+      ]
+    },
+    {
+      "id": "qq-family-chat",
+      "app": "qq",
+      "title": "相亲相爱一家人",
+      "participants": [
+        "owner",
+        "lin-jianguo",
+        "zhou-wanning",
+        "lin-zihao",
+        "lin-yutong"
+      ],
+      "messages": [
+        {
+          "id": "qq-family-chat-msg",
+          "body": "到家记得说一声。",
+          "senderId": "lin-jianguo",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "qq-besties-chat",
+      "app": "qq",
+      "title": "今天也要开心",
+      "participants": [
+        "owner",
+        "xu-jiaqi",
+        "chen-yinuo",
+        "tang-xinyi"
+      ],
+      "messages": [
+        {
+          "id": "qq-besties-chat-msg",
+          "body": "周末有空一起出来玩！",
+          "senderId": "xu-jiaqi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "qq-class-chat",
+      "app": "qq",
+      "title": "2026级班级群",
+      "participants": [
+        "owner",
+        "wang-chenxi",
+        "zhao-yuchen",
+        "sun-ruoxi",
+        "he-junhao",
+        "wu-xiaoyu"
+      ],
+      "messages": [
+        {
+          "id": "qq-class-chat-msg",
+          "body": "大家看一下群消息。",
+          "senderId": "wang-chenxi",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "qq-advisor-chat",
+      "app": "qq",
+      "title": "辅导员通知群",
+      "participants": [
+        "owner",
+        "li-minghui",
+        "wang-chenxi",
+        "zhao-yuchen"
+      ],
+      "messages": [
+        {
+          "id": "qq-advisor-chat-msg",
+          "body": "请同学们留意通知。",
+          "senderId": "li-minghui",
+          "time": "2026-10-27 19:42"
+        }
+      ]
+    },
+    {
+      "id": "qq-friends-chat",
+      "app": "qq",
+      "title": "周末去哪玩",
+      "participants": [
+        "owner",
+        "gao-ziyang",
+        "luo-jiayi",
+        "fang-zheng",
+        "song-yiran"
+      ],
+      "messages": [
+        {
+          "id": "qq-friends-chat-msg",
+          "body": "大家什么时候有空？",
+          "senderId": "gao-ziyang",
+          "time": "2026-10-27 19:42"
         }
       ]
     }

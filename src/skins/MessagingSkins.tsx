@@ -80,7 +80,11 @@ function ChatRows({
   items: Item[];
   round?: boolean;
 }) {
-  const names = [...new Set(items.map((i) => i.title))];
+  const names = [...new Set(items.map((i) => i.title))].sort((a, b) => {
+    const aPinned = items.some((i) => i.title === a && i.meta.pinned === "true");
+    const bPinned = items.some((i) => i.title === b && i.meta.pinned === "true");
+    return Number(bPinned) - Number(aPinned);
+  });
   return (
     <>
       {names.map((name) => {
