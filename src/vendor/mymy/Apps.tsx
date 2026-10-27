@@ -463,10 +463,8 @@ export function MymyInstagram(p: SkinProps) {
           // That is not a user pause, so never turn the whole Reel into a paused state for it.
           if (error && typeof error === "object" && "name" in error && error.name === "AbortError") return;
           if (attempt !== reelPlayAttempt.current || tab !== "Reels") return;
-          const activeVideo = reelStageRef.current?.querySelector<HTMLVideoElement>(".ig-reel-video-active");
-          if (activeVideo === video && error && typeof error === "object" && "name" in error && error.name === "NotAllowedError") {
-            setPlaying(false);
-          }
+          // Do not translate an autoplay denial into a persistent paused UI state.
+          // A later loadeddata/canplay event, or re-entry to Reels, will retry play().
         });
       }
     } catch {
