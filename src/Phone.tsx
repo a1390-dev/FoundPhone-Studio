@@ -1,10 +1,7 @@
 import { StatusGlyph } from "./ios/StatusGlyph";
-import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
-import { NativeCalculator } from "./ios/Calculator";
 import { HomeLauncher } from "./launcher/HomeLauncher";
 import { useDeviceLayout } from "./launcher/layout";
 import "./launcher/launcher.css";
-import { NativeDetail, nativeDetailApps } from "./ios/Details";
 import "./ios/details.css";
 import {
   SystemNotifications,
@@ -31,7 +28,6 @@ import "./device-system.css";
 import "./ios/tokens.css";
 import "./ios/reference.css";
 import "./ios/status-bar.css";
-import { WeChatSkin, WhatsAppSkin } from "./AppSkins";
 import { RichText } from "./RichText";
 import {
   useEffect,
@@ -39,6 +35,7 @@ import {
   useState,
   useRef,
   Suspense,
+  lazy,
   type CSSProperties,
 } from "react";
 import { AnimatePresence } from "motion/react";
@@ -65,6 +62,28 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
+
+// Large, app-specific UI modules are loaded only when the user opens the
+// relevant app or detail view, rather than delaying the first lock screen.
+const WeChatSkin = lazy(() =>
+  import("./AppSkins").then((m) => ({ default: m.WeChatSkin })),
+);
+const WhatsAppSkin = lazy(() =>
+  import("./AppSkins").then((m) => ({ default: m.WhatsAppSkin })),
+);
+const SocialDetail = lazy(() =>
+  import("./skins/SocialDetails").then((m) => ({ default: m.SocialDetail })),
+);
+const NativeDetail = lazy(() =>
+  import("./ios/Details").then((m) => ({ default: m.NativeDetail })),
+);
+const NativeCalculator = lazy(() =>
+  import("./ios/Calculator").then((m) => ({ default: m.NativeCalculator })),
+);
+const socialDetailApps = new Set(["twitter"]);
+const nativeDetailApps = new Set([
+  "notes", "photos", "contacts", "phone", "calendar", "safari",
+]);
 export const AppIcon = memo(function AppIcon({
   id,
   name,
@@ -1113,32 +1132,35 @@ function AppContent({
             />
           </Suspense>
         </div>
-        {detail &&
-          (socialDetailApps.has(app.id) &&
-          (!detail.password || unlocks.includes(detail.id)) ? (
-            <SocialDetail
-              app={app.id}
-              item={detail}
-              back={back}
-              owner={work.phone.owner}
-              ui={state.ui?.[app.id]}
-              onUi={onUi}
-            />
-          ) : nativeDetailApps.has(app.id) &&
+        {detail && (
+          <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
+            {socialDetailApps.has(app.id) &&
             (!detail.password || unlocks.includes(detail.id)) ? (
-            <NativeDetail app={app.id} item={detail} back={back} />
-          ) : (
-            <>
-              <div className="app-nav">
-                <button aria-label="返回" onClick={back}>
-                  <ChevronLeft size={23} />
-                </button>
-                <strong>{detail.title}</strong>
-                <span />
-              </div>
-              {detailView}
-            </>
-          ))}
+              <SocialDetail
+                app={app.id}
+                item={detail}
+                back={back}
+                owner={work.phone.owner}
+                ui={state.ui?.[app.id]}
+                onUi={onUi}
+              />
+            ) : nativeDetailApps.has(app.id) &&
+              (!detail.password || unlocks.includes(detail.id)) ? (
+              <NativeDetail app={app.id} item={detail} back={back} />
+            ) : (
+              <>
+                <div className="app-nav">
+                  <button aria-label="返回" onClick={back}>
+                    <ChevronLeft size={23} />
+                  </button>
+                  <strong>{detail.title}</strong>
+                  <span />
+                </div>
+                {detailView}
+              </>
+            )}
+          </Suspense>
+        )}
       </>
     );
   return (
@@ -1177,12 +1199,14 @@ function AppContent({
           onLoadSlot={onLoadSlot ?? (() => {})}
         />
       ) : app.id === "calculator" && !detail ? (
-        <NativeCalculator
-          items={shown}
-          onRead={read}
-          ui={state.ui?.[app.id]}
-          onUi={onUi}
-        />
+        <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
+          <NativeCalculator
+            items={shown}
+            onRead={read}
+            ui={state.ui?.[app.id]}
+            onUi={onUi}
+          />
+        </Suspense>
       ) : detail ? (
         detailView
       ) : app.engine === "messaging" && thread ? (
