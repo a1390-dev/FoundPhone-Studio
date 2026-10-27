@@ -463,7 +463,6 @@ function PhoneRuntime({
               } else if (locked) {
                 beginUnlock();
               } else if (g.zone === "bottom" && Date.now() - g.time > 450) {
-                captureApp();
                 setPanel("switcher");
               } else {
                 setApp("");
@@ -978,17 +977,24 @@ const AppContent = memo(function AppContent({
   const [unlocks, setUnlocks] = useState<string[]>([]);
   const [pwError, setPwError] = useState("");
   const [likes, setLikes] = useState<string[]>([]);
-  const shown = items
-    .filter((i) => creator || visible(i, state))
-    .filter((i) =>
-      (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
-    );
-  const filtered =
-    tab === "收藏"
-      ? shown.filter((i) => i.favorite)
-      : tab === app.tabs[0]
-        ? shown
-        : shown.filter((i) => i.folder === tab);
+  const shown = useMemo(
+    () =>
+      items
+        .filter((i) => creator || visible(i, state))
+        .filter((i) =>
+          (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
+        ),
+    [items, creator, state, q],
+  );
+  const filtered = useMemo(
+    () =>
+      tab === "收藏"
+        ? shown.filter((i) => i.favorite)
+        : tab === app.tabs[0]
+          ? shown
+          : shown.filter((i) => i.folder === tab),
+    [tab, app.tabs, shown],
+  );
   const read = (i: Item) => {
     if (creator) {
       onEdit(i);
@@ -997,7 +1003,7 @@ const AppContent = memo(function AppContent({
     setDetail(i);
     if (!i.password || unlocks.includes(i.id)) onRead(i.id);
   };
-  const chats = [...new Set(shown.map((i) => i.title))];
+  const chats = useMemo(() => [...new Set(shown.map((i) => i.title))], [shown]);
   const back = () => {
     if (detail) setDetail(null);
     else if (thread) setThread("");
