@@ -358,13 +358,13 @@ export function MymyInstagram(p: SkinProps) {
     media,
     kind: "video",
     meta: { ...officialAccount.meta, handle: "aespa_official" },
-    body: officialAccount.body || "aespa_official",
+    body: "",
   })) : [];
   const reel = reels.length ? reels[reelIndex % reels.length] : undefined;
   const reelCounts = (id: string) => {
     let hash = 0;
     for (let n = 0; n < id.length; n++) hash = (hash * 31 + id.charCodeAt(n)) >>> 0;
-    return { likes: 1000000 + (hash % 99000000), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
+    return { likes: 1000000 + (hash % 4000000), comments: 1200 + (hash % 88000), shares: 900 + (hash % 24000), saves: 1500 + (hash % 98000) };
   };
   const shortCount = (n: number) => n >= 10000000 ? (n / 10000000).toFixed(1).replace(/\.0$/, "") + "千万" : n >= 10000 ? (n / 10000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, "") + "万" : String(n);
   useEffect(() => {
@@ -540,7 +540,7 @@ export function MymyInstagram(p: SkinProps) {
                     <small>♪ aespa_official · 原声</small>
                   </div>
                   <div className="ig-reel-progress"><span /></div>
-                  <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
+                  <nav className="ig-reel-bottom-nav">{[Home, CirclePlay, Send, Search, User].map((Icon, n) => <button className={n === 1 ? "active" : ""} key={n} aria-label={["主页", "Reels", "私信", "搜索", "个人主页"][n]} onClick={() => { if (n !== 1) setTab(["主页", "Reels", "私信", "搜索", "个人主页"][n]); }}><Icon /></button>)}</nav>
                   {!playing && <div className="ig-reel-paused"><span>▶</span></div>}
                 </>
               ) : <div className="ig-reels-empty"><CirclePlay size={44} /><b>Reels</b><span>上传视频内容后会在这里显示</span></div>}
