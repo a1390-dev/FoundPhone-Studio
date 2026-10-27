@@ -464,8 +464,8 @@ export function MymyInstagram(p: SkinProps) {
     setReelIndex(nextIndex);
   };
 
-  // Only one current video exists. Switching tabs unmounts it; entering Reels
-  // creates a fresh video element rather than reusing stale Safari decoders.
+  // Keep playback controls separate from media disposal. On iOS Safari, changing
+  // tabs can leave the previous decoder alive unless its source is explicitly released.
   useEffect(() => {
     if (tab !== "Reels" || !reel) return;
     const video = reelStageRef.current?.querySelector<HTMLVideoElement>("video[data-reel-id]");
@@ -474,10 +474,18 @@ export function MymyInstagram(p: SkinProps) {
     video.muted = muted;
     if (playing) attemptReelPlayback(video);
     else video.pause();
+  }, [reelIndex, tab, muted, playing, reel?.id]);
+
+  useEffect(() => {
+    if (tab !== "Reels" || !reel) return;
+    const video = reelStageRef.current?.querySelector<HTMLVideoElement>("video[data-reel-id]");
+    if (!video) return;
     return () => {
       video.pause();
+      video.removeAttribute("src");
+      video.load();
     };
-  }, [reelIndex, tab, muted, playing, reel?.id]);
+  }, [tab, reelIndex, reel?.id]);
 
   useEffect(() => {
     if (!active) return;
@@ -770,9 +778,11 @@ export function MymyInstagram(p: SkinProps) {
                         autoPlay={playing}
                         muted={muted}
                         playsInline
-                        preload="auto"
-                        onLoadedData={(e) => { if (tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }}
-                        onCanPlay={(e) => { if (tab === "Reels" && playing && e.currentTarget.paused) attemptReelPlayback(e.currentTarget); }}
+                        preload="metadata"
+                        onCanPlay={(e) => {
+                          const video = e.currentTarget;
+                          if (tab === "Reels" && playing && video.paused) attemptReelPlayback(video);
+                        }}
                         onEnded={() => setPlaying(false)}
                         onError={(e) => {
                           const failedVideo = e.currentTarget;
