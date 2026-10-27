@@ -161,6 +161,7 @@ function PhoneRuntime({
 }) {
   const [app, setApp] = useState("");
   const [appThread, setAppThread] = useState("");
+  const [appOpenSequence, setAppOpenSequence] = useState(0);
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
@@ -399,6 +400,7 @@ function PhoneRuntime({
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setAppThread(initialThread);
+    setAppOpenSequence((value) => value + 1);
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -571,7 +573,7 @@ function PhoneRuntime({
               />
             ) : app && app !== "appstore" ? (
               <AppWindow
-                key={app}
+                key={app + ":" + appOpenSequence}
                 className={`app-screen engine-${plugin.engine} skin-${app}`}
                 creator={creator}
                 origin={launchOrigin}
