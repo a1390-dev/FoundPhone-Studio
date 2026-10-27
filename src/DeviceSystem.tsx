@@ -136,10 +136,10 @@ export function DeviceLock({
                 try { localStorage.setItem("foundphone.player-id.v1", value); } catch {}
                 if (work.phone.passcode) setPinOpen(true); else onUnlock("");
               }}
-              style={{ position: "absolute", left: 24, right: 24, bottom: 86, display: "grid", gap: 7, textAlign: "left" }}
+              style={{ position: "absolute", left: 24, right: 24, bottom: 158, display: "grid", gap: 7, textAlign: "left" }}
             >
               <label htmlFor="foundphone-player-id" style={{ fontSize: 11, color: "white", textShadow: "0 1px 5px #0008" }}>设置你的玩家 ID / 昵称</label>
-              <input id="foundphone-player-id" value={idDraft} onChange={(e) => setIdDraft(e.target.value)} maxLength={24} autoComplete="nickname" placeholder="输入你想使用的名字" required style={{ width: "100%", padding: "9px 11px", borderRadius: 10, background: "#ffffffdf", color: "#191919", fontSize: 13 }} />
+              <input id="foundphone-player-id" value={idDraft} onChange={(e) => setIdDraft(e.target.value)} maxLength={24} autoComplete="nickname" placeholder="输入你想使用的名字" required style={{ width: "100%", boxSizing: "border-box", minWidth: 0, padding: "10px 11px", borderRadius: 10, background: "#ffffffdf", color: "#191919", fontSize: 18 }} />
               <button type="submit" style={{ justifySelf: "start", padding: "8px 18px", borderRadius: 10, background: "#fee500", color: "#191919", fontWeight: 700, fontSize: 13 }}>确认 ID</button>
             </form>
           ) : null}
