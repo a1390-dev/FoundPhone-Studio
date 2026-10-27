@@ -282,19 +282,37 @@ export function DeliverySkin(p: Props) {
             </div>
           </article>)}
         </div>}
-        {tab === "购物车" && <div>
-          {cartItems.length ? cartItems.map(({product,qty})=><div key={product.id} style={{display:"flex",gap:10,alignItems:"center",padding:"12px 4px",borderBottom:"1px solid #eee"}}>
-            <span style={{fontSize:30}}>{product.emoji}</span><div style={{flex:1,minWidth:0}}><strong>{product.name}</strong><small style={{display:"block",color:"#888"}}>{product.store}</small><b>{money(product.price*qty)}</b></div>
-            <button onClick={()=>setQty(product.id,-1)} style={{width:28,height:28,border:"1px solid #ddd",borderRadius:8,background:"#fff"}}>−</button><span>{qty}</span><button onClick={()=>setQty(product.id,1)} style={{width:28,height:28,border:0,borderRadius:8,background:"#f5dc7d"}}>+</button>
-          </div>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>购物车还是空的，去挑点吃的吧</p>}
-          <div style={{padding:12,background:"#faf7ec",borderRadius:12,marginTop:12}}>
-            <strong style={{display:"block",marginBottom:8}}>配送地址</strong>
-            <select aria-label="结账配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{width:"100%",padding:10,borderRadius:10,border:"1px solid #e3d69f",background:"#fff"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>
-            <strong style={{display:"block",margin:"14px 0 8px"}}>选择付款人</strong><select aria-label="选择付款人" value={payer} onChange={e=>setPayer(e.target.value)} style={{width:"100%",padding:10,borderRadius:10,border:"1px solid #e3d69f",background:"#fff",marginBottom:12}}>{["我自己","家人代付","朋友代付"].map(person=><option key={person} value={person}>{person}</option>)}</select>
-            <strong style={{display:"block",margin:"14px 0 8px"}}>选择付款方式</strong>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8}}>{["KakaoPay","Naver Pay","信用卡","货到付款"].map(method=><button key={method} onClick={()=>setPaymentMethod(method)} style={{padding:10,borderRadius:10,border:paymentMethod===method?"2px solid #b99a30":"1px solid #ddd",background:paymentMethod===method?"#fff0b5":"#fff",fontWeight:paymentMethod===method?700:400}}>{paymentMethod===method?"✓ ":""}{method}</button>)}</div>
-            <p>商品金额 <b style={{float:"right"}}>{money(subtotal)}</b></p><p>配送费 <b style={{float:"right"}}>{deliveryFee ? money(deliveryFee) : "免配送费"}</b></p><p>合计 <b style={{float:"right",color:"#8c6d00"}}>{money(total)}</b></p><small style={{color:"#888"}}>满 ₩30,000 免配送费 · 模拟付款，不会真实扣款</small><button onClick={checkout} style={{width:"100%",padding:13,marginTop:12,border:0,borderRadius:12,background:"#f5dc7d",fontWeight:700}}>提交订单 · {money(total)}</button>
-          </div>
+        {tab === "购物车" && <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          {cartItems.length ? <>
+            <h3 style={{margin:"2px 0",fontSize:18,fontWeight:800,color:"#222"}}>确认订单</h3>
+            <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
+              <strong style={{display:"block",marginBottom:10}}>选择付款人</strong>
+              <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                {["刘知珉","内永绘里","金旼炡","宁艺卓"].map(person=><button key={person} onClick={()=>setPayer(person)} style={{border:0,borderRadius:22,padding:"9px 13px",background:payer===person?"#222":"#f2f2f2",color:payer===person?"#fff":"#333",fontWeight:payer===person?700:500}}>{person}{payer===person?" ✓":""}</button>)}
+              </div>
+            </section>
+            <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
+              <strong style={{display:"block",marginBottom:8}}>收货地址</strong>
+              {savedAddresses.map((saved,index)=><button key={saved} onClick={()=>setAddress(saved)} style={{display:"block",width:"100%",textAlign:"left",padding:"11px 2px",border:0,borderBottom:index===savedAddresses.length-1?"0":"1px solid #eee",background:"transparent",color:"#222",fontSize:14}}>
+                <span style={{display:"inline-block",width:22,color:address===saved?"#222":"#888"}}>{address===saved?"⦿":"◯"}</span>{saved}
+              </button>)}
+              {addressEditing ? <div style={{display:"flex",gap:6,marginTop:10}}><input aria-label="新增配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:0,padding:10,borderRadius:10,border:"1px solid #ddd"}}/><button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[...prev,address]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{border:0,borderRadius:10,padding:"8px 12px",background:"#eee"}}>保存</button></div> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{marginTop:8,border:0,borderRadius:18,padding:"8px 12px",background:"#f3f3f3",color:"#333"}}>＋ 新增地址</button>}
+            </section>
+            <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
+              <strong style={{display:"block",marginBottom:8}}>商品清单</strong>
+              {cartItems.map(({product,qty})=><div key={product.id} style={{display:"flex",gap:8,alignItems:"center",padding:"8px 0",borderBottom:"1px solid #eee"}}>
+                <span style={{fontSize:25,width:34,textAlign:"center"}}>{product.emoji}</span><div style={{flex:1,minWidth:0}}><strong style={{fontSize:13,display:"block"}}>{product.name} × {qty}</strong><small style={{color:"#888"}}>{product.store}</small></div><b style={{whiteSpace:"nowrap"}}>{money(product.price*qty)}</b>
+                <button aria-label={"减少"+product.name} onClick={()=>setQty(product.id,-1)} style={{width:24,height:24,border:"1px solid #ddd",borderRadius:7,background:"#fff"}}>−</button><button aria-label={"增加"+product.name} onClick={()=>setQty(product.id,1)} style={{width:24,height:24,border:0,borderRadius:7,background:"#f5dc7d"}}>＋</button>
+              </div>)}
+              <div style={{marginTop:10,fontSize:14}}><p style={{margin:"7px 0"}}>商品金额 <b style={{float:"right"}}>{money(subtotal)}</b></p><p style={{margin:"7px 0"}}>配送费 <b style={{float:"right"}}>{deliveryFee?money(deliveryFee):"免配送费"}</b></p><div style={{borderTop:"1px solid #333",paddingTop:10,marginTop:10,fontWeight:800}}>应付总额 <b style={{float:"right",color:"#d74738"}}>{money(total)}</b></div></div>
+            </section>
+            <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
+              <strong style={{display:"block",marginBottom:10}}>选择付款方式</strong>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8}}>{["KakaoPay","Naver Pay","信用卡","货到付款"].map(method=><button key={method} onClick={()=>setPaymentMethod(method)} style={{padding:10,borderRadius:12,border:paymentMethod===method?"2px solid #222":"1px solid #ddd",background:paymentMethod===method?"#f5f5f5":"#fff",fontWeight:paymentMethod===method?700:400}}>{paymentMethod===method?"✓ ":""}{method}</button>)}</div>
+            </section>
+            <button onClick={checkout} style={{width:"100%",padding:16,border:0,borderRadius:28,background:"#e34f40",color:"#fff",fontSize:16,fontWeight:800}}>确认下单（模拟） · {money(total)}</button>
+            <p style={{margin:"-6px 0 8px",textAlign:"center",color:"#999",fontSize:11}}>仅为剧情模拟，不会真实扣款或发货</p>
+          </> : <div style={{background:"#fff",borderRadius:16,padding:28,textAlign:"center",color:"#999"}}><span style={{fontSize:42}}>🛒</span><p>购物车还是空的，去挑点吃的吧。</p><button onClick={()=>setTab("商家")} style={{border:0,borderRadius:22,padding:"10px 18px",background:"#f5dc7d",fontWeight:700}}>去逛逛</button></div>}
         </div>}
         {tab === "订单" && <div>
           {orders.length ? orders.map(order=><article key={order.id} style={{padding:14,border:"1px solid #eee",borderRadius:14,marginBottom:12}}>
