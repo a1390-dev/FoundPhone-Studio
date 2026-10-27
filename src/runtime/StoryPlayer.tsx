@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Phone } from "../Phone";
+import customWallpaper from "../assets/custom/wallpaper.jpeg";
 import { validateWork, type Work } from "../schema";
 import "../styles.css";
 import "./player.css";
@@ -21,10 +22,22 @@ function StoryPlayer() {
         if (!r.ok) throw Error("缺少作品文件，请运行 npm run story:build");
         return r.json();
       })
-      .then((x) => {
+      .then(async (x) => {
         const w = validateWork(x);
         document.title =
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
+
+        // Decode the configured custom wallpaper before mounting the phone.
+        // This prevents the temporary gradient wallpaper from flashing first.
+        if (w.phone.wallpaper === "dog") {
+          const image = new Image();
+          image.src = customWallpaper;
+          try {
+            await image.decode();
+          } catch {
+            // Keep the player usable if decoding is unavailable or fails.
+          }
+        }
         setWork(w);
       })
       .catch((e) => {
