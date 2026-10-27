@@ -4199,12 +4199,191 @@
     ],
     "music": [
       {
-        "id": "test-item-music",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "apple-music-6808550173",
+        "title": "Saddle Up",
+        "body": "Saddle Up · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "6808550173",
+          "appleMusicUrl": "https://music.apple.com/cn/album/saddle-up-winter-solo/6808550171?i=6808550173",
+          "album": "Saddle Up - Winter Solo",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1850395173",
+        "title": "Blue",
+        "body": "Blue · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1850395173",
+          "appleMusicUrl": "https://music.apple.com/cn/album/blue-winter-solo/1850395172?i=1850395173",
+          "album": "Blue - Winter Solo",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-6804900820",
+        "title": "Speed of Summer",
+        "body": "Speed of Summer · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "6804900820",
+          "appleMusicUrl": "https://music.apple.com/cn/album/speed-of-summer/6804900819?i=6804900820",
+          "album": "Speed of Summer",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1772223480",
+        "title": "Spark",
+        "body": "Spark · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1772223480",
+          "appleMusicUrl": "https://music.apple.com/cn/album/spark-winter-solo/1772223474?i=1772223480",
+          "album": "Spark - Winter Solo",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1893599776",
+        "title": "Camouflage",
+        "body": "Camouflage · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1893599776",
+          "appleMusicUrl": "https://music.apple.com/cn/album/camouflage/1893599771?i=1893599776",
+          "album": "Camouflage",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1832407125",
+        "title": "Angel #48",
+        "body": "Angel #48 · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1832407125",
+          "appleMusicUrl": "https://music.apple.com/cn/album/angel-48/1832407118?i=1832407125",
+          "album": "Angel #48",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1754911759",
+        "title": "Sun and Moon",
+        "body": "Sun and Moon · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1754911759",
+          "appleMusicUrl": "https://music.apple.com/cn/album/sun-and-moon/1754911637?i=1754911759",
+          "album": "Sun and Moon",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-6790439178",
+        "title": "In Halo",
+        "body": "In Halo · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "6790439178",
+          "appleMusicUrl": "https://music.apple.com/cn/album/in-halo/6790439170?i=6790439178",
+          "album": "In Halo",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1745285496",
+        "title": "声音",
+        "body": "声音 · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1745285496",
+          "appleMusicUrl": "https://music.apple.com/cn/album/%E5%A3%B0%E9%9F%B3/1745285216?i=1745285496",
+          "album": "声音",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1715940143",
+        "title": "You",
+        "body": "You · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1715940143",
+          "appleMusicUrl": "https://music.apple.com/cn/album/you/1715939930?i=1715940143",
+          "album": "You",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
+      },
+      {
+        "id": "apple-music-1893599781",
+        "title": "'Til We Die",
+        "body": "'Til We Die · aespa",
+        "sender": "aespa",
+        "time": "2026-10-27 17:04",
+        "kind": "audio",
+        "media": "",
+        "folder": "我的音乐",
+        "meta": {
+          "appleTrackId": "1893599781",
+          "appleMusicUrl": "https://music.apple.com/cn/album/til-we-die/1893599771?i=1893599781",
+          "album": "'Til We Die",
+          "artist": "aespa",
+          "source": "iTunes preview"
+        }
       }
     ],
     "maps": [
