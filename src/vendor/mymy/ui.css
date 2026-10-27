@@ -981,4 +981,4 @@
 .mymy-ui .ig-reel-bottom-nav svg { width: 25px; height: 25px; stroke-width: 2; }
 .mymy-ui .ig-reel-progress { bottom: 72px; }
 .mymy-ui .ig-reel-caption { bottom: 112px; }
-.mymy-ui .ig-reel-actions { bottom: 180px; }
+.mymy-ui .ig-reel-actions { bottom: calc(180px - 14px); }
