@@ -454,6 +454,24 @@ export function MymyInstagram(p: SkinProps) {
     if (playing) attemptReelPlayback(activeVideo);
     else activeVideo.pause();
   }, [reelIndex, tab, muted, playing, reel?.id]);
+
+  // A preloaded video can fire canplay just before the swipe sets pendingReelIndex.
+  // Re-check readiness after React commits the pending target so upward swipes cannot get stuck.
+  useEffect(() => {
+    if (tab !== "Reels" || pendingReelIndex === null) return;
+    const stage = reelStageRef.current;
+    const targetItem = reels[pendingReelIndex];
+    if (!stage || !targetItem) return;
+    const targetVideo = stage.querySelector<HTMLVideoElement>(
+      'video[data-reel-id="' + targetItem.id + '"]',
+    );
+    if (targetVideo && targetVideo.readyState >= 3) {
+      delete stage.dataset.pendingIndex;
+      setPendingReelIndex(null);
+      setReelIndex(pendingReelIndex);
+      setPlaying(true);
+    }
+  }, [pendingReelIndex, reelIndex, tab, reels.length]);
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(
@@ -721,7 +739,15 @@ export function MymyInstagram(p: SkinProps) {
                             setReelIndex(targetIndex);
                             setPlaying(true);
                           }
-                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={activeVideo ? () => setPlaying(false) : undefined} onClick={activeVideo ? (e) => {
+                        }} onEnded={activeVideo ? () => setPlaying(false) : undefined} onError={(e) => {
+                          const failedIndex = reels.findIndex((candidate) => candidate.id === item.id);
+                          const stage = reelStageRef.current;
+                          if (stage && Number(stage.dataset.pendingIndex) === failedIndex) {
+                            delete stage.dataset.pendingIndex;
+                            setPendingReelIndex(null);
+                          }
+                          if (activeVideo) setPlaying(false);
+                        }} onClick={activeVideo ? (e) => {
                           const v = e.currentTarget;
                           if (v.paused) { setPlaying(true); attemptReelPlayback(v); } else { v.pause(); setPlaying(false); }
                         } : undefined} />;
