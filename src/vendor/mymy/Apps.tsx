@@ -534,17 +534,17 @@ export function MymyInstagram(p: SkinProps) {
     return (
       <article className={"igp " + (isCarouselPost ? "ig-first-post" : "")} key={i.id}>
         <header className="igph">
-          {isFirstCarouselPost ? (
+          {isCarouselPost ? (
             <img className="ig-first-avatar" src={i.avatar} alt="" />
           ) : (
             <Avatar name={i.sender} src={i.avatar} />
           )}
           <div className="igpn">
-            <button className={isFirstCarouselPost ? "ig-first-userrow" : ""} onClick={() => setTab("个人主页")}>
+            <button className={isCarouselPost ? "ig-first-userrow" : ""} onClick={() => setTab("个人主页")}>
               <b>{i.sender}</b>
-              {isFirstCarouselPost && <BadgeCheck className="ig-first-verified" size={18} fill="#159CF4" color="#FFFFFF" />}
+              {isCarouselPost && <BadgeCheck className="ig-first-verified" size={18} fill="#159CF4" color="#FFFFFF" />}
             </button>
-            {!isFirstCarouselPost && <small>{i.meta.location || i.time}</small>}
+            {!isCarouselPost && <small>{i.meta.location || i.time}</small>}
           </div>
           <button aria-label="帖子详情" onClick={() => openPost(i)}>
             <MoreHorizontal />
