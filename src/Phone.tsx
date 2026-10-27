@@ -277,7 +277,9 @@ function PhoneRuntime({
       localStorage.setItem("foundphone.player-id.v1", value);
       localStorage.setItem(`foundphone.player-run.v1:${encodeURIComponent(value)}`, generation);
     } catch { /* This session can still start if storage is unavailable. */ }
-    setReady(false);
+    // The new player gets a separate autosave key and fresh runtime below.
+    // Keep the mounted phone in place; unmounting it here can trigger a second
+    // viewport-size calculation while Safari is dismissing the ID keyboard.
     setLoadError("");
     setSaveSlots([undefined, undefined, undefined]);
     setPlayerId(value);
