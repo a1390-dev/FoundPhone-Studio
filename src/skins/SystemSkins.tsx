@@ -1,5 +1,5 @@
 export { WeatherSkin, HealthSkin } from "./CalibratedSystemApps";
-import { AudioPlayer, useTrack } from "../audio";
+import { useTrack } from "../audio";
 import { useSkinState } from "../skinState";
 import {
   Calendar,
@@ -20,14 +20,13 @@ import {
   Music,
   Phone,
   Search,
-  SkipForward,
   Star,
   Users,
   Wallet,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { download } from "../io";
-import { safeMedia, type Item } from "../schema";
+import { type Item } from "../schema";
 import {
   Add,
   Avatar,
@@ -779,10 +778,6 @@ export function MusicSkin(p: Props) {
       setPlaying(false);
     }
   };
-  const fmt = (seconds: number) => {
-    if (!Number.isFinite(seconds)) return "0:00";
-    return Math.floor(seconds / 60) + ":" + String(Math.floor(seconds % 60)).padStart(2, "0");
-  };
   const visibleItems = items.filter((i) => !q || (i.title + " " + i.sender + " " + meta(i, "album")).toLowerCase().includes(q.toLowerCase()));
   return (
     <div className="catalog-skin native-music" style={{ background: "#fff", color: "#111", position: "relative" }}>
@@ -911,7 +906,7 @@ export function WalletSkin(p: Props) {
         <h1 style={{ fontSize: 30, margin: "8px 0 4px", letterSpacing: "-1px" }}>钱包</h1>
         <p style={{ color: "#777", margin: "0 0 18px", fontSize: 13 }}>银行卡 · 5 张卡片</p>
         <div className="wallet-stack" style={{ display: "grid", gap: 14 }}>
-          {cards.map((i, n) => (
+          {cards.map((i) => (
             <button
               key={i.id}
               className={selected === i.id ? "selected" : ""}
