@@ -190,77 +190,48 @@ export function TaobaoSkin(p: Props) {
 }
 
 type DeliveryProduct = { id: string; category: string; store: string; name: string; desc: string; price: number; emoji: string };
+type ProductSeed = [string, string, number, string];
+const makeDeliveryProducts = (prefix: string, category: string, store: string, entries: ProductSeed[]): DeliveryProduct[] =>
+  entries.map(([name, desc, price, emoji], index) => ({id: prefix + (index + 1), category, store, name, desc, price, emoji}));
 const DELIVERY_PRODUCTS: DeliveryProduct[] = [
-  {id:"d01",category:"韩式料理",store:"김밥천국",name:"经典紫菜包饭",desc:"鸡蛋、胡萝卜、黄瓜、火腿",price:4500,emoji:"🍙"},
-  {id:"d02",category:"韩式料理",store:"김밥천국",name:"金枪鱼紫菜包饭",desc:"金枪鱼蛋黄酱与新鲜蔬菜",price:5500,emoji:"🍙"},
-  {id:"d03",category:"韩式料理",store:"김밥천국",name:"辣炒年糕",desc:"韩式甜辣酱、鱼饼",price:6000,emoji:"🍲"},
-  {id:"d04",category:"韩式料理",store:"김밥천국",name:"鱼饼汤",desc:"热乎清汤与韩式鱼饼",price:4500,emoji:"🥣"},
-  {id:"d05",category:"韩式料理",store:"김밥천국",name:"拉面加蛋",desc:"韩式方便面、鸡蛋、葱花",price:5000,emoji:"🍜"},
-  {id:"d06",category:"韩式料理",store:"김밥천국",name:"泡菜炒饭",desc:"泡菜炒饭配煎蛋",price:7500,emoji:"🍳"},
-  {id:"d07",category:"炸鸡",store:"교촌치킨",name:"蜂蜜酱油炸鸡",desc:"招牌蜂蜜酱油风味",price:19000,emoji:"🍗"},
-  {id:"d08",category:"炸鸡",store:"교촌치킨",name:"原味脆皮炸鸡",desc:"外脆里嫩经典款",price:18000,emoji:"🍗"},
-  {id:"d09",category:"炸鸡",store:"교촌치킨",name:"香辣炸鸡",desc:"韩式香辣酱汁",price:19000,emoji:"🍗"},
-  {id:"d10",category:"炸鸡",store:"교촌치킨",name:"无骨炸鸡",desc:"方便分享的无骨鸡块",price:20000,emoji:"🍗"},
-  {id:"d11",category:"炸鸡",store:"교촌치킨",name:"芝士球",desc:"外酥内软芝士小食",price:5500,emoji:"🧀"},
-  {id:"d12",category:"炸鸡",store:"교촌치킨",name:"薯条拼盘",desc:"酥脆薯条搭配蘸酱",price:4000,emoji:"🍟"},
-  {id:"d13",category:"拌饭烤肉",store:"비빔밥집",name:"石锅牛肉拌饭",desc:"牛肉、蔬菜、温泉蛋",price:12000,emoji:"🍚"},
-  {id:"d14",category:"拌饭烤肉",store:"비빔밥집",name:"蔬菜拌饭",desc:"时令蔬菜与韩式辣酱",price:9500,emoji:"🥗"},
-  {id:"d15",category:"拌饭烤肉",store:"비빔밥집",name:"烤五花肉饭",desc:"韩式烤五花肉配米饭",price:13500,emoji:"🥓"},
-  {id:"d16",category:"拌饭烤肉",store:"비빔밥집",name:"烤牛肉饭",desc:"甜口烤牛肉与米饭",price:14500,emoji:"🥩"},
-  {id:"d17",category:"拌饭烤肉",store:"비빔밥집",name:"泡菜豆腐汤套餐",desc:"泡菜豆腐汤、米饭、小菜",price:11000,emoji:"🍲"},
-  {id:"d18",category:"拌饭烤肉",store:"비빔밥집",name:"大酱汤套餐",desc:"大酱汤、米饭与韩式小菜",price:10500,emoji:"🥘"},
-  {id:"d19",category:"面食",store:"면가",name:"韩式炸酱面",desc:"黑豆酱、洋葱、猪肉末",price:8500,emoji:"🍜"},
-  {id:"d20",category:"面食",store:"면가",name:"海鲜辣汤面",desc:"海鲜与微辣汤底",price:10500,emoji:"🍜"},
-  {id:"d21",category:"面食",store:"면가",name:"冷面",desc:"清爽冰凉汤汁与荞麦面",price:9500,emoji:"🍜"},
-  {id:"d22",category:"面食",store:"면가",name:"手工刀切面",desc:"热汤手工面",price:9000,emoji:"🍜"},
-  {id:"d23",category:"面食",store:"면가",name:"饺子汤",desc:"韩式饺子与清汤",price:9000,emoji:"🥟"},
-  {id:"d24",category:"面食",store:"면가",name:"辣拌面",desc:"甜辣酱汁与爽口配菜",price:8500,emoji:"🍜"},
-  {id:"d25",category:"汉堡简餐",store:"롯데리아",name:"经典牛肉汉堡",desc:"牛肉饼、生菜、番茄酱",price:6500,emoji:"🍔"},
-  {id:"d26",category:"汉堡简餐",store:"롯데리아",name:"双层芝士汉堡",desc:"双层牛肉与芝士",price:8500,emoji:"🍔"},
-  {id:"d27",category:"汉堡简餐",store:"롯데리아",name:"鸡腿堡",desc:"香脆鸡腿排与生菜",price:7200,emoji:"🍔"},
-  {id:"d28",category:"汉堡简餐",store:"롯데리아",name:"炸鸡块",desc:"外脆里嫩鸡块",price:4500,emoji:"🍗"},
-  {id:"d29",category:"汉堡简餐",store:"롯데리아",name:"薯条",desc:"经典金黄薯条",price:2500,emoji:"🍟"},
-  {id:"d30",category:"汉堡简餐",store:"롯데리아",name:"汉堡套餐",desc:"汉堡、薯条、饮料",price:9900,emoji:"🍔"},
-  {id:"d31",category:"咖啡饮品",store:"메가커피",name:"冰美式",desc:"清爽浓缩咖啡",price:2500,emoji:"🧋"},
-  {id:"d32",category:"咖啡饮品",store:"메가커피",name:"冰拿铁",desc:"浓缩咖啡与牛奶",price:3500,emoji:"☕"},
-  {id:"d33",category:"咖啡饮品",store:"메가커피",name:"香草拿铁",desc:"香草风味奶咖",price:4000,emoji:"☕"},
-  {id:"d34",category:"咖啡饮品",store:"메가커피",name:"巧克力冰沙",desc:"浓郁巧克力冰饮",price:4500,emoji:"🥤"},
-  {id:"d35",category:"咖啡饮品",store:"메가커피",name:"草莓酸奶",desc:"草莓果味酸奶饮品",price:4800,emoji:"🍓"},
-  {id:"d36",category:"咖啡饮品",store:"메가커피",name:"柠檬气泡饮",desc:"清爽柠檬与气泡水",price:3500,emoji:"🍋"},
-  {id:"d37",category:"面包甜品",store:"파리바게뜨",name:"奶油面包",desc:"松软面包与香甜奶油",price:3200,emoji:"🥐"},
-  {id:"d38",category:"面包甜品",store:"파리바게뜨",name:"草莓奶油蛋糕",desc:"草莓与鲜奶油",price:6500,emoji:"🍰"},
-  {id:"d39",category:"面包甜品",store:"파리바게뜨",name:"巧克力可颂",desc:"酥皮与巧克力夹心",price:3800,emoji:"🥐"},
-  {id:"d40",category:"面包甜品",store:"파리바게뜨",name:"火腿芝士三明治",desc:"火腿、芝士与生菜",price:5200,emoji:"🥪"},
-  {id:"d41",category:"面包甜品",store:"파리바게뜨",name:"芝士蛋糕",desc:"浓郁奶香芝士蛋糕",price:6000,emoji:"🍰"},
-  {id:"d42",category:"面包甜品",store:"파리바게뜨",name:"巧克力曲奇",desc:"巧克力豆曲奇饼干",price:2500,emoji:"🍪"},
-  {id:"d43",category:"便利店",store:"편의점",name:"香蕉牛奶",desc:"韩国经典香蕉牛奶",price:1800,emoji:"🥛"},
-  {id:"d44",category:"便利店",store:"편의점",name:"三角紫菜包饭",desc:"金枪鱼口味即食饭团",price:1500,emoji:"🍙"},
-  {id:"d45",category:"便利店",store:"편의점",name:"杯面",desc:"韩式方便面",price:1800,emoji:"🍜"},
-  {id:"d46",category:"便利店",store:"편의점",name:"薯片",desc:"原味脆薯片",price:2000,emoji:"🥔"},
-  {id:"d47",category:"便利店",store:"편의점",name:"瓶装水",desc:"500ml饮用水",price:1000,emoji:"💧"},
-  {id:"d48",category:"便利店",store:"편의점",name:"巧克力棒",desc:"日常巧克力零食",price:1500,emoji:"🍫"},
+  ...makeDeliveryProducts("k", "韩餐", "首尔家常韩食", [
+    ["石锅牛肉拌饭","牛肉、时蔬、温泉蛋、韩式辣酱",12500,"🍲"],["泡菜五花肉炒饭","泡菜、五花肉、煎蛋",10500,"🍚"],["部队锅双人份","香肠、午餐肉、泡面和芝士",24000,"🍲"],["嫩豆腐汤套餐","嫩豆腐汤、米饭和小菜",11000,"🥘"],["韩式辣炒年糕","年糕、鱼饼、甜辣酱",6500,"🍢"],["鱼饼汤串","热汤鱼饼串与萝卜",5000,"🥣"],["蜂蜜酱油炸鸡","招牌蜂蜜酱油酥脆炸鸡",19500,"🍗"],["韩式甜辣无骨鸡","去骨鸡块、甜辣酱",20500,"🍗"]
+  ]),
+  ...makeDeliveryProducts("j", "日餐·寿司", "东京寿司铺", [
+    ["三文鱼握寿司 8贯","鲜切三文鱼握寿司",14500,"🍣"],["三文鱼牛油果卷","三文鱼、牛油果、寿司饭",13500,"🍣"],["综合刺身拼盘","三文鱼、金枪鱼、白身鱼",26000,"🐟"],["照烧鸡腿饭","照烧鸡腿、米饭、蔬菜",11500,"🍱"],["猪排咖喱饭","炸猪排、日式咖喱、米饭",12000,"🍛"],["豚骨拉面","浓厚豚骨汤、叉烧、溏心蛋",12500,"🍜"],["味噌拉面","味噌汤底、玉米、叉烧",12000,"🍜"],["炸虾天妇罗便当","炸虾、时蔬天妇罗、米饭",13500,"🍤"]
+  ]),
+  ...makeDeliveryProducts("c", "中餐", "中华料理馆", [
+    ["经典炸酱面","浓香炸酱、猪肉末、洋葱",8500,"🍜"],["海鲜辣汤面","虾、鱿鱼、蔬菜与辣汤",10500,"🍜"],["糖醋肉","酥脆猪肉、酸甜酱汁",18000,"🥡"],["宫保鸡丁盖饭","鸡肉、花生、青椒",10500,"🍚"],["猪肉小笼包 8只","鲜肉馅与热汤汁",8500,"🥟"],["虾仁炒饭","虾仁、鸡蛋、葱花",9500,"🍚"],["香辣麻婆豆腐饭","嫩豆腐、香辣酱汁、米饭",10000,"🥘"],["牛肉炒面","牛肉、彩椒、炒面",10500,"🍝"]
+  ]),
+  ...makeDeliveryProducts("w", "西式简餐", "城市简餐厨房", [
+    ["双层芝士牛肉堡","双层牛肉饼、芝士、生菜",9800,"🍔"],["香脆鸡腿堡套餐","鸡腿堡、薯条、汽水",12500,"🍔"],["奶油培根意面","奶油酱、培根、芝士",13500,"🍝"],["番茄海鲜意面","虾仁、鱿鱼、番茄酱",14500,"🍝"],["意式玛格丽特披萨","番茄、马苏里拉芝士、罗勒",17900,"🍕"],["韩式烤肉披萨","烤牛肉、洋葱、芝士",19900,"🍕"]
+  ]),
+  ...makeDeliveryProducts("s", "海鲜·三文鱼", "鲜鱼市场", [
+    ["三文鱼牛油果沙拉","三文鱼、牛油果、混合生菜",15500,"🥗"],["香煎三文鱼饭","香煎三文鱼、米饭、时蔬",16500,"🐟"],["金枪鱼玉米沙拉","金枪鱼、玉米、生菜",11500,"🥗"],["蒜香黄油虾","蒜香黄油虾与柠檬",17500,"🍤"],["海鲜乌冬面","虾、鱼板、蔬菜与乌冬",11500,"🍜"],["鳗鱼饭","蒲烧鳗鱼、米饭、腌菜",18500,"🍱"]
+  ])
 ];
-const DELIVERY_CATEGORIES = ["全部", "韩式料理", "炸鸡", "拌饭烤肉", "面食", "汉堡简餐", "咖啡饮品", "面包甜品", "便利店", "日常用品"];
-const DELIVERY_EXTRAS = [
-  {id:"x01",category:"日常用品",store:"便利生活",name:"抽纸",desc:"三层抽纸",price:3000,emoji:"🧻"},
-  {id:"x02",category:"日常用品",store:"便利生活",name:"瓶装洗衣液",desc:"日常衣物清洁",price:6900,emoji:"🧴"},
-  {id:"x03",category:"日常用品",store:"便利生活",name:"洗发水",desc:"日常洗护用品",price:7900,emoji:"🧴"},
-  {id:"x04",category:"日常用品",store:"便利生活",name:"牙膏",desc:"清新薄荷口味",price:3500,emoji:"🪥"},
-  {id:"x05",category:"日常用品",store:"便利生活",name:"牙刷",desc:"软毛牙刷一支",price:2500,emoji:"🪥"},
-  {id:"x06",category:"日常用品",store:"便利生活",name:"垃圾袋",desc:"家用垃圾袋一卷",price:4000,emoji:"🗑️"},
-  {id:"x07",category:"日常用品",store:"便利生活",name:"湿巾",desc:"便携湿巾一包",price:2200,emoji:"🧻"},
-  {id:"x08",category:"日常用品",store:"便利生活",name:"卫生纸",desc:"家庭装卷纸",price:6500,emoji:"🧻"},
-];
+const DELIVERY_DRINKS: DeliveryProduct[] = makeDeliveryProducts("b", "奶茶·饮品", "茶饮咖啡铺", [
+  ["黑糖珍珠鲜奶","黑糖珍珠、鲜奶",5500,"🧋"],["经典珍珠奶茶","红茶、鲜奶、珍珠",4800,"🧋"],["芋泥波波奶茶","芋泥、珍珠、奶茶",5800,"🧋"],["抹茶珍珠拿铁","抹茶、牛奶、珍珠",5600,"🍵"],["杨枝甘露","芒果、西柚、椰奶",6200,"🥭"],["满杯草莓果茶","草莓果肉、茉莉绿茶",5900,"🍓"],["百香果双响炮","百香果、椰果、珍珠",5500,"🍹"],["蜜桃乌龙茶","蜜桃果香、乌龙茶",4800,"🍑"],["冰美式咖啡","双份浓缩、冰水",3500,"🧊"],["香草冰拿铁","浓缩咖啡、牛奶、香草",4800,"☕"],["焦糖玛奇朵","焦糖、牛奶、浓缩咖啡",5200,"☕"],["巧克力冰沙","巧克力、牛奶、碎冰",5500,"🥤"],["鲜榨橙汁","鲜橙现榨",4500,"🍊"],["柠檬气泡水","柠檬、气泡水",3900,"🍋"],["草莓酸奶昔","草莓、酸奶、冰沙",5500,"🍓"]
+]);
+const DELIVERY_GROCERIES: DeliveryProduct[] = makeDeliveryProducts("g", "便利店·超市", "便利店 / 社区超市", [
+  ["香蕉牛奶","韩国经典香蕉牛奶",1800,"🥛"],["三角紫菜包饭","金枪鱼蛋黄酱口味",1600,"🍙"],["辣鸡肉杯面","韩式辣味方便面",1900,"🍜"],["蜂蜜黄油薯片","香脆蜂蜜黄油风味",2200,"🥔"],["瓶装饮用水 2瓶","500ml × 2",1800,"💧"],["鸡蛋 10枚","家庭常备鸡蛋",6500,"🥚"],["牛奶 1L","全脂牛奶",3200,"🥛"],["香蕉一把","新鲜香蕉",3900,"🍌"],["吐司面包","切片吐司",3500,"🍞"],["冷冻饺子","家常猪肉饺子一袋",7900,"🥟"]
+]);
+const DELIVERY_EXTRAS: DeliveryProduct[] = makeDeliveryProducts("x", "日常用品", "便利生活", [
+  ["抽纸","三层抽纸",3000,"🧻"],["洗衣液","日常衣物清洁",6900,"🧴"],["洗发水","日常洗护用品",7900,"🧴"],["牙膏","薄荷清新口味",3500,"🪥"],["软毛牙刷","单支装",2500,"🪥"],["家用垃圾袋","一卷装",4000,"🗑️"],["湿巾","便携装",2200,"🧻"],["卫生纸","家庭装卷纸",6500,"🧻"]
+]);
+const DELIVERY_CATEGORIES = ["全部", "韩餐", "日餐·寿司", "中餐", "西式简餐", "海鲜·三文鱼", "奶茶·饮品", "便利店·超市", "日常用品"];
 export function DeliverySkin(p: Props) {
   const [tab, setTab] = useState("商家");
   const [category, setCategory] = useState("全部");
   const [q, setQ] = useState("");
   const [cart, setCart] = useState<Record<string, number>>({});
-  const [address, setAddress] = useState("首尔特别市 · 请编辑配送地址");
+  const [address, setAddress] = useState("首尔特别市麻浦区杨花路 12号 101室");
+  const [savedAddresses, setSavedAddresses] = useState(["首尔特别市麻浦区杨花路 12号 101室", "首尔特别市城东区圣水一路 25号 302室"]);
   const [addressEditing, setAddressEditing] = useState(false);
-  const [orders, setOrders] = useState<Array<{id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; status:string; time:string}>>([]);
+  const [paymentMethod, setPaymentMethod] = useState("KakaoPay");
+  const [orders, setOrders] = useState<Array<{id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; status:string; time:string}>>([]);
   const [notice, setNotice] = useState("");
-  const products = [...DELIVERY_PRODUCTS, ...DELIVERY_EXTRAS];
+  const products = [...DELIVERY_PRODUCTS, ...DELIVERY_DRINKS, ...DELIVERY_GROCERIES, ...DELIVERY_EXTRAS];
   const visibleProducts = products.filter((item) =>
     (category === "全部" || item.category === category) &&
     (item.name + item.desc + item.store + item.category).toLowerCase().includes(q.toLowerCase())
@@ -274,7 +245,7 @@ export function DeliverySkin(p: Props) {
   const checkout = () => {
     if (!cartItems.length) { setNotice("购物车还是空的，先选择菜品吧"); return; }
     if (!address.trim() || address.includes("请编辑")) { setAddressEditing(true); setNotice("请先填写配送地址"); return; }
-    setOrders(prev => [{id:"FD-"+Date.now().toString().slice(-6),items:cartItems,total,address,status:"制作中",time:new Date().toLocaleString("zh-CN",{hour12:false})},...prev]);
+    setOrders(prev => [{id:"FD-"+Date.now().toString().slice(-6),items:cartItems,total,address,paymentMethod,status:"制作中",time:new Date().toLocaleString("zh-CN",{hour12:false})},...prev]);
     setCart({});
     setTab("订单");
     setNotice("下单成功！这是模拟订单，不会真实扣款。");
@@ -282,10 +253,10 @@ export function DeliverySkin(p: Props) {
   return (
     <div className="catalog-skin delivery-ui" style={{display:"flex",flexDirection:"column",height:"100%",minHeight:0,background:"#fff"}}>
       <Header p={p} />
-      <div className="delivery-location" style={{display:"flex",alignItems:"center",gap:8,padding:"12px 16px",background:"#f5dc7d",flexWrap:"wrap"}}>
+      <div className="delivery-location" style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:"#f5dc7d",flexWrap:"wrap"}}>
         <MapPin size={18} />
-        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="请输入详细配送地址" style={{flex:1,minWidth:150,padding:8,borderRadius:10,border:"1px solid #d5c06b"}} /> : <strong style={{flex:1}}>{address}</strong>}
-        <button onClick={()=>setAddressEditing(v=>!v)} style={{border:0,borderRadius:10,padding:"6px 10px",background:"#fff4c8"}}>{addressEditing ? "保存地址" : "修改"}</button>
+        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:150,padding:8,borderRadius:10,border:"1px solid #d5c06b"}} /> : <select aria-label="选择配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{flex:1,minWidth:160,padding:8,borderRadius:10,border:"1px solid #d5c06b",background:"#fff9df"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>}
+        {addressEditing ? <button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[address,...prev]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>保存</button> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>新增地址</button>}
       </div>
       <div style={{padding:"8px 12px",background:"#f5dc7d"}}>
         <SearchBox value={q} set={setQ} placeholder="搜索菜品、商家或用品" />
@@ -315,14 +286,20 @@ export function DeliverySkin(p: Props) {
             <span style={{fontSize:30}}>{product.emoji}</span><div style={{flex:1,minWidth:0}}><strong>{product.name}</strong><small style={{display:"block",color:"#888"}}>{product.store}</small><b>{money(product.price*qty)}</b></div>
             <button onClick={()=>setQty(product.id,-1)} style={{width:28,height:28,border:"1px solid #ddd",borderRadius:8,background:"#fff"}}>−</button><span>{qty}</span><button onClick={()=>setQty(product.id,1)} style={{width:28,height:28,border:0,borderRadius:8,background:"#f5dc7d"}}>+</button>
           </div>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>购物车还是空的，去挑点吃的吧</p>}
-          <div style={{padding:12,background:"#faf7ec",borderRadius:12,marginTop:12}}><p>商品金额 <b style={{float:"right"}}>{money(subtotal)}</b></p><p>配送费 <b style={{float:"right"}}>{deliveryFee ? money(deliveryFee) : "免配送费"}</b></p><p>合计 <b style={{float:"right",color:"#8c6d00"}}>{money(total)}</b></p><small style={{color:"#888"}}>满 ₩30,000 免配送费</small><button onClick={checkout} style={{width:"100%",padding:13,marginTop:12,border:0,borderRadius:12,background:"#f5dc7d",fontWeight:700}}>确认地址并结账 · {money(total)}</button></div>
+          <div style={{padding:12,background:"#faf7ec",borderRadius:12,marginTop:12}}>
+            <strong style={{display:"block",marginBottom:8}}>配送地址</strong>
+            <select aria-label="结账配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{width:"100%",padding:10,borderRadius:10,border:"1px solid #e3d69f",background:"#fff"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>
+            <strong style={{display:"block",margin:"14px 0 8px"}}>选择付款方式</strong>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8}}>{["KakaoPay","Naver Pay","信用卡","货到付款"].map(method=><button key={method} onClick={()=>setPaymentMethod(method)} style={{padding:10,borderRadius:10,border:paymentMethod===method?"2px solid #b99a30":"1px solid #ddd",background:paymentMethod===method?"#fff0b5":"#fff",fontWeight:paymentMethod===method?700:400}}>{paymentMethod===method?"✓ ":""}{method}</button>)}</div>
+            <p>商品金额 <b style={{float:"right"}}>{money(subtotal)}</b></p><p>配送费 <b style={{float:"right"}}>{deliveryFee ? money(deliveryFee) : "免配送费"}</b></p><p>合计 <b style={{float:"right",color:"#8c6d00"}}>{money(total)}</b></p><small style={{color:"#888"}}>满 ₩30,000 免配送费 · 模拟付款，不会真实扣款</small><button onClick={checkout} style={{width:"100%",padding:13,marginTop:12,border:0,borderRadius:12,background:"#f5dc7d",fontWeight:700}}>提交订单 · {money(total)}</button>
+          </div>
         </div>}
         {tab === "订单" && <div>
           {orders.length ? orders.map(order=><article key={order.id} style={{padding:14,border:"1px solid #eee",borderRadius:14,marginBottom:12}}>
             <div style={{display:"flex",justifyContent:"space-between",gap:8}}><strong>订单 {order.id}</strong><b style={{color:"#8c6d00"}}>{order.status}</b></div>
             <small style={{display:"block",color:"#888",marginTop:4}}>{order.time}</small>
             {order.items.map(({product,qty})=><p key={product.id} style={{margin:"8px 0"}}>{product.emoji} {product.name} × {qty} <span style={{float:"right"}}>{money(product.price*qty)}</span></p>)}
-            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
+            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
           </article>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>还没有订单</p>}
         </div>}
       </div>
