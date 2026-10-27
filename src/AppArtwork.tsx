@@ -1,4 +1,3 @@
-import { DetailedArtwork, detailedIcons } from "./ios/DetailedArtwork";
 import { useState } from "react";
 import { originalIconFiles } from "./ios/originalIconFiles";
 import "./ios/original-icons.css";
@@ -18,7 +17,6 @@ export function AppArtwork({
   // These are bundled Vite asset URLs, not hand-built /icon-assets paths.
   // That lets Vite generate the correct deployed URL for each original image.
   if (!file) {
-    if (detailedIcons.has(id)) return <DetailedArtwork id={id} />;
     return (
       <span
         className="original-icon-wrap original-icon-unavailable"
@@ -95,5 +93,4 @@ export function AppArtwork({
   );
 }
 
-export const hasNativeArtwork = (id: string) =>
-  detailedIcons.has(id) || id in originalIconFiles;
+export const hasNativeArtwork = (id: string) => id in originalIconFiles;
