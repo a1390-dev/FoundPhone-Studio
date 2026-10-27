@@ -896,3 +896,66 @@
 .mymy-ui .kzxx {
   white-space: pre-line;
 }
+
+
+/* Instagram Reels — scoped to the existing Instagram app only */
+.mymy-ui .ig { position: relative; min-height: 0; }
+.mymy-ui .ig-reels {
+  position: absolute; inset: 0; z-index: 8; overflow: hidden;
+  background: #090909; color: #fff; touch-action: pan-y;
+}
+.mymy-ui .ig-reel-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; background: #090909; display: block;
+}
+.mymy-ui .ig-reel-top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 52px 16px 16px;
+  background: linear-gradient(180deg, rgba(0,0,0,.42), transparent);
+}
+.mymy-ui .ig-reel-top strong { font-size: 18px; font-weight: 700; }
+.mymy-ui .ig-reel-top button { color: #fff; display: flex; padding: 4px; }
+.mymy-ui .ig-reel-actions {
+  position: absolute; right: 10px; bottom: 128px; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 19px;
+}
+.mymy-ui .ig-reel-actions button {
+  color: #fff; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 5px; min-width: 38px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.45));
+}
+.mymy-ui .ig-reel-actions svg { width: 29px; height: 29px; stroke-width: 2.1; }
+.mymy-ui .ig-reel-actions small { color: #fff; font-size: 11px; font-weight: 650; }
+.mymy-ui .ig-reel-actions .catalog-avatar {
+  width: 38px; height: 38px; border: 2px solid #fff; border-radius: 50%;
+  color: #111; background: #fff; overflow: hidden;
+}
+.mymy-ui .ig-reel-actions .catalog-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.mymy-ui .ig-reel-caption {
+  position: absolute; left: 14px; right: 68px; bottom: 43px; z-index: 3;
+  color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65);
+}
+.mymy-ui .ig-reel-caption > div { display: flex; align-items: center; gap: 10px; }
+.mymy-ui .ig-reel-caption b { font-size: 14px; overflow-wrap: anywhere; }
+.mymy-ui .ig-reel-caption button {
+  color: #fff; border: 1px solid rgba(255,255,255,.8); border-radius: 6px;
+  padding: 4px 8px; font-size: 11px; font-weight: 650;
+}
+.mymy-ui .ig-reel-caption p { margin-top: 8px; font-size: 12px; line-height: 1.35; }
+.mymy-ui .ig-reel-caption small { display: block; margin-top: 8px; font-size: 11px; }
+.mymy-ui .ig-reel-progress {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: rgba(255,255,255,.3); z-index: 4;
+}
+.mymy-ui .ig-reel-progress span { display: block; width: 23%; height: 100%; background: #fff; }
+.mymy-ui .ig-reel-paused {
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
+  pointer-events: none;
+}
+.mymy-ui .ig-reel-paused span { background: rgba(0,0,0,.35); border-radius: 50%; padding: 20px; font-size: 25px; }
+.mymy-ui .ig-reels-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; color: #fff;
+}
+.mymy-ui .ig-reels-empty span { color: #bbb; font-size: 12px; }
