@@ -873,8 +873,8 @@ export function AppArtwork({
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
         alt=""
-        loading="eager"
-        decoding="sync"
+        loading="lazy"
+        decoding="async"
         draggable={false}
         style={{ position: "absolute", inset: 0 }}
         onError={() => setFailed(true)}
