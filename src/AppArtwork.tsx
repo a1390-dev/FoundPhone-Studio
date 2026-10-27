@@ -840,6 +840,21 @@ function DrawnArtwork({ id, date }: { id: string; date?: string }) {
 }
 
 const originalsEnabled = import.meta.env.VITE_ORIGINAL_ICONS === "true";
+
+// Warm the icon cache while the lock screen is visible so the home screen
+// does not have to wait for dozens of image requests after unlocking.
+let originalIconPreloadStarted = false;
+const originalIconPreloadImages: HTMLImageElement[] = [];
+export function preloadOriginalIcons() {
+  if (!originalsEnabled || originalIconPreloadStarted) return;
+  originalIconPreloadStarted = true;
+  for (const file of new Set(Object.values(originalIconFiles))) {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = import.meta.env.BASE_URL + "icon-assets/" + file;
+    originalIconPreloadImages.push(image);
+  }
+}
 export function AppArtwork({
   id,
   date,
