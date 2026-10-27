@@ -1,12 +1,10 @@
-import { localIconPlugin } from "./scripts/local-icon-plugin";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-export default defineConfig(({ command }) => ({
+export default defineConfig(() => ({
   base: "./",
   optimizeDeps: { entries: ["index.html", "player.html"] },
   plugins: [
-    localIconPlugin(command),
     react(),
     VitePWA({
       registerType: "prompt",
