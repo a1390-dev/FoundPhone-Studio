@@ -681,8 +681,14 @@ function PhoneRuntime({
                       onOpen={() => {
                         setPanel("");
                         if (locked) beginUnlock();
-                        else if (installedApps.some((a) => a.id === "messages"))
-                          open("messages");
+                        else {
+                          const latest = runtimeRef.current.notifications.at(-1) || "";
+                          const targetApp = notificationContent(latest, work.apps).appId;
+                          if (installedApps.some((a) => a.id === targetApp))
+                            open(targetApp);
+                          else if (installedApps.some((a) => a.id === "messages"))
+                            open("messages");
+                        }
                       }}
                       onDismiss={dismissNotice}
                     />
