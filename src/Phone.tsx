@@ -204,6 +204,8 @@ function PhoneRuntime({
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
+  const playerId = (() => { try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || "未设置玩家ID"; } catch { return "未设置玩家ID"; } })();
+  const autoSaveId = `${work.id}:default:${encodeURIComponent(playerId)}`;
   const slotId = (index: number) => `${work.id}:manual-slot-${index + 1}`;
   useEffect(() => {
     let active = true;
@@ -238,7 +240,7 @@ function PhoneRuntime({
     let active = true;
     if (creator || external) return;
     void db.saves
-      .get(work.id)
+      .get(autoSaveId)
       .then((saved) => {
         if (!active) return;
         if (saved && saved.state.revision === work.updatedAt)
@@ -257,13 +259,13 @@ function PhoneRuntime({
     return () => {
       active = false;
     };
-  }, [work.id, work.updatedAt, creator, external]);
+  }, [work.id, work.updatedAt, creator, external, autoSaveId]);
   useEffect(() => {
     if (!creator && !external && ready)
       void db.saves
-        .put({ id: work.id, state: own })
+        .put({ id: autoSaveId, state: own })
         .catch(() => setLoadError("存档失败，请检查浏览器存储权限。"));
-  }, [own, creator, work.id, external, ready]);
+  }, [own, creator, work.id, autoSaveId, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
     const interval = setInterval(() => {
