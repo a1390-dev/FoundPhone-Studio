@@ -296,7 +296,7 @@ export function DeliverySkin(p: Props) {
               {savedAddresses.map((saved,index)=><button key={saved} onClick={()=>setAddress(saved)} style={{display:"block",width:"100%",textAlign:"left",padding:"11px 2px",border:0,borderBottom:index===savedAddresses.length-1?"0":"1px solid #eee",background:"transparent",color:"#222",fontSize:14}}>
                 <span style={{display:"inline-block",width:22,color:address===saved?"#222":"#888"}}>{address===saved?"⦿":"◯"}</span>{saved}
               </button>)}
-              {addressEditing ? <div style={{display:"flex",gap:6,marginTop:10}}><input aria-label="新增配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:0,padding:10,borderRadius:10,border:"1px solid #ddd"}}/><button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[...prev,address]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{border:0,borderRadius:10,padding:"8px 12px",background:"#eee"}}>保存</button></div> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{marginTop:8,border:0,borderRadius:18,padding:"8px 12px",background:"#f3f3f3",color:"#333"}}>＋ 新增地址</button>}
+              {addressEditing ? <p style={{margin:"8px 0 0",fontSize:12,color:"#888"}}>请在页面顶部的地址栏填写地址并点击“保存”。</p> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{marginTop:8,border:0,borderRadius:18,padding:"8px 12px",background:"#f3f3f3",color:"#333"}}>＋ 新增地址</button>}
             </section>
             <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
               <strong style={{display:"block",marginBottom:8}}>商品清单</strong>
