@@ -16,6 +16,58 @@
   padding: 52px 16px 8px;
   flex: none;
 }
+.mymy-ui .igh.ig-search-header-hidden {
+  display: none;
+}
+.mymy-ui .ig-explore-search-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px 16px;
+  flex: none;
+  background: #fff;
+}
+.mymy-ui .ig-explore-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  height: 48px;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: #efeff4;
+  color: #737780;
+}
+.mymy-ui .ig-explore-search input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111;
+  font: inherit;
+  font-size: 17px;
+  box-shadow: none;
+}
+.mymy-ui .ig-explore-search input::placeholder {
+  color: #737780;
+  opacity: 1;
+}
+.mymy-ui .ig-explore-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+}
 .mymy-ui .igh span:first-child {
   width: 28px;
 }
