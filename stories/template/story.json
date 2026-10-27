@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "仅用于界面测试，不含剧情",
-  "revision": 4,
+  "revision": 5,
   "phone": {
     "owner": "机主",
     "date": "2026-10-25",
@@ -121,109 +121,109 @@
     },
     {
       "id": "lin-jianguo",
-      "name": "김도윤",
+      "name": "金道允",
       "phone": "",
       "bio": ""
     },
     {
       "id": "zhou-wanning",
-      "name": "박서연",
+      "name": "朴瑞妍",
       "phone": "",
       "bio": ""
     },
     {
       "id": "lin-zihao",
-      "name": "이준호",
+      "name": "李俊昊",
       "phone": "",
       "bio": ""
     },
     {
       "id": "lin-yutong",
-      "name": "최유진",
+      "name": "崔有真",
       "phone": "",
       "bio": ""
     },
     {
       "id": "xu-jiaqi",
-      "name": "정하린",
+      "name": "郑夏凛",
       "phone": "",
       "bio": ""
     },
     {
       "id": "chen-yinuo",
-      "name": "강민서",
+      "name": "姜敏书",
       "phone": "",
       "bio": ""
     },
     {
       "id": "wang-chenxi",
-      "name": "윤지호",
+      "name": "尹志浩",
       "phone": "",
       "bio": ""
     },
     {
       "id": "zhao-yuchen",
-      "name": "한서준",
+      "name": "韩瑞俊",
       "phone": "",
       "bio": ""
     },
     {
       "id": "sun-ruoxi",
-      "name": "오지우",
+      "name": "吴知友",
       "phone": "",
       "bio": ""
     },
     {
       "id": "li-minghui",
-      "name": "김수현",
+      "name": "金秀贤",
       "phone": "",
       "bio": ""
     },
     {
       "id": "gao-ziyang",
-      "name": "임도현",
+      "name": "林道贤",
       "phone": "",
       "bio": ""
     },
     {
       "id": "tang-xinyi",
-      "name": "신예은",
+      "name": "申叡恩",
       "phone": "",
       "bio": ""
     },
     {
       "id": "he-junhao",
-      "name": "장민재",
+      "name": "张珉载",
       "phone": "",
       "bio": ""
     },
     {
       "id": "song-yiran",
-      "name": "배수빈",
+      "name": "裴秀彬",
       "phone": "",
       "bio": ""
     },
     {
       "id": "luo-jiayi",
-      "name": "권나연",
+      "name": "权娜妍",
       "phone": "",
       "bio": ""
     },
     {
       "id": "fang-zheng",
-      "name": "조현우",
+      "name": "赵贤宇",
       "phone": "",
       "bio": ""
     },
     {
       "id": "wu-xiaoyu",
-      "name": "문채원",
+      "name": "文彩元",
       "phone": "",
       "bio": ""
     },
     {
       "id": "jiang-chen",
-      "name": "유건우",
+      "name": "柳建宇",
       "phone": "",
       "bio": ""
     }
@@ -779,7 +779,7 @@
     {
       "id": "kakao-family-chat",
       "app": "kakao",
-      "title": "가족",
+      "title": "家里",
       "participants": [
         "owner",
         "lin-jianguo",
@@ -799,7 +799,7 @@
     {
       "id": "kakao-besties-chat",
       "app": "kakao",
-      "title": "우리끼리",
+      "title": "我们几个",
       "participants": [
         "owner",
         "xu-jiaqi",
@@ -818,7 +818,7 @@
     {
       "id": "kakao-class-chat",
       "app": "kakao",
-      "title": "과 단톡",
+      "title": "班级群",
       "participants": [
         "owner",
         "wang-chenxi",
@@ -839,7 +839,7 @@
     {
       "id": "kakao-advisor-chat",
       "app": "kakao",
-      "title": "학과 공지",
+      "title": "课程通知",
       "participants": [
         "owner",
         "li-minghui",
@@ -858,7 +858,7 @@
     {
       "id": "kakao-friends-chat",
       "app": "kakao",
-      "title": "오늘 뭐해?",
+      "title": "约饭",
       "participants": [
         "owner",
         "gao-ziyang",
@@ -1276,7 +1276,7 @@
     {
       "id": "wechat-family-chat",
       "app": "wechat",
-      "title": "가족",
+      "title": "家里",
       "participants": [
         "owner",
         "lin-jianguo",
@@ -1296,7 +1296,7 @@
     {
       "id": "wechat-besties-chat",
       "app": "wechat",
-      "title": "우리끼리",
+      "title": "我们几个",
       "participants": [
         "owner",
         "xu-jiaqi",
@@ -1315,7 +1315,7 @@
     {
       "id": "wechat-class-chat",
       "app": "wechat",
-      "title": "과 단톡",
+      "title": "班级群",
       "participants": [
         "owner",
         "wang-chenxi",
@@ -1336,7 +1336,7 @@
     {
       "id": "wechat-advisor-chat",
       "app": "wechat",
-      "title": "학과 공지",
+      "title": "课程通知",
       "participants": [
         "owner",
         "li-minghui",
@@ -1355,7 +1355,7 @@
     {
       "id": "wechat-friends-chat",
       "app": "wechat",
-      "title": "오늘 뭐해?",
+      "title": "约饭",
       "participants": [
         "owner",
         "gao-ziyang",
@@ -1773,7 +1773,7 @@
     {
       "id": "line-family-chat",
       "app": "line",
-      "title": "가족",
+      "title": "家里",
       "participants": [
         "owner",
         "lin-jianguo",
@@ -1793,7 +1793,7 @@
     {
       "id": "line-besties-chat",
       "app": "line",
-      "title": "우리끼리",
+      "title": "我们几个",
       "participants": [
         "owner",
         "xu-jiaqi",
@@ -1812,7 +1812,7 @@
     {
       "id": "line-class-chat",
       "app": "line",
-      "title": "과 단톡",
+      "title": "班级群",
       "participants": [
         "owner",
         "wang-chenxi",
@@ -1833,7 +1833,7 @@
     {
       "id": "line-advisor-chat",
       "app": "line",
-      "title": "학과 공지",
+      "title": "课程通知",
       "participants": [
         "owner",
         "li-minghui",
@@ -1852,7 +1852,7 @@
     {
       "id": "line-friends-chat",
       "app": "line",
-      "title": "오늘 뭐해?",
+      "title": "约饭",
       "participants": [
         "owner",
         "gao-ziyang",
@@ -2270,7 +2270,7 @@
     {
       "id": "qq-family-chat",
       "app": "qq",
-      "title": "가족",
+      "title": "家里",
       "participants": [
         "owner",
         "lin-jianguo",
@@ -2290,7 +2290,7 @@
     {
       "id": "qq-besties-chat",
       "app": "qq",
-      "title": "우리끼리",
+      "title": "我们几个",
       "participants": [
         "owner",
         "xu-jiaqi",
@@ -2309,7 +2309,7 @@
     {
       "id": "qq-class-chat",
       "app": "qq",
-      "title": "과 단톡",
+      "title": "班级群",
       "participants": [
         "owner",
         "wang-chenxi",
@@ -2330,7 +2330,7 @@
     {
       "id": "qq-advisor-chat",
       "app": "qq",
-      "title": "학과 공지",
+      "title": "课程通知",
       "participants": [
         "owner",
         "li-minghui",
@@ -2349,7 +2349,7 @@
     {
       "id": "qq-friends-chat",
       "app": "qq",
-      "title": "오늘 뭐해?",
+      "title": "约饭",
       "participants": [
         "owner",
         "gao-ziyang",
