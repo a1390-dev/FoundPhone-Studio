@@ -160,6 +160,7 @@ function PhoneRuntime({
   onRuntime?: (s: Runtime) => void;
 }) {
   const [app, setApp] = useState("");
+  const [appThread, setAppThread] = useState("");
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
@@ -395,8 +396,9 @@ function PhoneRuntime({
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
-  const open = (id: string) => {
+  const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
+    setAppThread(initialThread);
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -611,6 +613,7 @@ function PhoneRuntime({
                     );
                   }}
                   work={work}
+                  initialThread={appThread}
                 />
               </AppWindow>
             ) : (
@@ -698,7 +701,7 @@ function PhoneRuntime({
                           const latest = runtimeRef.current.notifications.at(-1) || "";
                           const targetApp = notificationContent(latest, work.apps).appId;
                           if (installedApps.some((a) => a.id === targetApp))
-                            open(targetApp);
+                            open(targetApp, targetApp === "kakao" ? notificationContent(latest, work.apps).title : "");
                           else if (installedApps.some((a) => a.id === "messages"))
                             open("messages");
                         }
@@ -824,8 +827,12 @@ function PhoneRuntime({
             <button
               className="device-banner"
               onClick={() => {
+                const latest = banner;
                 setBanner("");
-                setPanel("notification");
+                const notification = notificationContent(latest, work.apps);
+                if (installedApps.some((a) => a.id === notification.appId))
+                  open(notification.appId, notification.appId === "kakao" ? notification.title : "");
+                else setPanel("notification");
               }}
             >
               <AppIcon
@@ -1028,9 +1035,10 @@ function AppContent({
   onSaveSlot?: (index: number) => void | Promise<void>;
   onLoadSlot?: (index: number) => void | Promise<void>;
   work: Work;
+  initialThread?: string;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
-  const [thread, setThread] = useState("");
+  const [thread, setThread] = useState(initialThread || "");
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
