@@ -59,3 +59,23 @@ export const originalIconFiles: Record<string, string> = {
   line: iconLine,
   kakao: iconKakao,
 };
+
+let originalIconPreloadPromise: Promise<void> | undefined;
+
+/** Load and decode the entire original icon batch before revealing the home screen. */
+export function preloadOriginalIconFiles(): Promise<void> {
+  if (!originalIconPreloadPromise) {
+    originalIconPreloadPromise = Promise.all(
+      [...new Set(Object.values(originalIconFiles))].map((url) => {
+        const image = new Image();
+        image.decoding = "sync";
+        image.src = url;
+        return image.decode().then(
+          () => undefined,
+          () => undefined,
+        );
+      }),
+    ).then(() => undefined);
+  }
+  return originalIconPreloadPromise;
+}

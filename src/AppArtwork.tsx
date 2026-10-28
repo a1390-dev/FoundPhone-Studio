@@ -49,7 +49,7 @@ export function AppArtwork({
         src={file}
         alt=""
         loading="eager"
-        decoding="async"
+        decoding="sync"
         draggable={false}
         style={{ position: "absolute", inset: 0 }}
         onError={() => setFailed(true)}
