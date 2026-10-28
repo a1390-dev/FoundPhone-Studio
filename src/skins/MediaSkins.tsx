@@ -301,10 +301,14 @@ export function YouTubeSkin(p: Props) {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span className="catalog-avatar" aria-hidden="true">▶</span>
+                <img
+                  className="youtube-channel-avatar"
+                  src="/media/reels/aespa-official-avatar.jpg"
+                  alt="aespa"
+                />
                 <div>
-                  <strong>{video.title}</strong>
-                  <small>YouTube · 点击打开视频</small>
+                  <strong>aespa</strong>
+                  <small>@aespa · 官方 YouTube 频道</small>
                 </div>
               </a>
             </article>
