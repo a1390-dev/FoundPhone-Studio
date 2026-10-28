@@ -1190,3 +1190,145 @@
 .mymy-ui.mymy-x .x-rumor-photo-card:after,.threads-reference .tr-rumor-photo-card:after{content:"";position:absolute;z-index:-1;bottom:-24px;left:41%;width:52px;height:120px;border-radius:48% 48% 5px 5px;background:#131923dd;filter:blur(9px);box-shadow:38px 8px 0 3px #242c35cc,-30px 16px 0 0 #3c4149aa}
 .mymy-ui.mymy-x .x-rumor-photo-card span,.threads-reference .tr-rumor-photo-card span{font-size:13px;font-weight:650;text-shadow:0 1px 4px #000}
 .mymy-ui.mymy-x .x-rumor-photo-card small,.threads-reference .tr-rumor-photo-card small{font-size:11px;color:#e0e5ea;text-shadow:0 1px 4px #000}
+
+
+/* Rumor-event Instagram DMs: each fan arrives as its own inbox thread. */
+.mymy-ui.mymy-instagram .ig-rumor-dm-row {
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  border-bottom: 1px solid #8b8b8b20;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .catalog-avatar,
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .skin-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn b,
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn small {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn b {
+  color: #222;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn small {
+  color: #686868;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn .ig-rumor-dm-translation {
+  color: #9a9a9d;
+  font-size: 10px;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 7px;
+  background: #3797f0;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-thread {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-history {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 13px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 12px 20px;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message {
+  display: flex;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.incoming {
+  justify-content: flex-start;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.outgoing {
+  justify-content: flex-end;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble {
+  max-width: min(84%, 320px);
+  padding: 10px 13px;
+  border: 1px solid #dedee3;
+  border-radius: 19px;
+  overflow-wrap: anywhere;
+  color: #26262b;
+  background: #f1f1f4;
+  text-align: left;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.outgoing .ig-rumor-dm-bubble {
+  border-color: #d4e8ff;
+  background: #dceeff;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble small {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.45;
+  color: #87878e;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-compose {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 0 0 auto;
+  padding: 10px 11px max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid #8b8b8b22;
+  background: #fff;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-compose input {
+  min-width: 0;
+  flex: 1 1 auto;
+  height: 39px;
+  padding: 0 14px;
+  border: 1px solid #dadade;
+  border-radius: 22px;
+  outline: none;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  font-size: 13px;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-compose button {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 18px;
+  background: #3797f0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 650;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-compose button:disabled {
+  opacity: .4;
+}
