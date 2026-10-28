@@ -63,14 +63,15 @@ export function SocialDetail(p: {
       "followed-" + item.sender,
       false,
     ),
-    [extra, setExtra] = useSkinState<string[]>(p, "replies-" + item.id, []);
+    [extra, setExtra] = useSkinState<string[]>(p, "replies-" + item.id, []),
+    [autoNpcReplies] = useSkinState<string[]>(p, "x-auto-replies-" + item.id, []);
   const [tab, setTab] = useState("评论"),
     [draft, setDraft] = useState(""),
     [target, setTarget] = useState(""),
     [menu, setMenu] = useState(false),
     [sort, setSort] = useState(false),
     [copied, setCopied] = useState(false);
-  const comments = [...item.comments, ...extra],
+  const comments = [...item.comments, ...autoNpcReplies, ...extra],
     replies = sort ? [...comments].reverse() : comments;
   const copy = async () => {
     try {
