@@ -463,24 +463,24 @@ function PhoneRuntime({
     if (app && !work.apps.some((a) => a.id === app && a.installed)) setApp("");
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
-  const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step-v3"] ?? 0);
+  const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step-v4"] ?? 0);
   useEffect(() => {
-    if (creator || s.ui?.kakao?.["convenience-store-event-finished-v3"] !== true) return;
+    if (creator || s.ui?.kakao?.["convenience-store-event-finished-v4"] !== true) return;
     const current = runtimeRef.current;
     const storyState = current.ui?.story || {};
-    if (storyState["scandal-news-countdown-started-v3"] === true ||
-      storyState["scandal-news-pushed-v3"] === true) return;
+    if (storyState["scandal-news-countdown-started-v4"] === true ||
+      storyState["scandal-news-pushed-v4"] === true) return;
     update({
       ...current,
       ui: {
         ...current.ui,
-        story: { ...storyState, "scandal-news-countdown-started-v3": true },
+        story: { ...storyState, "scandal-news-countdown-started-v4": true },
       },
     });
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-news-pushed-v3"] === true) return;
+      if (latestStory["scandal-news-pushed-v4"] === true) return;
       const twitterName = work.apps.find((a) => a.id === "twitter")?.name || "X";
       const newsNotice = `${twitterName}:突发新闻：疑似 aespa Winter 昨夜与女性同行的模糊照片正在传播`;
       update({
@@ -493,64 +493,86 @@ function PhoneRuntime({
           story: {
             ...latestStory,
             "rumor-day-started": true,
-            "scandal-news-pushed-v3": true,
-            "scandal-kkt-first-notice-v3": false,
-            "scandal-kkt-second-notice-v3": false,
+            "scandal-news-pushed-v4": true,
+            "scandal-kkt-first-notice-v4": false,
+            "scandal-kkt-second-notice-v4": false,
           },
-          twitter: { ...latest.ui?.twitter, "rumor-news-unlocked": true },
+          twitter: { ...latest.ui?.twitter, "rumor-news-unlocked-v4": true },
           kakao: {
             ...latest.ui?.kakao,
-            "scandal-call-result-v3": "",
-            "scandal-precall-started-v3": false,
-            "scandal-precall-delivered-v3": false,
+            "scandal-call-result-v4": "",
+            "scandal-precall-started-v4": false,
+            "scandal-precall-delivered-v4": false,
           },
         },
       });
-      const firstKktNotice = "KKT|金旼炡:어디야?";
-      const secondKktNotice = "KKT|金旼炡:혼자 있어?";
-      window.setTimeout(() => {
-        const afterNews = runtimeRef.current;
-        update({
-          ...afterNews,
-          notifications: [...afterNews.notifications, firstKktNotice],
-          ui: {
-            ...afterNews.ui,
-            story: { ...afterNews.ui?.story, "scandal-kkt-first-notice-v3": true },
-          },
-        });
-        window.setTimeout(() => {
-          const afterFirst = runtimeRef.current;
-          update({
-            ...afterFirst,
-            notifications: [...afterFirst.notifications, secondKktNotice],
-            ui: {
-              ...afterFirst.ui,
-              story: { ...afterFirst.ui?.story, "scandal-kkt-second-notice-v3": true },
-            },
-          });
-        }, 1500);
-      }, 1500);
-    }, 5000);
+    }, 10000);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v3"]]);
+  }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v4"]]);
+
+  // Deliver each KKT notification only while the player is outside Minjeong's
+  // chat. If they tap the first notification and enter the chat, the second
+  // notice waits until they leave so it remains tappable and cannot interrupt
+  // the open conversation.
   useEffect(() => {
-    if (creator || s.ui?.kakao?.["scandal-precall-delivered-v3"] !== true) return;
+    if (creator || s.ui?.story?.["scandal-news-pushed-v4"] !== true ||
+      s.ui?.story?.["scandal-kkt-first-notice-v4"] === true ||
+      (app === "kakao" && appThread === "金旼炡")) return;
+    const timer = window.setTimeout(() => {
+      const latest = runtimeRef.current;
+      const latestStory = latest.ui?.story || {};
+      if (latestStory["scandal-kkt-first-notice-v4"] === true) return;
+      if (app === "kakao" && appThread === "金旼炡") return;
+      update({
+        ...latest,
+        notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
+        ui: {
+          ...latest.ui,
+          story: { ...latestStory, "scandal-kkt-first-notice-v4": true },
+        },
+      });
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [creator, app, appThread, s.ui?.story?.["scandal-news-pushed-v4"], s.ui?.story?.["scandal-kkt-first-notice-v4"]]);
+
+  useEffect(() => {
+    if (creator || s.ui?.story?.["scandal-kkt-first-notice-v4"] !== true ||
+      s.ui?.story?.["scandal-kkt-second-notice-v4"] === true ||
+      (app === "kakao" && appThread === "金旼炡")) return;
+    const timer = window.setTimeout(() => {
+      const latest = runtimeRef.current;
+      const latestStory = latest.ui?.story || {};
+      if (latestStory["scandal-kkt-second-notice-v4"] === true) return;
+      if (app === "kakao" && appThread === "金旼炡") return;
+      update({
+        ...latest,
+        notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+        ui: {
+          ...latest.ui,
+          story: { ...latestStory, "scandal-kkt-second-notice-v4": true },
+        },
+      });
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [creator, app, appThread, s.ui?.story?.["scandal-kkt-first-notice-v4"], s.ui?.story?.["scandal-kkt-second-notice-v4"]]);
+  useEffect(() => {
+    if (creator || s.ui?.kakao?.["scandal-precall-delivered-v4"] !== true) return;
     const current = runtimeRef.current;
     const storyState = current.ui?.story || {};
-    if (storyState["scandal-call-countdown-started-v3"] === true ||
-      storyState["scandal-call-triggered-v3"] === true || current.incomingCall) return;
+    if (storyState["scandal-call-countdown-started-v4"] === true ||
+      storyState["scandal-call-triggered-v4"] === true || current.incomingCall) return;
     update({
       ...current,
       ui: {
         ...current.ui,
-        story: { ...storyState, "scandal-call-countdown-started-v3": true },
+        story: { ...storyState, "scandal-call-countdown-started-v4": true },
       },
     });
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-call-triggered-v3"] === true || latest.incomingCall ||
-        latest.ui?.kakao?.["scandal-precall-delivered-v3"] !== true) return;
+      if (latestStory["scandal-call-triggered-v4"] === true || latest.incomingCall ||
+        latest.ui?.kakao?.["scandal-precall-delivered-v4"] !== true) return;
       update({
         ...latest,
         incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
@@ -558,14 +580,14 @@ function PhoneRuntime({
           ...latest.ui,
           story: {
             ...latestStory,
-            "scandal-call-triggered-v3": true,
-            "scandal-call-dialogue-step-v3": 0,
+            "scandal-call-triggered-v4": true,
+            "scandal-call-dialogue-step-v4": 0,
           },
         },
       });
     }, 3000);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.kakao?.["scandal-precall-delivered-v3"]]);
+  }, [creator, s.ui?.kakao?.["scandal-precall-delivered-v4"]]);
   useEffect(() => {
     if (creator || s.incomingCall?.target !== "scandal-call" ||
       s.incomingCall.status !== "answered") return;
@@ -575,15 +597,15 @@ function PhoneRuntime({
       const current = runtimeRef.current;
       if (current.incomingCall?.target !== "scandal-call" ||
         current.incomingCall.status !== "answered" ||
-        Number(current.ui?.story?.["scandal-call-dialogue-step-v3"] ?? 0) !== callDialogueStep) return;
+        Number(current.ui?.story?.["scandal-call-dialogue-step-v4"] ?? 0) !== callDialogueStep) return;
       update({
         ...current,
         ui: {
           ...current.ui,
-          story: { ...current.ui?.story, "scandal-call-dialogue-step-v3": nextStep },
+          story: { ...current.ui?.story, "scandal-call-dialogue-step-v4": nextStep },
         },
       });
-    }, 2000);
+    }, 1000);
     return () => window.clearTimeout(timer);
   }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
   const plugin = getApp(app);
@@ -802,11 +824,11 @@ function PhoneRuntime({
                     const current = runtimeRef.current;
                     const sawRumorFeed = current.ui?.twitter?.["rumor-feed-opened"] === true;
                     const storyState = current.ui?.story || {};
-                    const noticesDelivered = storyState["scandal-news-pushed-v3"] === true &&
-                      storyState["scandal-kkt-second-notice-v3"] === true;
+                    const noticesDelivered = storyState["scandal-news-pushed-v4"] === true &&
+                      storyState["scandal-kkt-second-notice-v4"] === true;
                     if (!sawRumorFeed || !noticesDelivered ||
-                      storyState["scandal-call-triggered-v3"] === true ||
-                      current.ui?.kakao?.["scandal-precall-started-v3"] === true ||
+                      storyState["scandal-call-triggered-v4"] === true ||
+                      current.ui?.kakao?.["scandal-precall-started-v4"] === true ||
                       current.incomingCall) return;
                     // Opening the actual KKT conversation starts the messages;
                     // the incoming call is triggered later, after both messages
@@ -815,8 +837,8 @@ function PhoneRuntime({
                       ...current,
                       ui: {
                         ...current.ui,
-                        story: { ...storyState, "scandal-kkt-chat-opened-v3": true },
-                        kakao: { ...current.ui?.kakao, "scandal-precall-started-v3": true },
+                        story: { ...storyState, "scandal-kkt-chat-opened-v4": true },
+                        kakao: { ...current.ui?.kakao, "scandal-precall-started-v4": true },
                       },
                     });
                   }}
@@ -1048,7 +1070,7 @@ function PhoneRuntime({
                             ...current,
                             ui: {
                               ...current.ui,
-                              story: { ...current.ui?.story, "scandal-call-dialogue-step-v3": nextStep },
+                              story: { ...current.ui?.story, "scandal-call-dialogue-step-v4": nextStep },
                             },
                           });
                         }}
@@ -1076,7 +1098,7 @@ function PhoneRuntime({
                       if (call.target === "scandal-call" && call.status === "ringing") {
                         next.ui = {
                           ...next.ui,
-                          kakao: { ...next.ui?.kakao, "scandal-call-result-v3": "declined" },
+                          kakao: { ...next.ui?.kakao, "scandal-call-result-v4": "declined" },
                         };
                       }
                       update(next);
@@ -1106,7 +1128,7 @@ function PhoneRuntime({
                         if (call.target === "scandal-call") {
                           next.ui = {
                             ...next.ui,
-                            story: { ...next.ui?.story, "scandal-call-dialogue-step-v3": 0 },
+                            story: { ...next.ui?.story, "scandal-call-dialogue-step-v4": 0 },
                           };
                         }
                         update(next);
@@ -1348,7 +1370,7 @@ function AppContent({
       onKktOpeningSeen?.();
       onRequestCall?.();
     }
-  }, [app.id, thread, creator, state.ui?.story?.["scandal-kkt-second-notice-v3"]]);
+  }, [app.id, thread, creator]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
