@@ -110,11 +110,41 @@ const KKT_STORY_ROUNDS = [
     choices: KKT_CONFIRMED_REPLY_OPTIONS,
   },
   {
-    // The supplied screenshots end at the three confirmed food-scene replies.
-    // Do not invent any further NPC dialogue beyond the user's provided material.
-    time: "20:22",
-    npc: [],
-    choices: [],
+    // Continuation from the player's confirmed 20:20 reply: they meet downstairs
+    // and go to the nearby convenience store together.
+    time: "20:23",
+    npc: [
+      ["어, 너도 내려왔네. 나도 편의점 가려고 막 나왔어. 같이 가자.", "诶，你也下来了。我也正准备去便利店，走吧，一起去。"],
+      ["떡볶이도 먹을까? 어묵도 넣으면 맛있을 것 같은데.", "要不要也吃炒年糕？感觉加上鱼饼会很好吃。"],
+    ],
+    choices: [
+      ["좋아, 떡볶이 해 먹자.", "好啊，做炒年糕吃吧。"],
+      ["나도 먹고 싶었어. 같이 먹자.", "我也想吃了，一起吃吧。"],
+      ["그럼 떡볶이에 어묵도 사자.", "那就买炒年糕和鱼饼的材料吧。"],
+    ],
+  },
+  {
+    time: "20:24",
+    npc: [
+      ["그럼 떡볶이랑 어묵 사고, 계란도 넣을까? 집에 뭐 있는지 알아?", "那就买炒年糕和鱼饼，要不要也买鸡蛋？你知道家里还有什么吗？"],
+    ],
+    choices: [
+      ["응, 계란도 넣으면 맛있겠다. 사자.", "嗯，加鸡蛋应该也很好吃，买吧。"],
+      ["집에 있는지 모르니까 그냥 사 두자.", "不知道家里有没有，干脆先买上吧。"],
+      ["그럼 계란도 장바구니에 넣자.", "那就把鸡蛋也放进购物篮吧。"],
+    ],
+  },
+  {
+    time: "20:25",
+    npc: [
+      ["응, 이제 다 산 것 같아. 계산하고 집에 가자.", "嗯，感觉东西都买齐了。结账然后回家吧。"],
+      ["봉투 하나면 되겠지? 내가 들게.", "一个袋子应该就够了吧？我来拿。"],
+    ],
+    choices: [
+      ["봉투 하나면 충분해. 같이 들고 가자.", "一个袋子就够了，我们一起拿回去吧。"],
+      ["좋아. 집에 가서 같이 만들어 먹자.", "好，回家一起做来吃吧。"],
+      ["좋아, 이 정도면 충분할 것 같아.", "好，这些应该就够了。"],
+    ],
   },
 ] as const;
 function Back({ onClick }: { onClick: () => void }) {
@@ -131,12 +161,15 @@ export function MymyKakao(p: SkinProps) {
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
+    [selectedChoices, setSelectedChoices] = useState<Array<readonly [string, string]>>([]),
     [candidateOpen, setCandidateOpen] = useState(false),
     [npcTyping, setNpcTyping] = useState(false),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
+  const storyStepRef = useRef(storyStep);
+  useEffect(() => { storyStepRef.current = storyStep; }, [storyStep]);
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
@@ -173,6 +206,40 @@ export function MymyKakao(p: SkinProps) {
       setNpcTyping(false);
     }, 2000);
     return () => window.clearTimeout(timer);
+  }, [p.thread]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const round = KKT_STORY_ROUNDS[storyStepRef.current];
+    if (!round?.npc.length) return;
+    const missing = round.npc.filter(([ko]) => !sentRef.current.some((raw) => {
+      try {
+        const entry: unknown = JSON.parse(raw);
+        return Array.isArray(entry) && entry[0] === p.thread && entry[1] === ko && entry[3] === "npc";
+      } catch {
+        return false;
+      }
+    }));
+    if (!missing.length) return;
+    setNpcTyping(true);
+    let index = 0;
+    const deliverMissing = () => {
+      const entry = missing[index++];
+      if (!entry) { setNpcTyping(false); return; }
+      const [ko, zh] = entry;
+      const npcEntry = JSON.stringify([
+        p.thread,
+        ko.replaceAll("{{playerId}}", p.playerId || "你"),
+        round.time,
+        "npc",
+        zh.replaceAll("{{playerId}}", p.playerId || "你"),
+      ]);
+      const updated = [...sentRef.current, npcEntry];
+      sentRef.current = updated;
+      setSent(updated);
+      if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
+      else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
+    };
+    deliveryTimer.current = setTimeout(deliverMissing, 800);
   }, [p.thread]);
   useEffect(() => {
     const field = composerRef.current;
@@ -300,14 +367,21 @@ export function MymyKakao(p: SkinProps) {
             className="kzinp"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!draft.trim()) return;
               const time = KKT_STORY_ROUNDS[storyStep]?.time || p.virtualTime || "20:17";
-              const outgoing = JSON.stringify([p.thread, draft.trim(), time, "owner", selectedZh || ""]);
-              const next = [...sentRef.current, outgoing];
+              const outgoingEntries = p.thread === "金旼炡" && selectedChoices.length
+                ? selectedChoices.map(([ko, zh]) => JSON.stringify([
+                    p.thread, ko, time, "owner", zh.replaceAll("{{playerId}}", p.playerId || "你"),
+                  ]))
+                : draft.trim()
+                  ? [JSON.stringify([p.thread, draft.trim(), time, "owner", selectedZh || ""])]
+                  : [];
+              if (!outgoingEntries.length) return;
+              const next = [...sentRef.current, ...outgoingEntries];
               sentRef.current = next;
               setSent(next);
               setDraft("");
               setSelectedZh("");
+              setSelectedChoices([]);
               setCandidateOpen(false);
               if (p.thread === "金旼炡") {
                 const nextStep = storyStep + 1;
@@ -363,7 +437,6 @@ export function MymyKakao(p: SkinProps) {
                 // the same in-phone tray behavior that worked before the font-only edit.
                 e.preventDefault();
                 if (npcTyping) return;
-                if ((KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0) return;
                 if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
                 setCandidateOpen(false);
                 choiceOpenTimer.current = setTimeout(() => setCandidateOpen(true), 500);
@@ -374,6 +447,7 @@ export function MymyKakao(p: SkinProps) {
               onChange={(e) => {
                 setDraft(e.target.value);
                 setSelectedZh("");
+                setSelectedChoices([]);
               }}
             />
             <Smile size={22} />
@@ -390,9 +464,18 @@ export function MymyKakao(p: SkinProps) {
               {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
                 <button
                   type="button"
-                  className={"kkt-choice" + (draft === ko ? " selected" : "")}
+                  className={"kkt-choice" + (selectedChoices.some(([chosenKo]) => chosenKo === ko) ? " selected" : "")}
                   key={ko}
-                  onClick={() => { setDraft(ko); setSelectedZh(zh.replaceAll("{{playerId}}", p.playerId || "你")); }}
+                  onClick={() => {
+                    const translated = zh.replaceAll("{{playerId}}", p.playerId || "你");
+                    const alreadySelected = selectedChoices.some(([chosenKo]) => chosenKo === ko);
+                    const nextChoices = alreadySelected
+                      ? selectedChoices.filter(([chosenKo]) => chosenKo !== ko)
+                      : [...selectedChoices, [ko, translated] as const];
+                    setSelectedChoices(nextChoices);
+                    setDraft(nextChoices.map(([chosenKo]) => chosenKo).join("\n"));
+                    setSelectedZh("");
+                  }}
                 >
                   <span>{ko}</span>
                   <small>{zh.replaceAll("{{playerId}}", p.playerId || "你")}</small>
