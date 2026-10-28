@@ -531,6 +531,60 @@ function PhoneRuntime({
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
   const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step"] ?? 0);
+  useEffect(() => {
+    if (creator || s.ui?.kakao?.["scandal-precall-delivered"] !== true) return;
+    const current = runtimeRef.current;
+    const storyState = current.ui?.story || {};
+    if (storyState["scandal-call-countdown-started"] === true ||
+      storyState["scandal-call-triggered"] === true || current.incomingCall) return;
+    update({
+      ...current,
+      ui: {
+        ...current.ui,
+        story: { ...storyState, "scandal-call-countdown-started": true },
+      },
+    });
+    const timer = window.setTimeout(() => {
+      const latest = runtimeRef.current;
+      const latestStory = latest.ui?.story || {};
+      if (latestStory["scandal-call-triggered"] === true || latest.incomingCall ||
+        latest.ui?.kakao?.["scandal-precall-delivered"] !== true) return;
+      update({
+        ...latest,
+        incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
+        ui: {
+          ...latest.ui,
+          story: {
+            ...latestStory,
+            "scandal-call-triggered": true,
+            "scandal-call-dialogue-step": 0,
+          },
+        },
+      });
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, [creator, s.ui?.kakao?.["scandal-precall-delivered"]]);
+  useEffect(() => {
+    if (creator || s.incomingCall?.target !== "scandal-call" ||
+      s.incomingCall.status !== "answered") return;
+    if (![0, 1, 3, 5].includes(callDialogueStep)) return;
+    const nextStep = callDialogueStep === 0 ? 1 : callDialogueStep === 1 ? 2 :
+      callDialogueStep === 3 ? 4 : 6;
+    const timer = window.setTimeout(() => {
+      const current = runtimeRef.current;
+      if (current.incomingCall?.target !== "scandal-call" ||
+        current.incomingCall.status !== "answered" ||
+        Number(current.ui?.story?.["scandal-call-dialogue-step"] ?? 0) !== callDialogueStep) return;
+      update({
+        ...current,
+        ui: {
+          ...current.ui,
+          story: { ...current.ui?.story, "scandal-call-dialogue-step": nextStep },
+        },
+      });
+    }, 2000);
+    return () => window.clearTimeout(timer);
+  }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
@@ -749,13 +803,18 @@ function PhoneRuntime({
                     const storyState = current.ui?.story || {};
                     const noticesDelivered = storyState["scandal-news-pushed"] === true &&
                       storyState["scandal-kkt-second-notice"] === true;
-                    if (!sawRumorFeed || !noticesDelivered || storyState["scandal-call-triggered"] === true || current.incomingCall) return;
+                    if (!sawRumorFeed || !noticesDelivered ||
+                      storyState["scandal-call-triggered"] === true ||
+                      current.ui?.kakao?.["scandal-precall-started"] === true ||
+                      current.incomingCall) return;
+                    // Opening the actual KKT conversation starts the messages;
+                    // the incoming call is triggered later, after both messages
+                    // have appeared and the three-second pause has elapsed.
                     update({
                       ...current,
-                      incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
                       ui: {
                         ...current.ui,
-                        story: { ...storyState, "scandal-call-triggered": true },
+                        story: { ...storyState, "scandal-kkt-chat-opened": true },
                         kakao: { ...current.ui?.kakao, "scandal-precall-started": true },
                       },
                     });
