@@ -391,7 +391,10 @@ export function MymyKakao(p: SkinProps) {
       setSent(updated);
       if (role === "npc") notifyKktNpcMessage(p.thread, ko, zh, time);
       if (index < queue.length) deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
-      else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 450);
+      else deliveryTimer.current = setTimeout(() => {
+        setNpcTyping(false);
+        p.onUi?.("scandal-call-decline-messages-finished-v6", true);
+      }, 450);
     };
     deliveryTimer.current = setTimeout(deliverCallMessage, 700);
   }, [p.thread, p.ui?.["scandal-call-result-v5"], processedCallResult]);
@@ -474,6 +477,17 @@ export function MymyKakao(p: SkinProps) {
       return total + (Number.isFinite(n) && n > 0 ? n : 1);
     }, 0);
   };
+  // Later NPC messages mark the player's earlier messages as read. This state
+  // applies to every KKT storyline, including earlier conversations.
+  const lastNpcMessageIndex = new Map<string, number>();
+  sent.forEach((raw, index) => {
+    try {
+      const entry: unknown = JSON.parse(raw);
+      if (!Array.isArray(entry) || typeof entry[0] !== "string") return;
+      const role = entry.length >= 4 ? entry[3] : "owner";
+      if (role === "npc") lastNpcMessageIndex.set(entry[0], index);
+    } catch { /* Ignore malformed local chat entries. */ }
+  });
   const localSentItems = sent.flatMap((raw, index): Item[] => {
     try {
       const entry: unknown = JSON.parse(raw);
@@ -484,6 +498,7 @@ export function MymyKakao(p: SkinProps) {
       ) return [];
       const role = entry.length >= 4 ? entry[3] : "owner";
       const outgoing = role !== "npc";
+      const unread = outgoing && index > (lastNpcMessageIndex.get(entry[0]) ?? -1);
       return [makeItem({
         id: "local-kkt-" + index,
         title: entry[0],
@@ -494,6 +509,7 @@ export function MymyKakao(p: SkinProps) {
         meta: {
           local: "true",
           translation: entry.length >= 5 ? entry[4] : "",
+          unread: unread ? "1" : "",
         },
       })];
     } catch {
@@ -547,7 +563,9 @@ export function MymyKakao(p: SkinProps) {
                   )}
                   {m.outgoing && run.last && (
                     <span className="kzt">
-                      {m.meta.unread || ""}
+                      {m.meta.unread ? (
+                        <i className="kkt-message-unread">{m.meta.unread}</i>
+                      ) : null}
                       <br />
                       {m.time.slice(-5)}
                     </span>
