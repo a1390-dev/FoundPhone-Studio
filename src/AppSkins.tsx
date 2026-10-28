@@ -48,6 +48,7 @@ export type SkinProps = {
   onBack: () => void;
   thread: string;
   onThread: (s: string) => void;
+  onRequestCall?: () => void;
 };
 const CONTACT_AVATARS: Record<string, string> = {
   "刘知珉": "/avatars/p1.jpg",
