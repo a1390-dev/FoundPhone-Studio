@@ -511,9 +511,7 @@ function PhoneRuntime({
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v4"]]);
 
   // Deliver each KKT notification only while the player is outside Minjeong's
-  // chat. If they tap the first notification and enter the chat, the second
-  // notice waits until they leave so it remains tappable and cannot interrupt
-  // the open conversation.
+  // chat. If the first alert is opened, the second waits until the player exits.
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v4"] !== true ||
       s.ui?.story?.["scandal-kkt-first-notice-v4"] === true ||
@@ -521,8 +519,8 @@ function PhoneRuntime({
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-first-notice-v4"] === true) return;
-      if (app === "kakao" && appThread === "金旼炡") return;
+      if (latestStory["scandal-kkt-first-notice-v4"] === true ||
+        (app === "kakao" && appThread === "金旼炡")) return;
       update({
         ...latest,
         notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
@@ -542,8 +540,8 @@ function PhoneRuntime({
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-second-notice-v4"] === true) return;
-      if (app === "kakao" && appThread === "金旼炡") return;
+      if (latestStory["scandal-kkt-second-notice-v4"] === true ||
+        (app === "kakao" && appThread === "金旼炡")) return;
       update({
         ...latest,
         notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
@@ -819,6 +817,7 @@ function PhoneRuntime({
                   work={work}
                   initialThread={appThread}
                   playerId={playerId}
+                  onActiveThread={(nextThread) => setAppThread(nextThread)}
                   onKktOpeningSeen={markKktOpeningAsSeen}
                   onRequestCall={() => {
                     const current = runtimeRef.current;
@@ -1340,6 +1339,7 @@ function AppContent({
   work,
   initialThread = "",
   playerId = "",
+  onActiveThread,
   onKktOpeningSeen,
   onRequestCall,
 }: {
@@ -1360,6 +1360,7 @@ function AppContent({
   work: Work;
   initialThread?: string;
   playerId?: string;
+  onActiveThread?: (thread: string) => void;
   onKktOpeningSeen?: () => void;
   onRequestCall?: () => void;
 }) {
@@ -1490,6 +1491,7 @@ function AppContent({
               thread={thread}
               onThread={(nextThread) => {
                 setThread(nextThread);
+                onActiveThread?.(nextThread);
                 if (app.id === "kakao" && nextThread === "金旼炡" && !creator)
                   onKktOpeningSeen?.();
               }}
