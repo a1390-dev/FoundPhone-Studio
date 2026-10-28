@@ -343,7 +343,7 @@ export function MymyKakao(p: SkinProps) {
           </form>
           {p.thread === "金旼炡" && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
-              {KKT_STORY_ROUNDS[storyStep].choices.map(([ko, zh]) => (
+              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
                 <button
                   type="button"
                   className={"kkt-choice" + (draft === ko ? " selected" : "")}
