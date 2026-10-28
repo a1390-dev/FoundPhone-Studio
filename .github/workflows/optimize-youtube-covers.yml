@@ -20,13 +20,12 @@ jobs:
         with:
           node-version: 22
       - name: Install temporary image optimizer
-        run: npm install --no-save --package-lock=false sharp
+        run: npm install --prefix /tmp/youtube-compressor --no-save --package-lock=false sharp
       - name: Compress the four YouTube cover files
         run: |
           node --input-type=module <<'NODE'
-          import sharp from 'sharp';
+          import sharp from '/tmp/youtube-compressor/node_modules/sharp/lib/index.js';
           import { readFile, writeFile } from 'node:fs/promises';
-          import { glob } from 'node:fs/promises';
           const files = [
             'public/media/youtube/JmSEjwQS-2o.jpg',
             'public/media/youtube/K3DpULg1_Vw.jpg',
