@@ -431,7 +431,6 @@ function PhoneRuntime({
   };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
-    if (id === "kakao" && !creator) markKktOpeningAsSeen();
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
@@ -671,6 +670,7 @@ function PhoneRuntime({
                   work={work}
                   initialThread={appThread}
                   playerId={playerId}
+                  onKktOpeningSeen={markKktOpeningAsSeen}
                 />
               </AppWindow>
             ) : (
@@ -1078,6 +1078,7 @@ function AppContent({
   work,
   initialThread = "",
   playerId = "",
+  onKktOpeningSeen,
 }: {
   app: AppPlugin;
   name: string;
@@ -1096,9 +1097,14 @@ function AppContent({
   work: Work;
   initialThread?: string;
   playerId?: string;
+  onKktOpeningSeen?: () => void;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
   const [thread, setThread] = useState(initialThread || "");
+  useEffect(() => {
+    if (app.id === "kakao" && thread === "金旼炡" && !creator)
+      onKktOpeningSeen?.();
+  }, [app.id, thread, creator]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
@@ -1216,7 +1222,11 @@ function AppContent({
               onAdd={onAdd}
               onBack={onBack}
               thread={thread}
-              onThread={setThread}
+              onThread={(nextThread) => {
+                setThread(nextThread);
+                if (app.id === "kakao" && nextThread === "金旼炡" && !creator)
+                  onKktOpeningSeen?.();
+              }}
             />
           </Suspense>
         </div>
