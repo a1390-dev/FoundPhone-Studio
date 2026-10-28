@@ -436,12 +436,36 @@ function PhoneRuntime({
     const hasRumorStory = (work.data.twitter || []).some((i) => i.meta.category === "rumor-discussion");
     const storyUi = current.ui?.story || {};
     if ((id === "twitter" || id === "threads") && hasRumorStory && storyUi["rumor-day-started"] !== true) {
+      const notifications = [...current.notifications, "KKT|金旼炡:어디야?"];
       update({
         ...current,
         date: "2026-10-28",
         time: "14:06",
-        ui: { ...current.ui, story: { ...storyUi, "rumor-day-started": true } },
+        notifications,
+        ui: {
+          ...current.ui,
+          story: {
+            ...storyUi,
+            "rumor-day-started": true,
+            "scandal-kkt-notices-sent": true,
+          },
+        },
       });
+      window.setTimeout(() => {
+        const latest = runtimeRef.current;
+        if (latest.ui?.story?.["scandal-kkt-second-notice"] === true) return;
+        update({
+          ...latest,
+          notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+          ui: {
+            ...latest.ui,
+            story: {
+              ...latest.ui?.story,
+              "scandal-kkt-second-notice": true,
+            },
+          },
+        });
+      }, 1800);
     }
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
