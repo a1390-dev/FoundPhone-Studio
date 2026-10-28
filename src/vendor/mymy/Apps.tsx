@@ -437,7 +437,6 @@ export function MymyKakao(p: SkinProps) {
                 // the same in-phone tray behavior that worked before the font-only edit.
                 e.preventDefault();
                 if (npcTyping) return;
-                if ((KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0) return;
                 if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
                 setCandidateOpen(false);
                 choiceOpenTimer.current = setTimeout(() => setCandidateOpen(true), 500);
