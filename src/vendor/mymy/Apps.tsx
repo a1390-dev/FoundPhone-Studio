@@ -192,8 +192,9 @@ export function MymyKakao(p: SkinProps) {
     if (!readThreads.includes(title)) setReadThreads([...readThreads, title]);
   };
   useEffect(() => {
-    if (p.thread) markThreadRead(p.thread);
-  }, [p.thread]);
+    if (p.thread && !readThreads.includes(p.thread))
+      setReadThreads([...readThreads, p.thread]);
+  }, [p.thread, readThreads, setReadThreads]);
   const unreadCount = (group: { title: string; items: Item[] }) => {
     if (readThreads.includes(group.title)) return 0;
     return group.items.reduce((total, item) => {
