@@ -177,7 +177,7 @@ export function DeviceLock({
                     >
                       <input
                         id="foundphone-player-id"
-                        style={{ fontSize: `${Math.max(16, 13 / Math.max(phoneScale, 0.4))}px` }}
+                        style={{ fontSize: `${16 / Math.max(phoneScale, 0.4)}px` }}
                         value={idDraft}
                         onChange={(e) => setIdDraft(e.target.value)}
                         maxLength={24}
