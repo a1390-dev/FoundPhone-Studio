@@ -159,6 +159,7 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
+    [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV1", ""),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
     [selectedChoices, setSelectedChoices] = useState<Array<readonly [string, string]>>([]),
@@ -207,6 +208,42 @@ export function MymyKakao(p: SkinProps) {
     }, 2000);
     return () => window.clearTimeout(timer);
   }, [p.thread]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const result = p.ui?.["scandal-call-result"];
+    if (typeof result !== "string" || !result || result === processedCallResult) return;
+    const queue: Array<[string, string, string, string]> = result === "answered"
+      ? [
+          ["괜찮아, 걱정하지 마.", "你别担心。", "npc", "14:06"],
+          ["내가 처리할게.", "我来处理。", "npc", "14:06"],
+          ["알겠어.", "好。", "owner", "14:07"],
+          ["집에 있어?", "你在家吗？", "npc", "14:07"],
+          ["응.", "嗯。", "owner", "14:07"],
+          ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:08"],
+        ]
+      : [
+          ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
+          ["집에 있어?", "你在家吗？", "npc", "14:06"],
+          ["응.", "嗯。", "owner", "14:07"],
+          ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:07"],
+          ["걱정하지 마.", "别担心。", "npc", "14:08"],
+        ];
+    setProcessedCallResult(result);
+    setNpcTyping(true);
+    let index = 0;
+    const deliverCallMessage = () => {
+      const entry = queue[index++];
+      if (!entry) { setNpcTyping(false); return; }
+      const [ko, zh, role, time] = entry;
+      const raw = JSON.stringify([p.thread, ko, time, role, zh]);
+      const updated = [...sentRef.current, raw];
+      sentRef.current = updated;
+      setSent(updated);
+      if (index < queue.length) deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
+      else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 450);
+    };
+    deliveryTimer.current = setTimeout(deliverCallMessage, 700);
+  }, [p.thread, p.ui?.["scandal-call-result"], processedCallResult]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const round = KKT_STORY_ROUNDS[storyStepRef.current];
@@ -1291,17 +1328,36 @@ export function MymyX(p: SkinProps) {
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
     [query, setQuery] = useState(""),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-v1", 0);
+    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v2", 1),
+    [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
+    [draft, setDraft] = useState(""),
+    [composeOpen, setComposeOpen] = useState(false);
   const liveItems = p.items.filter((i) => i.meta.live === "true");
+  const localXItems = userPosts.map((body, n) => makeItem({
+    id: "local-x-post-" + n,
+    title: "本地帖子",
+    body,
+    sender: p.playerId || p.owner || "机主",
+    time: p.virtualTime || "14:06",
+    kind: "post",
+    likes: 0,
+    comments: [],
+    meta: { handle: (p.playerId || "you").replace(/^@/, ""), local: "true", views: "1", platform: "twitter" },
+  }));
   const feedItems = [
+    ...localXItems,
     ...liveItems.slice(0, liveCount).reverse(),
     ...p.items.filter((i) => i.meta.live !== "true"),
   ];
   useEffect(() => {
+    if (p.items.some((i) => i.meta.category === "rumor-discussion"))
+      p.onUi?.("rumor-feed-opened", true);
+  }, [p.items.length]);
+  useEffect(() => {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      28000,
+      12000,
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
@@ -1331,6 +1387,7 @@ export function MymyX(p: SkinProps) {
             <button aria-label="切换X外观" onClick={() => setDark(!dark)}>
               <User />
             </button>
+            <button aria-label="新建X帖子" className="x-compose-button" onClick={() => setComposeOpen(true)}><Plus size={20} /></button>
             <button className="x-feed-refresh" type="button" aria-label="刷新X信息流" title="刷新" onClick={refreshFeed}>
               <RefreshCw size={18} />
             </button>
@@ -1341,12 +1398,30 @@ export function MymyX(p: SkinProps) {
             <button
               className={t === tab ? "on" : ""}
               key={t}
-              onClick={() => setTab(t)}
+              onClick={() => {
+                if (t === "添加 +") { setComposeOpen(true); return; }
+                setTab(t);
+              }}
             >
               {t}
             </button>
           ))}
         </div>
+        {composeOpen && (
+          <form className="x-compose-card" onSubmit={(e) => {
+            e.preventDefault();
+            const body = draft.trim();
+            if (!body) return;
+            setUserPosts((current) => [body, ...current]);
+            setDraft("");
+            setComposeOpen(false);
+            setTab("为你推荐");
+          }}>
+            <header><button type="button" onClick={() => setComposeOpen(false)}>取消</button><b>发帖</b><span /></header>
+            <div className="x-compose-body"><Avatar name={p.playerId || p.owner || "机主"} /><textarea aria-label="X发帖内容" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="有什么新鲜事？" maxLength={280} /></div>
+            <footer><span>◎ 所有人可以回复</span><button type="submit" disabled={!draft.trim()}>发帖</button></footer>
+          </form>
+        )}
         {tab === "搜索" && (
           <input
             className="mymy-search"
