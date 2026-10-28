@@ -1130,3 +1130,14 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* KKT chat-list preview mirrors the latest line in the open conversation. */
+.mymy-ui.mymy-kakao .kzkn .kkt-chat-preview {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
