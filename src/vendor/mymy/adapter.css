@@ -1184,3 +1184,9 @@
 .mymy-ui.mymy-x .x-compose-card>footer span{color:#1d9bf0;font-size:12px}
 .mymy-ui.mymy-x .x-compose-card>footer button{border-radius:22px;background:#1d9bf0;color:#fff;padding:7px 18px;font-weight:700}
 .mymy-ui.mymy-x .x-compose-card>footer button:disabled{opacity:.35}
+
+.mymy-ui.mymy-x .x-rumor-photo-card,.threads-reference .tr-rumor-photo-card{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;box-sizing:border-box;width:100%;min-height:184px;margin:10px 0 2px;padding:14px;overflow:hidden;border:1px solid #a4aab055;border-radius:15px;text-align:left;color:#fff;background:linear-gradient(145deg,#1b2733 0%,#596068 40%,#242c34 62%,#10151b 100%);isolation:isolate}
+.mymy-ui.mymy-x .x-rumor-photo-card:before,.threads-reference .tr-rumor-photo-card:before{content:"";position:absolute;inset:-15px;z-index:-1;background:linear-gradient(90deg,#e6e5cf33 0 15%,transparent 17% 66%,#cfd6dc22 68%),linear-gradient(0deg,#080c12 0 20%,transparent 70%);filter:blur(9px)}
+.mymy-ui.mymy-x .x-rumor-photo-card:after,.threads-reference .tr-rumor-photo-card:after{content:"";position:absolute;z-index:-1;bottom:-24px;left:41%;width:52px;height:120px;border-radius:48% 48% 5px 5px;background:#131923dd;filter:blur(9px);box-shadow:38px 8px 0 3px #242c35cc,-30px 16px 0 0 #3c4149aa}
+.mymy-ui.mymy-x .x-rumor-photo-card span,.threads-reference .tr-rumor-photo-card span{font-size:13px;font-weight:650;text-shadow:0 1px 4px #000}
+.mymy-ui.mymy-x .x-rumor-photo-card small,.threads-reference .tr-rumor-photo-card small{font-size:11px;color:#e0e5ea;text-shadow:0 1px 4px #000}
