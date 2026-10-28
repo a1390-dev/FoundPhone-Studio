@@ -938,3 +938,11 @@
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
 }
+
+/* KKT title temporarily becomes the sender typing status while reply bubbles arrive. */
+.mymy-ui.mymy-kakao .kzname-typing {
+  color: #586b7f;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
