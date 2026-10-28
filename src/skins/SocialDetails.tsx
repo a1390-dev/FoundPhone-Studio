@@ -26,6 +26,26 @@ import "./social-details.css";
 export const socialDetailApps = new Set(["twitter", "weibo"]);
 const count = (n: number) =>
   n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, "") + "w" : String(n);
+
+const X_RUMOR_NPCS = [
+  { name: "时间线路人", text: "先等等吧，照片这么模糊，现在下结论太快了。" },
+  { name: "理性围观中", text: "同一张图被重复转发不等于多了一份证据。" },
+  { name: "今天也追星", text: "不管真假，都别去扒同行者的身份和私人行踪。" },
+  { name: "热帖观察员", text: "看了最初的发帖，后面很多细节像是网友自己补上的。" },
+  { name: "普通用户A", text: "希望大家把‘疑似’留着，别把标题写成已确认。" },
+  { name: "不吃二手瓜", text: "我会等有来源的消息，不想靠截图猜人。" },
+  { name: "晚间刷帖人", text: "别因为讨论热度高就默认它是真的。" },
+  { name: "路过的MY", text: "关心她可以，但别把当事人的私生活当成公共投票。" },
+  { name: "新闻核对中", text: "目前能确认的只有照片正在传播，关系没有确认。" },
+  { name: "看帖不站队", text: "先看来源和时间，再决定要不要相信，比互相骂有用。" },
+];
+const X_GENERAL_NPCS = [
+  { name: "评论区常客", text: "你这条我也看到了，大家的说法差别还挺大的。" },
+  { name: "路过一下", text: "先别急着定论，等更多上下文吧。" },
+  { name: "小号观察员", text: "评论区信息太杂了，我会先看原帖。" },
+  { name: "夜猫子", text: "时间线真的刷得好快，刚进来又多了好多回复。" },
+  { name: "普通网友", text: "有道理，不过目前还是得把推测和事实分开。" },
+];
 export function SocialDetail(p: {
   app: string;
   item: Item;
@@ -61,11 +81,22 @@ export function SocialDetail(p: {
     }
   };
   const submit = () => {
-    if (!draft.trim()) return;
-    setExtra([...extra, (p.owner || "机主") + "：" + draft.trim()]);
+    const posted = draft.trim();
+    if (!posted) return;
+    const playerName = p.owner || "机主";
+    setExtra([...extra, playerName + (target ? " 回复 @" + target : "") + "：" + posted]);
     setDraft("");
     setTarget("");
     setTab("评论");
+    if (!weibo) {
+      const rumorPost = item.meta.category === "rumor-discussion";
+      const pool = rumorPost ? X_RUMOR_NPCS : X_GENERAL_NPCS;
+      const response = pool[Math.floor(Math.random() * pool.length)];
+      const delay = 1400 + Math.floor(Math.random() * 3100);
+      window.setTimeout(() => {
+        setExtra((current) => [...current, response.name + "：" + response.text]);
+      }, delay);
+    }
   };
   const actions = (
     <div className="post-detail-actions">
