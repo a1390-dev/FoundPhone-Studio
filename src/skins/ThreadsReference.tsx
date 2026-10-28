@@ -118,6 +118,9 @@ export function ThreadsReference(p: SkinProps) {
         </div>
         <button className="tr-body" onClick={() => open(i)}>
           {i.body}
+          {i.meta.category === "rumor-discussion" && i.id.endsWith("-01") && (
+            <div className="tr-rumor-photo-card"><span>夜间便利店 · 模糊网传图</span><small>身份与拍摄背景均未确认</small></div>
+          )}
           {i.media && <Media item={i} />}
         </button>
         <div className="tr-actions">
