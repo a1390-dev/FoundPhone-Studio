@@ -151,11 +151,33 @@ export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV1", 0),
+    [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
     [candidateOpen, setCandidateOpen] = useState(false),
+    [npcTyping, setNpcTyping] = useState(false),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
+  const sentRef = useRef(sent);
+  const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => { sentRef.current = sent; }, [sent]);
+  useEffect(() => () => {
+    if (deliveryTimer.current) clearTimeout(deliveryTimer.current);
+  }, []);
+  const markThreadRead = (title: string) => {
+    if (!readThreads.includes(title)) setReadThreads([...readThreads, title]);
+  };
+  useEffect(() => {
+    if (p.thread) markThreadRead(p.thread);
+  }, [p.thread]);
+  const unreadCount = (group: { title: string; items: Item[] }) => {
+    if (readThreads.includes(group.title)) return 0;
+    return group.items.reduce((total, item) => {
+      if (item.outgoing || item.read || !item.meta.unread) return total;
+      const n = Number(item.meta.unread);
+      return total + (Number.isFinite(n) && n > 0 ? n : 1);
+    }, 0);
+  };
   const list = grouped(p.items).sort(
       (a, b) => Number(b.title === "金旼炡") - Number(a.title === "金旼炡"),
     ),
@@ -241,7 +263,7 @@ export function MymyKakao(p: SkinProps) {
                     className={"kzbub" + (m.media ? " kzimg" : "")}
                     onClick={() => m.meta.local !== "true" && read(p, m)}
                   >
-                    {m.media ? <Media item={m} /> : m.body}
+                    {m.media ? <Media item={m} /> : <span className="kkt-korean">{m.body}</span>}
                     {m.meta.translation ? <small className="kkt-translation">{m.meta.translation}</small> : null}
                   </button>
                   {!m.outgoing && run.last && (
@@ -258,22 +280,43 @@ export function MymyKakao(p: SkinProps) {
               e.preventDefault();
               if (!draft.trim()) return;
               const time = KKT_STORY_ROUNDS[storyStep]?.time || p.virtualTime || "20:17";
-              const added = [
-                JSON.stringify([p.thread, draft.trim(), time, "owner", selectedZh || ""]),
-              ];
-              if (p.thread === "金旼炡") {
-                const nextStep = storyStep + 1;
-                const nextRound = KKT_STORY_ROUNDS[nextStep];
-                if (nextRound) {
-                  for (const [ko, zh] of nextRound.npc)
-                    added.push(JSON.stringify([p.thread, ko.replaceAll("{{playerId}}", p.playerId || "你"), nextRound.time, "npc", zh.replaceAll("{{playerId}}", p.playerId || "你")]));
-                }
-                setStoryStep(Math.min(nextStep, KKT_STORY_ROUNDS.length));
-              }
-              setSent([...sent, ...added]);
+              const outgoing = JSON.stringify([p.thread, draft.trim(), time, "owner", selectedZh || ""]);
+              const next = [...sentRef.current, outgoing];
+              sentRef.current = next;
+              setSent(next);
               setDraft("");
               setSelectedZh("");
               setCandidateOpen(false);
+              if (p.thread === "金旼炡") {
+                const nextStep = storyStep + 1;
+                const nextRound = KKT_STORY_ROUNDS[nextStep];
+                setStoryStep(Math.min(nextStep, KKT_STORY_ROUNDS.length));
+                if (nextRound?.npc.length) {
+                  setNpcTyping(true);
+                  let index = 0;
+                  const deliverOne = () => {
+                    const entry = nextRound.npc[index++];
+                    if (!entry) { setNpcTyping(false); return; }
+                    const [ko, zh] = entry;
+                    const npcEntry = JSON.stringify([
+                      p.thread,
+                      ko.replaceAll("{{playerId}}", p.playerId || "你"),
+                      nextRound.time,
+                      "npc",
+                      zh.replaceAll("{{playerId}}", p.playerId || "你"),
+                    ]);
+                    const updated = [...sentRef.current, npcEntry];
+                    sentRef.current = updated;
+                    setSent(updated);
+                    if (index < nextRound.npc.length) {
+                      deliveryTimer.current = setTimeout(deliverOne, 1150);
+                    } else {
+                      deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
+                    }
+                  };
+                  deliveryTimer.current = setTimeout(deliverOne, 700);
+                }
+              }
             }}
           >
             <button
@@ -296,18 +339,13 @@ export function MymyKakao(p: SkinProps) {
             <button
               className={draft.trim() ? "go" : ""}
               aria-label="发送KKT消息"
-              disabled={!draft.trim()}
+              disabled={!draft.trim() || npcTyping}
             >
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && candidateOpen && (
+          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
-              <div className="kkt-choice-heading">
-                <strong>选择一条回复</strong>
-                <span>点选只会填入输入框，不会自动发送</span>
-                <button type="button" aria-label="收起回复选项" onClick={() => setCandidateOpen(false)}>收起</button>
-              </div>
               {(KKT_STORY_ROUNDS[storyStep]?.choices || []).slice(0, 4).map(([ko, zh]) => (
                 <button
                   type="button"
@@ -319,7 +357,7 @@ export function MymyKakao(p: SkinProps) {
                   <small>{zh.replaceAll("{{playerId}}", p.playerId || "你")}</small>
                 </button>
               ))}
-              {!KKT_STORY_ROUNDS[storyStep] && <p className="kkt-story-finished">这段已确认的开局对话先到这里；没有自动结束手机或跳转结局。</p>}
+              {!KKT_STORY_ROUNDS[storyStep] && null}
             </section>
           )}
           {menu && (
@@ -394,7 +432,7 @@ export function MymyKakao(p: SkinProps) {
                   <button
                     className="kzkr kzkcr"
                     key={g.title}
-                    onClick={() => p.onThread(g.title)}
+                    onClick={() => { markThreadRead(g.title); p.onThread(g.title); }}
                   >
                     <Avatar name={g.title} src={last.avatar} />
                     <span className="kzkn">
@@ -403,8 +441,8 @@ export function MymyKakao(p: SkinProps) {
                     </span>
                     <span className="kzkmt">
                       {last.time.slice(-5)}
-                      {last.meta.unread && (
-                        <i className="kzkbd">{last.meta.unread}</i>
+                      {unreadCount(g) > 0 && (
+                        <i className="kzkbd" aria-label={unreadCount(g) + "条未读消息"}>{unreadCount(g)}</i>
                       )}
                     </span>
                   </button>
