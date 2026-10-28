@@ -5183,7 +5183,9 @@ label {
   padding: 12px 9px;
   border: 1px solid #ffffff16;
   border-radius: 18px;
-  background: #1017224d;
+  background: #10172220;
+  backdrop-filter: blur(18px) saturate(.85);
+  -webkit-backdrop-filter: blur(18px) saturate(.85);
 }
 .call-dialogue-row {
   display: flex;
@@ -5206,13 +5208,19 @@ label {
 }
 .call-dialogue-npc .call-dialogue-bubble {
   border-top-left-radius: 5px;
-  background: #f4f5f7;
-  color: #20232b;
+  border-color: #ffffff2a;
+  background: #ffffff22;
+  color: #f8f9fb;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 .call-dialogue-player .call-dialogue-bubble {
   border-top-right-radius: 5px;
-  background: #397a61;
+  border-color: #ffffff2a;
+  background: #ffffff1c;
   color: #fff;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 .call-dialogue-bubble > div {
   font-size: 13px;
@@ -5241,9 +5249,12 @@ label {
   padding: 9px 13px;
   border: 1px solid #ffffff40;
   border-radius: 14px;
-  background: #f7f8fa;
-  color: #21242a;
+  background: #ffffff1c;
+  color: #fff;
   text-align: left;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 3px 14px #0002;
 }
 .call-reply-options > button > span {
   font-size: 13px;
@@ -5258,7 +5269,8 @@ label {
   grid-row: 1 / span 2;
   padding: 5px 8px;
   border-radius: 9px;
-  background: #2088ff;
+  border: 1px solid #ffffff38;
+  background: #ffffff18;
   color: white;
   font-size: 11px;
   font-weight: 600;
