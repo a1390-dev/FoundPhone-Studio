@@ -108,6 +108,9 @@ export const AppIcon = memo(function AppIcon({
   (prev.id !== "calendar" || prev.date === next.date) &&
   (prev.id !== "clock" || prev.time === next.time));
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
+const isKktOpeningNotice = (notice: string) =>
+  notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
+
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
   return (
@@ -156,8 +159,6 @@ function PhoneRuntime({
     catch { return false; }
   });
   const kktOpeningSeenRef = useRef(kktOpeningSeen);
-  const isKktOpeningNotice = (notice: string) =>
-    notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
   useEffect(() => {
     let seen = false;
     try { seen = localStorage.getItem(kktOpeningNoticeKey) === "1"; }
@@ -318,6 +319,17 @@ function PhoneRuntime({
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, runtimeRef.current, event, target));
   };
+  const markKktOpeningAsSeen = () => {
+    kktOpeningSeenRef.current = true;
+    setKktOpeningSeen(true);
+    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
+    catch { /* This game session still suppresses the opening notification. */ }
+    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
+    const current = runtimeRef.current;
+    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
+    if (notifications.length !== current.notifications.length)
+      update({ ...current, notifications });
+  };
   const captureApp = () => {
     if (!app) return;
     const current = shell.current?.querySelector<HTMLElement>(".app-screen");
@@ -340,6 +352,8 @@ function PhoneRuntime({
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setAppThread(initialThread);
+    if (id === "kakao" && initialThread === "金旼炡" && !creator)
+      markKktOpeningAsSeen();
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -388,17 +402,6 @@ function PhoneRuntime({
         (_, i) => i !== index,
       ),
     });
-  const markKktOpeningAsSeen = () => {
-    kktOpeningSeenRef.current = true;
-    setKktOpeningSeen(true);
-    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
-    catch { /* This game session still suppresses the opening notification. */ }
-    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
-    const current = runtimeRef.current;
-    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
-    if (notifications.length !== current.notifications.length)
-      update({ ...current, notifications });
-  };
   const visibleNoticeEntries = s.notifications
     .map((text, index) => ({ text, index }))
     .filter(({ text }) => !(kktOpeningSeen && isKktOpeningNotice(text)));
@@ -1001,17 +1004,9 @@ function AppContent({
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
   const [thread, setThread] = useState(initialThread);
-  const openingMarked = useRef(false);
   useEffect(() => {
     if (initialThread) setThread(initialThread);
   }, [initialThread]);
-  useEffect(() => {
-    if (app.id === "kakao" && thread === "金旼炡" && !creator && !openingMarked.current) {
-      openingMarked.current = true;
-      onKktOpeningSeen?.();
-    }
-    if (thread !== "金旼炡") openingMarked.current = false;
-  }, [app.id, thread, creator]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
@@ -1130,8 +1125,9 @@ function AppContent({
               thread={thread}
               onThread={(nextThread) => {
                 setThread(nextThread);
-                if (app.id === "kakao" && nextThread === "金旼炡" && !creator)
+                if (app.id === "kakao" && nextThread === "金旼炡" && !creator) {
                   onKktOpeningSeen?.();
+                }
               }}
             />
           </Suspense>
