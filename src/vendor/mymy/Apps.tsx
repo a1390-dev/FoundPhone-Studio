@@ -845,6 +845,7 @@ export function MymyInstagram(p: SkinProps) {
   const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v6", "");
   const [activeFanDm, setActiveFanDm] = useState("");
   const [fanDmDraft, setFanDmDraft] = useState("");
+  const [activeThreadVisibleCount, setActiveThreadVisibleCount] = useState(0);
   const fanDmScrollRef = useRef<HTMLDivElement | null>(null);
   const visibleFanDms = fanDmQueue.slice(0, Math.max(0, fanDmVisibleCount))
     .map(parseInstagramFanDm).filter((dm): dm is InstagramFanDm => dm !== null).reverse();
@@ -862,6 +863,18 @@ export function MymyInstagram(p: SkinProps) {
     },
     ...fanDmReplyEntries.filter((message) => message.threadId === activeFan.id),
   ] : [];
+  useEffect(() => {
+    setActiveThreadVisibleCount(0);
+  }, [activeFanDm]);
+
+  useEffect(() => {
+    if (!activeFanDm || activeThreadVisibleCount >= activeFanMessages.length) return;
+    const timer = window.setTimeout(() => {
+      setActiveThreadVisibleCount((count) => Math.min(count + 1, activeFanMessages.length));
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [activeFanDm, activeThreadVisibleCount, activeFanMessages.length]);
+
   useEffect(() => {
     if (!fanDmOpenRequest) return;
     setTab("私信");
@@ -1300,7 +1313,7 @@ export function MymyInstagram(p: SkinProps) {
           {activeFanDm ? (
             <div className="ig-rumor-dm-thread">
               <div className="ig-rumor-dm-history" ref={fanDmScrollRef}>
-                {activeFanMessages.map((message) => (
+                {activeFanMessages.slice(0, activeThreadVisibleCount).map((message) => (
                   <article className={"ig-rumor-dm-message " + (message.role === "player" ? "outgoing" : "incoming")} key={message.id}>
                     {message.role !== "player" && (
                       <Avatar name={message.handle || activeFan?.handle || "粉丝"} round />
