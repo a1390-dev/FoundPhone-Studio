@@ -228,23 +228,16 @@ export function MymyKakao(p: SkinProps) {
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const result = p.ui?.["scandal-call-result"];
-    if (typeof result !== "string" || !result || result === processedCallResult) return;
-    const queue: Array<[string, string, string, string]> = result === "answered"
-      ? [
-          ["괜찮아, 걱정하지 마.", "你别担心。", "npc", "14:06"],
-          ["내가 처리할게.", "我来处理。", "npc", "14:06"],
-          ["알겠어.", "好。", "owner", "14:07"],
-          ["집에 있어?", "你在家吗？", "npc", "14:07"],
-          ["응.", "嗯。", "owner", "14:07"],
-          ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:08"],
-        ]
-      : [
-          ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
-          ["집에 있어?", "你在家吗？", "npc", "14:06"],
-          ["응.", "嗯。", "owner", "14:07"],
-          ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:07"],
-          ["걱정하지 마.", "别担心。", "npc", "14:08"],
-        ];
+    // Answered calls are played entirely inside the call screen. Only a declined
+    // call starts the alternate conversation in KakaoTalk.
+    if (result !== "declined" || result === processedCallResult) return;
+    const queue: Array<[string, string, string, string]> = [
+      ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
+      ["집에 있어?", "你在家吗？", "npc", "14:06"],
+      ["응.", "嗯。", "owner", "14:07"],
+      ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:07"],
+      ["걱정하지 마.", "别担心。", "npc", "14:08"],
+    ];
     setProcessedCallResult(result);
     setNpcTyping(true);
     let index = 0;
@@ -1345,11 +1338,13 @@ export function MymyX(p: SkinProps) {
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
     [query, setQuery] = useState(""),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v2", 1),
+    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v3", 1),
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
-  const liveItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
+  const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
+  const liveItems = allLiveRumorItems.slice(0, 26);
+  const olderRumorItems = allLiveRumorItems.slice(26);
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1364,6 +1359,7 @@ export function MymyX(p: SkinProps) {
   const feedItems = [
     ...localXItems.slice().reverse(),
     ...liveItems.slice(0, liveCount).reverse(),
+    ...olderRumorItems.slice().sort((a, b) => b.time.localeCompare(a.time)),
     ...p.items.filter((i) => i.meta.category !== "rumor-discussion").slice().sort((a, b) => b.time.localeCompare(a.time)),
   ];
   useEffect(() => {
@@ -1374,7 +1370,7 @@ export function MymyX(p: SkinProps) {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      12000,
+      1500 + Math.floor(Math.random() * 501),
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
