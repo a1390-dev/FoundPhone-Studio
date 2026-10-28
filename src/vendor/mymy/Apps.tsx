@@ -273,7 +273,7 @@ export function MymyKakao(p: SkinProps) {
                     sentRef.current = updated;
                     setSent(updated);
                     if (index < nextRound.npc.length) {
-                      deliveryTimer.current = setTimeout(deliverOne, 1150);
+                      deliveryTimer.current = setTimeout(deliverOne, 950);
                     } else {
                       deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
                     }
