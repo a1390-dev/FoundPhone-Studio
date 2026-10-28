@@ -2,8 +2,8 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "开局：解锁后约3秒收到金旼炡的 KKT 通知。进入聊天后依次显示“还没睡？”和“我今天可能会晚点回家。”；玩家选择询问回家时间、询问夜宵、再从已确认的三条温柔回复中选择。NPC 消息逐条发送，选项只填入输入框，玩家点击发送后才发送。",
-  "revision": 13,
+  "description": "X 与 Threads 首页各含至少30条原创日常信息流，含韩文原文及简体中文翻译、不同风格NPC、评论互动与模拟点赞/转发/收藏。开场不含恋情传闻；剧情后续由作者确认推进。原有手机UI与其他App数据保留。",
+  "revision": 14,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
@@ -6869,7 +6869,690 @@
     "forum": [],
     "instagram": [],
     "tiktok": [],
-    "twitter": [],
+    "twitter": [
+      {
+        "id": "xhome-post-01",
+        "title": "달콩마이 @dalcommy",
+        "body": "오늘 무대 영상 다시 보는데 표정 연기 진짜 좋다… 같은 파트인데 볼 때마다 새로움.\n\n又重看了一遍今天的舞台视频，表情管理真的很好……同一个part，每次看都有新感觉。",
+        "time": "2026-10-27 17:00",
+        "sender": "달콩마이",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 18420,
+        "comments": [
+          "입덕부정기: 그 표정에서 못 나오는 중이에요. / 还在嘴硬期：我已经卡在那个表情里出不来了。",
+          "캠코더: 직캠 화질보다 내 눈이 먼저 흐려짐ㅋㅋ / 摄像机：比起直拍画质，我的眼睛先模糊了ㅋㅋ"
+        ],
+        "meta": {
+          "handle": "@dalcommy",
+          "category": "fandom",
+          "reposts": "3120",
+          "bookmarks": "984",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-02",
+        "title": "퇴근만기다려 @leaveat6",
+        "body": "퇴근 10분 전부터 시간이 갑자기 느려지는 현상 이름 붙여 주세요.\n\n请给下班前十分钟时间突然变慢的现象取个名字。",
+        "time": "2026-10-27 17:07",
+        "sender": "퇴근만기다려",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 8320,
+        "comments": [
+          "분침파업: 시계가 노동 거부 중입니다. / 分针罢工：时钟正在拒绝劳动。",
+          "오늘도야근: 그거 제 사무실에서 실시간 관측돼요. / 今天也加班：我们办公室正在实时观测。"
+        ],
+        "meta": {
+          "handle": "@leaveat6",
+          "category": "daily",
+          "reposts": "711",
+          "bookmarks": "503",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-03",
+        "title": "김밥수호자 @kimbapguard",
+        "body": "김밥 한 줄만 먹으려 했는데 왜 포장지가 세 개지? 수학적으로 설명 가능하신 분.\n\n本来只想吃一卷紫菜包饭，为什么包装纸有三个？有没有人能从数学角度解释一下。",
+        "time": "2026-10-27 17:14",
+        "sender": "김밥수호자",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 12500,
+        "comments": [
+          "편의점박사: 한 줄의 정의부터 다시 세워야 합니다. / 便利店博士：得先重新定义“一卷”。",
+          "배고픈철학자: 의지는 하나였고 김밥은 세 번이었다. / 饥饿哲学家：意志只有一次，紫菜包饭却发生了三次。"
+        ],
+        "meta": {
+          "handle": "@kimbapguard",
+          "category": "humor",
+          "reposts": "1600",
+          "bookmarks": "742",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-04",
+        "title": "오늘의케이팝 @kpopbrief_today",
+        "body": "이번 주 음악방송 무대 의상들 색감이 다 달라서 모아 보는 재미가 있음. 스타일링팀들 고생 많으셨다.\n\n这周打歌舞台的服装配色各有特色，整理起来很有意思。造型团队辛苦了。",
+        "time": "2026-10-27 17:21",
+        "sender": "오늘의케이팝",
+        "kind": "post",
+        "folder": "celebrity",
+        "likes": 9700,
+        "comments": [
+          "옷장연구소: 소재까지 보면 더 재밌어요. / 衣橱研究所：连面料一起看会更有意思。",
+          "무대사랑: 무대마다 콘셉트가 확실해서 좋았어요. / 舞台爱好者：每个舞台的概念都很鲜明。"
+        ],
+        "meta": {
+          "handle": "@kpopbrief_today",
+          "category": "celebrity",
+          "reposts": "2080",
+          "bookmarks": "388",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-05",
+        "title": "비오는창가 @rainywindow_",
+        "body": "비 오는 날 카페 창가 자리는 왜 평소보다 두 배 비싸게 느껴질까. 실제 가격은 똑같은데.\n\n为什么雨天咖啡馆靠窗的位置感觉贵了一倍？明明实际价格没变。",
+        "time": "2026-10-27 17:28",
+        "sender": "비오는창가",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 6200,
+        "comments": [
+          "라떼한잔: 분위기값이 붙는 거죠 ☕ / 一杯拿铁：这是氛围附加费吧☕",
+          "현실주의자: 콘센트 있으면 프리미엄 삼 배. / 现实主义者：有插座的话溢价三倍。"
+        ],
+        "meta": {
+          "handle": "@rainywindow_",
+          "category": "daily",
+          "reposts": "430",
+          "bookmarks": "271",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-06",
+        "title": "별사탕수집 @starcandy_",
+        "body": "최애가 추천한 노래 듣다가 원곡 가수까지 찾아보는 순간이 덕질의 순기능 같음.\n\n听着本命推荐的歌，后来又去找原唱歌手，这一刻感觉就是追星的正面意义。",
+        "time": "2026-10-27 17:35",
+        "sender": "별사탕수집",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 15600,
+        "comments": [
+          "플레이리스트: 그렇게 좋은 노래를 많이 알게 됐어요. / 歌单收藏家：就这样认识了好多好歌。",
+          "새벽청취자: 알고리즘이 새벽 세 시까지 데려감. / 深夜听歌人：算法把我带到了凌晨三点。"
+        ],
+        "meta": {
+          "handle": "@starcandy_",
+          "category": "fandom",
+          "reposts": "2710",
+          "bookmarks": "611",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-07",
+        "title": "감자연구원 @potato_lab",
+        "body": "감자튀김은 왜 마지막 한 개가 제일 맛있을까? 첫 번째가 아니라 마지막이 진짜 보스임.\n\n薯条为什么最后一根最好吃？真正的Boss不是第一根，而是最后一根。",
+        "time": "2026-10-27 18:42",
+        "sender": "감자연구원",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 10900,
+        "comments": [
+          "소스추가: 마지막 한 개에 소스 다 몰아 줌. / 加酱派：把所有酱都留给最后一根。",
+          "식품공학도: 희소성이 맛을 증폭합니다. / 食品工程学生：稀缺性会放大美味。"
+        ],
+        "meta": {
+          "handle": "@potato_lab",
+          "category": "humor",
+          "reposts": "930",
+          "bookmarks": "452",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-08",
+        "title": "실시간덕질 @livefanlog",
+        "body": "오늘 타임라인 속도가 너무 빨라서 잠깐 물 마시고 왔는데 떡밥 열 개 지나감.\n\n今天时间线刷得太快了，我就去喝了口水，已经错过十个新料。",
+        "time": "2026-10-27 18:49",
+        "sender": "실시간덕질",
+        "kind": "post",
+        "folder": "trending",
+        "likes": 22300,
+        "comments": [
+          "알림켜둠: 물은 타임라인 옆에 두고 마셔야 합니다. / 开了通知：水得放在时间线旁边喝。",
+          "현생도살자: 밥 먹고 오면 시즌이 바뀌어 있음. / 现实生活受害者：吃完饭回来都换季了。"
+        ],
+        "meta": {
+          "handle": "@livefanlog",
+          "category": "trending",
+          "reposts": "5800",
+          "bookmarks": "1330",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-09",
+        "title": "모닝토스트 @toastmorning",
+        "body": "아침에 토스트 굽는 냄새 하나로 집 분위기가 달라지는 게 신기해.\n\n很神奇，早上烤吐司的香味就能改变整个家的氛围。",
+        "time": "2026-10-27 18:56",
+        "sender": "모닝토스트",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 4800,
+        "comments": [
+          "버터파: 버터 녹는 소리가 핵심이에요. / 黄油派：关键是黄油融化的声音。",
+          "커피중독: 이제 커피까지 있어야 완성. / 咖啡上瘾者：还得有咖啡才完整。"
+        ],
+        "meta": {
+          "handle": "@toastmorning",
+          "category": "daily",
+          "reposts": "320",
+          "bookmarks": "194",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-10",
+        "title": "짤저장소 @meme_drawer",
+        "body": "친구가 '나 5분 뒤 도착'이라고 하면 아직 집에서 양말 고르는 중이라는 뜻.\n\n朋友说“我五分钟后到”，意思是她还在家挑袜子。",
+        "time": "2026-10-27 18:03",
+        "sender": "짤저장소",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 17800,
+        "comments": [
+          "지각전문가: 양말이 아니라 옷장과 협상 중. / 迟到专家：不是挑袜子，是在跟衣柜谈判。",
+          "친구본인: 왜 저를 공개 저격하시죠? / 当事朋友：为什么公开点名我？"
+        ],
+        "meta": {
+          "handle": "@meme_drawer",
+          "category": "humor",
+          "reposts": "3120",
+          "bookmarks": "1050",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-11",
+        "title": "무대뒤궁금증 @stagecurious",
+        "body": "무대 뒤에서 스태프들이 얼마나 많은 일을 하는지 생각하면 엔딩 크레딧도 보고 싶어짐.\n\n想到舞台背后工作人员做了多少事，就会想把演职员表也看完。",
+        "time": "2026-10-27 18:10",
+        "sender": "무대뒤궁금증",
+        "kind": "post",
+        "folder": "celebrity",
+        "likes": 7100,
+        "comments": [
+          "현장덕후: 조명팀 이름도 꼭 봐 주세요. / 现场爱好者：也请看看灯光组的名字。",
+          "공연러: 박수는 무대 위만큼 뒤에도 보내야 함. / 演出爱好者：掌声也要给幕后。"
+        ],
+        "meta": {
+          "handle": "@stagecurious",
+          "category": "celebrity",
+          "reposts": "1120",
+          "bookmarks": "216",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-12",
+        "title": "책갈피모아 @bookmarkpile",
+        "body": "책을 읽다가 좋은 문장을 만나면 사진 찍고 결국 사진첩에서 못 찾음. 종이 책갈피가 답인가.\n\n读书时遇到好句子就拍照，结果最后在相册里找不到。纸质书签才是答案吗？",
+        "time": "2026-10-27 18:17",
+        "sender": "책갈피모아",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 5300,
+        "comments": [
+          "연필메모: 여백에 적으면 더 오래 기억나요. / 铅笔笔记：写在页边会记得更久。",
+          "디지털인간: 저는 캡처 폴더를 47개 만들었어요. / 数字人类：我已经建了47个截图文件夹。"
+        ],
+        "meta": {
+          "handle": "@bookmarkpile",
+          "category": "daily",
+          "reposts": "640",
+          "bookmarks": "289",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-13",
+        "title": "초코우유파 @chocomilkteam",
+        "body": "초코우유는 흔들어야 한다 vs 그냥 마셔도 된다. 오늘부터 진지하게 토론합니다.\n\n巧克力牛奶必须摇匀 vs 直接喝也行。今天开始严肃讨论。",
+        "time": "2026-10-27 19:24",
+        "sender": "초코우유파",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 14100,
+        "comments": [
+          "침전물반대: 바닥의 마지막 한 모금이 제일 진함. / 沉淀反对派：底下最后一口才最浓。",
+          "빨대협회: 빨대 넣고 열두 번 흔들기. / 吸管协会：插上吸管摇十二下。"
+        ],
+        "meta": {
+          "handle": "@chocomilkteam",
+          "category": "humor",
+          "reposts": "2010",
+          "bookmarks": "1880",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-14",
+        "title": "무대의온도 @stage_temperature",
+        "body": "라이브에서 작은 애드리브 하나 나오면 그날 공연이 특별해지는 느낌.\n\n现场演出里只要出现一个小小的即兴发挥，那场演出就变得特别。",
+        "time": "2026-10-27 19:31",
+        "sender": "무대의온도",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 19300,
+        "comments": [
+          "앞줄아님: 현장에 있었던 사람들 너무 부러워요. / 不在前排：好羡慕在现场的人。",
+          "귀로덕질: 영상으로도 숨 멎었어요. / 用耳朵追星：光听视频都屏住呼吸。"
+        ],
+        "meta": {
+          "handle": "@stage_temperature",
+          "category": "fandom",
+          "reposts": "4400",
+          "bookmarks": "805",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-15",
+        "title": "편의점신상 @newatstore",
+        "body": "편의점 신상 발견하면 사진부터 찍는 사람? 먹기 전에 기록 남기는 게 국룰.\n\n发现便利店新品会先拍照的人有吗？吃之前先记录是基本规则。",
+        "time": "2026-10-27 19:38",
+        "sender": "편의점신상",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 9200,
+        "comments": [
+          "영수증수집: 영수증도 같이 찍어야죠. / 收据收藏家：收据也得一起拍。",
+          "다이어터아님: 사진 찍고 두 개 사면 됩니다. / 不是减肥党：拍完照买两份就行。"
+        ],
+        "meta": {
+          "handle": "@newatstore",
+          "category": "daily",
+          "reposts": "710",
+          "bookmarks": "420",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-16",
+        "title": "이불밖은위험 @blanketfort",
+        "body": "주말 계획: 빨래, 청소, 운동. 실제 주말: 이불과 장기 협상.\n\n周末计划：洗衣、打扫、运动。真实周末：和被窝进行长期谈判。",
+        "time": "2026-10-27 19:45",
+        "sender": "이불밖은위험",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 20100,
+        "comments": [
+          "세탁기대기중: 빨래가 저를 기다리고 있습니다. / 洗衣机等待中：衣服正在等我。",
+          "침대대변인: 휴식도 중요한 일정입니다. / 床铺发言人：休息也是重要日程。"
+        ],
+        "meta": {
+          "handle": "@blanketfort",
+          "category": "humor",
+          "reposts": "3550",
+          "bookmarks": "960",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-17",
+        "title": "팬아트산책 @fanartwalk",
+        "body": "팬아트 그리는 분들 선 하나하나에 애정이 보여서 계속 보게 돼요.\n\n画同人图的人，每一笔都能看出感情，所以总忍不住一直看。",
+        "time": "2026-10-27 19:52",
+        "sender": "팬아트산책",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 11700,
+        "comments": [
+          "연필끝: 알아봐 주셔서 오늘도 그립니다. / 铅笔尖：谢谢你看到这些，我今天也会继续画。",
+          "색연구: 색 조합 저장해 갑니다. / 配色研究：我先收藏这个配色。"
+        ],
+        "meta": {
+          "handle": "@fanartwalk",
+          "category": "fandom",
+          "reposts": "1830",
+          "bookmarks": "371",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-18",
+        "title": "오늘뭐먹지 @mealroulette",
+        "body": "저녁 메뉴 정하는 데 40분 쓰고 결국 어제 먹은 거 먹는 사람 저뿐인가요.\n\n只有我会花40分钟决定晚饭，最后还是吃昨天吃过的东西吗？",
+        "time": "2026-10-27 19:59",
+        "sender": "오늘뭐먹지",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 15100,
+        "comments": [
+          "김치볶음밥: 고민 끝엔 늘 내가 승리함. / 泡菜炒饭：纠结到最后总是我赢。",
+          "배달앱삭제: 메뉴보다 선택이 더 힘들어요. / 删除外卖软件：做选择比吃饭还难。"
+        ],
+        "meta": {
+          "handle": "@mealroulette",
+          "category": "daily",
+          "reposts": "940",
+          "bookmarks": "1230",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-19",
+        "title": "트렌드관찰자 @trendwatch_note",
+        "body": "오늘은 같은 밈이 세 가지 버전으로 돌고 있네. 원본 찾는 게 또 하나의 취미가 됨.\n\n今天同一个梗有三个版本在流传。寻找原版又成了一种爱好。",
+        "time": "2026-10-27 20:06",
+        "sender": "트렌드관찰자",
+        "kind": "post",
+        "folder": "trending",
+        "likes": 13200,
+        "comments": [
+          "출처요정: 원본은 늘 오래된 계정에 있더라고요. / 出处精灵：原版总在很久以前的账号里。",
+          "리트윗장인: 변형 버전도 나름의 생명력이 있어요. / 转推达人：改编版也有自己的生命力。"
+        ],
+        "meta": {
+          "handle": "@trendwatch_note",
+          "category": "trending",
+          "reposts": "3900",
+          "bookmarks": "540",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-20",
+        "title": "퇴근길플리 @commuteplaylist",
+        "body": "퇴근길에 우연히 딱 맞는 노래 나오면 집까지 뮤직비디오 주인공 됨.\n\n下班路上偶然响起一首特别合适的歌，回家路上就觉得自己是MV主角。",
+        "time": "2026-10-27 20:13",
+        "sender": "퇴근길플리",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 6800,
+        "comments": [
+          "이어폰한쪽: 비 오는 날이면 더합니다. / 一只耳机：下雨天更是如此。",
+          "버스맨앞자리: 창문에 비친 표정까지 연기함. / 公交前排：连窗户倒影里的表情都要演。"
+        ],
+        "meta": {
+          "handle": "@commuteplaylist",
+          "category": "daily",
+          "reposts": "720",
+          "bookmarks": "301",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-21",
+        "title": "아이돌정보통 @idolcalendar",
+        "body": "이번 달 컴백 일정 정리하다가 달력이 꽉 찼다. 음악 좋아하는 사람에게 행복한 바쁨.\n\n整理这个月的回归日程，日历都满了。对喜欢音乐的人来说是幸福的忙碌。",
+        "time": "2026-10-27 20:20",
+        "sender": "아이돌정보통",
+        "kind": "post",
+        "folder": "celebrity",
+        "likes": 10100,
+        "comments": [
+          "스케줄러: 알람도 같이 열 개 추가했어요. / 日程管理：我还加了十个提醒。",
+          "현생잠시: 잠은 컴백 주간 끝나고 자는 걸로. / 现实生活暂停：等回归周结束再睡。"
+        ],
+        "meta": {
+          "handle": "@idolcalendar",
+          "category": "celebrity",
+          "reposts": "2440",
+          "bookmarks": "309",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-22",
+        "title": "고양이의견 @catcommittee",
+        "body": "고양이가 노트북 위에 앉는 건 방해가 아니라 회의 참석이라는 주장이 제기됨.\n\n有人提出，猫坐在笔记本电脑上不是捣乱，而是在参加会议。",
+        "time": "2026-10-27 20:27",
+        "sender": "고양이의견",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 24000,
+        "comments": [
+          "집사1호: 제 키보드에 결재도 올려요. / 一号铲屎官：它还会在我的键盘上审批。",
+          "고양이본부: 인간의 업무 효율을 감시 중입니다. / 猫咪总部：正在监督人类的工作效率。"
+        ],
+        "meta": {
+          "handle": "@catcommittee",
+          "category": "humor",
+          "reposts": "4600",
+          "bookmarks": "1710",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-23",
+        "title": "응원봉배터리 @lightstickcheck",
+        "body": "콘서트 전날 배터리 확인은 선택이 아니라 생존 점검입니다.\n\n演唱会前一天检查电池不是选择题，是生存检查。",
+        "time": "2026-10-27 20:34",
+        "sender": "응원봉배터리",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 16400,
+        "comments": [
+          "가방체크: 여분까지 챙겼어요. / 包包检查：我连备用电池都带了。",
+          "현장경험자: 출발 전에 한 번, 입장 전에 한 번. / 现场经验者：出发前检查一次，入场前再检查一次。"
+        ],
+        "meta": {
+          "handle": "@lightstickcheck",
+          "category": "fandom",
+          "reposts": "3800",
+          "bookmarks": "690",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-24",
+        "title": "동네산책자 @walkaroundtown",
+        "body": "늘 지나던 골목에 작은 꽃집이 생겼다. 천천히 걸으면 동네가 다르게 보임.\n\n常走的小巷开了一家小花店。慢慢走路时，熟悉的街区也会变得不同。",
+        "time": "2026-10-27 20:41",
+        "sender": "동네산책자",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 3900,
+        "comments": [
+          "꽃이름모름: 그냥 예뻐서 사진 찍었어요. / 不认识花名：只是觉得漂亮就拍了照。",
+          "산책메이트: 다음에 위치 알려 주세요. / 散步搭子：下次告诉我位置吧。"
+        ],
+        "meta": {
+          "handle": "@walkaroundtown",
+          "category": "daily",
+          "reposts": "280",
+          "bookmarks": "160",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-25",
+        "title": "댓글읽는중 @replyreader",
+        "body": "댓글창에서 싸우다가 갑자기 둘이 같은 밈으로 화해하는 흐름 너무 인터넷 같음.\n\n评论区里吵着吵着，突然用同一个梗和好了，这种走向太互联网了。",
+        "time": "2026-10-27 21:48",
+        "sender": "댓글읽는중",
+        "kind": "post",
+        "folder": "trending",
+        "likes": 14500,
+        "comments": [
+          "짤로종전: 밈은 평화협정입니다. / 用梗停战：梗就是和平协议。",
+          "논리대장: 논쟁은 끝났고 이제 출처를 찾습니다. / 逻辑大王：争论结束，现在开始找出处。"
+        ],
+        "meta": {
+          "handle": "@replyreader",
+          "category": "trending",
+          "reposts": "2700",
+          "bookmarks": "980",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-26",
+        "title": "새벽의플레이 @playat2am",
+        "body": "새벽에 듣는 노래는 낮에 들을 때랑 다른 가사처럼 느껴져.\n\n凌晨听的歌，歌词感觉和白天听时不一样。",
+        "time": "2026-10-27 21:55",
+        "sender": "새벽의플레이",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 8400,
+        "comments": [
+          "잠안옴: 감정이 자동으로 1.5배 됩니다. / 睡不着：情绪自动放大1.5倍。",
+          "내일의나: 내일 아침의 내가 후회할 예정. / 明天的我：明早的我会后悔。"
+        ],
+        "meta": {
+          "handle": "@playat2am",
+          "category": "daily",
+          "reposts": "1220",
+          "bookmarks": "402",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-27",
+        "title": "연습실기록 @practice_note",
+        "body": "연습 영상 보면 작은 동작까지 맞추려고 반복하는 게 보여서 더 응원하게 됨.\n\n看练习视频时能看到大家连小动作都反复调整，所以更想支持她们。",
+        "time": "2026-10-27 21:02",
+        "sender": "연습실기록",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 12800,
+        "comments": [
+          "디테일덕후: 손끝까지 맞는 순간 쾌감 있어요. / 细节爱好者：连指尖都同步的瞬间很爽。",
+          "무대응원단: 노력은 화면 밖에서도 느껴져요. / 舞台应援团：即使隔着屏幕也能感受到努力。"
+        ],
+        "meta": {
+          "handle": "@practice_note",
+          "category": "fandom",
+          "reposts": "2800",
+          "bookmarks": "344",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-28",
+        "title": "날씨탓하는사람 @weatherblamer",
+        "body": "비 오면 우산 안 챙긴 나를 탓하고, 맑으면 선크림 안 바른 나를 탓함. 날씨는 무죄.\n\n下雨怪自己没带伞，天晴怪自己没涂防晒。天气是无辜的。",
+        "time": "2026-10-27 21:09",
+        "sender": "날씨탓하는사람",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 11200,
+        "comments": [
+          "우산대여소: 우산은 늘 집에만 있습니다. / 雨伞租借处：雨伞永远只在家里。",
+          "선크림장군: 가방 속에 넣으면 안 바르게 됨. / 防晒霜将军：放进包里就不会涂。"
+        ],
+        "meta": {
+          "handle": "@weatherblamer",
+          "category": "humor",
+          "reposts": "1530",
+          "bookmarks": "603",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-29",
+        "title": "공연장귀가 @concertwayhome",
+        "body": "공연 끝나고 집에 가는 길까지 계속 무대 얘기하는 친구가 있으면 행복함.\n\n如果有朋友在演出结束回家路上还一直聊舞台，那真的很幸福。",
+        "time": "2026-10-27 21:16",
+        "sender": "공연장귀가",
+        "kind": "post",
+        "folder": "celebrity",
+        "likes": 7500,
+        "comments": [
+          "막차팬: 막차 놓쳐도 이야기는 안 끝나요. / 末班车粉：就算错过末班车，聊天也不会结束。",
+          "같이덕질: 다음 공연 예매 얘기로 넘어갑니다. / 一起追星：然后话题就转到下次演出预约。"
+        ],
+        "meta": {
+          "handle": "@concertwayhome",
+          "category": "celebrity",
+          "reposts": "880",
+          "bookmarks": "260",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-30",
+        "title": "오늘의질문 @tinyquestion",
+        "body": "다들 하루 중 가장 좋아하는 10분이 언제예요? 저는 씻고 잠옷 입은 직후.\n\n大家一天里最喜欢的十分钟是什么时候？我喜欢洗完澡穿上睡衣的那一刻。",
+        "time": "2026-10-27 21:23",
+        "sender": "오늘의질문",
+        "kind": "post",
+        "folder": "trending",
+        "likes": 6900,
+        "comments": [
+          "첫커피: 첫 모금 마시는 순간. / 第一杯咖啡：喝第一口的时候。",
+          "집앞고양이: 집에 가는 길에 고양이 만날 때. / 家门口的猫：回家路上遇到猫的时候。"
+        ],
+        "meta": {
+          "handle": "@tinyquestion",
+          "category": "trending",
+          "reposts": "420",
+          "bookmarks": "1180",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "xhome-post-31",
+        "title": "최애는최애 @biasisbias",
+        "body": "최애 사진 한 장 고르라는 건 불가능. 폴더 이름이 '최종최종진짜최종'인 이유.\n\n让我从本命照片里选一张是不可能的。我的文件夹才会叫“最终最终真的最终”。",
+        "time": "2026-10-27 22:30",
+        "sender": "최애는최애",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 22100,
+        "comments": [
+          "정리포기: 저는 폴더를 날짜로 나눴다가 더 망했어요. / 放弃整理：我按日期分文件夹后更乱了。",
+          "백업완료: 중요한 건 세 군데 저장입니다. / 备份完成：重要的东西要存三份。"
+        ],
+        "meta": {
+          "handle": "@biasisbias",
+          "category": "fandom",
+          "reposts": "5100",
+          "bookmarks": "1400",
+          "platform": "twitter",
+          "fictional": "true"
+        }
+      }
+    ],
     "youtube": [],
     "snapchat": [],
     "facebook": [],
@@ -6877,7 +7560,778 @@
     "spotify": [],
     "netflix": [],
     "pinterest": [],
-    "threads": [],
+    "threads": [
+      {
+        "id": "threadshome-post-01",
+        "title": "질문하는사람 @asksoftly",
+        "body": "요즘 여러분을 아주 조금 행복하게 만드는 건 뭐예요? 거창한 거 말고 작은 거요.\n\n最近有什么很小的事情能让你稍微开心一点？不需要很宏大的事。",
+        "time": "2026-10-27 17:00",
+        "sender": "질문하는사람",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 4200,
+        "comments": [
+          "저는 퇴근길에 좋아하는 빵 냄새 맡는 거요. / 我是在下班路上闻到喜欢的面包香。",
+          "충전중: 집에 와서 양말 벗는 순간. / 充电中：回家脱掉袜子的瞬间。"
+        ],
+        "meta": {
+          "handle": "@asksoftly",
+          "category": "questions",
+          "reposts": "756",
+          "bookmarks": "462",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-02",
+        "title": "오늘의기록 @daily_scribble",
+        "body": "오늘은 일부러 천천히 걸어봤어요. 급하게 지나치던 가게들이 처음 보이더라고요.\n\n今天特意放慢脚步，发现那些匆匆路过的店铺原来是第一次认真看到。",
+        "time": "2026-10-27 17:07",
+        "sender": "오늘의기록",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 2700,
+        "comments": [
+          "느린걸음: 동네가 여행지처럼 보일 때 있어요. / 慢慢走：有时熟悉的街区会像旅行目的地。",
+          "카메라없는날: 사진 안 찍고 보는 것도 좋죠. / 不带相机的日子：不拍照只看，也很好。"
+        ],
+        "meta": {
+          "handle": "@daily_scribble",
+          "category": "daily",
+          "reposts": "486",
+          "bookmarks": "297",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-03",
+        "title": "팬심수첩 @fanheartnote",
+        "body": "좋아하는 가수 덕분에 몰랐던 장르까지 듣게 됐어요. 취향이 넓어지는 게 좋다.\n\n因为喜欢的歌手，我开始听以前不了解的音乐类型。喜欢自己的品味慢慢变宽。",
+        "time": "2026-10-27 17:14",
+        "sender": "팬심수첩",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 6100,
+        "comments": [
+          "음악지도: 입덕이 새로운 문을 열어 줘요. / 音乐地图：入坑会打开新的门。",
+          "플리공유: 그렇게 찾은 노래가 오래 가더라고요. / 歌单分享：这样找到的歌会陪伴很久。"
+        ],
+        "meta": {
+          "handle": "@fanheartnote",
+          "category": "fandom",
+          "reposts": "1098",
+          "bookmarks": "671",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-04",
+        "title": "웃음저금통 @laughbank",
+        "body": "냉장고 열고 뭐 찾는지 까먹어서 닫았다가 다시 열기. 냉장고가 기억력 테스트장임.\n\n打开冰箱忘了要找什么，关上再打开。冰箱就是记忆力测试场。",
+        "time": "2026-10-27 17:21",
+        "sender": "웃음저금통",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 8900,
+        "comments": [
+          "반찬담당: 문 닫으면 생각나서 더 화나요. / 配菜负责人：关门才想起来，更气人。",
+          "뇌내검색: 검색 결과가 없습니다. / 脑内搜索：没有找到结果。"
+        ],
+        "meta": {
+          "handle": "@laughbank",
+          "category": "humor",
+          "reposts": "1602",
+          "bookmarks": "979",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-05",
+        "title": "커피와질문 @coffee_asks",
+        "body": "커피 마실 때 첫 모금이 좋아요, 마지막 한 모금이 좋아요? 저는 식기 전에 마시는 첫 모금.\n\n喝咖啡时你更喜欢第一口还是最后一口？我喜欢还没凉时的第一口。",
+        "time": "2026-10-27 17:28",
+        "sender": "커피와질문",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 3300,
+        "comments": [
+          "라떼파: 마지막 얼음이 녹기 직전도 좋아요. / 拿铁派：最后冰块融化前也很好喝。",
+          "아메리카노: 첫 모금은 정신이 돌아오는 느낌. / 美式派：第一口像是灵魂回到身体里。"
+        ],
+        "meta": {
+          "handle": "@coffee_asks",
+          "category": "questions",
+          "reposts": "594",
+          "bookmarks": "363",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-06",
+        "title": "동네고양이 @neighborhoodcat",
+        "body": "늘 같은 시간에 보이는 고양이가 오늘은 다른 골목에 있었어요. 괜히 하루가 특별해짐.\n\n总在同一时间出现的猫，今天却在另一条小巷里。莫名觉得这一天特别了。",
+        "time": "2026-10-27 17:35",
+        "sender": "동네고양이",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 5100,
+        "comments": [
+          "고양이관찰: 고양이 쪽에서는 우리가 특별할지도요. / 猫咪观察：说不定在猫看来，是我们很特别。",
+          "간식은없음: 눈인사만 하고 왔어요. / 没有零食：只和它对视打了招呼。"
+        ],
+        "meta": {
+          "handle": "@neighborhoodcat",
+          "category": "daily",
+          "reposts": "918",
+          "bookmarks": "561",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-07",
+        "title": "응원하는마음 @cheerquietly",
+        "body": "무대 위에서 반짝이는 사람들을 보면 나도 내 자리에서 열심히 살고 싶어져요.\n\n看到舞台上闪闪发光的人，也会想在自己的位置上认真生活。",
+        "time": "2026-10-27 18:42",
+        "sender": "응원하는마음",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 7200,
+        "comments": [
+          "오늘도출근: 저도 그 마음으로 출근합니다. / 今天也上班：我也带着这种心情去上班。",
+          "작은성취: 응원이 일상까지 이어지면 좋죠. / 小小成就：希望这份支持能延续到日常。"
+        ],
+        "meta": {
+          "handle": "@cheerquietly",
+          "category": "fandom",
+          "reposts": "1296",
+          "bookmarks": "792",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-08",
+        "title": "밥상토론 @tabletalk_kr",
+        "body": "라면에 계란은 처음부터 넣나요, 마지막에 넣나요? 이건 생각보다 중요한 문제.\n\n泡面里的鸡蛋是从一开始就放，还是最后放？这问题比想象中重要。",
+        "time": "2026-10-27 18:49",
+        "sender": "밥상토론",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 6400,
+        "comments": [
+          "반숙수호자: 불 끄기 직전에 넣어요. / 溏心蛋守护者：关火前放。",
+          "국물파: 처음부터 넣어야 국물에 맛이 배요. / 汤底派：一开始放才能让汤有味道。"
+        ],
+        "meta": {
+          "handle": "@tabletalk_kr",
+          "category": "questions",
+          "reposts": "1152",
+          "bookmarks": "704",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-09",
+        "title": "월요일연구소 @mondaylab",
+        "body": "월요일 아침에 알람 다섯 개 맞춘 사람의 자신감은 어디서 나오는 걸까.\n\n周一早上设五个闹钟的人，到底哪来的自信？",
+        "time": "2026-10-27 18:56",
+        "sender": "월요일연구소",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 9600,
+        "comments": [
+          "알람무시: 여섯 번째 알람이 진짜 시작이에요. / 无视闹钟：第六个闹钟才是真正开始。",
+          "현실주의: 자신감이 아니라 공포입니다. / 现实主义者：那不是自信，是恐惧。"
+        ],
+        "meta": {
+          "handle": "@mondaylab",
+          "category": "humor",
+          "reposts": "1728",
+          "bookmarks": "1056",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-10",
+        "title": "한줄일기 @one_line_day",
+        "body": "오늘의 한 줄: 별일 없던 하루가 나중에는 제일 그리운 하루일 수도 있다.\n\n今日一句话：平平无奇的一天，后来也许会成为最怀念的一天。",
+        "time": "2026-10-27 18:03",
+        "sender": "한줄일기",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 3900,
+        "comments": [
+          "기록하는사람: 그래서 사소한 것도 적어 둬요. / 记录的人：所以我会把琐碎的小事也记下来。",
+          "오늘을사는중: 이 문장 저장해 갑니다. / 正在生活：我收藏这句话了。"
+        ],
+        "meta": {
+          "handle": "@one_line_day",
+          "category": "daily",
+          "reposts": "702",
+          "bookmarks": "429",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-11",
+        "title": "팬아트모임 @drawtogether",
+        "body": "팬아트는 잘 그리는 것보다 그리는 사람이 즐거워 보일 때 더 오래 보게 돼요.\n\n比起画得多好，看见画画的人很享受时，我反而会看得更久。",
+        "time": "2026-10-27 18:10",
+        "sender": "팬아트모임",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 4400,
+        "comments": [
+          "물감손: 오늘은 낙서만 했는데도 재밌었어요. / 沾颜料的手：今天只涂鸦也很开心。",
+          "선연습중: 좋아하는 마음이 선에 보여요. / 练线条中：喜欢的心情会在线条里体现。"
+        ],
+        "meta": {
+          "handle": "@drawtogether",
+          "category": "fandom",
+          "reposts": "792",
+          "bookmarks": "484",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-12",
+        "title": "간식회의 @snackmeeting",
+        "body": "영화 볼 때 팝콘은 달콤한 맛인가요 짭짤한 맛인가요? 저는 반반파입니다.\n\n看电影时爆米花选甜的还是咸的？我是混合派。",
+        "time": "2026-10-27 18:17",
+        "sender": "간식회의",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 5800,
+        "comments": [
+          "카라멜파: 반반은 최고의 외교. / 焦糖派：混合口味是最好的外交。",
+          "소금파: 짠맛 먹고 달달한 음료가 정답. / 咸味派：咸爆米花配甜饮料才是答案。"
+        ],
+        "meta": {
+          "handle": "@snackmeeting",
+          "category": "questions",
+          "reposts": "1044",
+          "bookmarks": "638",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-13",
+        "title": "말랑한농담 @softpunchline",
+        "body": "'잠깐만 누워야지'라는 말은 시간 단위가 아니라 판타지 장르입니다.\n\n“我就躺一下”不是时间单位，而是一种奇幻题材。",
+        "time": "2026-10-27 19:24",
+        "sender": "말랑한농담",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 10200,
+        "comments": [
+          "이불왕국: 입국하면 출국이 어렵습니다. / 被窝王国：入境后很难出境。",
+          "낮잠연구: 8분만 자려다 두 계절이 지남. / 午睡研究：本想睡8分钟，醒来像过了两个季节。"
+        ],
+        "meta": {
+          "handle": "@softpunchline",
+          "category": "humor",
+          "reposts": "1836",
+          "bookmarks": "1122",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-14",
+        "title": "공연후유증 @afterstage",
+        "body": "공연 다녀온 다음 날은 몸은 피곤한데 마음은 이상하게 꽉 차 있어요.\n\n看完演出第二天身体很累，心里却奇妙地很充实。",
+        "time": "2026-10-27 19:31",
+        "sender": "공연후유증",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 6800,
+        "comments": [
+          "목소리쉼: 함성은 며칠 뒤에 돌아옵니다. / 嗓子休息中：喊叫后的声音要过几天才回来。",
+          "티켓보관: 티켓만 봐도 그날 생각나요. / 票根收藏：光看票根就会想起那一天。"
+        ],
+        "meta": {
+          "handle": "@afterstage",
+          "category": "fandom",
+          "reposts": "1224",
+          "bookmarks": "748",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-15",
+        "title": "질문상자 @questionbox_day",
+        "body": "친구랑 친해지는 데 가장 도움이 되는 건 같이 밥 먹기, 산책하기, 아니면 오래 통화하기?\n\n和朋友变亲近最有用的是一起吃饭、散步，还是长时间通话？",
+        "time": "2026-10-27 19:38",
+        "sender": "질문상자",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 3700,
+        "comments": [
+          "산책파: 걸으면 말이 자연스럽게 나와요. / 散步派：边走边聊会自然地说出很多话。",
+          "밥친구: 같이 먹으면 어색한 순간이 줄어요. / 饭友派：一起吃饭能减少尴尬时刻。"
+        ],
+        "meta": {
+          "handle": "@questionbox_day",
+          "category": "questions",
+          "reposts": "666",
+          "bookmarks": "407",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-16",
+        "title": "작은성공 @smallwinslog",
+        "body": "오늘 미뤄 둔 일을 하나 끝냈어요. 대단한 일은 아닌데 마음이 가벼움.\n\n今天终于完成了一件拖延很久的事。不是大事，但心里轻松了。",
+        "time": "2026-10-27 19:45",
+        "sender": "작은성공",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 3100,
+        "comments": [
+          "체크표시: 할 일 목록에서 지우는 맛이 있죠. / 打勾：从待办清单里划掉的感觉很爽。",
+          "응원단: 작아 보여도 해낸 건 해낸 거예요. / 应援团：看起来很小，但完成了就是完成了。"
+        ],
+        "meta": {
+          "handle": "@smallwinslog",
+          "category": "daily",
+          "reposts": "558",
+          "bookmarks": "341",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-17",
+        "title": "팬플리추천 @fanplaylist",
+        "body": "최애 노래로 시작해서 전혀 다른 아티스트까지 이어지는 플레이리스트 추천해 주세요.\n\n推荐一些从本命歌曲开始，最后延伸到完全不同歌手的歌单吧。",
+        "time": "2026-10-27 19:52",
+        "sender": "팬플리추천",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 5500,
+        "comments": [
+          "새벽믹스: 템포보다 분위기로 연결해 보세요. / 凌晨混音：试着按氛围而不是速度来衔接。",
+          "장르탐험: R&B에서 시티팝으로 넘어가는 길 추천. / 类型探索：推荐从R&B转到City Pop的路线。"
+        ],
+        "meta": {
+          "handle": "@fanplaylist",
+          "category": "fandom",
+          "reposts": "990",
+          "bookmarks": "605",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-18",
+        "title": "생활의발견 @ordinaryfinds",
+        "body": "마트에서 늘 지나치던 코너에 의외로 괜찮은 물건이 있더라고요. 천천히 보면 득템.\n\n超市里总是路过的货架，竟然有不错的东西。慢慢看会有意外收获。",
+        "time": "2026-10-27 19:59",
+        "sender": "생활의발견",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 2800,
+        "comments": [
+          "장바구니: 그래서 장 보러 가면 오래 걸려요. / 购物篮：所以我每次买东西都要逛很久。",
+          "계획구매: 계획에 없던 물건이 제일 많음. / 计划购物：计划外的东西反而最多。"
+        ],
+        "meta": {
+          "handle": "@ordinaryfinds",
+          "category": "daily",
+          "reposts": "504",
+          "bookmarks": "308",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-19",
+        "title": "기분전환법 @resetmyday",
+        "body": "기분이 복잡할 때 여러분은 음악, 샤워, 산책 중 뭘 먼저 해요?\n\n心情复杂时，你会先听音乐、洗澡还是散步？",
+        "time": "2026-10-27 20:06",
+        "sender": "기분전환법",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 4600,
+        "comments": [
+          "샤워파: 물소리가 생각을 끊어 줘요. / 洗澡派：水声能打断杂乱的思绪。",
+          "이어폰러: 한 곡만 듣고 나가요. / 耳机党：先听一首歌再出门。"
+        ],
+        "meta": {
+          "handle": "@resetmyday",
+          "category": "questions",
+          "reposts": "828",
+          "bookmarks": "506",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-20",
+        "title": "짤이필요해 @needameme",
+        "body": "회의에서 '편하게 의견 주세요'라는 말을 들으면 가장 불편한 자세로 앉게 됨.\n\n开会时听到“请轻松地发表意见”，我反而坐得最不自在。",
+        "time": "2026-10-27 20:13",
+        "sender": "짤이필요해",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 8100,
+        "comments": [
+          "회의실유령: 카메라 켜면 더 심해요. / 会议室幽灵：开摄像头后更严重。",
+          "발언대기: 의견은 있는데 와이파이가 끊김. / 等待发言：有意见，但Wi-Fi断了。"
+        ],
+        "meta": {
+          "handle": "@needameme",
+          "category": "humor",
+          "reposts": "1458",
+          "bookmarks": "891",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-21",
+        "title": "오늘의덕질 @stanandstudy",
+        "body": "공부하다가 좋아하는 노래 한 곡 듣고 다시 책상에 앉기. 오늘의 작은 루틴.\n\n学习时听一首喜欢的歌，再回到书桌前。今天的小习惯。",
+        "time": "2026-10-27 20:20",
+        "sender": "오늘의덕질",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 3900,
+        "comments": [
+          "타이머공부: 한 곡만이 세 곡 되는 게 문제. / 计时学习：问题是“一首歌”最后变成三首。",
+          "집중모드: 그래도 다시 앉는 게 중요하죠. / 专注模式：但重要的是还能重新坐回来。"
+        ],
+        "meta": {
+          "handle": "@stanandstudy",
+          "category": "fandom",
+          "reposts": "702",
+          "bookmarks": "429",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-22",
+        "title": "주말의질문 @weekendask",
+        "body": "완전히 비어 있는 주말과 약속이 하나 있는 주말, 어느 쪽이 더 좋아요?\n\n完全空白的周末和有一个约定的周末，你更喜欢哪种？",
+        "time": "2026-10-27 20:27",
+        "sender": "주말의질문",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 4300,
+        "comments": [
+          "즉흥파: 빈 주말에 갑자기 떠나는 게 좋아요. / 即兴派：喜欢在空白周末突然出门。",
+          "달력파: 약속 하나 있으면 하루가 선명해져요. / 日历派：有一个约定会让一天更有实感。"
+        ],
+        "meta": {
+          "handle": "@weekendask",
+          "category": "questions",
+          "reposts": "774",
+          "bookmarks": "473",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-23",
+        "title": "오늘도웃자 @smiletoday",
+        "body": "택배 도착 알림은 같은 문장인데 왜 매번 새로운 희망처럼 느껴질까.\n\n快递到达提醒明明每次都是同一句话，为什么每次都像新的希望？",
+        "time": "2026-10-27 20:34",
+        "sender": "오늘도웃자",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 9900,
+        "comments": [
+          "문앞대기: 문 열기 전부터 행복합니다. / 门口等待：开门前就已经幸福了。",
+          "배송추적: 새로고침이 취미가 됐어요. / 物流追踪：刷新页面已经成了爱好。"
+        ],
+        "meta": {
+          "handle": "@smiletoday",
+          "category": "humor",
+          "reposts": "1782",
+          "bookmarks": "1089",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-24",
+        "title": "팬덤예절 @kindfandom",
+        "body": "좋아하는 마음이 클수록 다른 사람의 감상 방식도 조금씩 존중할 수 있으면 좋겠어요.\n\n希望越是喜欢一个人，就越能尊重别人不同的欣赏方式。",
+        "time": "2026-10-27 20:41",
+        "sender": "팬덤예절",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 7600,
+        "comments": [
+          "덕질은자유: 서로 즐기는 방식이 다를 수 있죠. / 追星自由：每个人享受追星的方式都不同。",
+          "평화로운타임라인: 이 말 저장합니다. / 和平时间线：我收藏这句话了。"
+        ],
+        "meta": {
+          "handle": "@kindfandom",
+          "category": "fandom",
+          "reposts": "1368",
+          "bookmarks": "836",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-25",
+        "title": "커피산책 @walkwithcoffee",
+        "body": "테이크아웃 컵 들고 목적지 없이 한 바퀴 걷는 시간이 은근히 필요해요.\n\n拿着外带咖啡不设目的地地走一圈，这样的时间其实很有必要。",
+        "time": "2026-10-27 21:48",
+        "sender": "커피산책",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 3400,
+        "comments": [
+          "발걸음느리게: 생각이 정리되는 느낌. / 放慢脚步：感觉思绪会慢慢理清。",
+          "지도끄기: 지도 앱을 끄는 게 핵심이에요. / 关闭地图：关键是关掉地图软件。"
+        ],
+        "meta": {
+          "handle": "@walkwithcoffee",
+          "category": "daily",
+          "reposts": "612",
+          "bookmarks": "374",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-26",
+        "title": "질문하나만 @onequestionplz",
+        "body": "어릴 때는 싫었는데 어른이 되고 좋아진 음식 있어요? 저는 가지요.\n\n有没有小时候讨厌、长大后却喜欢上的食物？我的是茄子。",
+        "time": "2026-10-27 21:55",
+        "sender": "질문하나만",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 5100,
+        "comments": [
+          "당근탈출: 당근이 이제 달게 느껴져요. / 胡萝卜逃脱：现在觉得胡萝卜很甜。",
+          "가지구이: 가지는 구우면 완전히 다른 음식. / 烤茄子：茄子烤过后简直像另一种食物。"
+        ],
+        "meta": {
+          "handle": "@onequestionplz",
+          "category": "questions",
+          "reposts": "918",
+          "bookmarks": "561",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-27",
+        "title": "한밤의농담 @midnightgiggle",
+        "body": "잠들기 직전에 내일 할 일 생각나는 건 뇌가 마지막으로 보내는 푸시 알림.\n\n睡前突然想起明天要做的事，是大脑发出的最后一条推送通知。",
+        "time": "2026-10-27 21:02",
+        "sender": "한밤의농담",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 8800,
+        "comments": [
+          "알림끄기: 무음 모드가 필요합니다. / 关闭通知：需要静音模式。",
+          "메모장열기: 적고 나면 다른 할 일이 생각남. / 打开备忘录：写下来后又想起另一件事。"
+        ],
+        "meta": {
+          "handle": "@midnightgiggle",
+          "category": "humor",
+          "reposts": "1584",
+          "bookmarks": "968",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-28",
+        "title": "무대가좋아 @stageisjoy",
+        "body": "관객이 함께 따라 부르는 순간은 영상으로 봐도 괜히 마음이 벅차요.\n\n观众一起跟唱的瞬间，即使通过视频看到也会莫名感动。",
+        "time": "2026-10-27 21:09",
+        "sender": "무대가좋아",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 6900,
+        "comments": [
+          "떼창사랑: 현장에 있으면 온몸으로 느껴져요. / 大合唱爱好者：在现场会全身都感受到。",
+          "라이브기록: 소리만 들어도 그날이 떠올라요. / 现场记录：光听声音就能想起那一天。"
+        ],
+        "meta": {
+          "handle": "@stageisjoy",
+          "category": "fandom",
+          "reposts": "1242",
+          "bookmarks": "759",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-29",
+        "title": "쉬어가는페이지 @pausepage",
+        "body": "오늘은 할 일을 다 못 했지만 나를 너무 몰아붙이지 않기로 했어요.\n\n今天没能做完所有事情，但我决定不再过度逼迫自己。",
+        "time": "2026-10-27 21:16",
+        "sender": "쉬어가는페이지",
+        "kind": "post",
+        "folder": "daily",
+        "likes": 5600,
+        "comments": [
+          "천천히가도돼: 쉬는 것도 일정에 넣어요. / 慢慢来也没关系：把休息也排进日程。",
+          "내일의나: 이 문장 내일도 읽고 싶다. / 明天的我：明天也想再读一遍这句话。"
+        ],
+        "meta": {
+          "handle": "@pausepage",
+          "category": "daily",
+          "reposts": "1008",
+          "bookmarks": "616",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-30",
+        "title": "추천받아요 @recommendmeplease",
+        "body": "요즘 짧게 보기 좋은 예능이나 영상 추천해 주세요. 웃긴 것도 좋고 편안한 것도 좋아요.\n\n推荐最近适合短时间观看的综艺或视频吧。搞笑的、轻松的都可以。",
+        "time": "2026-10-27 21:23",
+        "sender": "추천받아요",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 4100,
+        "comments": [
+          "힐링필요: 동물 영상은 언제나 성공. / 需要治愈：动物视频永远不会错。",
+          "예능정주행: 짧게 보려다 한 시즌 끝나요. / 综艺追更：本想看一会儿，结果看完一季。"
+        ],
+        "meta": {
+          "handle": "@recommendmeplease",
+          "category": "questions",
+          "reposts": "738",
+          "bookmarks": "451",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-31",
+        "title": "덕질과일상 @stanlife_balance",
+        "body": "좋아하는 걸 오래 좋아하려면 내 일상도 잘 챙겨야 한다는 걸 요즘 배우는 중.\n\n最近慢慢明白，想长久地喜欢一件事，也得照顾好自己的日常生活。",
+        "time": "2026-10-27 22:30",
+        "sender": "덕질과일상",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 6200,
+        "comments": [
+          "밥먹고덕질: 밥부터 먹고 타임라인으로 돌아와요. / 先吃饭再追星：先吃饭，再回时间线。",
+          "마음관리: 오래 좋아하는 것도 좋은 기술이에요. / 照顾心情：长久地喜欢也是一种能力。"
+        ],
+        "meta": {
+          "handle": "@stanlife_balance",
+          "category": "fandom",
+          "reposts": "1116",
+          "bookmarks": "682",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-32",
+        "title": "작은질문 @littlecuriosity",
+        "body": "여러분 동네에서 제일 좋아하는 장소는 어디예요? 저는 오래된 문구점.\n\n你住的地方最喜欢的地点是什么？我喜欢一家老文具店。",
+        "time": "2026-10-27 22:37",
+        "sender": "작은질문",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 2900,
+        "comments": [
+          "골목책방: 조용한 작은书店요. / 小巷书店：安静的小书店。",
+          "공원벤치: 아무것도 안 해도 되는 자리. / 公园长椅：一个什么都不做也可以待着的地方。"
+        ],
+        "meta": {
+          "handle": "@littlecuriosity",
+          "category": "questions",
+          "reposts": "522",
+          "bookmarks": "319",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-33",
+        "title": "오늘의밈 @memeofday",
+        "body": "해야 할 일이 많을수록 책상 위 물건 정리가 갑자기 세계에서 가장 중요한 일이 됨.\n\n事情越多，整理桌面就突然变成世界上最重要的事。",
+        "time": "2026-10-27 22:44",
+        "sender": "오늘의밈",
+        "kind": "post",
+        "folder": "humor",
+        "likes": 9300,
+        "comments": [
+          "정리왕: 책상은 깨끗한데 과제는 그대로. / 整理王：桌子干净了，作业还在原地。",
+          "마감직전: 파일 이름 정리로 현실 도피. / 截止前夕：通过整理文件名逃避现实。"
+        ],
+        "meta": {
+          "handle": "@memeofday",
+          "category": "humor",
+          "reposts": "1674",
+          "bookmarks": "1023",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-34",
+        "title": "다정한팬 @gentlefan",
+        "body": "팬들이 서로 친절하게 정보 알려 주는 타임라인을 보면 기분이 좋아져요.\n\n看到粉丝们在时间线上互相友善地分享信息，心情就会变好。",
+        "time": "2026-10-27 22:51",
+        "sender": "다정한팬",
+        "kind": "post",
+        "folder": "fandom",
+        "likes": 4700,
+        "comments": [
+          "링크수집가: 출처까지 남겨 주면 더 고마워요. / 链接收藏家：如果还能附上来源就更感谢了。",
+          "따뜻한댓글: 친절은 생각보다 오래 남아요. / 温暖评论：善意留下的时间比想象中更久。"
+        ],
+        "meta": {
+          "handle": "@gentlefan",
+          "category": "fandom",
+          "reposts": "846",
+          "bookmarks": "517",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      },
+      {
+        "id": "threadshome-post-35",
+        "title": "저녁산책질문 @eveningwalkask",
+        "body": "저녁 산책은 음악 들으면서 걷기 vs 주변 소리 들으면서 걷기?\n\n晚间散步时你会听音乐走路，还是听周围环境的声音走路？",
+        "time": "2026-10-27 22:58",
+        "sender": "저녁산책질문",
+        "kind": "post",
+        "folder": "questions",
+        "likes": 3500,
+        "comments": [
+          "이어폰파: 플레이리스트가 길을 만들어 줘요. / 耳机派：歌单会替我铺出一条路。",
+          "소리수집: 바람 소리 듣는 것도 좋더라고요. / 收集声音：听风声也很好。"
+        ],
+        "meta": {
+          "handle": "@eveningwalkask",
+          "category": "questions",
+          "reposts": "630",
+          "bookmarks": "385",
+          "platform": "threads",
+          "fictional": "true"
+        }
+      }
+    ],
     "appstore": []
   },
   "variables": {},
