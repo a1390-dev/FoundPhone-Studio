@@ -420,6 +420,19 @@ export function MymyKakao(p: SkinProps) {
       const entry = missing[index++];
       if (!entry) { setNpcTyping(false); return; }
       const [ko, zh] = entry;
+      // Re-check the live message list so replayed effects cannot append duplicates.
+      const alreadyDelivered = sentRef.current.some((raw) => {
+        try {
+          const existing: unknown = JSON.parse(raw);
+          return Array.isArray(existing) && existing[0] === p.thread &&
+            existing[1] === ko && existing[2] === round.time && existing[3] === "npc";
+        } catch { return false; }
+      });
+      if (alreadyDelivered) {
+        if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
+        else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
+        return;
+      }
       const npcEntry = JSON.stringify([
         p.thread,
         ko.replaceAll("{{playerId}}", p.playerId || "你"),
@@ -491,6 +504,7 @@ export function MymyKakao(p: SkinProps) {
       if (role === "npc") lastNpcMessageIndex.set(entry[0], index);
     } catch { /* Ignore malformed local chat entries. */ }
   });
+  const seenLocalMessages = new Set<string>();
   const localSentItems = sent.flatMap((raw, index): Item[] => {
     try {
       const entry: unknown = JSON.parse(raw);
@@ -500,6 +514,10 @@ export function MymyKakao(p: SkinProps) {
         !entry.every((v) => typeof v === "string")
       ) return [];
       const role = entry.length >= 4 ? entry[3] : "owner";
+      // Hide identical NPC lines duplicated in previously saved story state.
+      const signature = JSON.stringify([entry[0], entry[1], entry[2], role]);
+      if (role === "npc" && seenLocalMessages.has(signature)) return [];
+      seenLocalMessages.add(signature);
       const outgoing = role !== "npc";
       const unread = outgoing && index > (lastNpcMessageIndex.get(entry[0]) ?? -1);
       return [makeItem({
