@@ -160,6 +160,7 @@ export function MymyKakao(p: SkinProps) {
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV1", ""),
+    [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV1", ""),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
     [selectedChoices, setSelectedChoices] = useState<Array<readonly [string, string]>>([]),
@@ -208,6 +209,19 @@ export function MymyKakao(p: SkinProps) {
     }, 2000);
     return () => window.clearTimeout(timer);
   }, [p.thread]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const started = p.ui?.["scandal-precall-started"];
+    if (started !== true || processedPreCall === "sent") return;
+    const preCallMessages = [
+      JSON.stringify([p.thread, "어디야?", "14:06", "npc", "你在哪？"]),
+      JSON.stringify([p.thread, "혼자 있어?", "14:06", "npc", "你一个人吗？"]),
+    ];
+    const updated = [...sentRef.current, ...preCallMessages];
+    sentRef.current = updated;
+    setSent(updated);
+    setProcessedPreCall("sent");
+  }, [p.thread, p.ui?.["scandal-precall-started"], processedPreCall]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const result = p.ui?.["scandal-call-result"];
@@ -496,7 +510,7 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
+          {p.thread === "金旼炡" && !p.ui?.["scandal-call-result"] && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
               {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
                 <button
