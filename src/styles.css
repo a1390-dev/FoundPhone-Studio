@@ -5058,3 +5058,225 @@ label {
 .taobao-ui .taobao-search .catalog-search input {
   font-size: 14px !important;
 }
+
+/* Incoming call: calibrated to the clean full-screen iPhone call sheet. */
+.ios18 .incoming-call-screen {
+  inset: 0;
+  z-index: 90;
+  padding: max(76px, env(safe-area-inset-top)) 26px 48px;
+  justify-content: flex-start;
+  background:
+    radial-gradient(ellipse at 50% 28%, #6e7d8a9c 0%, #26313de8 43%, #10131cf7 100%);
+  color: #fff;
+  backdrop-filter: blur(28px) saturate(.8);
+  -webkit-backdrop-filter: blur(28px) saturate(.8);
+  overflow: auto;
+}
+.ios18 .incoming-call-screen > small {
+  color: #e2e5e8;
+  font-size: 12px;
+  letter-spacing: .2px;
+  margin-top: 3px;
+}
+.ios18 .incoming-avatar {
+  margin-top: 70px;
+  width: 112px;
+  height: 112px;
+  overflow: hidden;
+  border: 1px solid #ffffff30;
+  background: #ffffff24;
+  box-shadow: 0 8px 34px #0003;
+}
+.ios18 .incoming-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ios18 .incoming-call-screen h2 {
+  margin-top: 21px;
+  font-size: 29px;
+  font-weight: 500;
+  letter-spacing: -.4px;
+  text-align: center;
+}
+.ios18 .incoming-call-screen .incoming-call-kind {
+  margin: 8px 0 0;
+  color: #d0d6dc;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.ios18 .incoming-call-screen audio {
+  margin-top: 22px;
+}
+.ios18 .incoming-actions {
+  gap: 60px;
+  margin-top: auto;
+  padding: 0 10px 34px;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ios18 .incoming-actions > button {
+  min-width: 76px;
+  gap: 10px;
+  font-size: 13px;
+  color: #f8f8fa;
+}
+.ios18 .incoming-actions > button > svg {
+  width: 66px;
+  height: 66px;
+  padding: 20px;
+  border-radius: 50%;
+  background: #32c759;
+  box-shadow: 0 3px 12px #0004, inset 0 1px 1px #ffffff45;
+}
+.ios18 .incoming-actions > .decline-call > svg {
+  background: #ff453a;
+  transform: rotate(135deg);
+}
+.ios18 .incoming-actions > button:active > svg {
+  transform: scale(.94);
+}
+.ios18 .incoming-actions > .decline-call:active > svg {
+  transform: rotate(135deg) scale(.94);
+}
+
+/* In-call story chat: keep call controls visible with NPC left / player right. */
+.ios18 .incoming-call-screen-chat {
+  overflow: hidden;
+  padding-top: max(48px, env(safe-area-inset-top));
+  padding-bottom: 10px;
+}
+.ios18 .incoming-call-screen-chat .incoming-avatar {
+  flex: 0 0 auto;
+  width: 62px;
+  height: 62px;
+  margin-top: 16px;
+}
+.ios18 .incoming-call-screen-chat h2 {
+  margin-top: 8px;
+  font-size: 22px;
+}
+.ios18 .incoming-call-screen-chat .incoming-call-kind {
+  margin-top: 3px;
+  font-size: 12px;
+}
+.call-chat-panel {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  min-height: 0;
+  margin-top: 12px;
+}
+.call-chat-log {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  min-height: 110px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 9px;
+  border: 1px solid #ffffff16;
+  border-radius: 18px;
+  background: #10172220;
+  backdrop-filter: blur(18px) saturate(.85);
+  -webkit-backdrop-filter: blur(18px) saturate(.85);
+}
+.call-dialogue-row {
+  display: flex;
+  width: 100%;
+}
+.call-dialogue-npc {
+  justify-content: flex-start;
+}
+.call-dialogue-player {
+  justify-content: flex-end;
+}
+.call-dialogue-bubble {
+  max-width: 88%;
+  padding: 9px 12px 8px;
+  border: 1px solid #ffffff22;
+  border-radius: 15px;
+  text-align: left;
+  overflow-wrap: anywhere;
+  box-shadow: 0 2px 8px #0002;
+}
+.call-dialogue-npc .call-dialogue-bubble {
+  border-top-left-radius: 5px;
+  border-color: #ffffff2a;
+  background: #ffffff22;
+  color: #f8f9fb;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+.call-dialogue-player .call-dialogue-bubble {
+  border-top-right-radius: 5px;
+  border-color: #ffffff2a;
+  background: #ffffff1c;
+  color: #fff;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+.call-dialogue-bubble > div {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.call-dialogue-bubble > small {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1.35;
+  opacity: .76;
+}
+.call-reply-options {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.call-reply-options > button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 14px;
+  min-width: 132px;
+  max-width: 100%;
+  padding: 9px 13px;
+  border: 1px solid #ffffff40;
+  border-radius: 14px;
+  background: #ffffff1c;
+  color: #fff;
+  text-align: left;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 3px 14px #0002;
+}
+.call-reply-options > button > span {
+  font-size: 13px;
+  font-weight: 600;
+}
+.call-reply-options > button > small {
+  font-size: 10px;
+  opacity: .7;
+}
+.call-reply-options > button > b {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 5px 8px;
+  border-radius: 9px;
+  border: 1px solid #ffffff38;
+  background: #ffffff18;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ios18 .incoming-call-screen-chat .incoming-actions {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
