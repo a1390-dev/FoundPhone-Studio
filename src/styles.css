@@ -5023,7 +5023,7 @@ label {
   text-size-adjust: 100%;
 }
 .story-runtime input:not([type="checkbox"]):not([type="radio"]):not(#foundphone-player-id),
-.story-runtime textarea,
+.story-runtime textarea:not(.kkt-composer-textarea),
 .story-runtime select,
 .story-runtime .phone-screen input:not(#foundphone-player-id),
 .story-runtime .system-panel input,
