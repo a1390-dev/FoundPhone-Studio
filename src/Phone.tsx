@@ -444,7 +444,13 @@ function PhoneRuntime({
   return (
     <div
       ref={shell}
-      style={{ "--phone-scale": deviceScale, "--phone-input-font-size": `${16 / Math.max(deviceScale, 0.4)}px` } as CSSProperties}
+      style={{
+        "--phone-scale": deviceScale,
+        "--phone-input-font-size": `${16 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-font-size": `${14 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-min-height": `${34 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-max-height": `${72 / Math.max(deviceScale, 0.4)}px`,
+      } as CSSProperties}
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
       <KeyboardContext.Provider value={setKeyboard}>
