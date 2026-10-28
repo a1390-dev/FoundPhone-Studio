@@ -16,6 +16,7 @@ import {
   Send,
   Bookmark,
   Repeat2,
+  RefreshCw,
   BarChart2,
   Share,
   User,
@@ -1206,7 +1207,22 @@ export function MymyX(p: SkinProps) {
     [likes, setLikes] = useSkinState<string[]>(p, "mymyXLikes", []),
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
-    [query, setQuery] = useState("");
+    [query, setQuery] = useState(""),
+    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-v1", 0);
+  const liveItems = p.items.filter((i) => i.meta.live === "true");
+  const feedItems = [
+    ...liveItems.slice(0, liveCount).reverse(),
+    ...p.items.filter((i) => i.meta.live !== "true"),
+  ];
+  useEffect(() => {
+    if (liveCount >= liveItems.length) return;
+    const timer = window.setTimeout(
+      () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
+      28000,
+    );
+    return () => window.clearTimeout(timer);
+  }, [liveCount, liveItems.length]);
+  const refreshFeed = () => setLiveCount(Math.min(liveItems.length, liveCount + 2));
   const isLiked = (id: string) =>
     typeof p.ui?.["liked-" + id] === "boolean"
       ? Boolean(p.ui["liked-" + id])
@@ -1242,6 +1258,10 @@ export function MymyX(p: SkinProps) {
               {t}
             </button>
           ))}
+          <button className="x-feed-refresh" type="button" aria-label="刷新X信息流" onClick={refreshFeed}>
+            <RefreshCw size={16} />
+            <span>刷新</span>
+          </button>
         </div>
         {tab === "搜索" && (
           <input
@@ -1253,7 +1273,7 @@ export function MymyX(p: SkinProps) {
           />
         )}
         <div className="kzxfd">
-          {p.items
+          {feedItems
             .filter((i) => (i.title + i.body).includes(query))
             .map((i) => (
               <article className="kzxt" key={i.id}>
