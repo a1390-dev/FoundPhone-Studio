@@ -675,6 +675,19 @@ function PhoneRuntime({
                   initialThread={appThread}
                   playerId={playerId}
                   onKktOpeningSeen={markKktOpeningAsSeen}
+                  onRequestCall={() => {
+                    const current = runtimeRef.current;
+                    const sawRumorFeed = current.ui?.twitter?.["rumor-feed-opened"] === true || current.ui?.threads?.["rumor-feed-opened"] === true;
+                    if (!sawRumorFeed || current.ui?.story?.["scandal-call-triggered"] === true || current.incomingCall) return;
+                    update({
+                      ...current,
+                      incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
+                      ui: {
+                        ...current.ui,
+                        story: { ...current.ui?.story, "scandal-call-triggered": true },
+                      },
+                    });
+                  }}
                 />
               </AppWindow>
             ) : (
@@ -821,9 +834,12 @@ function PhoneRuntime({
                 作品内模拟
               </small>
               <div className="incoming-avatar">
-                {s.incomingCall.caller.slice(0, 1)}
+                {s.incomingCall.caller === "金旼炡" ? (
+                  <img src="/avatars/p4.jpg" alt="金旼炡" />
+                ) : s.incomingCall.caller.slice(0, 1)}
               </div>
               <h2>{s.incomingCall.caller}</h2>
+              <p className="incoming-call-kind">{s.incomingCall.status === "ringing" ? "移动电话 · 来电" : "正在通话"}</p>
               {s.incomingCall.status === "answered" &&
                 (() => {
                   const record = work.data.phone?.find(
@@ -840,17 +856,21 @@ function PhoneRuntime({
                   className="decline-call"
                   onClick={() => {
                     const call = runtimeRef.current.incomingCall;
-                    if (call)
-                      update(
-                        dispatch(
-                          work,
-                          { ...runtimeRef.current, incomingCall: null },
-                          call.status === "ringing"
-                            ? "callDeclined"
-                            : "callEnded",
-                          call.target || call.caller,
-                        ),
+                    if (call) {
+                      const next = dispatch(
+                        work,
+                        { ...runtimeRef.current, incomingCall: null },
+                        call.status === "ringing" ? "callDeclined" : "callEnded",
+                        call.target || call.caller,
                       );
+                      if (call.target === "scandal-call" && call.status === "ringing") {
+                        next.ui = {
+                          ...next.ui,
+                          kakao: { ...next.ui?.kakao, "scandal-call-result": "declined" },
+                        };
+                      }
+                      update(next);
+                    }
                   }}
                 >
                   <PhoneIcon size={25} />
@@ -863,18 +883,24 @@ function PhoneRuntime({
                     className="accept-call"
                     onClick={() => {
                       const call = runtimeRef.current.incomingCall;
-                      if (call)
-                        update(
-                          dispatch(
-                            work,
-                            {
-                              ...runtimeRef.current,
-                              incomingCall: { ...call, status: "answered" },
-                            },
-                            "callAnswered",
-                            call.target || call.caller,
-                          ),
+                      if (call) {
+                        const next = dispatch(
+                          work,
+                          {
+                            ...runtimeRef.current,
+                            incomingCall: { ...call, status: "answered" },
+                          },
+                          "callAnswered",
+                          call.target || call.caller,
                         );
+                        if (call.target === "scandal-call") {
+                          next.ui = {
+                            ...next.ui,
+                            kakao: { ...next.ui?.kakao, "scandal-call-result": "answered" },
+                          };
+                        }
+                        update(next);
+                      }
                     }}
                   >
                     <PhoneIcon size={25} />
@@ -1083,6 +1109,7 @@ function AppContent({
   initialThread = "",
   playerId = "",
   onKktOpeningSeen,
+  onRequestCall,
 }: {
   app: AppPlugin;
   name: string;
@@ -1102,12 +1129,15 @@ function AppContent({
   initialThread?: string;
   playerId?: string;
   onKktOpeningSeen?: () => void;
+  onRequestCall?: () => void;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
   const [thread, setThread] = useState(initialThread || "");
   useEffect(() => {
-    if (app.id === "kakao" && thread === "金旼炡" && !creator)
+    if (app.id === "kakao" && thread === "金旼炡" && !creator) {
       onKktOpeningSeen?.();
+      onRequestCall?.();
+    }
   }, [app.id, thread, creator]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
