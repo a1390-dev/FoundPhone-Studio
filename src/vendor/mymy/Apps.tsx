@@ -222,6 +222,21 @@ export function MymyKakao(p: SkinProps) {
       ["어디야?", "你在哪？"],
       ["혼자 있어?", "你一个人吗？"],
     ];
+    // Earlier preview builds inserted both messages at once. Remove just those
+    // two event lines so the current flow can replay them at the intended pace.
+    const cleanHistory = sentRef.current.filter((raw) => {
+      try {
+        const parsed: unknown = JSON.parse(raw);
+        return !(Array.isArray(parsed) && parsed[0] === p.thread &&
+          parsed[3] === "npc" &&
+          ((parsed[1] === "어디야?" && parsed[4] === "你在哪？") ||
+           (parsed[1] === "혼자 있어?" && parsed[4] === "你一个人吗？")));
+      } catch { return true; }
+    });
+    if (cleanHistory.length !== sentRef.current.length) {
+      sentRef.current = cleanHistory;
+      setSent(cleanHistory);
+    }
     let timer: ReturnType<typeof setTimeout> | null = null;
     const deliver = (index: number) => {
       const entry = messages[index];
