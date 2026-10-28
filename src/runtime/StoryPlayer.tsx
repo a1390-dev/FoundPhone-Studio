@@ -4,6 +4,13 @@ import customWallpaper from "../assets/custom/wallpaper.jpeg";
 import type { Work } from "../schema";
 import "./player.css";
 
+// Start fetching the selected wallpaper as soon as the runtime module executes.
+// The CSS background can then reuse the browser-cached image instead of starting
+// its request only after the lock screen has already rendered.
+const wallpaperPreload = new Image();
+wallpaperPreload.decoding = "async";
+wallpaperPreload.src = customWallpaper;
+
 // Start downloading the phone runtime immediately, but keep it out of the
 // entry chunk so it can load in parallel with the work JSON on mobile.
 const phoneModule = import("../Phone");
@@ -140,13 +147,8 @@ function StoryPlayer() {
         document.title =
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
 
-        // Mount the phone immediately after the work JSON is ready.
-        // Wallpaper decoding must never block startup on mobile Safari.
-        if (w.phone.wallpaper === "dog") {
-          const image = new Image();
-          image.src = customWallpaper;
-          void image.decode().catch(() => {});
-        }
+        // Mount as soon as the work JSON is ready. The wallpaper request has
+        // already started at module initialization and does not block this step.
         setWork(w);
       })
       .catch((e) => {
