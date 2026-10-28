@@ -5028,7 +5028,9 @@ label {
 .story-runtime .phone-screen input:not(#foundphone-player-id),
 .story-runtime .system-panel input,
 .story-runtime .unlock-form input {
-  font-size: 16px !important;
+  /* The simulated device is scaled with CSS zoom. Counter-scale input text so
+     its rendered size remains at least the iOS Safari no-auto-zoom threshold. */
+  font-size: var(--phone-input-font-size, 16px) !important;
 }
 
 /* The whole simulated phone is scaled with CSS zoom. Compensate only the ID
