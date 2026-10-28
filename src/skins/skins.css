@@ -3015,6 +3015,44 @@
 .youtube-videos > article {
   margin-bottom: 16px;
 }
+.youtube-linked-video .youtube-thumb {
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: #eee;
+}
+.youtube-linked-video .youtube-thumb img {
+  display: block;
+}
+.youtube-play-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 34px;
+  border-radius: 10px;
+  background: #f03;
+  color: #fff;
+  font-size: 20px;
+  padding-left: 3px;
+  box-shadow: 0 1px 5px #0003;
+  pointer-events: none;
+}
+.youtube-linked-byline {
+  color: inherit;
+  text-decoration: none;
+}
+.youtube-linked-byline .catalog-avatar {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #f03;
+  border-radius: 50%;
+  font-size: 13px;
+}
 .youtube-thumb {
   width: 100%;
   display: block;
