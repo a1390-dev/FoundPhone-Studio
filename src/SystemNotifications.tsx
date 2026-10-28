@@ -4,9 +4,14 @@ import { X } from "lucide-react";
 import { AppArtwork } from "./AppArtwork";
 import type { Work } from "./schema";
 export function notificationContent(text: string, apps: Work["apps"]) {
-  const kktOpening = /^KKT\|金旼炡[:：]\s*(.*)$/s.exec(text);
-  if (kktOpening) {
-    return { title: "金旼炡", body: kktOpening[1], appId: "kakao" };
+  if (text.startsWith("KKT|")) {
+    const message = text.slice(4);
+    const separator = message.search(/[:：]/);
+    return {
+      title: separator > 0 ? message.slice(0, separator).trim() : "KakaoTalk",
+      body: separator > 0 ? message.slice(separator + 1).trim() : message,
+      appId: "kakao",
+    };
   }
   const separator = text.search(/[:：]/);
   const sender = separator > 0 ? text.slice(0, separator) : "信息";
