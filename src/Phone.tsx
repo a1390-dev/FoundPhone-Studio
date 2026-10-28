@@ -1003,6 +1003,9 @@ function AppContent({
   const [thread, setThread] = useState(initialThread);
   const openingMarked = useRef(false);
   useEffect(() => {
+    if (initialThread) setThread(initialThread);
+  }, [initialThread]);
+  useEffect(() => {
     if (app.id === "kakao" && thread === "金旼炡" && !creator && !openingMarked.current) {
       openingMarked.current = true;
       onKktOpeningSeen?.();
