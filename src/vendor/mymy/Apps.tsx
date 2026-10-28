@@ -1412,10 +1412,23 @@ export function MymyX(p: SkinProps) {
             e.preventDefault();
             const body = draft.trim();
             if (!body) return;
+            const postId = "local-x-post-" + userPosts.length;
             setUserPosts((current) => [...current, body]);
             setDraft("");
             setComposeOpen(false);
             setTab("为你推荐");
+            const npcPool = [
+              ["时间线路人", "先等更多上下文吧，别急着下结论。"],
+              ["普通网友", "我也刷到这个话题了，先把推测和事实分开比较好。"],
+              ["小号观察员", "这条我看到了，大家目前的说法还不一致。"],
+              ["路过的MY", "讨论的时候也给当事人留点私人空间吧。"],
+              ["消息核对中", "目前没有确认信息，先不要把传闻写成事实。"],
+              ["晚间刷帖人", "时间线更新真的很快，刚进来就看到新帖。"],
+            ];
+            const npc = npcPool[Math.floor(Math.random() * npcPool.length)];
+            window.setTimeout(() => {
+              p.onUi?.("x-auto-replies-" + postId, [npc[0] + "：" + npc[1]]);
+            }, 1800 + Math.floor(Math.random() * 3200));
           }}>
             <header><button type="button" onClick={() => setComposeOpen(false)}>取消</button><b>发帖</b><span /></header>
             <div className="x-compose-body"><Avatar name={p.playerId || p.owner || "机主"} /><textarea aria-label="X发帖内容" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="有什么新鲜事？" maxLength={280} /></div>
