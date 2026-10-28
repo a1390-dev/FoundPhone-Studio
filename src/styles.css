@@ -4999,9 +4999,11 @@ label {
 #foundphone-player-id {
   width: 100%;
   min-width: 0;
-  min-height: 48px;
+  height: 42px;
+  min-height: 42px;
+  box-sizing: border-box;
   margin: 0 0 3px;
-  padding: 11px 12px;
+  padding: 9px 12px;
   border: 1px solid #ffffff38;
   border-radius: 12px;
   background: #fff;
@@ -5010,6 +5012,10 @@ label {
   line-height: 1.25;
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
+}
+#foundphone-player-id::placeholder {
+  font-size: 13px;
+  color: #999;
 }
 
 
