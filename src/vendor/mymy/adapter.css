@@ -978,3 +978,63 @@
   background: #fff9c7;
   border-radius: 9px;
 }
+
+
+/* Balanced KKT readability: modestly enlarge NPC identity and bilingual bubbles. */
+.mymy-ui.mymy-kakao .kzmav .catalog-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.mymy-ui.mymy-kakao .kzmn {
+  font-size: 13.5px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.mymy-ui.mymy-kakao .kzbub {
+  padding: 10px 13px;
+  max-width: 82%;
+}
+.mymy-ui.mymy-kakao .kkt-korean {
+  font-size: 15px;
+  line-height: 1.45;
+}
+.mymy-ui.mymy-kakao .kzbub .kkt-translation {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+/* Keep long selected Korean replies within the composer, like a real phone input. */
+.mymy-ui.mymy-kakao .kzinp {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.mymy-ui.mymy-kakao .kzinp input {
+  box-sizing: border-box;
+  width: 0;
+  flex: 1 1 0%;
+  min-width: 0;
+  max-width: 100%;
+  height: 34px;
+  padding: 0 7px;
+  font-size: 11.5px !important;
+  line-height: 1.25;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-size-adjust: 100%;
+  transform: none;
+}
+.mymy-ui.mymy-kakao .kkt-choice {
+  padding: 9px 6px;
+}
+.mymy-ui.mymy-kakao .kkt-choice > span {
+  font-size: 13px;
+  line-height: 1.4;
+}
+.mymy-ui.mymy-kakao .kkt-choice > small {
+  font-size: 11px;
+  line-height: 1.4;
+}
