@@ -59,23 +59,36 @@ function Blank() {
   return <p className="mymy-empty">暂无内容</p>;
 }
 
-// These are the exact three replies the player checked in the prior rehearsal.
-// Reuse them in the native reply tray instead of inventing a fresh candidate list.
+// Exact dialogue and player choices transcribed from the user's current story screenshots.
+const KKT_RETURN_TIME_OPTIONS = [
+  ["몇 시쯤 들어올 것 같아?", "你大概几点回来？"],
+  ["늦으면 몇 시쯤 될 것 같아?", "如果晚的话，大概会到几点？"],
+  ["집에 오는 시간 정해지면 알려 줄래?", "确定什么时候回家之后，可以告诉我吗？"],
+] as const;
+const KKT_NIGHT_SNACK_OPTIONS = [
+  ["열한 시에 오면 같이 야식 먹을까?", "如果你十一点回来，我们要不要一起吃夜宵？"],
+  ["내가 뭐 준비해 놓을까? 먹고 싶은 거 있어?", "要不要我提前准备点吃的？你想吃什么？"],
+  ["밥은 먹었어? 뭐 드시고 싶으세요?", "你吃饭了吗？有什么想吃的吗？"],
+] as const;
 const KKT_CONFIRMED_REPLY_OPTIONS = [
   ["그럼 내가 맛있는 거 준비해 놓고 기다릴게. 너무 무리하지 말고 와.", "那我就准备好吃的等你回来。别太勉强自己，慢慢来。"],
   ["자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.", "我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。"],
   ["알겠어, 걱정 마. 내가 기다리고 있을 테니까 일 마무리 잘하고 와.", "好啦，别担心。我会等你的，你安心把工作处理好再回来。"],
 ] as const;
+const KKT_OPENING_FOLLOWUP = [
+  "금旼炡",
+  "나 오늘 집에 좀 늦게 들어갈 것 같아.",
+  "20:17",
+  "npc",
+  "我今天可能会晚点回家。",
+] as const;
 const KKT_STORY_ROUNDS = [
   {
+    // The opening question already exists in the story template. After this
+    // follow-up arrives, the player can ask when she will be home.
     time: "20:17",
-    npc: [["아직 안 잤어?", "还没睡？"]],
-    choices: [],
-  },
-  {
-    time: "20:17",
-    npc: [["나 오늘 집에 좀 늦게 들어갈 것 같아.", "我今天可能会晚点回家。"]],
-    choices: [],
+    npc: [],
+    choices: KKT_RETURN_TIME_OPTIONS,
   },
   {
     time: "20:19",
@@ -84,7 +97,7 @@ const KKT_STORY_ROUNDS = [
       ["아직 마무리할 게 조금 남았어.", "还有一点事情要收尾。"],
       ["너무 늦으면 먼저 자도 돼.", "如果太晚的话，你可以先睡。"],
     ],
-    choices: [],
+    choices: KKT_NIGHT_SNACK_OPTIONS,
   },
   {
     time: "20:20",
@@ -96,12 +109,10 @@ const KKT_STORY_ROUNDS = [
     choices: KKT_CONFIRMED_REPLY_OPTIONS,
   },
   {
+    // The supplied screenshots end at the three confirmed food-scene replies.
+    // Do not invent any further NPC dialogue beyond the user's provided material.
     time: "20:22",
-    npc: [
-      ["뭐야, 이렇게 다정하게 말하면 진짜 빨리 집에 가고 싶어지잖아.", "干嘛呀，你这样温柔地跟我说话，我真的会越来越想早点回家嘛。"],
-      ["오늘만 조금 더 기다려 줘. 끝나는 대로 바로 갈게.", "今天再稍微等我一下嘛。我一忙完就马上回去。"],
-      ["집에 가면 {{playerId}} 옆에 붙어 있을래. 오늘은 좀 많이 안아 줘.", "回家以后我要一直黏在{{playerId}}身边。今天要多抱抱我。"],
-    ],
+    npc: [],
     choices: [],
   },
 ] as const;
@@ -114,8 +125,8 @@ function Back({ onClick }: { onClick: () => void }) {
 }
 export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
-    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
-    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV1", 0),
+    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
+    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
@@ -128,6 +139,40 @@ export function MymyKakao(p: SkinProps) {
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
+  // The opening "I may get home late today" arrives as the second NPC message,
+  // about two seconds after the player opens this KKT conversation.
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const alreadyDelivered = sentRef.current.some((raw) => {
+      try {
+        const entry: unknown = JSON.parse(raw);
+        return Array.isArray(entry) &&
+          entry[0] === p.thread &&
+          entry[1] === KKT_OPENING_FOLLOWUP[1] &&
+          entry[3] === "npc";
+      } catch {
+        return false;
+      }
+    });
+    if (alreadyDelivered) return;
+    setNpcTyping(true);
+    const timer = window.setTimeout(() => {
+      const updated = [
+        ...sentRef.current,
+        JSON.stringify([
+          p.thread,
+          KKT_OPENING_FOLLOWUP[1],
+          KKT_OPENING_FOLLOWUP[2],
+          "npc",
+          KKT_OPENING_FOLLOWUP[4],
+        ]),
+      ];
+      sentRef.current = updated;
+      setSent(updated);
+      setNpcTyping(false);
+    }, 2000);
+    return () => window.clearTimeout(timer);
+  }, [p.thread]);
   useEffect(() => {
     const field = composerRef.current;
     if (!field) return;
