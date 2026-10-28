@@ -23,7 +23,7 @@ import {
 import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
 import { preloadOriginalIconFiles } from "./ios/originalIconFiles";
 import { getFields } from "./fields";
-import { catalogSkins } from "./skins/catalog";
+import { catalogSkins, preloadCatalogSkins } from "./skins/catalog";
 import "./skins/skins.css";
 import "./ios18.css";
 import "./device-system.css";
@@ -645,15 +645,18 @@ function PhoneRuntime({
     if (!creator) void preloadOriginalIconFiles();
   }, [creator]);
 
-  const unlock = (pin = "") => {
+  const unlock = async (pin = "") => {
     if (!work.phone.passcode || pin === work.phone.passcode) {
-      // Keep icon preloading in the background. Unlocking must not depend on
-      // every image decode finishing, which can stall on mobile Safari.
-      if (!creator) void preloadOriginalIconFiles();
+      // Keep the lock screen visible until the desktop icon images have been
+      // fetched and decoded, avoiding a slow, staggered icon pop-in after unlock.
+      if (!creator) await preloadOriginalIconFiles();
       setPinError("");
       setLocked(false);
       setPinOpen(false);
       event("password", pin);
+      // Warm app chunks in the background so opening a skin usually reuses an
+      // already downloaded module instead of pausing for its first JS request.
+      window.setTimeout(() => { void preloadCatalogSkins(); }, 180);
     } else {
       setPinError("密码不正确");
       setPinOpen(true);
