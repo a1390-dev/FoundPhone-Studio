@@ -640,11 +640,11 @@ function PhoneRuntime({
     if (!creator) void preloadOriginalIconFiles();
   }, [creator]);
 
-  const unlock = async (pin = "") => {
+  const unlock = (pin = "") => {
     if (!work.phone.passcode || pin === work.phone.passcode) {
-      // Icon preloading begins while the lock screen is visible. Wait for that
-      // shared batch before revealing the home screen so icons appear together.
-      if (!creator) await preloadOriginalIconFiles();
+      // Keep icon preloading in the background. Unlocking must not depend on
+      // every image decode finishing, which can stall on mobile Safari.
+      if (!creator) void preloadOriginalIconFiles();
       setPinError("");
       setLocked(false);
       setPinOpen(false);
