@@ -720,6 +720,7 @@ function PhoneRuntime({
                       ui: {
                         ...current.ui,
                         story: { ...current.ui?.story, "scandal-call-triggered": true },
+                        kakao: { ...current.ui?.kakao, "scandal-precall-started": true },
                       },
                     });
                   }}
