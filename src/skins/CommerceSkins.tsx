@@ -104,16 +104,23 @@ type TaobaoSavedState = {
   paymentMethod: string;
   orders: TaobaoOrder[];
   lastOrder: TaobaoOrder | null;
+  tab: string;
+  orderDone: boolean;
 };
 const TAOBAO_DEFAULT_ADDRESS = "首尔特别市 江南区 · 清潭洞";
 const TAOBAO_DEFAULT_ADDRESSES = [
   TAOBAO_DEFAULT_ADDRESS,
   "首尔特别市 江南区 · 三成洞",
   "首尔特别市 江南区 · 狎鸥亭洞",
+  "首尔特别市 江南区 · 新沙洞",
+  "首尔特别市 江南区 · 驿三洞",
   "首尔特别市 城东区 · 圣水洞",
   "首尔特别市 龙山区 · 汉南洞",
+  "首尔特别市 龙山区 · 梨泰院洞",
   "首尔特别市 松坡区 · 蚕室洞",
   "首尔特别市 麻浦区 · 合井洞",
+  "首尔特别市 西大门区 · 延禧洞",
+  "首尔特别市 钟路区 · 三清洞",
 ];
 const TAOBAO_DEFAULT_STATE: TaobaoSavedState = {
   cart: {},
@@ -122,6 +129,8 @@ const TAOBAO_DEFAULT_STATE: TaobaoSavedState = {
   paymentMethod: "KakaoPay",
   orders: [],
   lastOrder: null,
+  tab: "商品",
+  orderDone: false,
 };
 function parseTaobaoState(serialized: string): Partial<TaobaoSavedState> {
   try {
@@ -132,15 +141,28 @@ function parseTaobaoState(serialized: string): Partial<TaobaoSavedState> {
   }
 }
 export function TaobaoSkin(p: Props) {
+  const playerLabel = p.playerId?.trim() || "玩家自己";
+  const storageKey = `foundphone:taobao:${encodeURIComponent(playerLabel)}`;
+  const localSavedState = (() => {
+    if (typeof window === "undefined") return JSON.stringify(TAOBAO_DEFAULT_STATE);
+    try {
+      return window.localStorage.getItem(storageKey) ?? JSON.stringify(TAOBAO_DEFAULT_STATE);
+    } catch {
+      return JSON.stringify(TAOBAO_DEFAULT_STATE);
+    }
+  })();
   const [savedState, setSavedState] = useSkinState(
     p,
     "taobaoState",
-    JSON.stringify(TAOBAO_DEFAULT_STATE),
+    localSavedState,
   );
   const restored = parseTaobaoState(savedState);
-  const playerLabel = p.playerId?.trim() || "玩家自己";
   const { q, setQ, items } = useContent(p, "商品");
-  const [tab, setTab] = useState("商品");
+  const [tab, setTab] = useState(() =>
+    typeof restored.tab === "string" && ["商品", "购物车", "订单", "结账"].includes(restored.tab)
+      ? restored.tab
+      : "商品",
+  );
   const [category, setCategory] = useState("全部");
   const [cart, setCart] = useState<Record<string, number>>(() =>
     restored.cart && typeof restored.cart === "object" && !Array.isArray(restored.cart)
@@ -161,7 +183,7 @@ export function TaobaoSkin(p: Props) {
   const [paymentMethod, setPaymentMethod] = useState(
     typeof restored.paymentMethod === "string" ? restored.paymentMethod : "KakaoPay",
   );
-  const [orderDone, setOrderDone] = useState(false);
+  const [orderDone, setOrderDone] = useState(() => restored.orderDone === true);
   const [orders, setOrders] = useState<TaobaoOrder[]>(() =>
     Array.isArray(restored.orders) ? restored.orders : [],
   );
@@ -169,8 +191,14 @@ export function TaobaoSkin(p: Props) {
     restored.lastOrder && typeof restored.lastOrder === "object" ? restored.lastOrder : null,
   );
   useEffect(() => {
-    setSavedState(JSON.stringify({ cart, payer, address, paymentMethod, orders, lastOrder }));
-  }, [cart, payer, address, paymentMethod, orders, lastOrder]);
+    const nextState = JSON.stringify({ cart, payer, address, paymentMethod, orders, lastOrder, tab, orderDone });
+    setSavedState(nextState);
+    try {
+      window.localStorage.setItem(storageKey, nextState);
+    } catch {
+      // Keep in-app save state working when browser storage is unavailable.
+    }
+  }, [cart, payer, address, paymentMethod, orders, lastOrder, tab, orderDone, storageKey, setSavedState]);
   const products = items.filter((i) => i.folder === "商品");
   const addresses = TAOBAO_DEFAULT_ADDRESSES;
   const categories = ["全部", "包包", "项链", "手表", "衣服", "鞋子"];
