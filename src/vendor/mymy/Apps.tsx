@@ -159,7 +159,7 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
-    [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV1", ""),
+    [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV2", ""),
     [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV2", ""),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
@@ -181,7 +181,7 @@ export function MymyKakao(p: SkinProps) {
     if (p.thread !== "金旼炡") return;
     // This 20:17 follow-up belongs to the previous evening conversation, not
     // to the Oct 28 afternoon rumor-and-call sequence.
-    if (p.ui?.["scandal-precall-started"] === true || p.virtualTime?.startsWith("14:")) return;
+    if (p.ui?.["scandal-precall-started-v2"] === true || p.virtualTime?.startsWith("14:")) return;
     const alreadyDelivered = sentRef.current.some((raw) => {
       try {
         const entry: unknown = JSON.parse(raw);
@@ -211,10 +211,10 @@ export function MymyKakao(p: SkinProps) {
       setNpcTyping(false);
     }, 2000);
     return () => window.clearTimeout(timer);
-  }, [p.thread, p.ui?.["scandal-precall-started"], p.virtualTime]);
+  }, [p.thread, p.ui?.["scandal-precall-started-v2"], p.virtualTime]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
-    const started = p.ui?.["scandal-precall-started"];
+    const started = p.ui?.["scandal-precall-started-v2"];
     if (started !== true || processedPreCall) return;
     setProcessedPreCall("running");
     const messages: Array<[string, string]> = [
@@ -238,20 +238,20 @@ export function MymyKakao(p: SkinProps) {
         sentRef.current = updated;
         setSent(updated);
       }
-      p.onUi?.("scandal-precall-step", index + 1);
+      p.onUi?.("scandal-precall-step-v2", index + 1);
       if (index + 1 < messages.length) {
         timer = window.setTimeout(() => deliver(index + 1), 2000);
       } else {
         setProcessedPreCall("sent");
-        p.onUi?.("scandal-precall-delivered", true);
+        p.onUi?.("scandal-precall-delivered-v2", true);
       }
     };
     timer = window.setTimeout(() => deliver(0), 650);
     return () => { if (timer) window.clearTimeout(timer); };
-  }, [p.thread, p.ui?.["scandal-precall-started"], processedPreCall]);
+  }, [p.thread, p.ui?.["scandal-precall-started-v2"], processedPreCall]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
-    const result = p.ui?.["scandal-call-result"];
+    const result = p.ui?.["scandal-call-result-v2"];
     if (typeof result !== "string" || !result) {
       if (processedCallResult) setProcessedCallResult("");
       return;
@@ -281,7 +281,7 @@ export function MymyKakao(p: SkinProps) {
       else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 450);
     };
     deliveryTimer.current = setTimeout(deliverCallMessage, 700);
-  }, [p.thread, p.ui?.["scandal-call-result"], processedCallResult]);
+  }, [p.thread, p.ui?.["scandal-call-result-v2"], processedCallResult]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const round = KKT_STORY_ROUNDS[storyStepRef.current];
@@ -534,7 +534,7 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && !p.ui?.["scandal-call-result"] && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
+          {p.thread === "金旼炡" && !p.ui?.["scandal-call-result-v2"] && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
               {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
                 <button
