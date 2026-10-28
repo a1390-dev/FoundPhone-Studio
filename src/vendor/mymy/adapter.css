@@ -1153,3 +1153,19 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+
+/* Feed refresh control */
+.mymy-ui .kzxtb .x-feed-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 8px;
+  color: #1d9bf0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mymy-ui .kzxtb .x-feed-refresh svg {
+  flex: none;
+}
