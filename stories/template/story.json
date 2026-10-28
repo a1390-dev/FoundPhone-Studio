@@ -2,12 +2,12 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "仅用于界面测试，不含剧情",
-  "revision": 8,
+  "description": "剧情开局：解锁后约3秒收到金旼炡的 KKT 通知。进入聊天后，玩家可从明确的回复选项中选择并点击发送；NPC 连续消息逐条出现，韩文原文在上、中文翻译在下。",
+  "revision": 14,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
-    "time": "17:04",
+    "time": "20:17",
     "battery": 94,
     "network": "5G",
     "wallpaper": "dog",
@@ -375,67 +375,16 @@
       ],
       "messages": [
         {
-          "id": "kakao-kim-minjeong-conversation-1",
-          "body": "你到家了吗？",
+          "id": "kkt-minjeong-opening-01",
+          "title": "金旼炡",
+          "body": "아직 안 잤어?",
           "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:04",
+          "time": "2026-10-27 20:17",
           "meta": {
-            "pinned": "true"
+            "pinned": "true",
+            "translation": "还没睡？",
+            "unread": "1"
           }
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-2",
-          "body": "刚到，你呢？",
-          "senderId": "owner",
-          "time": "2026-10-27 17:06"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-3",
-          "body": "我也刚结束，今天有点累。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:08"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-4",
-          "body": "那先休息一会儿，记得吃东西。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:10"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-5",
-          "body": "你晚饭吃什么了？",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:12"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-6",
-          "body": "还没决定，你有什么推荐？",
-          "senderId": "owner",
-          "time": "2026-10-27 17:14"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-7",
-          "body": "想吃热汤或者面条。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:16"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-8",
-          "body": "那就吃点热乎的吧。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:18"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-9",
-          "body": "好，等下拍给你看。",
-          "senderId": "kim-minjeong",
-          "time": "2026-10-27 17:20"
-        },
-        {
-          "id": "kakao-kim-minjeong-conversation-10",
-          "body": "嗯，吃完跟我说一声。",
-          "senderId": "owner",
-          "time": "2026-10-27 17:22"
         }
       ]
     },
@@ -6933,6 +6882,67 @@
     "appstore": []
   },
   "variables": {},
-  "events": [],
-  "tests": []
+  "events": [
+    {
+      "id": "kkt-first-message-after-unlock",
+      "label": "解锁后等待3秒再弹出金旼炡的第一条 KKT 消息",
+      "type": "delay",
+      "event": "password",
+      "target": "0101",
+      "conditions": [],
+      "logic": "and",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "KKT|金旼炡: 아직 안 잤어?"
+        }
+      ],
+      "next": [],
+      "once": true,
+      "x": 240,
+      "y": 120,
+      "delayMs": 3000
+    },
+    {
+      "id": "kkt-opening-test-ending",
+      "label": "自动化测试专用：验证 KKT 开局路径",
+      "type": "ending",
+      "event": "storyTest",
+      "target": "verifyKktOpen",
+      "conditions": [],
+      "logic": "and",
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "KKT opening verified"
+        }
+      ],
+      "next": [],
+      "once": true,
+      "x": 440,
+      "y": 120
+    }
+  ],
+  "tests": [
+    {
+      "name": "解锁后等待三秒收到金旼炡 KKT 通知",
+      "steps": [
+        {
+          "event": "password",
+          "target": "0101"
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "storyTest",
+          "target": "verifyKktOpen"
+        }
+      ],
+      "ending": "KKT opening verified",
+      "expectUnlocked": []
+    }
+  ]
 }
