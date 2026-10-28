@@ -5042,7 +5042,7 @@ label {
 /* Only the delivery address selector uses the same 13px type scale as product titles.
    Keep the anti-auto-zoom font-size override scoped away from all other inputs. */
 .story-runtime .delivery-location select {
-  font-size: 13px !important;
+  font-size: 14px !important;
 }
 
 /* The whole simulated phone is scaled with CSS zoom. Compensate only the ID
