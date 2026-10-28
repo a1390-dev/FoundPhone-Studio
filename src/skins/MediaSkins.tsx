@@ -240,6 +240,13 @@ export function NeteaseSkin(p: Props) {
     </div>
   );
 }
+const linkedYouTubeVideos = [
+  { id: "K3DpULg1_Vw", title: "你分享的视频 1" },
+  { id: "JmSEjwQS-2o", title: "你分享的视频 2" },
+  { id: "TDxKRbGESFk", title: "你分享的视频 3" },
+  { id: "Tjff1tkZDbE", title: "你分享的视频 4" },
+];
+
 export function YouTubeSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "首页");
   const [category, setCategory] = useState("全部");
@@ -271,6 +278,37 @@ export function YouTubeSkin(p: Props) {
       </div>
       <div className="catalog-scroll">
         <div className={tab === "Shorts" ? "youtube-shorts" : "youtube-videos"}>
+          {tab === "首页" && category === "全部" && linkedYouTubeVideos.map((video) => (
+            <article key={video.id} className="youtube-linked-video">
+              <a
+                className="youtube-thumb"
+                href={`https://www.youtube.com/watch?v=${video.id}`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`在 YouTube 打开${video.title}`}
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                  loading="lazy"
+                  decoding="async"
+                  alt={video.title}
+                />
+                <span className="youtube-play-mark" aria-hidden="true">▶</span>
+              </a>
+              <a
+                className="youtube-byline youtube-linked-byline"
+                href={`https://www.youtube.com/watch?v=${video.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="catalog-avatar" aria-hidden="true">▶</span>
+                <div>
+                  <strong>{video.title}</strong>
+                  <small>YouTube · 点击打开视频</small>
+                </div>
+              </a>
+            </article>
+          ))}
           {list.map((i) => (
             <article key={i.id}>
               <button className="youtube-thumb" onClick={() => p.onItem(i)}>
