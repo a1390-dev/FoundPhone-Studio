@@ -297,7 +297,7 @@ export function MymyKakao(p: SkinProps) {
             </button>
             <input
               aria-label="KKT消息"
-              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 ? "点击选择一条回复" : "输入消息"}
+              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
               value={draft}
               maxLength={2000}
               readOnly={p.thread === "金旼炡" || npcTyping}
