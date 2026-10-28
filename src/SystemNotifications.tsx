@@ -4,6 +4,19 @@ import { X } from "lucide-react";
 import { AppArtwork } from "./AppArtwork";
 import type { Work } from "./schema";
 export function notificationContent(text: string, apps: Work["apps"]) {
+  if (text.startsWith("IGDM|")) {
+    const payload = text.slice(5);
+    const separator = payload.indexOf("|");
+    const threadId = separator >= 0 ? payload.slice(0, separator) : "";
+    const message = separator >= 0 ? payload.slice(separator + 1) : payload;
+    const divider = message.indexOf(":");
+    return {
+      title: divider > 0 ? message.slice(0, divider).trim() : "Instagram",
+      body: divider > 0 ? message.slice(divider + 1).trim() : message,
+      appId: "instagram",
+      threadId,
+    };
+  }
   if (text.startsWith("KKT|")) {
     const message = text.slice(4);
     const separator = message.search(/[:：]/);
@@ -31,7 +44,7 @@ export function SystemNotifications({
 }: {
   notices: string[];
   apps: Work["apps"];
-  onOpen: () => void;
+  onOpen: (notice: string) => void;
   onDismiss: (index: number) => void;
   compact?: boolean;
 }) {
@@ -55,14 +68,16 @@ export function SystemNotifications({
               key={text + "::" + index}
               initial={{ opacity: 0, y: 35, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.3}
+              drag
+              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+              dragElastic={0.22}
               onDragEnd={(_, info) => {
-                if (info.offset.x < -80) onDismiss(index);
+                if (info.offset.y < -55 || info.velocity.y < -450 || info.offset.x < -80) {
+                  onDismiss(index);
+                }
               }}
             >
-              <button className="notice-open" onClick={onOpen}>
+              <button className="notice-open" onClick={() => onOpen(text)}>
                 <span className="notice-app-art">
                   <AppArtwork id={n.appId} />
                 </span>
