@@ -1342,3 +1342,60 @@
   flex: 1 1 auto;
   min-height: 0;
 }
+
+
+/* Instagram DM typography and bubbles matched to the supplied reference. */
+.mymy-ui.mymy-instagram .ig-rumor-dm-message {
+  align-items: flex-end;
+  gap: 7px;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.incoming .skin-avatar {
+  display: inline-flex;
+  width: 27px;
+  height: 27px;
+  min-width: 27px;
+  min-height: 27px;
+  flex: 0 0 27px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3px;
+  border-radius: 50%;
+  background: #e6e6eb;
+  color: #33343a;
+  font-size: 10px;
+  font-weight: 750;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble {
+  padding: 11px 14px;
+  border-radius: 20px;
+  border-color: #e5e5ea;
+  background: #f0f0f4;
+  color: #17171b;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble p {
+  font-size: 14px;
+  line-height: 1.48;
+  font-weight: 700;
+  letter-spacing: -.08px;
+  color: #17171b;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-bubble small {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #393940;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.outgoing .ig-rumor-dm-bubble {
+  border-color: #6940ef;
+  background: linear-gradient(145deg, #7949ff 0%, #6335ed 100%);
+  color: #fff;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.outgoing .ig-rumor-dm-bubble p {
+  color: #fff;
+  font-weight: 700;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-message.outgoing .ig-rumor-dm-bubble small {
+  color: #f1eaff;
+  font-weight: 600;
+}
