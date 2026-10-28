@@ -448,9 +448,12 @@ function PhoneRuntime({
     if (!creator) void preloadOriginalIconFiles();
   }, [creator]);
 
-  const unlock = async (pin = "") => {
+  const unlock = (pin = "") => {
     if (!work.phone.passcode || pin === work.phone.passcode) {
-      if (!creator) await preloadOriginalIconFiles();
+      // Keep icon decoding in the background so it can never trap the unlock
+      // flow on mobile Safari.
+      if (!creator) void preloadOriginalIconFiles();
+      setPinError("");
       setLocked(false);
       setPinOpen(false);
       event("password", pin);
