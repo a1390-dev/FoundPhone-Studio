@@ -4,6 +4,10 @@ import { X } from "lucide-react";
 import { AppArtwork } from "./AppArtwork";
 import type { Work } from "./schema";
 export function notificationContent(text: string, apps: Work["apps"]) {
+  const kktOpening = /^KKT\|金旼炡[:：]\s*(.*)$/s.exec(text);
+  if (kktOpening) {
+    return { title: "金旼炡", body: kktOpening[1], appId: "kakao" };
+  }
   const separator = text.search(/[:：]/);
   const sender = separator > 0 ? text.slice(0, separator) : "信息";
   const app = apps.find((a) => a.name === sender);
