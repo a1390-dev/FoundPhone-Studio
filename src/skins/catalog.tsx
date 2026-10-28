@@ -57,3 +57,25 @@ export const catalogSkins = {
   taobao: skin(commerce, "TaobaoSkin"),
   delivery: skin(commerce, "DeliverySkin"),
 };
+
+let catalogPreloadPromise: Promise<void> | undefined;
+
+/** Pre-fetch app UI chunks after unlock so opening an app does not wait for its first JS download. */
+export function preloadCatalogSkins(): Promise<void> {
+  if (!catalogPreloadPromise) {
+    catalogPreloadPromise = Promise.all([
+      system(),
+      messaging(),
+      social(),
+      media(),
+      commerce(),
+      mymy(),
+      import("./ThreadsReference"),
+      import("../AppSkins"),
+    ]).then(() => undefined, () => {
+      // Allow a later attempt if one chunk failed because the network was offline.
+      catalogPreloadPromise = undefined;
+    });
+  }
+  return catalogPreloadPromise;
+}
