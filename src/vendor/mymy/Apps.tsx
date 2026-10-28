@@ -36,6 +36,70 @@ import { useSkinState } from "../../skinState";
 import { makeItem, type Item } from "../../schema";
 import "./ui.css";
 import "./adapter.css";
+type InstagramFanDm = {
+  id: string;
+  handle: string;
+  text: string;
+  translation: string;
+  category: "support" | "critical" | "curious" | "passerby";
+};
+type InstagramFanDmReply = {
+  id: string;
+  threadId: string;
+  handle: string;
+  text: string;
+  translation: string;
+  role: "player" | "npc";
+};
+function parseInstagramFanDm(raw: string): InstagramFanDm | null {
+  try {
+    const value = JSON.parse(raw) as Partial<InstagramFanDm>;
+    if (typeof value.id === "string" && typeof value.handle === "string" &&
+      typeof value.text === "string" && typeof value.translation === "string" &&
+      typeof value.category === "string") return value as InstagramFanDm;
+  } catch { /* Ignore invalid stored message rows. */ }
+  return null;
+}
+function parseInstagramFanDmReply(raw: string): InstagramFanDmReply | null {
+  try {
+    const value = JSON.parse(raw) as Partial<InstagramFanDmReply>;
+    if (typeof value.id === "string" && typeof value.threadId === "string" &&
+      typeof value.handle === "string" && typeof value.text === "string" &&
+      typeof value.role === "string") return value as InstagramFanDmReply;
+  } catch { /* Ignore invalid stored replies. */ }
+  return null;
+}
+const IG_FAN_DM_RESPONSES: Record<InstagramFanDm["category"], Array<{ text: string; translation: string }>> = {
+  support: [
+    { text: "답장해 줘서 고마워요. 너무 혼자 감당하지 않았으면 해요.", translation: "谢谢你回复我，希望你不要一个人承受太多。" },
+    { text: "괜히 참견한 건 아닌가 걱정했는데 다행이에요.", translation: "我还担心自己是不是多管闲事了，听你这么说就好。" },
+    { text: "오늘은 댓글보다 편한 사람들과 함께 있어요.", translation: "今天比起看评论，还是和让你放松的人待在一起吧。" },
+    { text: "응원한다는 말은 꼭 전하고 싶었어요. 힘내요 🤍", translation: "还是想把支持你的话传达给你，加油 🤍" },
+    { text: "저도 너무 단정 짓지 않으려고 해요. 잘 지나가길 바라요.", translation: "我也不想妄下结论，希望这件事能顺利过去。" },
+  ],
+  critical: [
+    { text: "그냥 온라인 반응이 과열된 것 같아서 한 말이에요.", translation: "我只是觉得网上的反应太过火了，才这么说。" },
+    { text: "제 말이 불편했다면 미안해요. 그래도 추측은 조심했으면 해요.", translation: "如果我的话让你不舒服，对不起。但还是希望大家谨慎猜测。" },
+    { text: "저도 더 알아보지 않고 말 얹은 건 아닌지 생각 중이에요.", translation: "我也在想自己是不是没弄清楚就跟着评论了。" },
+    { text: "누굴 비난하려는 건 아니고 이 분위기가 부담스럽다는 뜻이에요.", translation: "我不是想责怪谁，只是觉得这种氛围让人有压力。" },
+    { text: "알겠어요. 사진만 보고 확실하다고 말하긴 어렵겠네요.", translation: "知道了。确实不能只看照片就说事情已经确定。" },
+  ],
+  curious: [
+    { text: "자세히 말하기 곤란하면 대답 안 해도 괜찮아요.", translation: "如果不方便说得太详细，不回答也没关系。" },
+    { text: "아, 저는 처음 올라온 글이 진짜 기사인 줄 알았어요.", translation: "啊，我还以为最早那条是正式新闻。" },
+    { text: "그럼 아직 확인된 건 없다고 보면 되는 거죠?", translation: "那可以理解为目前还没有任何确认的信息，对吧？" },
+    { text: "답장 고마워요. 더 퍼뜨리기보다는 기다려 볼게요.", translation: "谢谢回复。我不会继续传播，先等等看吧。" },
+    { text: "저도 타임라인만 보고는 잘 모르겠네요. 얘기가 계속 바뀌어요.", translation: "我看时间线也弄不清楚，大家的说法一直在变。" },
+  ],
+  passerby: [
+    { text: "아 그렇군요. 괜히 궁금해서 메시지했네요, 미안해요.", translation: "原来如此。我只是好奇才发消息的，不好意思。" },
+    { text: "답장해 줘서 고마워요. 오늘 인터넷이 정말 시끄럽네요.", translation: "谢谢回复，今天网上确实特别吵。" },
+    { text: "저는 이제 그만 보고 다른 일 하러 갈게요. 좋은 하루 보내요.", translation: "我不再看了，去忙别的事啦，祝你今天顺利。" },
+    { text: "이런 일은 당사자끼리 잘 정리되길 바라는 게 제일이겠어요.", translation: "这种事还是希望当事人能好好处理吧。" },
+    { text: "괜히 더 시끄럽게 만들 생각은 없어요. 조심히 지내요.", translation: "我没有想把事情闹得更大，照顾好自己。" },
+  ],
+};
+
 function grouped(items: Item[]) {
   return [...new Set(items.map((i) => i.title))].map((title) => ({
     title,
