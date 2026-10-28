@@ -433,8 +433,6 @@ function PhoneRuntime({
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     const current = runtimeRef.current;
-    const hasRumorStory = (work.data.twitter || []).some((i) => i.meta.category === "rumor-discussion");
-    const storyUi = current.ui?.story || {};
 
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
@@ -573,9 +571,8 @@ function PhoneRuntime({
   useEffect(() => {
     if (creator || s.incomingCall?.target !== "scandal-call" ||
       s.incomingCall.status !== "answered") return;
-    if (![0, 1, 3, 5].includes(callDialogueStep)) return;
-    const nextStep = callDialogueStep === 0 ? 1 : callDialogueStep === 1 ? 2 :
-      callDialogueStep === 3 ? 4 : 6;
+    if (![0, 3, 5].includes(callDialogueStep)) return;
+    const nextStep = callDialogueStep === 0 ? 1 : callDialogueStep === 3 ? 4 : 6;
     const timer = window.setTimeout(() => {
       const current = runtimeRef.current;
       if (current.incomingCall?.target !== "scandal-call" ||
@@ -1042,13 +1039,13 @@ function PhoneRuntime({
                       </div>
                     )}
                   </div>
-                  {(callDialogueStep === 2 || callDialogueStep === 4) && (
+                  {(callDialogueStep === 1 || callDialogueStep === 4) && (
                     <div className="call-reply-options">
                       <button
                         type="button"
                         onClick={() => {
                           const current = runtimeRef.current;
-                          const nextStep = callDialogueStep === 2 ? 3 : 5;
+                          const nextStep = callDialogueStep === 1 ? 3 : 5;
                           update({
                             ...current,
                             ui: {
@@ -1058,8 +1055,8 @@ function PhoneRuntime({
                           });
                         }}
                       >
-                        <span>{callDialogueStep === 2 ? "알겠어." : "응."}</span>
-                        <small>{callDialogueStep === 2 ? "好。" : "嗯。"}</small>
+                        <span>{callDialogueStep === 1 ? "알겠어." : "응."}</span>
+                        <small>{callDialogueStep === 1 ? "好。" : "嗯。"}</small>
                         <b>发送</b>
                       </button>
                     </div>
