@@ -176,6 +176,21 @@ export function MymyKakao(p: SkinProps) {
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡" || storyStep < KKT_STORY_ROUNDS.length) return;
+    const lastRound = KKT_STORY_ROUNDS[KKT_STORY_ROUNDS.length - 1];
+    const completed = sentRef.current.some((raw) => {
+      try {
+        const entry: unknown = JSON.parse(raw);
+        return Array.isArray(entry) && entry[0] === p.thread &&
+          entry[2] === lastRound.time && entry[3] === "owner" &&
+          lastRound.choices.some(([ko]) => ko === entry[1]);
+      } catch {
+        return false;
+      }
+    });
+    if (completed) p.onUi?.("convenience-store-event-finished-v3", true);
+  }, [p.thread, storyStep]);
   // The opening "I may get home late today" arrives as the second NPC message,
   // about two seconds after the player opens this KKT conversation.
   useEffect(() => {
@@ -483,9 +498,6 @@ export function MymyKakao(p: SkinProps) {
                 const nextStep = storyStep + 1;
                 const nextRound = KKT_STORY_ROUNDS[nextStep];
                 setStoryStep(Math.min(nextStep, KKT_STORY_ROUNDS.length));
-                if (storyStep === KKT_STORY_ROUNDS.length - 1 && selectedChoices.length > 0) {
-                  p.onUi?.("convenience-store-event-finished-v3", true);
-                }
                 if (nextRound?.npc.length) {
                   setNpcTyping(true);
                   let index = 0;
