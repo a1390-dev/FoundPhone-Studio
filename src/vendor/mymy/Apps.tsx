@@ -1244,9 +1244,14 @@ export function MymyX(p: SkinProps) {
             <ArrowLeft />
           </button>
           <div className="kzxlg">𝕏</div>
-          <button aria-label="切换X外观" onClick={() => setDark(!dark)}>
-            <User />
-          </button>
+          <div className="x-header-actions">
+            <button aria-label="切换X外观" onClick={() => setDark(!dark)}>
+              <User />
+            </button>
+            <button className="x-feed-refresh" type="button" aria-label="刷新X信息流" title="刷新" onClick={refreshFeed}>
+              <RefreshCw size={18} />
+            </button>
+          </div>
         </header>
         <div className="kzxtb">
           {["为你推荐", "正在关注", "添加 +", "时间"].map((t) => (
@@ -1258,10 +1263,6 @@ export function MymyX(p: SkinProps) {
               {t}
             </button>
           ))}
-          <button className="x-feed-refresh" type="button" aria-label="刷新X信息流" onClick={refreshFeed}>
-            <RefreshCw size={16} />
-            <span>刷新</span>
-          </button>
         </div>
         {tab === "搜索" && (
           <input
