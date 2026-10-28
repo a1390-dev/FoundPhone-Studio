@@ -32,6 +32,95 @@ function readBuiltWork(value: unknown): Work {
 function StoryPlayer() {
   const [work, setWork] = useState<Work | null>(null),
     [error, setError] = useState("");
+
+  // iOS Safari can still chain a vertical touch gesture to the outer page even
+  // when the page root is fixed. Freeze the document and allow vertical touch
+  // movement only when it can scroll a genuine inner list/chat pane.
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const root = document.getElementById("root");
+    const elements = [html, body, root].filter(
+      (value): value is HTMLElement => value instanceof HTMLElement,
+    );
+    const before = elements.map((el) => ({
+      el,
+      css: {
+        position: el.style.position,
+        inset: el.style.inset,
+        width: el.style.width,
+        height: el.style.height,
+        overflow: el.style.overflow,
+        overscrollBehavior: el.style.overscrollBehavior,
+      },
+    }));
+    for (const el of elements) {
+      el.style.overflow = "hidden";
+      el.style.overscrollBehavior = "none";
+    }
+    for (const el of [html, body, root]) {
+      if (!el) continue;
+      el.style.position = "fixed";
+      el.style.inset = "0";
+      el.style.width = "100%";
+      el.style.height = "100%";
+    }
+
+    let startX = 0;
+    let startY = 0;
+    let startPane: HTMLElement | null = null;
+    const findScrollable = (target: EventTarget | null) => {
+      let node = target instanceof HTMLElement ? target : null;
+      while (node && node !== root) {
+        const overflowY = window.getComputedStyle(node).overflowY;
+        if (
+          (overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay") &&
+          node.scrollHeight > node.clientHeight + 1
+        ) return node;
+        node = node.parentElement;
+      }
+      return null;
+    };
+    const onTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) {
+        startPane = null;
+        return;
+      }
+      const touch = event.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      startPane = findScrollable(event.target);
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      if (event.touches.length !== 1) return;
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+      if (Math.abs(deltaY) < 2 || Math.abs(deltaX) > Math.abs(deltaY)) return;
+
+      const pane = findScrollable(event.target) || startPane;
+      if (!pane || pane.scrollHeight <= pane.clientHeight + 1) {
+        if (event.cancelable) event.preventDefault();
+        return;
+      }
+      const maxScroll = pane.scrollHeight - pane.clientHeight;
+      const canScroll = deltaY < 0
+        ? pane.scrollTop < maxScroll - 1
+        : pane.scrollTop > 1;
+      // Stop overscroll from escaping a list at its top/bottom to the page.
+      if (!canScroll && event.cancelable) event.preventDefault();
+    };
+    document.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });
+    document.addEventListener("touchmove", onTouchMove, { capture: true, passive: false });
+    return () => {
+      document.removeEventListener("touchstart", onTouchStart, true);
+      document.removeEventListener("touchmove", onTouchMove, true);
+      for (const entry of before) {
+        Object.assign(entry.el.style, entry.css);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const abort = new AbortController();
     fetch(
