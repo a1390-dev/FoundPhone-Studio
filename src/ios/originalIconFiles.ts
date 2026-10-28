@@ -70,6 +70,7 @@ export function preloadOriginalIconFiles(): Promise<void> {
         const image = new Image();
         image.decoding = "sync";
         image.src = url;
+        if (typeof image.decode !== "function") return Promise.resolve();
         return image.decode().then(
           () => undefined,
           () => undefined,
