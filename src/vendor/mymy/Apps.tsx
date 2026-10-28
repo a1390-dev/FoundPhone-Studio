@@ -803,6 +803,76 @@ export function MymyInstagram(p: SkinProps) {
     [story, setStory] = useState(0),
     [draft, setDraft] = useState(""),
     [pop, setPop] = useState("");
+  const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v6", []);
+  const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v6", 0);
+  const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v6", []);
+  const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v6", []);
+  const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v6", "");
+  const [activeFanDm, setActiveFanDm] = useState("");
+  const [fanDmDraft, setFanDmDraft] = useState("");
+  const fanDmScrollRef = useRef<HTMLDivElement | null>(null);
+  const visibleFanDms = fanDmQueue.slice(0, Math.max(0, fanDmVisibleCount))
+    .map(parseInstagramFanDm).filter((dm): dm is InstagramFanDm => dm !== null);
+  const fanDmReplyEntries = fanDmReplies.map(parseInstagramFanDmReply)
+    .filter((message): message is InstagramFanDmReply => message !== null);
+  const activeFan = visibleFanDms.find((dm) => dm.id === activeFanDm) || null;
+  const activeFanMessages: InstagramFanDmReply[] = activeFan ? [
+    {
+      id: activeFan.id,
+      threadId: activeFan.id,
+      handle: activeFan.handle,
+      text: activeFan.text,
+      translation: activeFan.translation,
+      role: "npc",
+    },
+    ...fanDmReplyEntries.filter((message) => message.threadId === activeFan.id),
+  ] : [];
+  useEffect(() => {
+    if (!fanDmOpenRequest) return;
+    setTab("私信");
+    setActiveFanDm(fanDmOpenRequest);
+    setFanDmOpenRequest("");
+  }, [fanDmOpenRequest]);
+  useEffect(() => {
+    p.onUi?.("scandal-ig-dm-screen-active-v6", tab === "私信" && !selected);
+    return () => p.onUi?.("scandal-ig-dm-screen-active-v6", false);
+  }, [tab, selected?.id]);
+  useEffect(() => {
+    const node = fanDmScrollRef.current;
+    if (node) node.scrollTop = node.scrollHeight;
+  }, [activeFanDm, fanDmVisibleCount, fanDmReplies.length]);
+  const sendFanDmReply = () => {
+    const text = fanDmDraft.trim();
+    if (!text || !activeFan) return;
+    const playerMessage: InstagramFanDmReply = {
+      id: activeFan.id + "-player-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+      threadId: activeFan.id,
+      handle: activeFan.handle,
+      text,
+      translation: "",
+      role: "player",
+    };
+    setFanDmReplies([...fanDmReplies, JSON.stringify(playerMessage)]);
+    setFanDmDraft("");
+    if (Math.random() >= 0.6) return;
+    const pool = [...IG_FAN_DM_RESPONSES[activeFan.category]];
+    const responseCount = Math.random() < 0.45 ? 2 : 1;
+    const pending: string[] = [];
+    for (let index = 0; index < responseCount; index += 1) {
+      const choiceIndex = Math.floor(Math.random() * pool.length);
+      const choice = pool.splice(choiceIndex, 1)[0];
+      if (!choice) continue;
+      pending.push(JSON.stringify({
+        id: activeFan.id + "-npc-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7) + "-" + index,
+        threadId: activeFan.id,
+        handle: activeFan.handle,
+        text: choice.text,
+        translation: choice.translation,
+        role: "npc",
+      } satisfies InstagramFanDmReply));
+    }
+    if (pending.length) setFanDmReplyQueue([...fanDmReplyQueue, ...pending]);
+  };
   const sourcePosts = p.items.filter(
       (i) => i.folder !== "私信" && i.meta.story !== "true",
     ),
