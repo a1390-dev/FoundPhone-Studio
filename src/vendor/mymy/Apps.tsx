@@ -263,7 +263,12 @@ export function MymyKakao(p: SkinProps) {
       }
     };
     timer = window.setTimeout(() => deliver(0), 650);
-    return () => { if (timer) window.clearTimeout(timer); };
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      // If the chat is temporarily closed (or React replays effects in dev),
+      // allow the sequence to resume instead of leaving a stuck "started" ref.
+      if (processedPreCall !== "sent") preCallSequenceStartedRef.current = false;
+    };
   }, [p.thread, p.ui?.["scandal-precall-started-v2"], processedPreCall]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
