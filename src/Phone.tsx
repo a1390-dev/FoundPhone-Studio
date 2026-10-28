@@ -640,9 +640,13 @@ function PhoneRuntime({
     if (!creator) void preloadOriginalIconFiles();
   }, [creator]);
 
-  const unlock = async (pin = "") => {
+  const unlock = (pin = "") => {
     if (!work.phone.passcode || pin === work.phone.passcode) {
-      if (!creator) await preloadOriginalIconFiles();
+      // Do not block the unlock gesture on image decoding. Start preloading in
+      // the background so slow iOS Safari asset decoding cannot trap the phone
+      // on the lock screen.
+      if (!creator) void preloadOriginalIconFiles();
+      setPinError("");
       setLocked(false);
       setPinOpen(false);
       event("password", pin);
