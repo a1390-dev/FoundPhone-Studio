@@ -8804,24 +8804,29 @@
       },
       {
         "id": "threadshome-post-35",
-        "title": "저녁산책질문 @eveningwalkask",
-        "body": "저녁 산책은 음악 들으면서 걷기 vs 주변 소리 들으면서 걷기?\n\n晚间散步时你会听音乐走路，还是听周围环境的声音走路？",
-        "time": "2026-10-27 22:58",
-        "sender": "저녁산책질문",
+        "title": "散步模式选择题 @walkmode.cn",
+        "body": "晚上散步你们更喜欢哪种模式：戴耳机听歌，把自己走成MV主角；还是不戴耳机，听风声、车声和路边店铺的声音？",
+        "time": "2026-10-27 16:50",
+        "sender": "散步模式选择题",
         "kind": "post",
         "folder": "questions",
-        "likes": 3500,
+        "likes": 516,
         "comments": [
-          "이어폰파: 플레이리스트가 길을 만들어 줘요. / 耳机派：歌单会替我铺出一条路。",
-          "소리수집: 바람 소리 듣는 것도 좋더라고요. / 收集声音：听风声也很好。"
+          "MV主角本人：必须要有一首走路BGM。",
+          "城市收音机：偶尔听听周围也很舒服。",
+          "走到哪算哪：看当天心情切换模式。",
+          "↳ MV主角本人：下雨天还要加一段慢动作。",
+          "路灯收藏家：我投不戴耳机，夜晚声音很治愈。"
         ],
         "meta": {
-          "handle": "@eveningwalkask",
+          "handle": "walkmode.cn",
           "category": "questions",
-          "reposts": "630",
-          "bookmarks": "385",
           "platform": "threads",
-          "fictional": "true"
+          "fictional": "true",
+          "language": "zh",
+          "live": "false",
+          "reposts": "88",
+          "bookmarks": "41"
         }
       },
       {
