@@ -232,34 +232,31 @@ function PhoneRuntime({
     const el = shell.current;
     if (!el) return;
     const fit = () => {
-      // Do not recompute the device size while iOS Safari is showing the
-      // keyboard for the player-ID field. Its temporary viewport height is
-      // not the usable phone layout and must not shrink the whole simulator.
-      if (document.activeElement?.id === "foundphone-player-id") return;
+      // Size the device from its fixed simulator stage, not window.innerHeight
+      // or visualViewport: iOS Safari shrinks those while the keyboard is open.
+      // Using that temporary height caused the phone to jump/shrink after ID entry.
+      const stage = el.parentElement;
+      if (!stage) return;
+      const availableWidth = stage.clientWidth - 24;
+      const availableHeight = stage.clientHeight - (creator ? 170 : external ? 150 : 40);
+      if (availableWidth <= 0 || availableHeight <= 0) return;
       setDeviceScale(
         Math.max(
           0.4,
-          Math.min(
-            1,
-            (el.parentElement!.clientWidth - 24) / 407,
-            (window.innerHeight - (creator ? 170 : external ? 150 : 40)) / 866,
-          ),
+          Math.min(1, availableWidth / 407, availableHeight / 866),
         ),
       );
     };
     const observer = new ResizeObserver(fit);
-    const viewport = window.visualViewport;
-    const onFocusOut = () => requestAnimationFrame(fit);
-    observer.observe(el.parentElement!);
-    window.addEventListener("resize", fit);
-    viewport?.addEventListener("resize", fit);
-    document.addEventListener("focusout", onFocusOut);
+    const stage = el.parentElement;
+    if (stage) observer.observe(stage);
+    // Do not listen to the visual viewport: its height changes with the iOS
+    // keyboard and is not the dimensions of the simulated phone stage.
+    window.addEventListener("orientationchange", fit);
     fit();
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", fit);
-      viewport?.removeEventListener("resize", fit);
-      document.removeEventListener("focusout", onFocusOut);
+      window.removeEventListener("orientationchange", fit);
     };
   }, [creator, ready]);
   const s = external ?? own;
