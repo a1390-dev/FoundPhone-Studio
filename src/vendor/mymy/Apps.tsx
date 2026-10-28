@@ -170,6 +170,7 @@ export function MymyKakao(p: SkinProps) {
     [menu, setMenu] = useState(false);
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
+  const preCallSequenceStartedRef = useRef(false);
   const storyStepRef = useRef(storyStep);
   useEffect(() => { storyStepRef.current = storyStep; }, [storyStep]);
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -215,8 +216,8 @@ export function MymyKakao(p: SkinProps) {
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const started = p.ui?.["scandal-precall-started-v2"];
-    if (started !== true || processedPreCall) return;
-    setProcessedPreCall("running");
+    if (started !== true || processedPreCall || preCallSequenceStartedRef.current) return;
+    preCallSequenceStartedRef.current = true;
     const messages: Array<[string, string]> = [
       ["어디야?", "你在哪？"],
       ["혼자 있어?", "你一个人吗？"],
