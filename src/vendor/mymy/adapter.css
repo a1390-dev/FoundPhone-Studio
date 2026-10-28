@@ -1170,3 +1170,17 @@
   color: #1d9bf0;
   border-radius: 50%;
 }
+
+.mymy-ui.mymy-x .x-compose-button{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#1d9bf0;color:#fff}
+.mymy-ui.mymy-x .x-compose-card{position:absolute;z-index:70;inset:44px 0 0;display:flex;flex-direction:column;padding:0 14px 14px;background:var(--x-bg,#fff);color:var(--x-fg,#0f1419);overflow:auto}
+.mymy-ui.mymy-x.x-reference-dark .x-compose-card{--x-bg:#000;--x-fg:#e7e9ea}
+.mymy-ui.mymy-x .x-compose-card>header,.mymy-ui.mymy-x .x-compose-card>footer{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;flex:none}
+.mymy-ui.mymy-x .x-compose-card>header button{color:inherit;font-size:14px}
+.mymy-ui.mymy-x .x-compose-card>header b{font-size:16px}
+.mymy-ui.mymy-x .x-compose-body{display:flex;align-items:flex-start;gap:11px;padding-top:12px;flex:1}
+.mymy-ui.mymy-x .x-compose-body>.catalog-avatar{width:42px;height:42px;flex:none}
+.mymy-ui.mymy-x .x-compose-body textarea{display:block;width:100%;min-height:150px;resize:none;border:0;outline:0;background:transparent;color:inherit;font:inherit;font-size:18px;line-height:1.45}
+.mymy-ui.mymy-x .x-compose-card>footer{border-top:1px solid #80808035;padding-top:10px}
+.mymy-ui.mymy-x .x-compose-card>footer span{color:#1d9bf0;font-size:12px}
+.mymy-ui.mymy-x .x-compose-card>footer button{border-radius:22px;background:#1d9bf0;color:#fff;padding:7px 18px;font-weight:700}
+.mymy-ui.mymy-x .x-compose-card>footer button:disabled{opacity:.35}
