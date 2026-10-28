@@ -874,6 +874,30 @@ function PhoneRuntime({
     const originalIndex = visibleNoticeEntries[visibleIndex]?.index;
     if (originalIndex !== undefined) dismissNotice(originalIndex);
   };
+  const openNotification = (noticeText: string) => {
+    const notification = notificationContent(noticeText, work.apps);
+    if (notification.appId === "instagram" && "threadId" in notification && notification.threadId) {
+      const current = runtimeRef.current;
+      update({
+        ...current,
+        ui: {
+          ...current.ui,
+          instagram: {
+            ...current.ui?.instagram,
+            mymyTab: "私信",
+            "scandal-ig-open-thread-v6": notification.threadId,
+          },
+        },
+      });
+      open("instagram");
+    } else if (installedApps.some((a) => a.id === notification.appId)) {
+      open(notification.appId, notification.appId === "kakao" ? notification.title : "");
+    } else if (installedApps.some((a) => a.id === "messages")) {
+      open("messages");
+    } else {
+      setPanel("notification");
+    }
+  };
   if (!ready) return <div className="phone-loading">正在恢复进度…</div>;
   return (
     <div
@@ -1166,17 +1190,10 @@ function PhoneRuntime({
                     <SystemNotifications
                       notices={visibleNotices}
                       apps={work.apps}
-                      onOpen={() => {
+                      onOpen={(noticeText) => {
                         setPanel("");
                         if (locked) beginUnlock();
-                        else {
-                          const latest = runtimeRef.current.notifications.at(-1) || "";
-                          const targetApp = notificationContent(latest, work.apps).appId;
-                          if (installedApps.some((a) => a.id === targetApp))
-                            open(targetApp, targetApp === "kakao" ? notificationContent(latest, work.apps).title : "");
-                          else if (installedApps.some((a) => a.id === "messages"))
-                            open("messages");
-                        }
+                        else openNotification(noticeText);
                       }}
                       onDismiss={dismissVisibleNotice}
                     />
@@ -1392,24 +1409,7 @@ function PhoneRuntime({
               onClick={() => {
                 const latest = banner;
                 setBanner("");
-                const notification = notificationContent(latest, work.apps);
-                if (notification.appId === "instagram" && "threadId" in notification && notification.threadId) {
-                  const current = runtimeRef.current;
-                  update({
-                    ...current,
-                    ui: {
-                      ...current.ui,
-                      instagram: {
-                        ...current.ui?.instagram,
-                        mymyTab: "私信",
-                        "scandal-ig-open-thread-v6": notification.threadId,
-                      },
-                    },
-                  });
-                  open("instagram");
-                } else if (installedApps.some((a) => a.id === notification.appId)) {
-                  open(notification.appId, notification.appId === "kakao" ? notification.title : "");
-                } else setPanel("notification");
+                openNotification(latest);
               }}
             >
               <AppIcon
