@@ -354,7 +354,7 @@ export function MymyKakao(p: SkinProps) {
               ref={composerRef}
               className="kkt-composer-textarea"
               aria-label="KKT消息"
-              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
+              placeholder="输入消息"
               value={draft}
               rows={1}
               maxLength={2000}
