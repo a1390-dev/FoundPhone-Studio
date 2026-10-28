@@ -1048,9 +1048,9 @@
   flex: 1 1 0%;
   min-width: 0;
   max-width: 100%;
-  min-height: 34px;
-  height: 34px;
-  max-height: 72px;
+  min-height: var(--kkt-composer-min-height, 34px);
+  height: var(--kkt-composer-min-height, 34px);
+  max-height: var(--kkt-composer-max-height, 72px);
   margin: 0;
   padding: 5px 7px;
   border: 0;
@@ -1062,7 +1062,7 @@
   background: transparent;
   color: #111;
   font-family: inherit;
-  font-size: 12px !important;
+  font-size: var(--kkt-composer-font-size, 14px) !important;
   font-weight: 400;
   line-height: 1.32;
   letter-spacing: 0;
