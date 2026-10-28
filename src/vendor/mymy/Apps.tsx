@@ -36,6 +36,70 @@ import { useSkinState } from "../../skinState";
 import { makeItem, type Item } from "../../schema";
 import "./ui.css";
 import "./adapter.css";
+type InstagramFanDm = {
+  id: string;
+  handle: string;
+  text: string;
+  translation: string;
+  category: "support" | "critical" | "curious" | "passerby";
+};
+type InstagramFanDmReply = {
+  id: string;
+  threadId: string;
+  handle: string;
+  text: string;
+  translation: string;
+  role: "player" | "npc";
+};
+function parseInstagramFanDm(raw: string): InstagramFanDm | null {
+  try {
+    const value = JSON.parse(raw) as Partial<InstagramFanDm>;
+    if (typeof value.id === "string" && typeof value.handle === "string" &&
+      typeof value.text === "string" && typeof value.translation === "string" &&
+      typeof value.category === "string") return value as InstagramFanDm;
+  } catch { /* Ignore invalid stored message rows. */ }
+  return null;
+}
+function parseInstagramFanDmReply(raw: string): InstagramFanDmReply | null {
+  try {
+    const value = JSON.parse(raw) as Partial<InstagramFanDmReply>;
+    if (typeof value.id === "string" && typeof value.threadId === "string" &&
+      typeof value.handle === "string" && typeof value.text === "string" &&
+      typeof value.role === "string") return value as InstagramFanDmReply;
+  } catch { /* Ignore invalid stored replies. */ }
+  return null;
+}
+const IG_FAN_DM_RESPONSES: Record<InstagramFanDm["category"], Array<{ text: string; translation: string }>> = {
+  support: [
+    { text: "답장해 줘서 고마워요. 너무 혼자 감당하지 않았으면 해요.", translation: "谢谢你回复我，希望你不要一个人承受太多。" },
+    { text: "괜히 참견한 건 아닌가 걱정했는데 다행이에요.", translation: "我还担心自己是不是多管闲事了，听你这么说就好。" },
+    { text: "오늘은 댓글보다 편한 사람들과 함께 있어요.", translation: "今天比起看评论，还是和让你放松的人待在一起吧。" },
+    { text: "응원한다는 말은 꼭 전하고 싶었어요. 힘내요 🤍", translation: "还是想把支持你的话传达给你，加油 🤍" },
+    { text: "저도 너무 단정 짓지 않으려고 해요. 잘 지나가길 바라요.", translation: "我也不想妄下结论，希望这件事能顺利过去。" },
+  ],
+  critical: [
+    { text: "그냥 온라인 반응이 과열된 것 같아서 한 말이에요.", translation: "我只是觉得网上的反应太过火了，才这么说。" },
+    { text: "제 말이 불편했다면 미안해요. 그래도 추측은 조심했으면 해요.", translation: "如果我的话让你不舒服，对不起。但还是希望大家谨慎猜测。" },
+    { text: "저도 더 알아보지 않고 말 얹은 건 아닌지 생각 중이에요.", translation: "我也在想自己是不是没弄清楚就跟着评论了。" },
+    { text: "누굴 비난하려는 건 아니고 이 분위기가 부담스럽다는 뜻이에요.", translation: "我不是想责怪谁，只是觉得这种氛围让人有压力。" },
+    { text: "알겠어요. 사진만 보고 확실하다고 말하긴 어렵겠네요.", translation: "知道了。确实不能只看照片就说事情已经确定。" },
+  ],
+  curious: [
+    { text: "자세히 말하기 곤란하면 대답 안 해도 괜찮아요.", translation: "如果不方便说得太详细，不回答也没关系。" },
+    { text: "아, 저는 처음 올라온 글이 진짜 기사인 줄 알았어요.", translation: "啊，我还以为最早那条是正式新闻。" },
+    { text: "그럼 아직 확인된 건 없다고 보면 되는 거죠?", translation: "那可以理解为目前还没有任何确认的信息，对吧？" },
+    { text: "답장 고마워요. 더 퍼뜨리기보다는 기다려 볼게요.", translation: "谢谢回复。我不会继续传播，先等等看吧。" },
+    { text: "저도 타임라인만 보고는 잘 모르겠네요. 얘기가 계속 바뀌어요.", translation: "我看时间线也弄不清楚，大家的说法一直在变。" },
+  ],
+  passerby: [
+    { text: "아 그렇군요. 괜히 궁금해서 메시지했네요, 미안해요.", translation: "原来如此。我只是好奇才发消息的，不好意思。" },
+    { text: "답장해 줘서 고마워요. 오늘 인터넷이 정말 시끄럽네요.", translation: "谢谢回复，今天网上确实特别吵。" },
+    { text: "저는 이제 그만 보고 다른 일 하러 갈게요. 좋은 하루 보내요.", translation: "我不再看了，去忙别的事啦，祝你今天顺利。" },
+    { text: "이런 일은 당사자끼리 잘 정리되길 바라는 게 제일이겠어요.", translation: "这种事还是希望当事人能好好处理吧。" },
+    { text: "괜히 더 시끄럽게 만들 생각은 없어요. 조심히 지내요.", translation: "我没有想把事情闹得更大，照顾好自己。" },
+  ],
+};
+
 function grouped(items: Item[]) {
   return [...new Set(items.map((i) => i.title))].map((title) => ({
     title,
@@ -159,6 +223,8 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
+    [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV5", ""),
+    [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV5", ""),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
     [selectedChoices, setSelectedChoices] = useState<Array<readonly [string, string]>>([]),
@@ -168,15 +234,44 @@ export function MymyKakao(p: SkinProps) {
     [menu, setMenu] = useState(false);
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
+  const notifyKktNpcMessage = (thread: string, text: string, translation: string, time: string) => {
+    if (!thread || !text) return;
+    p.onUi?.("kkt-incoming-message-event", JSON.stringify({
+      id: thread + "-" + time + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      thread,
+      text,
+      translation,
+      time,
+    }));
+  };
+  const preCallSequenceStartedRef = useRef(false);
   const storyStepRef = useRef(storyStep);
   useEffect(() => { storyStepRef.current = storyStep; }, [storyStep]);
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡" || storyStep < KKT_STORY_ROUNDS.length) return;
+    const lastRound = KKT_STORY_ROUNDS[KKT_STORY_ROUNDS.length - 1];
+    const completed = sentRef.current.some((raw) => {
+      try {
+        const entry: unknown = JSON.parse(raw);
+        return Array.isArray(entry) && entry[0] === p.thread &&
+          entry[2] === lastRound.time && entry[3] === "owner" &&
+          lastRound.choices.some(([ko]) => ko === entry[1]);
+      } catch {
+        return false;
+      }
+    });
+    if (completed) p.onUi?.("convenience-store-event-finished-v5", true);
+  }, [p.thread, storyStep]);
   // The opening "I may get home late today" arrives as the second NPC message,
   // about two seconds after the player opens this KKT conversation.
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
+    // This 20:17 follow-up belongs to the previous evening conversation, not
+    // to the Oct 28 afternoon rumor-and-call sequence.
+    if (p.ui?.["scandal-precall-started-v5"] === true || p.virtualTime?.startsWith("14:")) return;
     const alreadyDelivered = sentRef.current.some((raw) => {
       try {
         const entry: unknown = JSON.parse(raw);
@@ -203,10 +298,103 @@ export function MymyKakao(p: SkinProps) {
       ];
       sentRef.current = updated;
       setSent(updated);
+      notifyKktNpcMessage(p.thread, KKT_OPENING_FOLLOWUP[1], KKT_OPENING_FOLLOWUP[4], KKT_OPENING_FOLLOWUP[2]);
       setNpcTyping(false);
     }, 2000);
     return () => window.clearTimeout(timer);
-  }, [p.thread]);
+  }, [p.thread, p.ui?.["scandal-precall-started-v5"], p.virtualTime]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const started = p.ui?.["scandal-precall-started-v5"];
+    if (started !== true || processedPreCall || preCallSequenceStartedRef.current) return;
+    preCallSequenceStartedRef.current = true;
+    const messages: Array<[string, string]> = [
+      ["어디야?", "你在哪？"],
+      ["혼자 있어?", "你一个人吗？"],
+    ];
+    // Earlier preview builds inserted both messages at once. Remove just those
+    // two event lines so the current flow can replay them at the intended pace.
+    const cleanHistory = sentRef.current.filter((raw) => {
+      try {
+        const parsed: unknown = JSON.parse(raw);
+        return !(Array.isArray(parsed) && parsed[0] === p.thread &&
+          parsed[3] === "npc" &&
+          ((parsed[1] === "어디야?" && parsed[4] === "你在哪？") ||
+           (parsed[1] === "혼자 있어?" && parsed[4] === "你一个人吗？")));
+      } catch { return true; }
+    });
+    if (cleanHistory.length !== sentRef.current.length) {
+      sentRef.current = cleanHistory;
+      setSent(cleanHistory);
+    }
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const deliver = (index: number) => {
+      const entry = messages[index];
+      if (!entry) return;
+      const [ko, zh] = entry;
+      const alreadyDelivered = sentRef.current.some((raw) => {
+        try {
+          const parsed: unknown = JSON.parse(raw);
+          return Array.isArray(parsed) && parsed[0] === p.thread &&
+            parsed[1] === ko && parsed[3] === "npc";
+        } catch { return false; }
+      });
+      if (!alreadyDelivered) {
+        const updated = [...sentRef.current, JSON.stringify([p.thread, ko, "14:06", "npc", zh])];
+        sentRef.current = updated;
+        setSent(updated);
+        notifyKktNpcMessage(p.thread, ko, zh, "14:06");
+      }
+      p.onUi?.("scandal-precall-step-v5", index + 1);
+      if (index + 1 < messages.length) {
+        timer = window.setTimeout(() => deliver(index + 1), 2000);
+      } else {
+        setProcessedPreCall("sent");
+        p.onUi?.("scandal-precall-delivered-v5", true);
+      }
+    };
+    timer = window.setTimeout(() => deliver(0), 650);
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      // If the chat is temporarily closed (or React replays effects in dev),
+      // allow the sequence to resume instead of leaving a stuck "started" ref.
+      if (processedPreCall !== "sent") preCallSequenceStartedRef.current = false;
+    };
+  }, [p.thread, p.ui?.["scandal-precall-started-v5"], processedPreCall]);
+  useEffect(() => {
+    if (p.thread !== "金旼炡") return;
+    const result = p.ui?.["scandal-call-result-v5"];
+    if (typeof result !== "string" || !result) {
+      if (processedCallResult) setProcessedCallResult("");
+      return;
+    }
+    // Answered calls are played entirely inside the call screen. Only a declined
+    // call starts the alternate conversation in KakaoTalk.
+    if (result !== "declined" || result === processedCallResult) return;
+    const queue: Array<[string, string, string, string]> = [
+      ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
+      ["집에 있어?", "你在家吗？", "npc", "14:06"],
+      ["응.", "嗯。", "owner", "14:07"],
+      ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:07"],
+      ["걱정하지 마.", "别担心。", "npc", "14:08"],
+    ];
+    setProcessedCallResult(result);
+    setNpcTyping(true);
+    let index = 0;
+    const deliverCallMessage = () => {
+      const entry = queue[index++];
+      if (!entry) { setNpcTyping(false); return; }
+      const [ko, zh, role, time] = entry;
+      const raw = JSON.stringify([p.thread, ko, time, role, zh]);
+      const updated = [...sentRef.current, raw];
+      sentRef.current = updated;
+      setSent(updated);
+      if (role === "npc") notifyKktNpcMessage(p.thread, ko, zh, time);
+      if (index < queue.length) deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
+      else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 450);
+    };
+    deliveryTimer.current = setTimeout(deliverCallMessage, 700);
+  }, [p.thread, p.ui?.["scandal-call-result-v5"], processedCallResult]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const round = KKT_STORY_ROUNDS[storyStepRef.current];
@@ -236,6 +424,12 @@ export function MymyKakao(p: SkinProps) {
       const updated = [...sentRef.current, npcEntry];
       sentRef.current = updated;
       setSent(updated);
+      notifyKktNpcMessage(
+        p.thread,
+        ko.replaceAll("{{playerId}}", p.playerId || "你"),
+        zh.replaceAll("{{playerId}}", p.playerId || "你"),
+        round.time,
+      );
       if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
       else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
     };
@@ -258,11 +452,21 @@ export function MymyKakao(p: SkinProps) {
   }, []);
   const markThreadRead = (title: string) => {
     if (!readThreads.includes(title)) setReadThreads([...readThreads, title]);
+    // Read state is tracked per conversation in the phone runtime, not just
+    // within this mounted KKT component.
+    p.onUi?.("kkt-clear-thread-notifications", title);
   };
   useEffect(() => {
     if (p.thread) markThreadRead(p.thread);
   }, [p.thread]);
   const unreadCount = (group: { title: string; items: Item[] }) => {
+    const runtimeCount = p.ui?.["kkt-unread-count:" + group.title];
+    // Once the phone runtime has a counter for this conversation, it is the
+    // source of truth, including zero after the player opens that chat.
+    if (runtimeCount !== undefined) {
+      const n = Number(runtimeCount);
+      return Number.isFinite(n) ? Math.max(0, n) : 0;
+    }
     if (readThreads.includes(group.title)) return 0;
     return group.items.reduce((total, item) => {
       if (item.outgoing || item.read || !item.meta.unread) return total;
@@ -404,6 +608,12 @@ export function MymyKakao(p: SkinProps) {
                     const updated = [...sentRef.current, npcEntry];
                     sentRef.current = updated;
                     setSent(updated);
+                    notifyKktNpcMessage(
+                      p.thread,
+                      ko.replaceAll("{{playerId}}", p.playerId || "你"),
+                      zh.replaceAll("{{playerId}}", p.playerId || "你"),
+                      nextRound.time,
+                    );
                     if (index < nextRound.npc.length) {
                       deliveryTimer.current = setTimeout(deliverOne, 2000);
                     } else {
@@ -459,7 +669,7 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
+          {p.thread === "金旼炡" && !p.ui?.["scandal-call-result-v5"] && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
               {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
                 <button
@@ -628,6 +838,89 @@ export function MymyInstagram(p: SkinProps) {
     [story, setStory] = useState(0),
     [draft, setDraft] = useState(""),
     [pop, setPop] = useState("");
+  const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v6", []);
+  const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v6", 0);
+  const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v6", []);
+  const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v6", []);
+  const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v6", "");
+  const [activeFanDm, setActiveFanDm] = useState("");
+  const [fanDmDraft, setFanDmDraft] = useState("");
+  const [activeThreadVisibleCount, setActiveThreadVisibleCount] = useState(0);
+  const fanDmScrollRef = useRef<HTMLDivElement | null>(null);
+  const visibleFanDms = fanDmQueue.slice(0, Math.max(0, fanDmVisibleCount))
+    .map(parseInstagramFanDm).filter((dm): dm is InstagramFanDm => dm !== null).reverse();
+  const fanDmReplyEntries = fanDmReplies.map(parseInstagramFanDmReply)
+    .filter((message): message is InstagramFanDmReply => message !== null);
+  const activeFan = visibleFanDms.find((dm) => dm.id === activeFanDm) || null;
+  const activeFanMessages: InstagramFanDmReply[] = activeFan ? [
+    {
+      id: activeFan.id,
+      threadId: activeFan.id,
+      handle: activeFan.handle,
+      text: activeFan.text,
+      translation: activeFan.translation,
+      role: "npc",
+    },
+    ...fanDmReplyEntries.filter((message) => message.threadId === activeFan.id),
+  ] : [];
+  useEffect(() => {
+    setActiveThreadVisibleCount(0);
+  }, [activeFanDm]);
+
+  useEffect(() => {
+    if (!activeFanDm || activeThreadVisibleCount >= activeFanMessages.length) return;
+    const timer = window.setTimeout(() => {
+      setActiveThreadVisibleCount((count) => Math.min(count + 1, activeFanMessages.length));
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [activeFanDm, activeThreadVisibleCount, activeFanMessages.length]);
+
+  useEffect(() => {
+    if (!fanDmOpenRequest) return;
+    setTab("私信");
+    setActiveFanDm(fanDmOpenRequest);
+    setFanDmOpenRequest("");
+  }, [fanDmOpenRequest]);
+  useEffect(() => {
+    p.onUi?.("scandal-ig-dm-screen-active-v6", tab === "私信" && !selected);
+    return () => p.onUi?.("scandal-ig-dm-screen-active-v6", false);
+  }, [tab, selected?.id]);
+  useEffect(() => {
+    const node = fanDmScrollRef.current;
+    if (node) node.scrollTop = node.scrollHeight;
+  }, [activeFanDm, fanDmVisibleCount, fanDmReplies.length]);
+  const sendFanDmReply = () => {
+    const text = fanDmDraft.trim();
+    if (!text || !activeFan) return;
+    const playerMessage: InstagramFanDmReply = {
+      id: activeFan.id + "-player-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+      threadId: activeFan.id,
+      handle: activeFan.handle,
+      text,
+      translation: "",
+      role: "player",
+    };
+    setFanDmReplies([...fanDmReplies, JSON.stringify(playerMessage)]);
+    setFanDmDraft("");
+    if (Math.random() >= 0.6) return;
+    const pool = [...IG_FAN_DM_RESPONSES[activeFan.category]];
+    const responseCount = Math.random() < 0.45 ? 2 : 1;
+    const pending: string[] = [];
+    for (let index = 0; index < responseCount; index += 1) {
+      const choiceIndex = Math.floor(Math.random() * pool.length);
+      const choice = pool.splice(choiceIndex, 1)[0];
+      if (!choice) continue;
+      pending.push(JSON.stringify({
+        id: activeFan.id + "-npc-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7) + "-" + index,
+        threadId: activeFan.id,
+        handle: activeFan.handle,
+        text: choice.text,
+        translation: choice.translation,
+        role: "npc",
+      } satisfies InstagramFanDmReply));
+    }
+    if (pending.length) setFanDmReplyQueue([...fanDmReplyQueue, ...pending]);
+  };
   const sourcePosts = p.items.filter(
       (i) => i.folder !== "私信" && i.meta.story !== "true",
     ),
@@ -983,14 +1276,20 @@ export function MymyInstagram(p: SkinProps) {
   return (
     <div className="mymy-ui mymy-instagram" data-mymy="instagram">
       <div className="ig">
-        <header className={"igh" + (!selected && tab === "搜索" ? " ig-search-header-hidden" : "")}>
+        <header className={"igh" + (!selected && !activeFanDm && tab === "搜索" ? " ig-search-header-hidden" : "")}>
           <button
-            aria-label={selected ? "返回Instagram动态" : "关闭当前App"}
-            onClick={() => (selected ? setSelected(null) : p.onBack())}
+            aria-label={activeFanDm ? "返回Instagram私信" : selected ? "返回Instagram动态" : "关闭当前App"}
+            onClick={() => {
+              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); }
+              else if (selected) setSelected(null);
+              else p.onBack();
+            }}
           >
             <ArrowLeft />
           </button>
-          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
+          {activeFanDm ? (
+            <span className="igl2"><b>{activeFan?.handle || "私信"}</b></span>
+          ) : selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
             <span className="igl2 ig-first-detail-title">
               <b>帖子</b>
               <small>imwinter</small>
@@ -1000,15 +1299,45 @@ export function MymyInstagram(p: SkinProps) {
               {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
             </span>
           )}
-          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
+          {activeFanDm ? (
+            <span className="ig-first-header-space" aria-hidden="true" />
+          ) : selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
             <span className="ig-first-header-space" aria-hidden="true" />
           ) : (
-            <button aria-label="打开私信" onClick={() => setTab("私信")}>
+            <button aria-label="打开私信" onClick={() => { setSelected(null); setActiveFanDm(""); setTab("私信"); }}>
               <Send />
             </button>
           )}
         </header>
         <div className="igb">
+          {activeFanDm ? (
+            <div className="ig-rumor-dm-thread">
+              <div className="ig-rumor-dm-history" ref={fanDmScrollRef}>
+                {activeFanMessages.slice(0, activeThreadVisibleCount).map((message) => (
+                  <article className={"ig-rumor-dm-message " + (message.role === "player" ? "outgoing" : "incoming")} key={message.id}>
+                    {message.role !== "player" && (
+                      <Avatar name={message.handle || activeFan?.handle || "粉丝"} round />
+                    )}
+                    <div className="ig-rumor-dm-bubble">
+                      <p>{message.text}</p>
+                      {message.translation && <small>{message.translation}</small>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <form className="ig-rumor-dm-compose" onSubmit={(e) => { e.preventDefault(); sendFanDmReply(); }}>
+                <input
+                  aria-label="回复Instagram私信"
+                  value={fanDmDraft}
+                  onChange={(e) => setFanDmDraft(e.target.value)}
+                  placeholder="发送消息…"
+                  maxLength={1000}
+                />
+                <button type="submit" disabled={!fanDmDraft.trim()}>发送</button>
+              </form>
+            </div>
+          ) : (
+            <>
           {selected && post(selected)}
           {!selected && tab === "主页" && (
             <>
@@ -1152,6 +1481,24 @@ export function MymyInstagram(p: SkinProps) {
           )}
           {!selected && tab === "私信" && (
             <>
+              {visibleFanDms.map((dm) => {
+                const lastReply = [...fanDmReplyEntries].reverse().find((message) => message.threadId === dm.id);
+                const previewText = lastReply?.text || dm.text;
+                const previewTranslation = lastReply
+                  ? lastReply.role === "npc" ? lastReply.translation : ""
+                  : dm.translation;
+                return (
+                  <button className="kzkr ig-rumor-dm-row" key={dm.id} onClick={() => { setSelected(null); setActiveFanDm(dm.id); setTab("私信"); }}>
+                    <Avatar name={dm.handle} round />
+                    <span className="kzkn">
+                      <b>{dm.handle}</b>
+                      <small>{previewText}</small>
+                      {previewTranslation && <small className="ig-rumor-dm-translation">{previewTranslation}</small>}
+                    </span>
+                    <span className="ig-rumor-dm-dot" aria-hidden="true" />
+                  </button>
+                );
+              })}
               {dms.map((i) => (
                 <button className="kzkr" key={i.id} onClick={() => openPost(i)}>
                   <Avatar name={i.sender} src={i.avatar} />
@@ -1161,7 +1508,7 @@ export function MymyInstagram(p: SkinProps) {
                   </span>
                 </button>
               ))}
-              {!dms.length && <Blank />}
+              {!dms.length && !visibleFanDms.length && <Blank />}
             </>
           )}
           {!selected && tab === "搜索" && (
@@ -1183,8 +1530,10 @@ export function MymyInstagram(p: SkinProps) {
 
             </>
           )}
+            </>
+          )}
         </div>
-        <nav className="mymy-ig-nav">
+        {!activeFanDm && <nav className="mymy-ig-nav">
           {[Home, CirclePlay, Send, Search, User].map((Icon, n) => (
             <button
               key={n}
@@ -1199,7 +1548,7 @@ export function MymyInstagram(p: SkinProps) {
               <Icon />
             </button>
           ))}
-        </nav>
+        </nav>}
       </div>
       {sheet && (
         <div className="kzcs">
@@ -1286,22 +1635,43 @@ export function MymyInstagram(p: SkinProps) {
 }
 export function MymyX(p: SkinProps) {
   const [dark, setDark] = useSkinState<boolean>(p, "x-dark", true);
-  const [tab, setTab] = useSkinState<string>(p, "mymyTab", "推荐"),
+  const [tab, setTab] = useSkinState<string>(p, "x-feed-tab-rumor-v2", "为你推荐"),
     [likes, setLikes] = useSkinState<string[]>(p, "mymyXLikes", []),
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
     [query, setQuery] = useState(""),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-v1", 0);
-  const liveItems = p.items.filter((i) => i.meta.live === "true");
+    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v5", 1),
+    [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
+    [draft, setDraft] = useState(""),
+    [composeOpen, setComposeOpen] = useState(false);
+  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v5"] === true;
+  const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
+  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 26) : [];
+  const localXItems = userPosts.map((body, n) => makeItem({
+    id: "local-x-post-" + n,
+    title: "本地帖子",
+    body,
+    sender: p.playerId || p.owner || "机主",
+    time: p.virtualTime || "14:06",
+    kind: "post",
+    likes: 0,
+    comments: [],
+    meta: { handle: (p.playerId || "you").replace(/^@/, ""), local: "true", views: "1", platform: "twitter" },
+  }));
   const feedItems = [
+    ...localXItems.slice().reverse(),
     ...liveItems.slice(0, liveCount).reverse(),
-    ...p.items.filter((i) => i.meta.live !== "true"),
+    ...p.items.filter((i) => i.meta.category !== "rumor-discussion").slice().sort((a, b) => b.time.localeCompare(a.time)),
   ];
+  useEffect(() => {
+    if (rumorNewsUnlocked && p.items.some((i) => i.meta.category === "rumor-discussion"))
+      p.onUi?.("rumor-feed-opened", true);
+  }, [p.items.length, rumorNewsUnlocked]);
   useEffect(() => {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      28000,
+      1500 + Math.floor(Math.random() * 501),
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
@@ -1331,6 +1701,7 @@ export function MymyX(p: SkinProps) {
             <button aria-label="切换X外观" onClick={() => setDark(!dark)}>
               <User />
             </button>
+            <button aria-label="新建X帖子" className="x-compose-button" onClick={() => setComposeOpen(true)}><Plus size={20} /></button>
             <button className="x-feed-refresh" type="button" aria-label="刷新X信息流" title="刷新" onClick={refreshFeed}>
               <RefreshCw size={18} />
             </button>
@@ -1341,12 +1712,43 @@ export function MymyX(p: SkinProps) {
             <button
               className={t === tab ? "on" : ""}
               key={t}
-              onClick={() => setTab(t)}
+              onClick={() => {
+                if (t === "添加 +") { setComposeOpen(true); return; }
+                setTab(t);
+              }}
             >
               {t}
             </button>
           ))}
         </div>
+        {composeOpen && (
+          <form className="x-compose-card" onSubmit={(e) => {
+            e.preventDefault();
+            const body = draft.trim();
+            if (!body) return;
+            const postId = "local-x-post-" + userPosts.length;
+            setUserPosts((current) => [...current, body]);
+            setDraft("");
+            setComposeOpen(false);
+            setTab("为你推荐");
+            const npcPool = [
+              ["时间线路人", "先等更多上下文吧，别急着下结论。"],
+              ["普通网友", "我也刷到这个话题了，先把推测和事实分开比较好。"],
+              ["小号观察员", "这条我看到了，大家目前的说法还不一致。"],
+              ["路过的MY", "讨论的时候也给当事人留点私人空间吧。"],
+              ["消息核对中", "目前没有确认信息，先不要把传闻写成事实。"],
+              ["晚间刷帖人", "时间线更新真的很快，刚进来就看到新帖。"],
+            ];
+            const npc = npcPool[Math.floor(Math.random() * npcPool.length)];
+            window.setTimeout(() => {
+              p.onUi?.("x-auto-replies-" + postId, [npc[0] + "：" + npc[1]]);
+            }, 1800 + Math.floor(Math.random() * 3200));
+          }}>
+            <header><button type="button" onClick={() => setComposeOpen(false)}>取消</button><b>发帖</b><span /></header>
+            <div className="x-compose-body"><Avatar name={p.playerId || p.owner || "机主"} /><textarea aria-label="X发帖内容" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="有什么新鲜事？" maxLength={280} /></div>
+            <footer><span>◎ 所有人可以回复</span><button type="submit" disabled={!draft.trim()}>发帖</button></footer>
+          </form>
+        )}
         {tab === "搜索" && (
           <input
             className="mymy-search"
@@ -1381,6 +1783,12 @@ export function MymyX(p: SkinProps) {
                   >
                     {i.body}
                   </button>
+                  {i.meta.category === "rumor-discussion" && i.id.endsWith("-01") && (
+                    <button className="x-rumor-photo-card" aria-label="打开网传模糊照片的讨论" onClick={() => p.onItem(i)}>
+                      <span>夜间便利店 · 模糊网传图</span>
+                      <small>身份与拍摄背景均未确认</small>
+                    </button>
+                  )}
                   {i.media && (
                     <button
                       className="kzxv"
@@ -1396,7 +1804,9 @@ export function MymyX(p: SkinProps) {
                       onClick={() => p.onItem(i)}
                     >
                       <MessageCircle />
-                      {i.comments.length}
+                      {i.comments.length +
+                        (Array.isArray(p.ui?.["x-auto-replies-" + i.id]) ? (p.ui?.["x-auto-replies-" + i.id] as string[]).length : 0) +
+                        (Array.isArray(p.ui?.["replies-" + i.id]) ? (p.ui?.["replies-" + i.id] as string[]).length : 0)}
                     </button>
                     <button
                       aria-label={"转发" + i.title}
