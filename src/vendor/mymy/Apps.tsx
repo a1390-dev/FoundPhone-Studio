@@ -118,8 +118,8 @@ function Back({ onClick }: { onClick: () => void }) {
 }
 export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
-    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
-    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV1", 0),
+    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV2", []),
+    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV2", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
@@ -127,10 +127,19 @@ export function MymyKakao(p: SkinProps) {
     [npcTyping, setNpcTyping] = useState(false),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
+  useEffect(() => {
+    const field = composerRef.current;
+    if (!field) return;
+    field.style.height = "34px";
+    const height = Math.min(72, Math.max(34, field.scrollHeight));
+    field.style.height = `${height}px`;
+    field.style.overflowY = field.scrollHeight > 72 ? "auto" : "hidden";
+  }, [draft, p.thread]);
   useEffect(() => () => {
     if (deliveryTimer.current) clearTimeout(deliveryTimer.current);
     if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
@@ -297,28 +306,27 @@ export function MymyKakao(p: SkinProps) {
             >
               <Plus size={21} />
             </button>
-            <input
+            <textarea
+              ref={composerRef}
+              className="kkt-composer-textarea"
               aria-label="KKT消息"
-              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
+              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 ? "点击选择一条回复" : "输入消息"}
               value={draft}
+              rows={1}
               maxLength={2000}
-              readOnly={p.thread === "金旼炡" || npcTyping}
+              readOnly={npcTyping || (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)}
               onPointerDown={(e) => {
-                if (p.thread !== "金旼炡") return;
-                // Never focus the real input on iOS Safari: opening the native
-                // keyboard changes the visual viewport and makes the phone jump.
+                if (p.thread !== "金旼炡" || npcTyping || (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0) return;
+                // Keep the simulated phone fixed; this field opens the in-phone
+                // reply tray instead of triggering the iOS keyboard.
                 e.preventDefault();
-                if (npcTyping) return;
                 if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
                 setCandidateOpen(false);
-                choiceOpenTimer.current = setTimeout(() => {
-                  setCandidateOpen(true);
-                }, 500);
+                choiceOpenTimer.current = setTimeout(() => setCandidateOpen(true), 500);
               }}
               onFocus={(e) => {
-                if (p.thread === "金旼炡") {
+                if (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)
                   e.currentTarget.blur();
-                }
               }}
               onChange={(e) => {
                 setDraft(e.target.value);
@@ -334,12 +342,9 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (
+          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
-              {(KKT_STORY_ROUNDS[storyStep]?.choices?.length
-                ? KKT_STORY_ROUNDS[storyStep].choices
-                : KKT_CONFIRMED_REPLY_OPTIONS
-              ).map(([ko, zh]) => (
+              {KKT_STORY_ROUNDS[storyStep].choices.map(([ko, zh]) => (
                 <button
                   type="button"
                   className={"kkt-choice" + (draft === ko ? " selected" : "")}
