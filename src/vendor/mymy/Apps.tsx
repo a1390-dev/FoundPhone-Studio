@@ -1435,13 +1435,17 @@ export function MymyInstagram(p: SkinProps) {
             <>
               {visibleFanDms.map((dm) => {
                 const lastReply = [...fanDmReplyEntries].reverse().find((message) => message.threadId === dm.id);
+                const previewText = lastReply?.text || dm.text;
+                const previewTranslation = lastReply
+                  ? lastReply.role === "npc" ? lastReply.translation : ""
+                  : dm.translation;
                 return (
                   <button className="kzkr ig-rumor-dm-row" key={dm.id} onClick={() => { setSelected(null); setActiveFanDm(dm.id); setTab("私信"); }}>
                     <Avatar name={dm.handle} round />
                     <span className="kzkn">
                       <b>{dm.handle}</b>
-                      <small>{lastReply?.text || dm.text}</small>
-                      {(lastReply?.translation || dm.translation) && <small className="ig-rumor-dm-translation">{lastReply?.translation || dm.translation}</small>}
+                      <small>{previewText}</small>
+                      {previewTranslation && <small className="ig-rumor-dm-translation">{previewTranslation}</small>}
                     </span>
                     <span className="ig-rumor-dm-dot" aria-hidden="true" />
                   </button>
