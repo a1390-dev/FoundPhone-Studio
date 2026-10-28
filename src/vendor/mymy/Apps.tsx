@@ -812,7 +812,7 @@ export function MymyInstagram(p: SkinProps) {
   const [fanDmDraft, setFanDmDraft] = useState("");
   const fanDmScrollRef = useRef<HTMLDivElement | null>(null);
   const visibleFanDms = fanDmQueue.slice(0, Math.max(0, fanDmVisibleCount))
-    .map(parseInstagramFanDm).filter((dm): dm is InstagramFanDm => dm !== null);
+    .map(parseInstagramFanDm).filter((dm): dm is InstagramFanDm => dm !== null).reverse();
   const fanDmReplyEntries = fanDmReplies.map(parseInstagramFanDmReply)
     .filter((message): message is InstagramFanDmReply => message !== null);
   const activeFan = visibleFanDms.find((dm) => dm.id === activeFanDm) || null;
@@ -1430,15 +1430,6 @@ export function MymyInstagram(p: SkinProps) {
           )}
           {!selected && tab === "私信" && (
             <>
-              {dms.map((i) => (
-                <button className="kzkr" key={i.id} onClick={() => openPost(i)}>
-                  <Avatar name={i.sender} src={i.avatar} />
-                  <span className="kzkn">
-                    <b>{i.title}</b>
-                    <small>{i.body}</small>
-                  </span>
-                </button>
-              ))}
               {visibleFanDms.map((dm) => {
                 const lastReply = [...fanDmReplyEntries].reverse().find((message) => message.threadId === dm.id);
                 return (
@@ -1453,6 +1444,15 @@ export function MymyInstagram(p: SkinProps) {
                   </button>
                 );
               })}
+              {dms.map((i) => (
+                <button className="kzkr" key={i.id} onClick={() => openPost(i)}>
+                  <Avatar name={i.sender} src={i.avatar} />
+                  <span className="kzkn">
+                    <b>{i.title}</b>
+                    <small>{i.body}</small>
+                  </span>
+                </button>
+              ))}
               {!dms.length && !visibleFanDms.length && <Blank />}
             </>
           )}
