@@ -335,7 +335,7 @@ function PhoneRuntime({
     } catch { return "legacy"; }
   });
   const [resumePromptKey, setResumePromptKey] = useState(0);
-  const handledKktEventsRef = useRef(new Set<string>());
+
   useEffect(() => {
     if (creator) return;
     let hiddenAt = 0;
@@ -442,6 +442,58 @@ function PhoneRuntime({
     runtimeRef.current = next;
     setOwn(next);
     onRuntime?.(next);
+  };
+  const kktNoticeThread = (notice: string): string | null => {
+    if (!notice.startsWith("KKT|")) return null;
+    const payload = notice.slice(4);
+    const separator = payload.search(/[:：]/);
+    return separator > 0 ? payload.slice(0, separator).trim() : null;
+  };
+  const clearKktThreadNotifications = (thread: string) => {
+    if (!thread) return;
+    const current = runtimeRef.current;
+    const unreadKey = "kkt-unread-count:" + thread;
+    const notifications = current.notifications.filter((notice) => kktNoticeThread(notice) !== thread);
+    const next = {
+      ...current,
+      notifications,
+      ui: {
+        ...current.ui,
+        kakao: { ...current.ui?.kakao, [unreadKey]: 0 },
+      },
+    };
+    if (banner && kktNoticeThread(banner) === thread) setBanner("");
+    update(next);
+  };
+  const handleKktIncomingMessage = (rawValue: UiValue) => {
+    if (typeof rawValue !== "string") return;
+    let incoming: { id?: string; thread?: string; text?: string; translation?: string };
+    try { incoming = JSON.parse(rawValue) as typeof incoming; }
+    catch { return; }
+    if (!incoming.id || !incoming.thread || !incoming.text) return;
+    if (handledKktEventsRef.current.has(incoming.id)) return;
+    handledKktEventsRef.current.add(incoming.id);
+    if (handledKktEventsRef.current.size > 300) {
+      handledKktEventsRef.current = new Set([...handledKktEventsRef.current].slice(-150));
+    }
+    const current = runtimeRef.current;
+    const unreadKey = "kkt-unread-count:" + incoming.thread;
+    const activeConversation = app === "kakao" && appThread === incoming.thread;
+    const unreadCount = activeConversation
+      ? 0
+      : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
+    const notifications = activeConversation
+      ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
+      : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
+    if (activeConversation && banner && kktNoticeThread(banner) === incoming.thread) setBanner("");
+    update({
+      ...current,
+      notifications,
+      ui: {
+        ...current.ui,
+        kakao: { ...current.ui?.kakao, [unreadKey]: unreadCount },
+      },
+    });
   };
   useEffect(() => {
     let active = true;
