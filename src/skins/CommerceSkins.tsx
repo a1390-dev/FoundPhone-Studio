@@ -5,8 +5,10 @@ import {
   ShoppingBag,
   Ticket,
   Wallet,
+  X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSkinState } from "../skinState";
 import {
   Empty,
   Header,
@@ -186,6 +188,38 @@ export function TaobaoSkin(p: Props) {
 }
 
 type DeliveryProduct = { id: string; category: string; store: string; name: string; desc: string; price: number; emoji: string };
+type DeliveryOrder = { id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; payer:string; status:string; time:string };
+type DeliverySavedState = {
+  cart: Record<string, number>;
+  orders: DeliveryOrder[];
+  address: string;
+  savedAddresses: string[];
+  paymentMethod: string;
+  payer: string;
+};
+const DELIVERY_DEFAULT_ADDRESS = "首尔特别市 江南区 · 清潭洞高级别墅区";
+const DELIVERY_DEFAULT_ADDRESSES = [
+  DELIVERY_DEFAULT_ADDRESS,
+  "首尔特别市 江南区 · 三成洞高层公寓区",
+  "SM娱乐总部 · 首尔特别市城东区圣水洞",
+  "KWANGYA SEOUL · SM大楼附近",
+];
+const DELIVERY_DEFAULT_STATE: DeliverySavedState = {
+  cart: {},
+  orders: [],
+  address: DELIVERY_DEFAULT_ADDRESS,
+  savedAddresses: DELIVERY_DEFAULT_ADDRESSES,
+  paymentMethod: "KakaoPay",
+  payer: "玩家自己",
+};
+function parseDeliveryState(serialized: string): Partial<DeliverySavedState> {
+  try {
+    const parsed = JSON.parse(serialized) as Partial<DeliverySavedState>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
 type ProductSeed = [string, string, number, string];
 const makeDeliveryProducts = (prefix: string, category: string, store: string, entries: ProductSeed[]): DeliveryProduct[] =>
   entries.map(([name, desc, price, emoji], index) => ({id: prefix + (index + 1), category, store, name, desc, price, emoji}));
@@ -229,25 +263,57 @@ const DELIVERY_PETS: DeliveryProduct[] = makeDeliveryProducts("d", "狗狗用品
 ]);
 const DELIVERY_CATEGORIES = ["全部", "韩餐", "日餐·寿司", "中餐", "西式简餐", "海鲜·三文鱼", "奶茶·饮品", "便利店·超市", "日常用品", "狗狗用品"];
 export function DeliverySkin(p: Props) {
+  const [savedState, setSavedState] = useSkinState(
+    p,
+    "deliveryState",
+    JSON.stringify(DELIVERY_DEFAULT_STATE),
+  );
+  const restored = parseDeliveryState(savedState);
+  const playerLabel = p.playerId?.trim() || "玩家自己";
   const [tab, setTab] = useState("商家");
   const [category, setCategory] = useState("全部");
   const [q, setQ] = useState("");
-  const [cart, setCart] = useState<Record<string, number>>({});
-  const [address, setAddress] = useState("首尔特别市 江南区 · 清潭洞高级别墅区");
-  const [savedAddresses, setSavedAddresses] = useState([
-    "首尔特别市 江南区 · 清潭洞高级别墅区",
-    "首尔特别市 江南区 · 三成洞高层公寓区",
-    "SM娱乐总部 · 首尔特别市城东区圣水洞",
-    "KWANGYA SEOUL · SM大楼附近",
-  ]);
+  const [cart, setCart] = useState<Record<string, number>>(() =>
+    restored.cart && typeof restored.cart === "object" && !Array.isArray(restored.cart)
+      ? restored.cart
+      : {},
+  );
+  const [address, setAddress] = useState(
+    typeof restored.address === "string" ? restored.address : DELIVERY_DEFAULT_ADDRESS,
+  );
+  const [savedAddresses, setSavedAddresses] = useState<string[]>(() =>
+    Array.isArray(restored.savedAddresses) && restored.savedAddresses.every(a => typeof a === "string")
+      ? restored.savedAddresses
+      : DELIVERY_DEFAULT_ADDRESSES,
+  );
   const [addressEditing, setAddressEditing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("KakaoPay");
-  const [payer, setPayer] = useState("玩家自己");
-  type DeliveryOrder = { id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; payer:string; status:string; time:string };
-  const [orders, setOrders] = useState<DeliveryOrder[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState(
+    typeof restored.paymentMethod === "string" ? restored.paymentMethod : "KakaoPay",
+  );
+  const [payer, setPayer] = useState(
+    typeof restored.payer === "string"
+      ? restored.payer === "玩家自己" ? playerLabel : restored.payer
+      : playerLabel,
+  );
+  const [orders, setOrders] = useState<DeliveryOrder[]>(() =>
+    Array.isArray(restored.orders) ? restored.orders : [],
+  );
+  const persistRef = useRef(setSavedState);
+  persistRef.current = setSavedState;
+  useEffect(() => {
+    persistRef.current(JSON.stringify({
+      cart,
+      orders,
+      address,
+      savedAddresses,
+      paymentMethod,
+      payer,
+    }));
+  }, [cart, orders, address, savedAddresses, paymentMethod, payer]);
   const [orderFilter, setOrderFilter] = useState("全部");
   const [paidOrder, setPaidOrder] = useState<DeliveryOrder | null>(null);
   const [notice, setNotice] = useState("");
+  const displayPayer = (value: string) => value === "玩家自己" ? playerLabel : value;
   const products = [...DELIVERY_PRODUCTS, ...DELIVERY_DRINKS, ...DELIVERY_GROCERIES, ...DELIVERY_EXTRAS, ...DELIVERY_PETS];
   const visibleProducts = products.filter((item) =>
     (category === "全部" || item.category === category) &&
@@ -278,12 +344,12 @@ export function DeliverySkin(p: Props) {
   return (
     <div className="catalog-skin delivery-ui" style={{display:"flex",flexDirection:"column",height:"100%",minHeight:0,background:"#fff",position:"relative"}}>
       <Header p={p} />
-      <div className="delivery-location" style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:"#f5dc7d",flexWrap:"wrap"}}>
-        <MapPin size={18} />
-        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:150,padding:8,borderRadius:10,border:"1px solid #d5c06b"}} /> : <select aria-label="选择配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{flex:"0 1 245px",width:"min(245px, calc(100% - 108px))",minWidth:0,padding:"7px 8px",fontSize:12,borderRadius:10,border:"1px solid #d5c06b",background:"#fff9df"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>}
-        {addressEditing ? <button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[address,...prev]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>保存</button> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>新增地址</button>}
+      <div className="delivery-location" style={{display:"flex",alignItems:"center",gap:5,padding:"7px 8px",background:"#f5dc7d",flexWrap:"nowrap"}}>
+        <MapPin size={16} style={{flexShrink:0}} />
+        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:"1 1 0",minWidth:0,width:0,padding:"6px 7px",fontSize:11,borderRadius:9,border:"1px solid #d5c06b"}} /> : <select aria-label="选择配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{flex:"1 1 0",width:0,maxWidth:220,minWidth:0,padding:"6px 7px",fontSize:11,borderRadius:9,border:"1px solid #d5c06b",background:"#fff9df"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>}
+        {addressEditing ? <button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[address,...prev]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{flexShrink:0,border:0,borderRadius:9,padding:"6px 8px",fontSize:11,whiteSpace:"nowrap",background:"#fff4c8"}}>保存</button> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{flexShrink:0,border:0,borderRadius:9,padding:"6px 8px",fontSize:11,whiteSpace:"nowrap",background:"#fff4c8"}}>新增地址</button>}
       </div>
-      <div style={{padding:"8px 12px",background:"#f5dc7d"}}>
+      <div className="delivery-search-wrap" style={{padding:"5px 10px 7px",background:"#f5dc7d"}}>
         <SearchBox value={q} set={setQ} placeholder="搜索菜品、商家或用品" />
       </div>
       {tab === "商家" && <div style={{display:"flex",gap:8,overflowX:"auto",padding:"10px 12px",background:"#fff",borderBottom:"1px solid #eee",flexShrink:0}}>
@@ -346,7 +412,7 @@ export function DeliverySkin(p: Props) {
             <div style={{display:"flex",justifyContent:"space-between",gap:8}}><strong>订单 {order.id}</strong><b style={{color:"#8c6d00"}}>{order.status}</b></div>
             <small style={{display:"block",color:"#888",marginTop:4}}>{order.time}</small>
             {order.items.map(({product,qty})=><p key={product.id} style={{margin:"8px 0"}}>{product.emoji} {product.name} × {qty} <span style={{float:"right"}}>{money(product.price*qty)}</span></p>)}
-            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款人：{order.payer}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
+            <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款人：{displayPayer(order.payer)}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
             {order.status === "已完成" ? <p style={{margin:"10px 0 0",color:"#888",fontSize:12}}>✓ 订单已完成，感谢使用</p> : <button onClick={()=>setOrders(prev=>prev.map(item=>item.id===order.id?{...item,status:"已完成"}:item))} style={{width:"100%",marginTop:12,padding:10,border:0,borderRadius:22,background:"#fff4c8",color:"#786117",fontWeight:700}}>模拟配送完成 · 标记为已完成</button>}
           </article>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>{orders.length ? "暂无"+orderFilter+"订单" : "还没有订单"}</p>}
         </div>}
@@ -355,12 +421,13 @@ export function DeliverySkin(p: Props) {
         {[{id:"商家",icon:"🍱"},{id:"购物车",icon:"🛒"},{id:"订单",icon:"🧾"}].map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,border:0,background:"transparent",color:tab===t.id?"#a88a21":"#888",fontWeight:tab===t.id?700:400,padding:4}}><span style={{display:"block",fontSize:22}}>{t.icon}{t.id==="购物车" && cartItems.length>0 ? " •" : ""}</span>{t.id}</button>)}
       </nav>
       {paidOrder && <div role="dialog" aria-modal="true" aria-label="模拟付款成功" style={{position:"absolute",inset:0,zIndex:30,background:"#0007",display:"grid",placeItems:"center",padding:18}}>
-        <section style={{background:"#fff",borderRadius:24,padding:22,width:"100%",maxWidth:340,maxHeight:"88%",overflowY:"auto",color:"#222",boxShadow:"0 18px 50px #0003"}}>
-          <div style={{fontSize:20,fontWeight:800}}>付款成功</div>
+        <section style={{position:"relative",background:"#fff",borderRadius:24,padding:22,width:"100%",maxWidth:340,maxHeight:"88%",overflowY:"auto",color:"#222",boxShadow:"0 18px 50px #0003"}}>
+          <button aria-label="关闭付款成功界面" onClick={()=>setPaidOrder(null)} style={{position:"absolute",top:12,right:12,width:30,height:30,display:"grid",placeItems:"center",border:0,borderRadius:15,background:"#f1f1f1",color:"#333"}}><X size={18}/></button>
+          <div style={{fontSize:20,fontWeight:800,paddingRight:36}}>付款成功</div>
           <div style={{fontSize:30,fontWeight:800,margin:"18px 0 6px"}}>{money(paidOrder.total)}</div>
           <div style={{fontSize:12,color:"#888",marginBottom:14}}>模拟交易已记录 · 不会真实扣款</div>
           <div style={{padding:"12px 0",borderTop:"1px solid #eee",borderBottom:"1px solid #eee",fontSize:13,lineHeight:1.7}}>
-            <div>扣款账户：<strong>{paidOrder.payer}</strong></div>
+            <div>扣款账户：<strong>{displayPayer(paidOrder.payer)}</strong></div>
             <div>支付方式：{paidOrder.paymentMethod}</div>
             <div>订单编号：{paidOrder.id}</div>
             <div>配送地址：{paidOrder.address}</div>
@@ -374,9 +441,8 @@ export function DeliverySkin(p: Props) {
             </div>
           </div>
           <div style={{fontSize:13,fontWeight:800,borderTop:"1px solid #eee",paddingTop:12}}>模拟账户扣款成功 <span style={{float:"right",fontSize:17}}>{money(paidOrder.total)}</span></div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:20}}>
-            <button onClick={()=>setPaidOrder(null)} style={{border:0,borderRadius:14,padding:12,background:"#eee",color:"#333",fontWeight:700}}>查看订单</button>
-            <button onClick={()=>{setPaidOrder(null);setTab("商家");}} style={{border:0,borderRadius:14,padding:12,background:"#f5dc7d",color:"#594500",fontWeight:700}}>继续购物</button>
+          <div style={{marginTop:20}}>
+            <button onClick={()=>{setPaidOrder(null);setTab("订单");}} style={{width:"100%",border:0,borderRadius:14,padding:12,background:"#eee",color:"#333",fontWeight:700}}>查看订单</button>
           </div>
         </section>
       </div>}
