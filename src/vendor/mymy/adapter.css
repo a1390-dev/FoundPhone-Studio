@@ -1105,3 +1105,17 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+/* Match KakaoTalk's compact sender line: smaller avatar and sender name only. */
+.mymy-ui.mymy-kakao .kzmav .catalog-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+}
+.mymy-ui.mymy-kakao .kzmn {
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 600;
+}
