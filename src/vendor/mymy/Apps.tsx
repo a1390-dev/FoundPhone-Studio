@@ -59,8 +59,13 @@ function Blank() {
   return <p className="mymy-empty">暂无内容</p>;
 }
 
-// Native KKT opening dialogue. Only the three replies explicitly checked by the player
-// are available as selectable options; unconfirmed rounds accept manual input.
+// These are the exact three replies the player checked in the prior rehearsal.
+// Reuse them in the native reply tray instead of inventing a fresh candidate list.
+const KKT_CONFIRMED_REPLY_OPTIONS = [
+  ["그럼 내가 맛있는 거 준비해 놓고 기다릴게. 너무 무리하지 말고 와.", "那我就准备好吃的等你回来。别太勉强自己，慢慢来。"],
+  ["자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.", "我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。"],
+  ["알겠어, 걱정 마. 내가 기다리고 있을 테니까 일 마무리 잘하고 와.", "好啦，别担心。我会等你的，你安心把工作处理好再回来。"],
+] as const;
 const KKT_STORY_ROUNDS = [
   {
     time: "20:17",
@@ -295,16 +300,23 @@ export function MymyKakao(p: SkinProps) {
               placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 ? "点击选择一条回复" : "输入消息"}
               value={draft}
               maxLength={2000}
-              readOnly={npcTyping || (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)}
-              onFocus={() => {
-                if (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)
+              readOnly={p.thread === "金旼炡" || npcTyping}
+              onPointerDown={(e) => {
+                if (p.thread !== "金旼炡") return;
+                // Never focus the real input on iOS Safari: opening the native
+                // keyboard changes the visual viewport and makes the phone jump.
+                e.preventDefault();
+                if (!npcTyping) setCandidateOpen((open) => !open);
+              }}
+              onFocus={(e) => {
+                if (p.thread === "金旼炡") {
                   setCandidateOpen(true);
+                  e.currentTarget.blur();
+                }
               }}
               onChange={(e) => {
                 setDraft(e.target.value);
                 setSelectedZh("");
-                if (!e.target.value && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0)
-                  setCandidateOpen(false);
               }}
             />
             <Smile size={22} />
@@ -316,9 +328,12 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
+          {p.thread === "金旼炡" && candidateOpen && !npcTyping && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
-              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
+              {(KKT_STORY_ROUNDS[storyStep]?.choices?.length
+                ? KKT_STORY_ROUNDS[storyStep].choices
+                : KKT_CONFIRMED_REPLY_OPTIONS
+              ).map(([ko, zh]) => (
                 <button
                   type="button"
                   className={"kkt-choice" + (draft === ko ? " selected" : "")}
