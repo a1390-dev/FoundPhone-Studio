@@ -52,7 +52,7 @@ export default defineConfig(() => ({
             // let Workbox serve Range requests from fully cached video files.
             urlPattern: /\.(?:mp4|webm|mov|m4v)(?:\?.*)?$/i,
             handler: "CacheFirst",
-            rangeRequests: true,
+            plugins: [{ use: "workbox-range-requests" }],
             options: {
               cacheName: "foundphone-media-videos-v1",
               expiration: { maxEntries: 40, maxAgeSeconds: 31536000 },
