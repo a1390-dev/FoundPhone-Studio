@@ -21,6 +21,7 @@ import {
   NativeSettings,
 } from "./DeviceSystem";
 import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
+import { preloadOriginalIconFiles } from "./ios/originalIconFiles";
 import { getFields } from "./fields";
 import { catalogSkins } from "./skins/catalog";
 import "./skins/skins.css";
@@ -443,8 +444,13 @@ function PhoneRuntime({
   };
   const installedApps = work.apps.filter((a) => a.installed);
   const apps = installedApps.filter((a) => a.visible);
-  const unlock = (pin = "") => {
+  useEffect(() => {
+    if (!creator) void preloadOriginalIconFiles();
+  }, [creator]);
+
+  const unlock = async (pin = "") => {
     if (!work.phone.passcode || pin === work.phone.passcode) {
+      if (!creator) await preloadOriginalIconFiles();
       setLocked(false);
       setPinOpen(false);
       event("password", pin);
@@ -612,8 +618,6 @@ function PhoneRuntime({
                     : work
                 }
                 time={displayTime}
-                notices={visibleNotices}
-                onDismiss={dismissVisibleNotice}
                 pinOpen={pinOpen}
                 setPinOpen={setPinOpen}
                 error={pinError}

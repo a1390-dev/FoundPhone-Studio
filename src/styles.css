@@ -4999,9 +4999,11 @@ label {
 #foundphone-player-id {
   width: 100%;
   min-width: 0;
-  min-height: 48px;
+  height: 42px;
+  min-height: 42px;
+  box-sizing: border-box;
   margin: 0 0 3px;
-  padding: 11px 12px;
+  padding: 9px 12px;
   border: 1px solid #ffffff38;
   border-radius: 12px;
   background: #fff;
@@ -5010,6 +5012,10 @@ label {
   line-height: 1.25;
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
+}
+#foundphone-player-id::placeholder {
+  font-size: 13px;
+  color: #999;
 }
 
 
@@ -5033,6 +5039,12 @@ label {
   font-size: var(--phone-input-font-size, 16px) !important;
 }
 
+/* Only the delivery address selector uses the same 13px type scale as product titles.
+   Keep the anti-auto-zoom font-size override scoped away from all other inputs. */
+.story-runtime .delivery-location select {
+  font-size: 14px !important;
+}
+
 /* The whole simulated phone is scaled with CSS zoom. Compensate only the ID
    field through its inline font size so Safari sees a real rendered 16px field
    and does not auto-zoom the webpage when the player taps it. */
@@ -5040,4 +5052,9 @@ label {
   font-size: inherit;
   -webkit-text-size-adjust: 100%;
   transform: none;
+}
+
+/* Taobao-only search placeholder sizing; keep delivery styles untouched. */
+.taobao-ui .taobao-search .catalog-search input {
+  font-size: 14px !important;
 }

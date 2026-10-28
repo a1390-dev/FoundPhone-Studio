@@ -1,4 +1,3 @@
-import { SystemNotifications } from "./SystemNotifications";
 import {
   ConnectivityModule,
   SliderModule,
@@ -61,8 +60,6 @@ export function NativeComposer({
 export function DeviceLock({
   work,
   time,
-  notices,
-  onDismiss,
   pinOpen,
   setPinOpen,
   error,
@@ -76,8 +73,6 @@ export function DeviceLock({
   work: Work;
   phoneScale: number;
   time: string;
-  notices: string[];
-  onDismiss: (index: number) => void;
   pinOpen: boolean;
   setPinOpen: (v: boolean) => void;
   error: string;
@@ -190,7 +185,7 @@ export function DeviceLock({
                         autoCapitalize="none"
                         autoCorrect="off"
                         spellCheck={false}
-                        placeholder="输入你想使用的名字"
+                        placeholder="NAME"
                         required
                       />
                       <button type="submit" className="player-session-primary">开始新游戏</button>
@@ -203,17 +198,6 @@ export function DeviceLock({
               </section>
             </div>
           )}
-          <div className="lock-notifications">
-            {work.phone.notifications && (
-              <SystemNotifications
-                compact
-                notices={notices}
-                apps={work.apps}
-                onOpen={open}
-                onDismiss={onDismiss}
-              />
-            )}
-          </div>
           {playerId && resumeChoice === "hidden" ? <UnlockHandle onUnlock={open} /> : null}
 
           <div className="lock-tools">
