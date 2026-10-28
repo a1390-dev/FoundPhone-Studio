@@ -1332,3 +1332,13 @@
 .mymy-ui.mymy-instagram .ig-rumor-dm-compose button:disabled {
   opacity: .4;
 }
+
+.mymy-ui.mymy-instagram .igb:has(.ig-rumor-dm-thread) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+}
