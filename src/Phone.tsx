@@ -456,6 +456,13 @@ function PhoneRuntime({
             "scandal-news-pushed": true,
             "scandal-kkt-first-notice": false,
             "scandal-kkt-second-notice": false,
+            "scandal-call-triggered": false,
+            "scandal-call-dialogue-step": 0,
+          },
+          kakao: {
+            ...current.ui?.kakao,
+            "scandal-call-result": "",
+            "scandal-precall-started": false,
           },
         },
       });
