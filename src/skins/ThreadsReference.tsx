@@ -36,7 +36,7 @@ export function ThreadsReference(p: SkinProps) {
     [saved, setSaved] = useSkinState<string[]>(p, "threads-saved", []),
     [posts, setPosts] = useSkinState<string[]>(p, "threads-posts", []),
     [replies, setReplies] = useSkinState<string[]>(p, "threads-replies", []),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "threads-live-post-count-v1", 0);
+    [liveCount, setLiveCount] = useSkinState<number>(p, "threads-live-post-count-rumor-v2", 1);
   const [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("全部"),
@@ -60,8 +60,15 @@ export function ThreadsReference(p: SkinProps) {
   const liveItems = p.items.filter(
     (i) => i.meta.live === "true" && i.folder !== "私信" && !i.meta.activityType,
   );
+  useEffect(() => {
+    if (p.items.some((i) => i.meta.category === "rumor-discussion"))
+      p.onUi?.("rumor-feed-opened", true);
+  }, [p.items.length]);
+  useEffect(() => {
+    if (liveCount === 0 && liveItems.length) setLiveCount(1);
+  }, [liveCount, liveItems.length]);
   const feed = [
-      ...local,
+      ...local.slice().reverse(),
       ...liveItems.slice(0, liveCount).reverse(),
       ...p.items.filter(
         (i) => i.folder !== "私信" && !i.meta.activityType && i.meta.live !== "true",
@@ -75,7 +82,7 @@ export function ThreadsReference(p: SkinProps) {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      28000,
+      12000,
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
@@ -184,17 +191,52 @@ export function ThreadsReference(p: SkinProps) {
                 ...replies
                   .filter((v) => v.startsWith(selected.id + "\t"))
                   .map((v) => v.split("\t").slice(1).join("\t")),
-              ].map((c, n) => (
-                <p key={n}>{c}</p>
-              ))}
+              ].map((rawComment, n) => {
+                const match = rawComment.match(/^([^：:]{1,32})[：:]\s*(.*)$/s);
+                const author = match?.[1] || "路人用户";
+                const body = match?.[2] || rawComment;
+                return (
+                  <article className="tr-comment" key={n}>
+                    <Avatar name={author} />
+                    <div className="tr-comment-content">
+                      <header><b>{author}</b><small>{n < selected.comments.length ? "今天" : "刚刚"}</small></header>
+                      <p>{body}</p>
+                      <div className="tr-comment-actions">
+                        <button aria-label={"喜欢" + author} onClick={(e) => e.currentTarget.classList.toggle("liked")}><Heart size={15} /></button>
+                        <button onClick={() => setDraft("@" + author + " ")}>回复</button>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
             <form
               className="tr-reply"
               onSubmit={(e) => {
                 e.preventDefault();
                 if (draft.trim()) {
-                  setReplies([...replies, selected.id + "\t" + draft.trim()]);
+                  const posted = draft.trim();
+                  const who = p.playerId || p.owner || "机主";
+                  setReplies((current) => [...current, selected.id + "\t" + who + "：" + posted]);
                   setDraft("");
+                  const rumorPool = [
+                    ["理性围观中", "照片太模糊了，还是先别下结论吧。"],
+                    ["普通网友", "同一张图被转来转去，不代表多了新的证据。"],
+                    ["晚间刷帖人", "先等核实信息吧，别去找当事人的私人行踪。"],
+                    ["小号观察员", "这条讨论里有些细节像是后来猜出来的。"],
+                    ["路过的MY", "关心她可以，但别把私生活当成大家都能追查的事。"],
+                    ["话题记录员", "现在最确定的只有网传照片在传播，其他还没有确认。"],
+                  ];
+                  const pool = selected.meta.category === "rumor-discussion" ? rumorPool : [
+                    ["路过的用户", "看到你的回复了。"],
+                    ["话题记录员", "这个角度之前还没人提到。"],
+                    ["普通网友", "先等等后续吧。"],
+                    ["晚睡选手", "评论区又多一个观点。"],
+                  ];
+                  const npc = pool[Math.floor(Math.random() * pool.length)];
+                  window.setTimeout(() => {
+                    setReplies((current) => [...current, selected.id + "\t" + npc[0] + "：" + npc[1]]);
+                  }, 1500 + Math.floor(Math.random() * 3300));
                 }
               }}
             >
@@ -511,11 +553,25 @@ export function ThreadsReference(p: SkinProps) {
             <button
               disabled={!draft.trim()}
               onClick={() => {
-                setPosts([draft.trim(), ...posts]);
+                const body = draft.trim();
+                if (!body) return;
+                const newPostId = "local-thread-" + posts.length;
+                setPosts((current) => [...current, body]);
                 setDraft("");
                 setCompose(false);
                 setKeyboard(false);
                 setTab("首页");
+                const npcPool = [
+                  ["时间线路人", "看到你的帖子了，先把讨论放在已知信息上吧。"],
+                  ["普通网友", "我也刷到这个话题了，评论里信息有点杂。"],
+                  ["小号观察员", "等有来源的消息再判断会更稳妥。"],
+                  ["路过的MY", "希望大家讨论的时候也记得给当事人留点空间。"],
+                  ["晚间刷帖人", "刚才还没看到这条，时间线更新好快。"],
+                ];
+                const npc = npcPool[Math.floor(Math.random() * npcPool.length)];
+                window.setTimeout(() => {
+                  setReplies((current) => [...current, newPostId + "\t" + npc[0] + "：" + npc[1]]);
+                }, 2200 + Math.floor(Math.random() * 3500));
               }}
             >
               发布
