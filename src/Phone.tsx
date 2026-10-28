@@ -586,6 +586,15 @@ function PhoneRuntime({
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
   const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
+  const igDmQueue = Array.isArray(s.ui?.instagram?.["scandal-ig-dm-queue-v6"])
+    ? s.ui?.instagram?.["scandal-ig-dm-queue-v6"] as string[] : [];
+  const igDmVisibleCount = Number(s.ui?.instagram?.["scandal-ig-dm-visible-count-v6"] ?? 0);
+  const igDmBatchStarted = s.ui?.instagram?.["scandal-ig-dm-batch-started-v6"] === true;
+  const igDmReplyQueue = Array.isArray(s.ui?.instagram?.["scandal-ig-dm-reply-queue-v6"])
+    ? s.ui?.instagram?.["scandal-ig-dm-reply-queue-v6"] as string[] : [];
+  const igDmReplyCount = Number(s.ui?.instagram?.["scandal-ig-dm-reply-count-v6"] ?? 0);
+  const igDmScreenActive = app === "instagram" &&
+    s.ui?.instagram?.["scandal-ig-dm-screen-active-v6"] === true;
   useEffect(() => {
     if (creator || s.ui?.kakao?.["convenience-store-event-finished-v5"] !== true) return;
     const current = runtimeRef.current;
@@ -728,6 +737,111 @@ function PhoneRuntime({
     }, 1000);
     return () => window.clearTimeout(timer);
   }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
+  // The final in-call line is the end of the scripted conversation. Hang up
+  // automatically, then start the one-by-one Instagram DM influx.
+  useEffect(() => {
+    if (creator || s.incomingCall?.target !== "scandal-call" ||
+      s.incomingCall.status !== "answered" || callDialogueStep < 6) return;
+    const timer = window.setTimeout(() => {
+      const current = runtimeRef.current;
+      if (current.incomingCall?.target !== "scandal-call" ||
+        current.incomingCall.status !== "answered" ||
+        Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0) < 6) return;
+      const instagramUi = current.ui?.instagram || {};
+      const next = dispatch(
+        work,
+        { ...current, incomingCall: null },
+        "callEnded",
+        "scandal-call",
+      );
+      next.ui = {
+        ...next.ui,
+        instagram: {
+          ...instagramUi,
+          "scandal-ig-dm-batch-started-v6": true,
+          "scandal-ig-dm-queue-v6": createInstagramFanDmBatch(),
+          "scandal-ig-dm-visible-count-v6": 0,
+          "scandal-ig-dm-replies-v6": [],
+          "scandal-ig-dm-reply-queue-v6": [],
+          "scandal-ig-dm-reply-count-v6": 0,
+          "scandal-ig-dm-screen-active-v6": false,
+          "scandal-ig-open-thread-v6": "",
+        },
+      };
+      update(next);
+    }, 1800);
+    return () => window.clearTimeout(timer);
+  }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
+
+  useEffect(() => {
+    if (creator || !igDmBatchStarted || igDmVisibleCount >= igDmQueue.length) return;
+    const timer = window.setTimeout(() => {
+      const current = runtimeRef.current;
+      const instagramUi = current.ui?.instagram || {};
+      const currentQueue = Array.isArray(instagramUi["scandal-ig-dm-queue-v6"])
+        ? instagramUi["scandal-ig-dm-queue-v6"] as string[] : [];
+      const currentIndex = Number(instagramUi["scandal-ig-dm-visible-count-v6"] ?? 0);
+      const raw = currentQueue[currentIndex];
+      if (!raw || currentIndex !== igDmVisibleCount) return;
+      let dm: InstagramFanDm;
+      try { dm = JSON.parse(raw) as InstagramFanDm; }
+      catch { return; }
+      const active = app === "instagram" &&
+        instagramUi["scandal-ig-dm-screen-active-v6"] === true;
+      const notice = `IGDM|${dm.id}|${dm.handle}: ${dm.text} — ${dm.translation}`;
+      update({
+        ...current,
+        notifications: active ? current.notifications : [...current.notifications, notice],
+        ui: {
+          ...current.ui,
+          instagram: {
+            ...instagramUi,
+            "scandal-ig-dm-visible-count-v6": currentIndex + 1,
+          },
+        },
+      });
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [creator, igDmBatchStarted, igDmVisibleCount, igDmQueue.length, app, igDmScreenActive]);
+
+  useEffect(() => {
+    if (creator || igDmReplyCount >= igDmReplyQueue.length) return;
+    const timer = window.setTimeout(() => {
+      const current = runtimeRef.current;
+      const instagramUi = current.ui?.instagram || {};
+      const queue = Array.isArray(instagramUi["scandal-ig-dm-reply-queue-v6"])
+        ? instagramUi["scandal-ig-dm-reply-queue-v6"] as string[] : [];
+      const index = Number(instagramUi["scandal-ig-dm-reply-count-v6"] ?? 0);
+      const raw = queue[index];
+      if (!raw || index !== igDmReplyCount) return;
+      let message: { id: string; threadId: string; handle: string; text: string; translation: string; role: string };
+      try { message = JSON.parse(raw) as typeof message; }
+      catch { return; }
+      const currentReplies = Array.isArray(instagramUi["scandal-ig-dm-replies-v6"])
+        ? instagramUi["scandal-ig-dm-replies-v6"] as string[] : [];
+      const active = app === "instagram" &&
+        instagramUi["scandal-ig-dm-screen-active-v6"] === true;
+      const notice = `IGDM|${message.threadId}|${message.handle}: ${message.text} — ${message.translation}`;
+      update({
+        ...current,
+        notifications: active ? current.notifications : [...current.notifications, notice],
+        ui: {
+          ...current.ui,
+          instagram: {
+            ...instagramUi,
+            "scandal-ig-dm-replies-v6": [...currentReplies, raw],
+            "scandal-ig-dm-reply-count-v6": index + 1,
+          },
+        },
+      });
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [creator, igDmReplyCount, igDmReplyQueue.length, app, igDmScreenActive]);
+
+  useEffect(() => {
+    if (igDmScreenActive && banner.startsWith("IGDM|")) setBanner("");
+  }, [igDmScreenActive]);
+
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
