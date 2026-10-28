@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Home,
   Send,
@@ -10,6 +10,7 @@ import {
   MoreHorizontal,
   ArrowLeft,
   Repeat2,
+  RefreshCw,
   Bookmark,
   SquarePen,
   SlidersHorizontal,
@@ -34,7 +35,8 @@ export function ThreadsReference(p: SkinProps) {
     [liked, setLiked] = useSkinState<string[]>(p, "threads-liked", []),
     [saved, setSaved] = useSkinState<string[]>(p, "threads-saved", []),
     [posts, setPosts] = useSkinState<string[]>(p, "threads-posts", []),
-    [replies, setReplies] = useSkinState<string[]>(p, "threads-replies", []);
+    [replies, setReplies] = useSkinState<string[]>(p, "threads-replies", []),
+    [liveCount, setLiveCount] = useSkinState<number>(p, "threads-live-post-count-v1", 0);
   const [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("全部"),
@@ -55,12 +57,28 @@ export function ThreadsReference(p: SkinProps) {
       meta: { local: "true" },
     }),
   );
+  const liveItems = p.items.filter(
+    (i) => i.meta.live === "true" && i.folder !== "私信" && !i.meta.activityType,
+  );
   const feed = [
       ...local,
-      ...p.items.filter((i) => i.folder !== "私信" && !i.meta.activityType),
+      ...liveItems.slice(0, liveCount).reverse(),
+      ...p.items.filter(
+        (i) => i.folder !== "私信" && !i.meta.activityType && i.meta.live !== "true",
+      ),
     ],
     messages = p.items.filter((i) => i.folder === "私信"),
     activities = p.items.filter((i) => i.meta.activityType);
+  const touchStartY = useRef<number | null>(null);
+  const refreshFeed = () => setLiveCount(Math.min(liveItems.length, liveCount + 2));
+  useEffect(() => {
+    if (liveCount >= liveItems.length) return;
+    const timer = window.setTimeout(
+      () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
+      28000,
+    );
+    return () => window.clearTimeout(timer);
+  }, [liveCount, liveItems.length]);
   const toggle = (id: string, items: string[], set: (v: string[]) => void) =>
     set(items.includes(id) ? items.filter((v) => v !== id) : [...items, id]);
   const open = (i: Item) => {
@@ -132,7 +150,21 @@ export function ThreadsReference(p: SkinProps) {
   );
   return (
     <div className="threads-reference">
-      <div className="tr-scroll">
+      <div
+        className="tr-scroll"
+        onTouchStart={(e) => {
+          touchStartY.current =
+            e.currentTarget.scrollTop <= 0 ? e.touches[0]?.clientY ?? null : null;
+        }}
+        onTouchEnd={(e) => {
+          const start = touchStartY.current;
+          const end = e.changedTouches[0]?.clientY;
+          touchStartY.current = null;
+          if (start !== null && end !== undefined && end - start > 64 && e.currentTarget.scrollTop <= 0) {
+            refreshFeed();
+          }
+        }}
+      >
         {selected ? (
           <>
             <header className="tr-head">
@@ -210,6 +242,14 @@ export function ThreadsReference(p: SkinProps) {
                     onClick={() => setTab("搜索")}
                   >
                     <Search />
+                  </button>
+                  <button
+                    className="tr-refresh-button"
+                    aria-label="刷新Threads首页"
+                    title="刷新首页"
+                    onClick={refreshFeed}
+                  >
+                    <RefreshCw />
                   </button>
                 </>
               ) : (
