@@ -114,8 +114,8 @@ function Back({ onClick }: { onClick: () => void }) {
 }
 export function MymyKakao(p: SkinProps) {
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
-    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV2", []),
-    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV2", 0),
+    [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
+    [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV1", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
@@ -309,23 +309,24 @@ export function MymyKakao(p: SkinProps) {
               ref={composerRef}
               className="kkt-composer-textarea"
               aria-label="KKT消息"
-              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 ? "点击选择一条回复" : "输入消息"}
+              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
               value={draft}
               rows={1}
               maxLength={2000}
-              readOnly={npcTyping || (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)}
+              readOnly={p.thread === "金旼炡" || npcTyping}
               onPointerDown={(e) => {
-                if (p.thread !== "金旼炡" || npcTyping || (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0) return;
-                // Keep the simulated phone fixed; this field opens the in-phone
-                // reply tray instead of triggering the iOS keyboard.
+                if (p.thread !== "金旼炡") return;
+                // Never open the iOS keyboard in the scripted KKT chat. Restore
+                // the same in-phone tray behavior that worked before the font-only edit.
                 e.preventDefault();
+                if (npcTyping) return;
+                if ((KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) === 0) return;
                 if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
                 setCandidateOpen(false);
                 choiceOpenTimer.current = setTimeout(() => setCandidateOpen(true), 500);
               }}
               onFocus={(e) => {
-                if (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)
-                  e.currentTarget.blur();
+                if (p.thread === "金旼炡") e.currentTarget.blur();
               }}
               onChange={(e) => {
                 setDraft(e.target.value);
