@@ -288,7 +288,7 @@ export function YouTubeSkin(p: Props) {
                 aria-label={`在 YouTube 打开${video.title}`}
               >
                 <img
-                  src={`https://i.ytimg.com/vi/${video.id}/hq720.jpg`}
+                  src={`/media/youtube/${video.id}.jpg`}
                   loading="lazy"
                   decoding="async"
                   alt={video.title}
