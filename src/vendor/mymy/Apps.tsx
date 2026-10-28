@@ -1323,7 +1323,7 @@ export function MymyInstagram(p: SkinProps) {
 }
 export function MymyX(p: SkinProps) {
   const [dark, setDark] = useSkinState<boolean>(p, "x-dark", true);
-  const [tab, setTab] = useSkinState<string>(p, "mymyTab", "推荐"),
+  const [tab, setTab] = useSkinState<string>(p, "x-feed-tab-rumor-v2", "为你推荐"),
     [likes, setLikes] = useSkinState<string[]>(p, "mymyXLikes", []),
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
@@ -1332,7 +1332,7 @@ export function MymyX(p: SkinProps) {
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
-  const liveItems = p.items.filter((i) => i.meta.live === "true");
+  const liveItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1347,7 +1347,7 @@ export function MymyX(p: SkinProps) {
   const feedItems = [
     ...localXItems.slice().reverse(),
     ...liveItems.slice(0, liveCount).reverse(),
-    ...p.items.filter((i) => i.meta.live !== "true"),
+    ...p.items.filter((i) => i.meta.category !== "rumor-discussion").slice().sort((a, b) => b.time.localeCompare(a.time)),
   ];
   useEffect(() => {
     if (p.items.some((i) => i.meta.category === "rumor-discussion"))
