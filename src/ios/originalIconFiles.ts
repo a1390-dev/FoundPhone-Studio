@@ -68,7 +68,8 @@ export function preloadOriginalIconFiles(): Promise<void> {
     originalIconPreloadPromise = Promise.all(
       [...new Set(Object.values(originalIconFiles))].map((url) => {
         const image = new Image();
-        image.decoding = "sync";
+        image.decoding = "async";
+        image.fetchPriority = "high";
         image.src = url;
         if (typeof image.decode !== "function") return Promise.resolve();
         return image.decode().then(
