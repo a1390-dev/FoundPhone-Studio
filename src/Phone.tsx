@@ -612,8 +612,6 @@ function PhoneRuntime({
                     : work
                 }
                 time={displayTime}
-                notices={visibleNotices}
-                onDismiss={dismissVisibleNotice}
                 pinOpen={pinOpen}
                 setPinOpen={setPinOpen}
                 error={pinError}
