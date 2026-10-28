@@ -76,7 +76,7 @@ const KKT_CONFIRMED_REPLY_OPTIONS = [
   ["알겠어, 걱정 마. 내가 기다리고 있을 테니까 일 마무리 잘하고 와.", "好啦，别担心。我会等你的，你安心把工作处理好再回来。"],
 ] as const;
 const KKT_OPENING_FOLLOWUP = [
-  "금旼炡",
+  "金旼炡",
   "나 오늘 집에 좀 늦게 들어갈 것 같아.",
   "20:17",
   "npc",
