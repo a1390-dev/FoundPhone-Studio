@@ -1344,7 +1344,6 @@ export function MymyX(p: SkinProps) {
     [composeOpen, setComposeOpen] = useState(false);
   const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
   const liveItems = allLiveRumorItems.slice(0, 26);
-  const olderRumorItems = allLiveRumorItems.slice(26);
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1359,7 +1358,6 @@ export function MymyX(p: SkinProps) {
   const feedItems = [
     ...localXItems.slice().reverse(),
     ...liveItems.slice(0, liveCount).reverse(),
-    ...olderRumorItems.slice().sort((a, b) => b.time.localeCompare(a.time)),
     ...p.items.filter((i) => i.meta.category !== "rumor-discussion").slice().sort((a, b) => b.time.localeCompare(a.time)),
   ];
   useEffect(() => {
