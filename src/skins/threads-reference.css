@@ -478,3 +478,19 @@
 .threads-reference .tr-search input {
   flex: 1;
 }
+
+
+/* Threads refresh control sits alongside the search control. */
+.tr-head .tr-refresh-button {
+  display: grid;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  padding: 0;
+}
+.tr-head .tr-refresh-button svg {
+  width: 21px;
+  height: 21px;
+}
