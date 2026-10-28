@@ -156,6 +156,8 @@ export function TaobaoSkin(p: Props) {
     "taobaoState",
     localSavedState,
   );
+  const persistTaobaoRef = useRef(setSavedState);
+  persistTaobaoRef.current = setSavedState;
   const restored = parseTaobaoState(savedState);
   const { q, setQ, items } = useContent(p, "商品");
   const [tab, setTab] = useState(() =>
@@ -192,7 +194,7 @@ export function TaobaoSkin(p: Props) {
   );
   useEffect(() => {
     const nextState = JSON.stringify({ cart, payer, address, paymentMethod, orders, lastOrder, tab, orderDone });
-    setSavedState(nextState);
+    persistTaobaoRef.current(nextState);
     try {
       window.localStorage.setItem(storageKey, nextState);
     } catch {
