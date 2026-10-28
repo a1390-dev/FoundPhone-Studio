@@ -1,11 +1,14 @@
 .story-runtime {
-  height: 100dvh;
+  position: fixed;
+  inset: 0;
+  height: 100svh;
   min-height: 320px;
-  width: 100%;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  overscroll-behavior: none;
   background: #111113;
 }
 .story-runtime .phone-stage {
