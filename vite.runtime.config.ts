@@ -34,6 +34,29 @@ export default defineConfig(() => ({
             options: {
               cacheName: "foundphone-app-icons-v3",
               expiration: { maxEntries: 60, maxAgeSeconds: 31536000 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // Reuse successfully loaded pictures across app visits and reloads.
+            urlPattern: /\.(?:avif|webp|png|jpe?g|gif|svg)(?:\?.*)?$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "foundphone-media-images-v1",
+              expiration: { maxEntries: 1000, maxAgeSeconds: 31536000 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // Keep video assets when a cacheable response is available, and
+            // let Workbox serve Range requests from fully cached video files.
+            urlPattern: /\.(?:mp4|webm|mov|m4v)(?:\?.*)?$/i,
+            handler: "CacheFirst",
+            rangeRequests: true,
+            options: {
+              cacheName: "foundphone-media-videos-v1",
+              expiration: { maxEntries: 40, maxAgeSeconds: 31536000 },
+              cacheableResponse: { statuses: [0, 200, 206] },
             },
           },
         ],
