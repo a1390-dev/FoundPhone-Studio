@@ -432,8 +432,6 @@ function PhoneRuntime({
   };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
-    const current = runtimeRef.current;
-
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
