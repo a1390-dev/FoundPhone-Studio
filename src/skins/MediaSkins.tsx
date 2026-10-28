@@ -288,10 +288,17 @@ export function YouTubeSkin(p: Props) {
                 aria-label={`在 YouTube 打开${video.title}`}
               >
                 <img
-                  src={`${import.meta.env.BASE_URL}media/youtube/${video.id}.jpg`}
-                  loading="lazy"
+                  src={`/media/youtube/${video.id}.jpg`}
+                  loading={video.id === linkedYouTubeVideos[0].id || video.id === linkedYouTubeVideos[1].id ? "eager" : "lazy"}
                   decoding="async"
                   alt={video.title}
+                  onError={(event) => {
+                    const image = event.currentTarget;
+                    if (!image.dataset.remoteFallback) {
+                      image.dataset.remoteFallback = "1";
+                      image.src = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+                    }
+                  }}
                 />
                 <span className="youtube-play-mark" aria-hidden="true">▶</span>
               </a>
@@ -331,7 +338,9 @@ export function YouTubeSkin(p: Props) {
             </article>
           ))}
         </div>
-        <Empty items={list} />
+        {!(tab === "首页" && category === "全部" && linkedYouTubeVideos.length > 0) && (
+          <Empty items={list} />
+        )}
       </div>
       <Tabs
         tabs={["首页", "Shorts", "订阅", "播放列表"]}
