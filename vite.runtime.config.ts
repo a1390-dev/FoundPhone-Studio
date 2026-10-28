@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import { RangeRequestsPlugin } from "workbox-range-requests";
 export default defineConfig(() => ({
   base: "./",
   optimizeDeps: { entries: ["index.html"] },
@@ -53,7 +54,7 @@ export default defineConfig(() => ({
             urlPattern: /\.(?:mp4|webm|mov|m4v)(?:\?.*)?$/i,
             handler: "CacheFirst",
             options: {
-              plugins: [{ use: "workbox-range-requests" }],
+              plugins: [new RangeRequestsPlugin()],
               cacheName: "foundphone-media-videos-v1",
               expiration: { maxEntries: 40, maxAgeSeconds: 31536000 },
               cacheableResponse: { statuses: [0, 200, 206] },
