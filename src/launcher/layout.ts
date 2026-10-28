@@ -33,6 +33,27 @@ export const layoutSchema = z
 export type DeviceLayout = z.infer<typeof layoutSchema>;
 export type Widget = z.infer<typeof widgetSchema>;
 export type AppConfig = Work["apps"][number];
+
+// Temporary icon/performance test: keep these apps' code and data, but remove
+// them from the simulated phone's installed home-screen apps.
+const ICON_TEST_REMOVED_APPS = new Set([
+  "qq", "weibo", "redbook", "bilibili", "alipay", "netease", "forum",
+  "tiktok", "telegram", "discord", "snapchat", "facebook", "reddit",
+  "spotify", "netflix", "pinterest", "douyin", "reminders", "files",
+  "mail", "find",
+]);
+function removeAppsForIconTest(layout: DeviceLayout): DeviceLayout {
+  for (const app of layout.apps) {
+    if (!ICON_TEST_REMOVED_APPS.has(app.id)) continue;
+    app.installed = false;
+    app.visible = false;
+    app.dock = false;
+    app.folder = "";
+    delete layout.positions[app.id];
+  }
+  layout.order = layout.order.filter((id) => !ICON_TEST_REMOVED_APPS.has(id));
+  return layout;
+}
 export function ensureAppStore(work: Work): Work {
   return work.apps.some((a) => a.id === "appstore")
     ? work
@@ -54,7 +75,7 @@ export function ensureAppStore(work: Work): Work {
 }
 export function defaultLayout(input: Work): DeviceLayout {
   const w = ensureAppStore(input);
-  return {
+  return removeAppsForIconTest({
     version: 1,
     workId: w.id,
     previewLayoutRevision: w.id === "ui-test-phone-v2" ? 1 : 0,
@@ -69,12 +90,13 @@ export function defaultLayout(input: Work): DeviceLayout {
     order: [],
     cleared: [],
     positions: {},
-  };
+  });
 }
 export function validateLayout(raw: unknown, input: Work) {
   const w = ensureAppStore(input);
   const layout = layoutSchema.parse(raw);
   if (layout.workId !== w.id) throw Error("布局属于其他作品");
+  removeAppsForIconTest(layout);
   const known = new Set(w.apps.map((a) => a.id));
   if (layout.apps.some((a) => !known.has(a.id))) throw Error("布局含未注册App");
   if (new Set(layout.apps.map((a) => a.id)).size !== layout.apps.length)
@@ -118,6 +140,7 @@ export function validateLayout(raw: unknown, input: Work) {
     ];
     layout.previewLayoutRevision = 1;
   }
+  removeAppsForIconTest(layout);
   const entries = homeEntries(layout),
     packed = packHome(entries, layout.positions);
   for (const entry of entries) {
@@ -166,17 +189,25 @@ export function useDeviceLayout(authored: Work, creator = false) {
     if (creator) return base;
     const known = new Map(base.apps.map((a) => [a.id, a]));
     const apps = [
-      ...layout.apps.filter((a) => known.has(a.id)),
-      ...base.apps.filter((a) => !layout.apps.some((b) => b.id === a.id)),
+      ...layout.apps.filter(
+        (a) => known.has(a.id) && !ICON_TEST_REMOVED_APPS.has(a.id),
+      ),
+      ...base.apps.filter(
+        (a) =>
+          !ICON_TEST_REMOVED_APPS.has(a.id) &&
+          !layout.apps.some((b) => b.id === a.id),
+      ),
     ];
     return {
       ...base,
       apps,
       data: Object.fromEntries(
-        Object.entries(base.data).map(([id, items]) => [
-          id,
-          layout.cleared.includes(id) ? [] : items,
-        ]),
+        Object.entries(base.data)
+          .filter(([id]) => !ICON_TEST_REMOVED_APPS.has(id))
+          .map(([id, items]) => [
+            id,
+            layout.cleared.includes(id) ? [] : items,
+          ]),
       ),
     };
   }, [base, creator, layout]);
