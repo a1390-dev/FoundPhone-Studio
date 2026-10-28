@@ -550,6 +550,7 @@ function PhoneRuntime({
                 key={resumePromptKey}
                 canContinue={ready}
                 onNewPlayer={startNewPlayer}
+                phoneScale={deviceScale}
                 work={
                   s.date
                     ? { ...work, phone: { ...work.phone, date: s.date } }
