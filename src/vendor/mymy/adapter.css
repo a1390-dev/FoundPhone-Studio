@@ -1155,17 +1155,18 @@
 }
 
 
-/* Feed refresh control */
-.mymy-ui .kzxtb .x-feed-refresh {
-  display: inline-flex;
+/* Feed refresh control stays in the header so the timeline tabs do not overflow. */
+.mymy-ui .kzxh .x-header-actions {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 10px 8px;
-  color: #1d9bf0;
-  font-size: 12px;
-  white-space: nowrap;
+  gap: 8px;
 }
-.mymy-ui .kzxtb .x-feed-refresh svg {
-  flex: none;
+.mymy-ui .kzxh .x-feed-refresh {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  color: #1d9bf0;
+  border-radius: 50%;
 }
