@@ -335,73 +335,7 @@ function PhoneRuntime({
     } catch { return "legacy"; }
   });
   const [resumePromptKey, setResumePromptKey] = useState(0);
-  const kktOpeningNoticeKey = `foundphone.kkt-opening-seen.v1:${encodeURIComponent(playerId || "default")}:${saveGeneration}`;
-  const [kktOpeningSeen, setKktOpeningSeen] = useState(() => {
-    try { return localStorage.getItem(kktOpeningNoticeKey) === "1"; }
-    catch { return false; }
-  });
-  const kktOpeningSeenRef = useRef(kktOpeningSeen);
-  const isKktOpeningNotice = (notice: string) =>
-    notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
-  const kktNoticeThread = (notice: string): string | null => {
-    if (!notice.startsWith("KKT|")) return null;
-    const payload = notice.slice(4);
-    const separator = payload.search(/[:：]/);
-    return separator > 0 ? payload.slice(0, separator).trim() : null;
-  };
-  const clearKktThreadNotifications = (thread: string) => {
-    const current = runtimeRef.current;
-    const unreadKey = "kkt-unread-count:" + thread;
-    const notifications = current.notifications.filter((notice) => kktNoticeThread(notice) !== thread);
-    const next = {
-      ...current,
-      notifications,
-      ui: {
-        ...current.ui,
-        kakao: { ...current.ui?.kakao, [unreadKey]: 0 },
-      },
-    };
-    if (banner && kktNoticeThread(banner) === thread) setBanner("");
-    update(next);
-  };
-  const handleKktIncomingMessage = (rawValue: UiValue) => {
-    if (typeof rawValue !== "string") return;
-    let event: { id?: string; thread?: string; text?: string; translation?: string };
-    try { event = JSON.parse(rawValue) as typeof event; }
-    catch { return; }
-    if (!event.id || !event.thread || !event.text) return;
-    if (handledKktEventsRef.current.has(event.id)) return;
-    handledKktEventsRef.current.add(event.id);
-    if (handledKktEventsRef.current.size > 300) {
-      const keep = [...handledKktEventsRef.current].slice(-150);
-      handledKktEventsRef.current = new Set(keep);
-    }
-    const current = runtimeRef.current;
-    const unreadKey = "kkt-unread-count:" + event.thread;
-    const activeConversation = app === "kakao" && appThread === event.thread;
-    const nextUnread = activeConversation
-      ? 0
-      : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
-    const notifications = activeConversation
-      ? current.notifications.filter((notice) => kktNoticeThread(notice) !== event.thread)
-      : [...current.notifications, `KKT|${event.thread}:${event.text}`];
-    if (activeConversation && banner && kktNoticeThread(banner) === event.thread) setBanner("");
-    update({
-      ...current,
-      notifications,
-      ui: {
-        ...current.ui,
-        kakao: { ...current.ui?.kakao, [unreadKey]: nextUnread },
-      },
-    });
-  };
-  useEffect(() => {
-    let seen = false;
-    try { seen = localStorage.getItem(kktOpeningNoticeKey) === "1"; }
-    catch { /* Per-session suppression still works without persistent storage. */ }
-    kktOpeningSeenRef.current = seen;
-    setKktOpeningSeen(seen);
-  }, [kktOpeningNoticeKey]);
+  const handledKktEventsRef = useRef(new Set<string>());
   useEffect(() => {
     if (creator) return;
     let hiddenAt = 0;
@@ -569,14 +503,6 @@ function PhoneRuntime({
           };
         }
       }
-      // Once KKT has been opened for this player run, discard only the opening
-      // notification if its pending three-second timer fires after a reload.
-      if (kktOpeningSeenRef.current && next.notifications.some(isKktOpeningNotice)) {
-        next = {
-          ...next,
-          notifications: next.notifications.filter((notice) => !isKktOpeningNotice(notice)),
-        };
-      }
       runtimeRef.current = next;
 
       const changed =
@@ -625,15 +551,9 @@ function PhoneRuntime({
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
   const markKktOpeningAsSeen = () => {
-    kktOpeningSeenRef.current = true;
-    setKktOpeningSeen(true);
-    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
-    catch { /* This run still suppresses repeat opening notices while mounted. */ }
-    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
-    const current = runtimeRef.current;
-    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
-    if (notifications.length !== current.notifications.length)
-      update({ ...current, notifications });
+    // The active KKT conversation is the only place where its messages are read
+    // silently. Clear this conversation's unread badge and queued notices.
+    clearKktThreadNotifications("金旼炡");
   };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
@@ -933,8 +853,7 @@ function PhoneRuntime({
     if (
       !locked &&
       work.phone.notifications &&
-      count > noticesSeen.current &&
-      !(kktOpeningSeenRef.current && isKktOpeningNotice(latest))
+      count > noticesSeen.current
     ) {
       setBanner(latest);
       const timer = setTimeout(() => setBanner(""), 4500);
@@ -951,8 +870,7 @@ function PhoneRuntime({
       ),
     });
   const visibleNoticeEntries = s.notifications
-    .map((text, index) => ({ text, index }))
-    .filter(({ text }) => !(kktOpeningSeen && isKktOpeningNotice(text)));
+    .map((text, index) => ({ text, index }));
   const visibleNotices = visibleNoticeEntries.map((entry) => entry.text);
   const dismissVisibleNotice = (visibleIndex: number) => {
     const originalIndex = visibleNoticeEntries[visibleIndex]?.index;
