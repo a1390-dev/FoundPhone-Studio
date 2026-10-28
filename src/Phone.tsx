@@ -454,11 +454,19 @@ function PhoneRuntime({
     const current = runtimeRef.current;
     const unreadKey = "kkt-unread-count:" + thread;
     const notifications = current.notifications.filter((notice) => kktNoticeThread(notice) !== thread);
+    const storyState = { ...current.ui?.story };
+    if (thread === "金旼炡" && storyState["scandal-news-pushed-v5"] === true) {
+      // Once the player opens this conversation, both lead-in messages are
+      // consumed in-chat; never defer a duplicate second popup until they leave.
+      storyState["scandal-kkt-first-notice-v5"] = true;
+      storyState["scandal-kkt-second-notice-v5"] = true;
+    }
     const next = {
       ...current,
       notifications,
       ui: {
         ...current.ui,
+        story: storyState,
         kakao: { ...current.ui?.kakao, [unreadKey]: 0 },
       },
     };
@@ -714,6 +722,13 @@ function PhoneRuntime({
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-first-notice-v5": true },
+          kakao: {
+            ...latest.ui?.kakao,
+            "kkt-unread-count:金旼炡": Math.max(
+              0,
+              Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
+            ) + 1,
+          },
         },
       });
     }, 1500);
@@ -735,6 +750,13 @@ function PhoneRuntime({
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-second-notice-v5": true },
+          kakao: {
+            ...latest.ui?.kakao,
+            "kkt-unread-count:金旼炡": Math.max(
+              0,
+              Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
+            ) + 1,
+          },
         },
       });
     }, 1500);
