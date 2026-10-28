@@ -59,8 +59,8 @@ function Blank() {
   return <p className="mymy-empty">暂无内容</p>;
 }
 
-// These are the confirmed Korean/Chinese dialogue rounds from the standalone
-// KKT rehearsal, now reused by the native KakaoTalk screen.
+// Native KKT opening dialogue. Only the three replies explicitly checked by the player
+// are available as selectable options; unconfirmed rounds accept manual input.
 const KKT_STORY_ROUNDS = [
   {
     time: "20:17",
@@ -288,10 +288,10 @@ export function MymyKakao(p: SkinProps) {
             </button>
             <input
               aria-label="KKT消息"
-              placeholder={p.thread === "金旼炡" ? "点击选择一条回复" : "输入消息"}
+              placeholder={npcTyping ? "正在输入中…" : p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 ? "点击选择一条回复" : "输入消息"}
               value={draft}
               maxLength={2000}
-              readOnly={p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0}
+              readOnly={npcTyping || (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)}
               onFocus={() => {
                 if (p.thread === "金旼炡" && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)
                   setCandidateOpen(true);
@@ -325,7 +325,6 @@ export function MymyKakao(p: SkinProps) {
                   <small>{zh.replaceAll("{{playerId}}", p.playerId || "你")}</small>
                 </button>
               ))}
-              {!KKT_STORY_ROUNDS[storyStep] && null}
             </section>
           )}
           {menu && (
