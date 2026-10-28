@@ -3016,6 +3016,10 @@
   margin-bottom: 16px;
 }
 .youtube-linked-video .youtube-thumb {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   color: inherit;
   text-decoration: none;
@@ -3023,6 +3027,9 @@
 }
 .youtube-linked-video .youtube-thumb img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .youtube-play-mark {
   position: absolute;
