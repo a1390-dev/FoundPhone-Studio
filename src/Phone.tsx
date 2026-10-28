@@ -490,7 +490,11 @@ function PhoneRuntime({
     // Count each incoming NPC message until the player opens this conversation
     // again. Messages arriving in the visible chat still count for the inbox,
     // matching the supplied KKT list reference after the player backs out.
-    const unreadCount = Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
+    // Messages received while this exact chat is open are read immediately.
+    // Do not leave a badge behind when the player later exits the conversation.
+    const unreadCount = activeConversation
+      ? 0
+      : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
     const notifications = activeConversation
       ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
       : app === "kakao"
@@ -932,7 +936,7 @@ function PhoneRuntime({
           instagram: { ...instagramUi, "scandal-ig-dm-popup-count-v6": index + 1 },
         },
       });
-    }, 2000);
+    }, 1600);
     return () => window.clearTimeout(timer);
   }, [creator, igDmBatchStarted, igDmPopupCount, igDmQueue.length, app, igDmScreenActive]);
 
@@ -992,7 +996,7 @@ function PhoneRuntime({
           },
         },
       });
-    }, 2000);
+    }, 1600);
     return () => window.clearTimeout(timer);
   }, [creator, igDmReplyPopupCount, igDmReplyQueue.length, app, igDmScreenActive]);
 
