@@ -1507,7 +1507,9 @@ export function MymyX(p: SkinProps) {
                       onClick={() => p.onItem(i)}
                     >
                       <MessageCircle />
-                      {i.comments.length}
+                      {i.comments.length +
+                        (Array.isArray(p.ui?.["x-auto-replies-" + i.id]) ? (p.ui?.["x-auto-replies-" + i.id] as string[]).length : 0) +
+                        (Array.isArray(p.ui?.["replies-" + i.id]) ? (p.ui?.["replies-" + i.id] as string[]).length : 0)}
                     </button>
                     <button
                       aria-label={"转发" + i.title}
