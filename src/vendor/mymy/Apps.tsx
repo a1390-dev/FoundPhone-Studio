@@ -179,6 +179,9 @@ export function MymyKakao(p: SkinProps) {
   // about two seconds after the player opens this KKT conversation.
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
+    // This 20:17 follow-up belongs to the previous evening conversation, not
+    // to the Oct 28 afternoon rumor-and-call sequence.
+    if (p.ui?.["scandal-precall-started"] === true || p.virtualTime?.startsWith("14:")) return;
     const alreadyDelivered = sentRef.current.some((raw) => {
       try {
         const entry: unknown = JSON.parse(raw);
@@ -208,7 +211,7 @@ export function MymyKakao(p: SkinProps) {
       setNpcTyping(false);
     }, 2000);
     return () => window.clearTimeout(timer);
-  }, [p.thread]);
+  }, [p.thread, p.ui?.["scandal-precall-started"], p.virtualTime]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const started = p.ui?.["scandal-precall-started"];
