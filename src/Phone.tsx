@@ -40,7 +40,7 @@ import {
   lazy,
   type CSSProperties,
 } from "react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   ChevronLeft,
   Plus,
@@ -804,7 +804,7 @@ function PhoneRuntime({
           },
         },
       });
-    }, 1000);
+    }, 2000);
     return () => window.clearTimeout(timer);
   }, [creator, igDmBatchStarted, igDmVisibleCount, igDmQueue.length, app, igDmScreenActive]);
 
@@ -838,7 +838,7 @@ function PhoneRuntime({
           },
         },
       });
-    }, 1000);
+    }, 2000);
     return () => window.clearTimeout(timer);
   }, [creator, igDmReplyCount, igDmReplyQueue.length, app, igDmScreenActive]);
 
@@ -1408,8 +1408,19 @@ function PhoneRuntime({
             </div>
           )}
           {banner && !locked && (
-            <button
+            <motion.button
               className="device-banner"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={0.12}
+              whileDrag={{ scale: 0.985 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.y < -45 || info.velocity.y < -350) {
+                  // Dismissing the banner hides only this visual toast. The
+                  // underlying notification and the incoming-message queue remain.
+                  setBanner("");
+                }
+              }}
               onClick={() => {
                 const latest = banner;
                 setBanner("");
@@ -1424,7 +1435,7 @@ function PhoneRuntime({
                 <strong>{notificationContent(banner, work.apps).title}</strong>
                 <span>{notificationContent(banner, work.apps).body}</span>
               </span>
-            </button>
+            </motion.button>
           )}
           {panel === "switcher" && (
             <div className="device-switcher">
