@@ -1402,7 +1402,7 @@ export function MymyX(p: SkinProps) {
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
     [query, setQuery] = useState(""),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v3", 1),
+    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v4", 1),
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
