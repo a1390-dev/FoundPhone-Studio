@@ -1,4 +1,3 @@
-import { SystemNotifications } from "./SystemNotifications";
 import {
   ConnectivityModule,
   SliderModule,
@@ -61,8 +60,6 @@ export function NativeComposer({
 export function DeviceLock({
   work,
   time,
-  notices,
-  onDismiss,
   pinOpen,
   setPinOpen,
   error,
@@ -76,8 +73,6 @@ export function DeviceLock({
   work: Work;
   phoneScale: number;
   time: string;
-  notices: string[];
-  onDismiss: (index: number) => void;
   pinOpen: boolean;
   setPinOpen: (v: boolean) => void;
   error: string;
@@ -182,7 +177,7 @@ export function DeviceLock({
                     >
                       <input
                         id="foundphone-player-id"
-                        style={{ fontSize: `${16 / Math.max(phoneScale, 0.4)}px` }}
+                        style={{ fontSize: `${13 / Math.max(phoneScale, 0.4)}px` }}
                         value={idDraft}
                         onChange={(e) => setIdDraft(e.target.value)}
                         maxLength={24}
@@ -203,17 +198,6 @@ export function DeviceLock({
               </section>
             </div>
           )}
-          <div className="lock-notifications">
-            {work.phone.notifications && (
-              <SystemNotifications
-                compact
-                notices={notices}
-                apps={work.apps}
-                onOpen={open}
-                onDismiss={onDismiss}
-              />
-            )}
-          </div>
           {playerId && resumeChoice === "hidden" ? <UnlockHandle onUnlock={open} /> : null}
 
           <div className="lock-tools">
