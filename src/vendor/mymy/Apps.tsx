@@ -1456,6 +1456,12 @@ export function MymyX(p: SkinProps) {
                   >
                     {i.body}
                   </button>
+                  {i.meta.category === "rumor-discussion" && i.id.endsWith("-01") && (
+                    <button className="x-rumor-photo-card" aria-label="打开网传模糊照片的讨论" onClick={() => p.onItem(i)}>
+                      <span>夜间便利店 · 模糊网传图</span>
+                      <small>身份与拍摄背景均未确认</small>
+                    </button>
+                  )}
                   {i.media && (
                     <button
                       className="kzxv"
