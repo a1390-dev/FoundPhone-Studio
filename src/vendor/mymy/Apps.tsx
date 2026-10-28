@@ -129,9 +129,11 @@ export function MymyKakao(p: SkinProps) {
     [menu, setMenu] = useState(false);
   const sentRef = useRef(sent);
   const deliveryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const choiceOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { sentRef.current = sent; }, [sent]);
   useEffect(() => () => {
     if (deliveryTimer.current) clearTimeout(deliveryTimer.current);
+    if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
   }, []);
   const markThreadRead = (title: string) => {
     if (!readThreads.includes(title)) setReadThreads([...readThreads, title]);
@@ -278,12 +280,12 @@ export function MymyKakao(p: SkinProps) {
                     sentRef.current = updated;
                     setSent(updated);
                     if (index < nextRound.npc.length) {
-                      deliveryTimer.current = setTimeout(deliverOne, 950);
+                      deliveryTimer.current = setTimeout(deliverOne, 2000);
                     } else {
                       deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
                     }
                   };
-                  deliveryTimer.current = setTimeout(deliverOne, 700);
+                  deliveryTimer.current = setTimeout(deliverOne, 2000);
                 }
               }
             }}
@@ -306,11 +308,15 @@ export function MymyKakao(p: SkinProps) {
                 // Never focus the real input on iOS Safari: opening the native
                 // keyboard changes the visual viewport and makes the phone jump.
                 e.preventDefault();
-                if (!npcTyping) setCandidateOpen((open) => !open);
+                if (npcTyping) return;
+                if (choiceOpenTimer.current) clearTimeout(choiceOpenTimer.current);
+                setCandidateOpen(false);
+                choiceOpenTimer.current = setTimeout(() => {
+                  setCandidateOpen(true);
+                }, 500);
               }}
               onFocus={(e) => {
                 if (p.thread === "金旼炡") {
-                  setCandidateOpen(true);
                   e.currentTarget.blur();
                 }
               }}
