@@ -54,15 +54,15 @@
  <section class="candidate-panel collapsed" id="candidatePanel">
   <div id="candidates"></div>
  </section>
- <div class="toast" id="toast">点击候选回复填入输入框，或自行输入。</div>
+ <div class="toast" id="toast">可选择 3–4 条同一意思的回复；点击发送后逐条发送。也可以自行输入。</div>
 </section>
 </main>
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
-const STORAGE_PREFIX="marriageSim.defaultSave.v1:"; // 独立默认自动存档命名空间，不读取或覆盖设置里的手动存档
+const STORAGE_PREFIX="marriageSim.convenienceTest.20261028.v1:"; // 独立默认自动存档命名空间，不读取或覆盖设置里的手动存档
 const PLAYER_ID_KEY="foundphone.player-id.v1";
-let playerId="",unlocked=false,step=0,currentView="home",pendingNotice=null;
+let playerId="",unlocked=false,step=0,currentView="home",pendingNotice=null,selectedChoices=[];
 try{playerId=(localStorage.getItem(PLAYER_ID_KEY)||"").trim();if(playerId)$("#playerId").value=playerId}catch(e){}
 function personalize(text){return String(text).replaceAll("{{playerId}}",playerId||"你");}
 const history=[];
@@ -114,21 +114,22 @@ const rounds=[
  ]},
  {time:"20:23",npc:[
   ["어, 너도 내려왔네. 나도 편의점 가려고 막 나왔어. 같이 가자.","诶，你也下来了。我也正准备去便利店，走吧，一起去。"],
-  ["떡볶이 해 먹자. 어묵도 같이 사면 되겠다.","做炒年糕吃吧，鱼饼也一起买上。"]
+  ["떡볶이도 먹을까? 어묵도 넣으면 맛있을 것 같은데.","要不要也吃炒年糕？感觉加上鱼饼会很好吃。"]
  ],choices:[
   ["좋아, 떡볶이 해 먹자.","好啊，做炒年糕吃吧。"],
   ["나도 먹고 싶었어. 같이 먹자.","我也想吃了，一起吃吧。"],
   ["그럼 떡볶이에 어묵도 사자.","那就买炒年糕和鱼饼的材料吧。"]
  ]},
  {time:"20:24",npc:[
-  ["계란도 넣으면 더 맛있겠다. 계란도 사자.","加鸡蛋也会更好吃，鸡蛋也买上吧。"]
+  ["그럼 떡볶이랑 어묵 사고, 계란도 넣을까? 집에 뭐 있는지 알아?","那就买炒年糕和鱼饼，要不要也买鸡蛋？你知道家里还有什么吗？"]
  ],choices:[
   ["응, 계란도 넣으면 맛있겠다. 사자.","嗯，加鸡蛋应该也很好吃，买吧。"],
   ["집에 있는지 모르니까 그냥 사 두자.","不知道家里有没有，干脆先买上吧。"],
   ["그럼 계란도 장바구니에 넣자.","那就把鸡蛋也放进购物篮吧。"]
  ]},
  {time:"20:25",npc:[
-  ["재료는 이 정도면 충분하겠다. 봉투 하나 챙겨서 계산하고 같이 집에 가자.","食材买这些应该就够了。拿一个袋子，结账后一起回家吧。"]
+  ["응, 이제 다 산 것 같아. 계산하고 집에 가자.","嗯，感觉东西都买齐了。结账然后回家吧。"],
+  ["봉투 하나면 되겠지? 내가 들게.","一个袋子应该就够了吧？我来拿。"]
  ],choices:[
   ["봉투 하나면 충분해. 같이 들고 가자.","一个袋子就够了，我们一起拿回去吧。"],
   ["좋아. 집에 가서 같이 만들어 먹자.","好，回家一起做来吃吧。"],
@@ -150,9 +151,9 @@ function renderHistory(){const box=$("#messages");box.innerHTML="";let lastTime=
 function append(m){history.push({...m,ko:personalize(m.ko),zh:personalize(m.zh)});renderHistory();save()}
 function openChat(){show("chatScreen");$("#homeNotice").style.display="none";currentView="chat";renderCandidates();$("#candidatePanel").classList.add("collapsed");}
 $("#openKkt").addEventListener("click",openChat);$("#openNotice").addEventListener("click",openChat);$("#backHome").addEventListener("click",()=>{currentView="home";show("homeScreen")});
-function renderCandidates(){const round=rounds[Math.min(step,rounds.length-1)];const box=$("#candidates");box.innerHTML="";round.choices.forEach(([ko,zh],i)=>{const b=document.createElement("button");b.className="candidate";b.innerHTML="";const koNode=document.createElement("span");koNode.textContent=ko;const zhNode=document.createElement("span");zhNode.className="zh";zhNode.textContent=zh;b.append(koNode,zhNode);b.addEventListener("click",()=>{$("#messageInput").value=ko;$("#messageInput").dataset.zh=zh;box.querySelectorAll(".candidate").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");$("#messageInput").focus();$("#toast").textContent="已填入输入框。点击发送才会真正发送。"});box.append(b)})}
-function sendMessage(){if(window.replyBusy)return;const ko=$("#messageInput").value.trim();if(!ko){$("#toast").textContent="请先选择或输入一条回复。";return}const chosenZh=$("#messageInput").dataset.zh||"（自定义消息）";append({time:rounds[Math.min(step,rounds.length-1)].time,ko,zh:chosenZh,me:true});$("#messageInput").value="";delete $("#messageInput").dataset.zh;$("#candidatePanel").classList.add("collapsed");$("#toast").textContent="消息已发送。";if(step>=rounds.length-1){$("#toast").textContent="当前已演练到这段已确认剧情的末尾；后续剧情尚未添加。";save();return}step+=1;const next=rounds[step];window.replyBusy=true;let i=0;function deliverNext(){if(i>=next.npc.length){window.replyBusy=false;renderCandidates();save();return}const m=next.npc[i++];append({time:next.time,ko:m[0],zh:m[1],me:false});setTimeout(deliverNext,1100)}setTimeout(deliverNext,800);save()}
-$("#sendButton").addEventListener("click",sendMessage);$("#messageInput").addEventListener("focus",()=>$("#candidatePanel").classList.remove("collapsed"));$("#messageInput").addEventListener("input",()=>{delete $("#messageInput").dataset.zh;$("#candidatePanel").classList.remove("collapsed")});$("#messageInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendMessage()});
+function renderCandidates(){const round=rounds[Math.min(step,rounds.length-1)];const box=$("#candidates");box.innerHTML="";selectedChoices=[];round.choices.forEach(([ko,zh],i)=>{const b=document.createElement("button");b.className="candidate";const koNode=document.createElement("span");koNode.textContent=ko;const zhNode=document.createElement("span");zhNode.className="zh";zhNode.textContent=zh;b.append(koNode,zhNode);b.addEventListener("click",()=>{if(selectedChoices.includes(i)){selectedChoices=selectedChoices.filter(n=>n!==i);b.classList.remove("selected")}else{selectedChoices.push(i);b.classList.add("selected")}$("#toast").textContent=selectedChoices.length?"已选中 "+selectedChoices.length+" 条回复；点击发送后会逐条发送，再由金旼炡继续回应。":"请点击选择回复；也可以直接输入自定义消息。"});box.append(b)})}
+function sendMessage(){if(window.replyBusy)return;const round=rounds[Math.min(step,rounds.length-1)];const chosen=selectedChoices.slice().sort((a,b)=>a-b).map(i=>round.choices[i]);const typed=$("#messageInput").value.trim();if(!chosen.length&&!typed){$("#toast").textContent="请至少选择一条回复，或输入自定义消息。";return}if(chosen.length){chosen.forEach(([ko,zh])=>append({time:round.time,ko,zh,me:true}))}else{const chosenZh=$("#messageInput").dataset.zh||"（自定义消息）";append({time:round.time,ko:typed,zh:chosenZh,me:true})}selectedChoices=[];$("#messageInput").value="";delete $("#messageInput").dataset.zh;$("#candidatePanel").classList.add("collapsed");$("#toast").textContent="玩家回复已发送。";if(step>=rounds.length-1){$("#toast").textContent="当前已演练到这段已确认剧情的末尾；后续剧情尚未添加。";save();return}step+=1;const next=rounds[step];window.replyBusy=true;let i=0;function deliverNext(){if(i>=next.npc.length){window.replyBusy=false;renderCandidates();save();return}const m=next.npc[i++];append({time:next.time,ko:m[0],zh:m[1],me:false});setTimeout(deliverNext,1100)}setTimeout(deliverNext,800);save()}
+$("#sendButton").addEventListener("click",sendMessage);$("#messageInput").addEventListener("focus",()=>$("#candidatePanel").classList.remove("collapsed"));$("#messageInput").addEventListener("input",()=>{delete $("#messageInput").dataset.zh;selectedChoices=[];$("#candidates").querySelectorAll(".candidate").forEach(x=>x.classList.remove("selected"));$("#candidatePanel").classList.remove("collapsed")});$("#messageInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendMessage()});
 })();
 </script>
 </body>
