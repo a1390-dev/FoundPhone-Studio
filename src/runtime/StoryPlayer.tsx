@@ -4,8 +4,9 @@ import customWallpaper from "../assets/custom/wallpaper.jpeg";
 import type { Work } from "../schema";
 import "./player.css";
 
-// Begin fetching the custom wallpaper as soon as the runtime module loads,
-// allowing the browser to cache it before the lock screen is painted.
+// Start fetching the selected wallpaper as soon as the runtime module executes.
+// The CSS background can then reuse the browser-cached image instead of starting
+// its request only after the lock screen has already rendered.
 const wallpaperPreload = new Image();
 wallpaperPreload.decoding = "async";
 wallpaperPreload.src = customWallpaper;
@@ -147,7 +148,7 @@ function StoryPlayer() {
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
 
         // Mount as soon as the work JSON is ready. The wallpaper request has
-        // already started during runtime initialization and can be reused from cache.
+        // already started at module initialization and does not block this step.
         setWork(w);
       })
       .catch((e) => {
