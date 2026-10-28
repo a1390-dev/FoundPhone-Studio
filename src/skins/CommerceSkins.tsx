@@ -215,7 +215,19 @@ const DELIVERY_GROCERIES: DeliveryProduct[] = makeDeliveryProducts("g", "便利�
 const DELIVERY_EXTRAS: DeliveryProduct[] = makeDeliveryProducts("x", "日常用品", "便利生活", [
   ["抽纸","三层抽纸",3000,"🧻"],["洗衣液","日常衣物清洁",6900,"🧴"],["洗发水","日常洗护用品",7900,"🧴"],["牙膏","薄荷清新口味",3500,"🪥"],["软毛牙刷","单支装",2500,"🪥"],["家用垃圾袋","一卷装",4000,"🗑️"],["湿巾","便携装",2200,"🧻"],["卫生纸","家庭装卷纸",6500,"🧻"]
 ]);
-const DELIVERY_CATEGORIES = ["全部", "韩餐", "日餐·寿司", "中餐", "西式简餐", "海鲜·三文鱼", "奶茶·饮品", "便利店·超市", "日常用品"];
+const DELIVERY_PETS: DeliveryProduct[] = makeDeliveryProducts("d", "狗狗用品", "宠物生活馆", [
+  ["小型犬成犬粮","日常主粮小包装",8900,"🐶"],
+  ["鸡肉湿粮罐头","鸡肉配方主食罐",3200,"🥫"],
+  ["鸡肉冻干零食","独立小包装训练零食",7900,"🍗"],
+  ["牛皮磨牙棒","帮助日常磨牙清洁",5900,"🦴"],
+  ["训练奖励小饼干","适合训练时奖励",4500,"🦴"],
+  ["便携饮水壶","外出喝水两用瓶",12500,"🧴"],
+  ["折叠宠物食碗","轻便外出喂食碗",5900,"🥣"],
+  ["拾便袋补充装","外出遛狗清洁用品",3500,"🧻"],
+  ["软毛宠物梳","日常梳毛护理",8900,"🪮"],
+  ["耐咬发声玩具球","日常互动玩具",6500,"🎾"]
+]);
+const DELIVERY_CATEGORIES = ["全部", "韩餐", "日餐·寿司", "中餐", "西式简餐", "海鲜·三文鱼", "奶茶·饮品", "便利店·超市", "日常用品", "狗狗用品"];
 export function DeliverySkin(p: Props) {
   const [tab, setTab] = useState("商家");
   const [category, setCategory] = useState("全部");
@@ -230,15 +242,19 @@ export function DeliverySkin(p: Props) {
   ]);
   const [addressEditing, setAddressEditing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("KakaoPay");
-  const [payer, setPayer] = useState("我自己");
-  const [orders, setOrders] = useState<Array<{id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; payer:string; status:string; time:string}>>([]);
+  const [payer, setPayer] = useState("玩家自己");
+  type DeliveryOrder = { id:string; items:Array<{product:DeliveryProduct;qty:number}>; total:number; address:string; paymentMethod:string; payer:string; status:string; time:string };
+  const [orders, setOrders] = useState<DeliveryOrder[]>([]);
+  const [orderFilter, setOrderFilter] = useState("全部");
+  const [paidOrder, setPaidOrder] = useState<DeliveryOrder | null>(null);
   const [notice, setNotice] = useState("");
-  const products = [...DELIVERY_PRODUCTS, ...DELIVERY_DRINKS, ...DELIVERY_GROCERIES, ...DELIVERY_EXTRAS];
+  const products = [...DELIVERY_PRODUCTS, ...DELIVERY_DRINKS, ...DELIVERY_GROCERIES, ...DELIVERY_EXTRAS, ...DELIVERY_PETS];
   const visibleProducts = products.filter((item) =>
     (category === "全部" || item.category === category) &&
     (item.name + item.desc + item.store + item.category).toLowerCase().includes(q.toLowerCase())
   );
   const cartItems = Object.entries(cart).filter(([,qty]) => qty > 0).map(([id,qty]) => ({product:products.find(p => p.id === id)!,qty})).filter(x => x.product);
+  const visibleOrders = orders.filter(order => orderFilter === "全部" || order.status === orderFilter);
   const subtotal = cartItems.reduce((sum,x) => sum + x.product.price*x.qty,0);
   const deliveryFee = subtotal > 0 ? (subtotal >= 30000 ? 0 : 3000) : 0;
   const total = subtotal + deliveryFee;
@@ -247,17 +263,24 @@ export function DeliverySkin(p: Props) {
   const checkout = () => {
     if (!cartItems.length) { setNotice("购物车还是空的，先选择菜品吧"); return; }
     if (!address.trim() || address.includes("请编辑")) { setAddressEditing(true); setNotice("请先填写配送地址"); return; }
-    setOrders(prev => [{id:"FD-"+Date.now().toString().slice(-6),items:cartItems,total,address,paymentMethod,payer,status:"制作中",time:new Date().toLocaleString("zh-CN",{hour12:false})},...prev]);
+    const order: DeliveryOrder = {
+      id:"FD-"+Date.now().toString().slice(-6),
+      items:cartItems.map(({product,qty})=>({product,qty})),
+      total,address,paymentMethod,payer,status:"制作中",
+      time:new Date().toLocaleString("zh-CN",{hour12:false})
+    };
+    setOrders(prev => [order,...prev]);
     setCart({});
     setTab("订单");
-    setNotice("下单成功！这是模拟订单，不会真实扣款。");
+    setPaidOrder(order);
+    setNotice("付款成功！已生成模拟扣款记录，不会真实扣款。");
   };
   return (
-    <div className="catalog-skin delivery-ui" style={{display:"flex",flexDirection:"column",height:"100%",minHeight:0,background:"#fff"}}>
+    <div className="catalog-skin delivery-ui" style={{display:"flex",flexDirection:"column",height:"100%",minHeight:0,background:"#fff",position:"relative"}}>
       <Header p={p} />
       <div className="delivery-location" style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:"#f5dc7d",flexWrap:"wrap"}}>
         <MapPin size={18} />
-        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:150,padding:8,borderRadius:10,border:"1px solid #d5c06b"}} /> : <select aria-label="选择配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{flex:1,minWidth:160,padding:8,borderRadius:10,border:"1px solid #d5c06b",background:"#fff9df"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>}
+        {addressEditing ? <input aria-label="配送地址" value={address} onChange={e=>setAddress(e.target.value)} placeholder="输入详细配送地址" style={{flex:1,minWidth:150,padding:8,borderRadius:10,border:"1px solid #d5c06b"}} /> : <select aria-label="选择配送地址" value={address} onChange={e=>setAddress(e.target.value)} style={{flex:"0 1 245px",width:"min(245px, calc(100% - 108px))",minWidth:0,padding:"7px 8px",fontSize:12,borderRadius:10,border:"1px solid #d5c06b",background:"#fff9df"}}>{savedAddresses.map(a=><option key={a} value={a}>{a}</option>)}</select>}
         {addressEditing ? <button onClick={()=>{if(address.trim()){setSavedAddresses(prev=>prev.includes(address)?prev:[address,...prev]);setAddressEditing(false);setNotice("配送地址已保存");}}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>保存</button> : <button onClick={()=>{setAddress("");setAddressEditing(true);}} style={{border:0,borderRadius:10,padding:"7px 10px",background:"#fff4c8"}}>新增地址</button>}
       </div>
       <div style={{padding:"8px 12px",background:"#f5dc7d"}}>
@@ -289,7 +312,7 @@ export function DeliverySkin(p: Props) {
             <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
               <strong style={{display:"block",marginBottom:10}}>选择付款人</strong>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                {["刘知珉","内永绘里","金旼炡","宁艺卓"].map(person=><button key={person} onClick={()=>setPayer(person)} style={{border:0,borderRadius:22,padding:"9px 13px",background:payer===person?"#222":"#f2f2f2",color:payer===person?"#fff":"#333",fontWeight:payer===person?700:500}}>{person}{payer===person?" ✓":""}</button>)}
+                {["玩家自己","刘知珉","内永绘里","金旼炡","宁艺卓"].map(person=><button key={person} onClick={()=>setPayer(person)} style={{border:0,borderRadius:22,padding:"9px 13px",background:payer===person?"#222":"#f2f2f2",color:payer===person?"#fff":"#333",fontWeight:payer===person?700:500}}>{person}{payer===person?" ✓":""}</button>)}
               </div>
             </section>
             <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
@@ -316,17 +339,47 @@ export function DeliverySkin(p: Props) {
           </> : <div style={{background:"#fff",borderRadius:16,padding:28,textAlign:"center",color:"#999"}}><span style={{fontSize:42}}>🛒</span><p>购物车还是空的，去挑点吃的吧。</p><button onClick={()=>setTab("商家")} style={{border:0,borderRadius:22,padding:"10px 18px",background:"#f5dc7d",fontWeight:700}}>去逛逛</button></div>}
         </div>}
         {tab === "订单" && <div>
-          {orders.length ? orders.map(order=><article key={order.id} style={{padding:14,border:"1px solid #eee",borderRadius:14,marginBottom:12}}>
+          <div style={{display:"flex",gap:8,overflowX:"auto",padding:"2px 0 12px"}}>
+            {["全部","制作中","已完成"].map(status=><button key={status} onClick={()=>setOrderFilter(status)} style={{whiteSpace:"nowrap",border:0,borderRadius:18,padding:"8px 14px",background:orderFilter===status?"#f5dc7d":"#f3f3f3",fontWeight:orderFilter===status?700:500}}>{status}{status!=="全部" ? ` ${orders.filter(o=>o.status===status).length}` : ""}</button>)}
+          </div>
+          {visibleOrders.length ? visibleOrders.map(order=><article key={order.id} style={{padding:14,border:"1px solid #eee",borderRadius:14,marginBottom:12}}>
             <div style={{display:"flex",justifyContent:"space-between",gap:8}}><strong>订单 {order.id}</strong><b style={{color:"#8c6d00"}}>{order.status}</b></div>
             <small style={{display:"block",color:"#888",marginTop:4}}>{order.time}</small>
             {order.items.map(({product,qty})=><p key={product.id} style={{margin:"8px 0"}}>{product.emoji} {product.name} × {qty} <span style={{float:"right"}}>{money(product.price*qty)}</span></p>)}
             <p style={{borderTop:"1px solid #eee",paddingTop:8}}>配送地址：{order.address}</p><p>付款人：{order.payer}</p><p>付款方式：{order.paymentMethod}</p><b style={{display:"block",textAlign:"right"}}>实付 {money(order.total)}</b>
-          </article>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>还没有订单</p>}
+            {order.status === "已完成" ? <p style={{margin:"10px 0 0",color:"#888",fontSize:12}}>✓ 订单已完成，感谢使用</p> : <button onClick={()=>setOrders(prev=>prev.map(item=>item.id===order.id?{...item,status:"已完成"}:item))} style={{width:"100%",marginTop:12,padding:10,border:0,borderRadius:22,background:"#fff4c8",color:"#786117",fontWeight:700}}>模拟配送完成 · 标记为已完成</button>}
+          </article>) : <p style={{textAlign:"center",padding:40,color:"#999"}}>{orders.length ? "暂无"+orderFilter+"订单" : "还没有订单"}</p>}
         </div>}
       </div>
       <nav style={{display:"flex",borderTop:"1px solid #eee",padding:"8px 0",background:"#fff",flexShrink:0}}>
         {[{id:"商家",icon:"🍱"},{id:"购物车",icon:"🛒"},{id:"订单",icon:"🧾"}].map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,border:0,background:"transparent",color:tab===t.id?"#a88a21":"#888",fontWeight:tab===t.id?700:400,padding:4}}><span style={{display:"block",fontSize:22}}>{t.icon}{t.id==="购物车" && cartItems.length>0 ? " •" : ""}</span>{t.id}</button>)}
       </nav>
+      {paidOrder && <div role="dialog" aria-modal="true" aria-label="模拟付款成功" style={{position:"absolute",inset:0,zIndex:30,background:"#0007",display:"grid",placeItems:"center",padding:18}}>
+        <section style={{background:"#fff",borderRadius:24,padding:22,width:"100%",maxWidth:340,maxHeight:"88%",overflowY:"auto",color:"#222",boxShadow:"0 18px 50px #0003"}}>
+          <div style={{fontSize:20,fontWeight:800}}>付款成功</div>
+          <div style={{fontSize:30,fontWeight:800,margin:"18px 0 6px"}}>{money(paidOrder.total)}</div>
+          <div style={{fontSize:12,color:"#888",marginBottom:14}}>模拟交易已记录 · 不会真实扣款</div>
+          <div style={{padding:"12px 0",borderTop:"1px solid #eee",borderBottom:"1px solid #eee",fontSize:13,lineHeight:1.7}}>
+            <div>扣款账户：<strong>{paidOrder.payer}</strong></div>
+            <div>支付方式：{paidOrder.paymentMethod}</div>
+            <div>订单编号：{paidOrder.id}</div>
+            <div>配送地址：{paidOrder.address}</div>
+          </div>
+          <div style={{padding:"8px 0"}}>
+            {paidOrder.items.map(({product,qty})=><div key={product.id} style={{display:"flex",justifyContent:"space-between",gap:12,padding:"8px 0",fontSize:13}}>
+              <span>{product.name} × {qty}</span><strong style={{whiteSpace:"nowrap"}}>{money(product.price*qty)}</strong>
+            </div>)}
+            <div style={{display:"flex",justifyContent:"space-between",gap:12,padding:"8px 0",borderTop:"1px solid #eee",fontSize:13}}>
+              <span>配送费</span><strong>{money(Math.max(0,paidOrder.total-paidOrder.items.reduce((sum,item)=>sum+item.product.price*item.qty,0)))}</strong>
+            </div>
+          </div>
+          <div style={{fontSize:13,fontWeight:800,borderTop:"1px solid #eee",paddingTop:12}}>模拟账户扣款成功 <span style={{float:"right",fontSize:17}}>{money(paidOrder.total)}</span></div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:20}}>
+            <button onClick={()=>setPaidOrder(null)} style={{border:0,borderRadius:14,padding:12,background:"#eee",color:"#333",fontWeight:700}}>查看订单</button>
+            <button onClick={()=>{setPaidOrder(null);setTab("商家");}} style={{border:0,borderRadius:14,padding:12,background:"#f5dc7d",color:"#594500",fontWeight:700}}>继续购物</button>
+          </div>
+        </section>
+      </div>}
     </div>
   );
 }
