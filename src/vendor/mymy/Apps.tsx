@@ -228,6 +228,10 @@ export function MymyKakao(p: SkinProps) {
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const result = p.ui?.["scandal-call-result"];
+    if (typeof result !== "string" || !result) {
+      if (processedCallResult) setProcessedCallResult("");
+      return;
+    }
     // Answered calls are played entirely inside the call screen. Only a declined
     // call starts the alternate conversation in KakaoTalk.
     if (result !== "declined" || result === processedCallResult) return;
