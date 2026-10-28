@@ -48,7 +48,7 @@ export function AppArtwork({
         className="app-artwork original-app-artwork"
         src={file}
         alt=""
-        loading="eager"
+        loading="lazy"
         decoding="async"
         draggable={false}
         style={{ position: "absolute", inset: 0 }}
