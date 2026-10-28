@@ -1,9 +1,14 @@
 /* Device runtime: safe areas, system layers and gestures are independent of Studio. */
 .phone-shell.ios18 {
-  border-radius: calc(48px * var(--phone-scale) + 7px);
+  /* Scale the entire simulated device, not only its outer frame. The previous
+     width/height-only scaling left the 393×852 screen content unscaled, so a
+     viewport resize (especially while the ID input opened the iOS keyboard)
+     could make icons and text look oversized or clipped. */
+  zoom: var(--phone-scale);
+  border-radius: 48px;
   padding: 7px;
-  width: calc(393px * var(--phone-scale) + 14px);
-  height: calc(852px * var(--phone-scale) + 14px);
+  width: 407px;
+  height: 866px;
   background: #17181b;
   box-shadow:
     0 0 0 1px #65666a,
