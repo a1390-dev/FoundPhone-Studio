@@ -821,23 +821,32 @@ function PhoneRuntime({
                   onKktOpeningSeen={markKktOpeningAsSeen}
                   onRequestCall={() => {
                     const current = runtimeRef.current;
-                    const sawRumorFeed = current.ui?.twitter?.["rumor-feed-opened"] === true;
                     const storyState = current.ui?.story || {};
-                    const noticesDelivered = storyState["scandal-news-pushed-v4"] === true &&
-                      storyState["scandal-kkt-second-notice-v4"] === true;
-                    if (!sawRumorFeed || !noticesDelivered ||
+                    // The X news event is the prerequisite. Do not require the
+                    // second OS notification here: opening the first KKT alert
+                    // is how players enter this conversation, and the next OS
+                    // alert is deliberately held back while the chat is open.
+                    if (storyState["scandal-news-pushed-v4"] !== true ||
                       storyState["scandal-call-triggered-v4"] === true ||
                       current.ui?.kakao?.["scandal-precall-started-v4"] === true ||
                       current.incomingCall) return;
-                    // Opening the actual KKT conversation starts the messages;
-                    // the incoming call is triggered later, after both messages
-                    // have appeared and the three-second pause has elapsed.
                     update({
                       ...current,
                       ui: {
                         ...current.ui,
-                        story: { ...storyState, "scandal-kkt-chat-opened-v4": true },
-                        kakao: { ...current.ui?.kakao, "scandal-precall-started-v4": true },
+                        story: {
+                          ...storyState,
+                          "scandal-kkt-chat-opened-v4": true,
+                          // Both NPC lines will arrive inside this open chat.
+                          // Consume OS-notice flags so no popup blocks tapping.
+                          "scandal-kkt-first-notice-v4": true,
+                          "scandal-kkt-second-notice-v4": true,
+                        },
+                        kakao: {
+                          ...current.ui?.kakao,
+                          "scandal-precall-started-v4": true,
+                          "scandal-precall-delivered-v4": false,
+                        },
                       },
                     });
                   }}
