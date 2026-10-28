@@ -107,7 +107,7 @@ type TaobaoSavedState = {
   tab: string;
   orderDone: boolean;
 };
-const TAOBAO_DEFAULT_ADDRESS = "首尔特别市 江南区 · 清潭洞";
+const TAOBAO_DEFAULT_ADDRESS = "首尔特别市 江南区 · 清潭洞高级别墅区";
 const TAOBAO_DEFAULT_ADDRESSES = [
   TAOBAO_DEFAULT_ADDRESS,
   "首尔特别市 江南区 · 三成洞高层公寓区",
