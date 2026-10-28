@@ -3546,8 +3546,8 @@
   background: #fff;
   color: #bdac9b;
 }
-.taobao-search .catalog-search input,
-.taobao-search .catalog-search input::placeholder {
+.story-runtime .taobao-ui .taobao-search .catalog-search input:not(#foundphone-player-id),
+.story-runtime .taobao-ui .taobao-search .catalog-search input:not(#foundphone-player-id)::placeholder {
   font-size: 14px !important;
 }
 .taobao-products {

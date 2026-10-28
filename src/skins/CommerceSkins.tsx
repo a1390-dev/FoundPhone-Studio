@@ -172,10 +172,7 @@ export function TaobaoSkin(p: Props) {
     setSavedState(JSON.stringify({ cart, payer, address, paymentMethod, orders, lastOrder }));
   }, [cart, payer, address, paymentMethod, orders, lastOrder]);
   const products = items.filter((i) => i.folder === "商品");
-  const addresses = [...new Set([
-    ...TAOBAO_DEFAULT_ADDRESSES,
-    ...items.filter((i) => i.folder === "地址").map((a) => meta(a, "address", a.title)),
-  ])];
+  const addresses = TAOBAO_DEFAULT_ADDRESSES;
   const categories = ["全部", "包包", "项链", "手表", "衣服", "鞋子"];
   const filtered = products.filter((i) =>
     (category === "全部" || meta(i, "category") === category) &&
