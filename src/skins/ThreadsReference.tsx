@@ -58,7 +58,7 @@ export function ThreadsReference(p: SkinProps) {
     }),
   );
   const liveItems = p.items.filter(
-    (i) => i.meta.live === "true" && i.folder !== "私信" && !i.meta.activityType,
+    (i) => i.meta.live === "true" && i.meta.category === "rumor-discussion" && i.folder !== "私信" && !i.meta.activityType,
   );
   useEffect(() => {
     if (p.items.some((i) => i.meta.category === "rumor-discussion"))
@@ -70,9 +70,10 @@ export function ThreadsReference(p: SkinProps) {
   const feed = [
       ...local.slice().reverse(),
       ...liveItems.slice(0, liveCount).reverse(),
-      ...p.items.filter(
-        (i) => i.folder !== "私信" && !i.meta.activityType && i.meta.live !== "true",
-      ),
+      ...p.items
+        .filter((i) => i.folder !== "私信" && !i.meta.activityType && i.meta.category !== "rumor-discussion")
+        .slice()
+        .sort((a, b) => b.time.localeCompare(a.time)),
     ],
     messages = p.items.filter((i) => i.folder === "私信"),
     activities = p.items.filter((i) => i.meta.activityType);
