@@ -435,7 +435,7 @@ function PhoneRuntime({
     const current = runtimeRef.current;
     const hasRumorStory = (work.data.twitter || []).some((i) => i.meta.category === "rumor-discussion");
     const storyUi = current.ui?.story || {};
-    if (id === "twitter" && hasRumorStory && storyUi["scandal-news-pushed"] !== true) {
+    if (id === "twitter" && hasRumorStory && storyUi["scandal-news-pushed-v2"] !== true) {
       const twitterName = work.apps.find((a) => a.id === "twitter")?.name || "X";
       const newsNotice = `${twitterName}:突发新闻：疑似 aespa Winter 昨夜与女性同行的模糊照片正在传播`;
       const firstKktNotice = "KKT|金旼炡:어디야?";
@@ -453,16 +453,16 @@ function PhoneRuntime({
           story: {
             ...storyUi,
             "rumor-day-started": true,
-            "scandal-news-pushed": true,
-            "scandal-kkt-first-notice": false,
-            "scandal-kkt-second-notice": false,
-            "scandal-call-triggered": false,
-            "scandal-call-dialogue-step": 0,
+            "scandal-news-pushed-v2": true,
+            "scandal-kkt-first-notice-v2": false,
+            "scandal-kkt-second-notice-v2": false,
+            "scandal-call-triggered-v2": false,
+            "scandal-call-dialogue-step-v2": 0,
           },
           kakao: {
             ...current.ui?.kakao,
-            "scandal-call-result": "",
-            "scandal-precall-started": false,
+            "scandal-call-result-v2": "",
+            "scandal-precall-started-v2": false,
           },
         },
       });
@@ -470,7 +470,7 @@ function PhoneRuntime({
       // rather than starting as soon as either social app is opened.
       window.setTimeout(() => {
         const latest = runtimeRef.current;
-        if (latest.ui?.story?.["scandal-kkt-first-notice"] === true) return;
+        if (latest.ui?.story?.["scandal-kkt-first-notice-v2"] === true) return;
         update({
           ...latest,
           notifications: [...latest.notifications, firstKktNotice],
@@ -478,13 +478,13 @@ function PhoneRuntime({
             ...latest.ui,
             story: {
               ...latest.ui?.story,
-              "scandal-kkt-first-notice": true,
+              "scandal-kkt-first-notice-v2": true,
             },
           },
         });
         window.setTimeout(() => {
           const afterFirst = runtimeRef.current;
-          if (afterFirst.ui?.story?.["scandal-kkt-second-notice"] === true) return;
+          if (afterFirst.ui?.story?.["scandal-kkt-second-notice-v2"] === true) return;
           update({
             ...afterFirst,
             notifications: [...afterFirst.notifications, secondKktNotice],
@@ -492,7 +492,7 @@ function PhoneRuntime({
               ...afterFirst.ui,
               story: {
                 ...afterFirst.ui?.story,
-                "scandal-kkt-second-notice": true,
+                "scandal-kkt-second-notice-v2": true,
               },
             },
           });
@@ -530,25 +530,25 @@ function PhoneRuntime({
     if (app && !work.apps.some((a) => a.id === app && a.installed)) setApp("");
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
-  const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step"] ?? 0);
+  const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step-v2"] ?? 0);
   useEffect(() => {
-    if (creator || s.ui?.kakao?.["scandal-precall-delivered"] !== true) return;
+    if (creator || s.ui?.kakao?.["scandal-precall-delivered-v2"] !== true) return;
     const current = runtimeRef.current;
     const storyState = current.ui?.story || {};
-    if (storyState["scandal-call-countdown-started"] === true ||
-      storyState["scandal-call-triggered"] === true || current.incomingCall) return;
+    if (storyState["scandal-call-countdown-started-v2"] === true ||
+      storyState["scandal-call-triggered-v2"] === true || current.incomingCall) return;
     update({
       ...current,
       ui: {
         ...current.ui,
-        story: { ...storyState, "scandal-call-countdown-started": true },
+        story: { ...storyState, "scandal-call-countdown-started-v2": true },
       },
     });
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-call-triggered"] === true || latest.incomingCall ||
-        latest.ui?.kakao?.["scandal-precall-delivered"] !== true) return;
+      if (latestStory["scandal-call-triggered-v2"] === true || latest.incomingCall ||
+        latest.ui?.kakao?.["scandal-precall-delivered-v2"] !== true) return;
       update({
         ...latest,
         incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
@@ -556,14 +556,14 @@ function PhoneRuntime({
           ...latest.ui,
           story: {
             ...latestStory,
-            "scandal-call-triggered": true,
-            "scandal-call-dialogue-step": 0,
+            "scandal-call-triggered-v2": true,
+            "scandal-call-dialogue-step-v2": 0,
           },
         },
       });
     }, 3000);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.kakao?.["scandal-precall-delivered"]]);
+  }, [creator, s.ui?.kakao?.["scandal-precall-delivered-v2"]]);
   useEffect(() => {
     if (creator || s.incomingCall?.target !== "scandal-call" ||
       s.incomingCall.status !== "answered") return;
@@ -574,12 +574,12 @@ function PhoneRuntime({
       const current = runtimeRef.current;
       if (current.incomingCall?.target !== "scandal-call" ||
         current.incomingCall.status !== "answered" ||
-        Number(current.ui?.story?.["scandal-call-dialogue-step"] ?? 0) !== callDialogueStep) return;
+        Number(current.ui?.story?.["scandal-call-dialogue-step-v2"] ?? 0) !== callDialogueStep) return;
       update({
         ...current,
         ui: {
           ...current.ui,
-          story: { ...current.ui?.story, "scandal-call-dialogue-step": nextStep },
+          story: { ...current.ui?.story, "scandal-call-dialogue-step-v2": nextStep },
         },
       });
     }, 2000);
@@ -801,11 +801,11 @@ function PhoneRuntime({
                     const current = runtimeRef.current;
                     const sawRumorFeed = current.ui?.twitter?.["rumor-feed-opened"] === true;
                     const storyState = current.ui?.story || {};
-                    const noticesDelivered = storyState["scandal-news-pushed"] === true &&
-                      storyState["scandal-kkt-second-notice"] === true;
+                    const noticesDelivered = storyState["scandal-news-pushed-v2"] === true &&
+                      storyState["scandal-kkt-second-notice-v2"] === true;
                     if (!sawRumorFeed || !noticesDelivered ||
-                      storyState["scandal-call-triggered"] === true ||
-                      current.ui?.kakao?.["scandal-precall-started"] === true ||
+                      storyState["scandal-call-triggered-v2"] === true ||
+                      current.ui?.kakao?.["scandal-precall-started-v2"] === true ||
                       current.incomingCall) return;
                     // Opening the actual KKT conversation starts the messages;
                     // the incoming call is triggered later, after both messages
@@ -814,8 +814,8 @@ function PhoneRuntime({
                       ...current,
                       ui: {
                         ...current.ui,
-                        story: { ...storyState, "scandal-kkt-chat-opened": true },
-                        kakao: { ...current.ui?.kakao, "scandal-precall-started": true },
+                        story: { ...storyState, "scandal-kkt-chat-opened-v2": true },
+                        kakao: { ...current.ui?.kakao, "scandal-precall-started-v2": true },
                       },
                     });
                   }}
@@ -1031,24 +1031,24 @@ function PhoneRuntime({
                       </div>
                     )}
                   </div>
-                  {callDialogueStep < 2 && (
+                  {(callDialogueStep === 2 || callDialogueStep === 4) && (
                     <div className="call-reply-options">
                       <button
                         type="button"
                         onClick={() => {
                           const current = runtimeRef.current;
-                          const nextStep = Number(current.ui?.story?.["scandal-call-dialogue-step"] ?? 0) + 1;
+                          const nextStep = callDialogueStep === 2 ? 3 : 5;
                           update({
                             ...current,
                             ui: {
                               ...current.ui,
-                              story: { ...current.ui?.story, "scandal-call-dialogue-step": nextStep },
+                              story: { ...current.ui?.story, "scandal-call-dialogue-step-v2": nextStep },
                             },
                           });
                         }}
                       >
-                        <span>{callDialogueStep === 0 ? "알겠어." : "응."}</span>
-                        <small>{callDialogueStep === 0 ? "好。" : "嗯。"}</small>
+                        <span>{callDialogueStep === 2 ? "알겠어." : "응."}</span>
+                        <small>{callDialogueStep === 2 ? "好。" : "嗯。"}</small>
                         <b>发送</b>
                       </button>
                     </div>
@@ -1070,7 +1070,7 @@ function PhoneRuntime({
                       if (call.target === "scandal-call" && call.status === "ringing") {
                         next.ui = {
                           ...next.ui,
-                          kakao: { ...next.ui?.kakao, "scandal-call-result": "declined" },
+                          kakao: { ...next.ui?.kakao, "scandal-call-result-v2": "declined" },
                         };
                       }
                       update(next);
@@ -1100,7 +1100,7 @@ function PhoneRuntime({
                         if (call.target === "scandal-call") {
                           next.ui = {
                             ...next.ui,
-                            story: { ...next.ui?.story, "scandal-call-dialogue-step": 0 },
+                            story: { ...next.ui?.story, "scandal-call-dialogue-step-v2": 0 },
                           };
                         }
                         update(next);
@@ -1342,7 +1342,7 @@ function AppContent({
       onKktOpeningSeen?.();
       onRequestCall?.();
     }
-  }, [app.id, thread, creator, state.ui?.story?.["scandal-kkt-second-notice"]]);
+  }, [app.id, thread, creator, state.ui?.story?.["scandal-kkt-second-notice-v2"]]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
