@@ -1393,9 +1393,23 @@ function PhoneRuntime({
                 const latest = banner;
                 setBanner("");
                 const notification = notificationContent(latest, work.apps);
-                if (installedApps.some((a) => a.id === notification.appId))
+                if (notification.appId === "instagram" && "threadId" in notification && notification.threadId) {
+                  const current = runtimeRef.current;
+                  update({
+                    ...current,
+                    ui: {
+                      ...current.ui,
+                      instagram: {
+                        ...current.ui?.instagram,
+                        mymyTab: "私信",
+                        "scandal-ig-open-thread-v6": notification.threadId,
+                      },
+                    },
+                  });
+                  open("instagram");
+                } else if (installedApps.some((a) => a.id === notification.appId)) {
                   open(notification.appId, notification.appId === "kakao" ? notification.title : "");
-                else setPanel("notification");
+                } else setPanel("notification");
               }}
             >
               <AppIcon
