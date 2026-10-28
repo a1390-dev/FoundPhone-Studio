@@ -69,8 +69,12 @@ export function DeviceLock({
   onUnlock,
   onCamera,
   onLight,
+  canContinue,
+  onNewPlayer,
+  phoneScale,
 }: {
   work: Work;
+  phoneScale: number;
   time: string;
   notices: string[];
   onDismiss: (index: number) => void;
@@ -80,8 +84,16 @@ export function DeviceLock({
   onUnlock: (v: string) => void;
   onCamera: () => void;
   onLight: () => void;
+  canContinue: boolean;
+  onNewPlayer: (id: string) => void;
 }) {
   const [code, setCode] = useState("");
+  const [playerId, setPlayerId] = useState(() => { try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || ""; } catch { return ""; } });
+  const [idDraft, setIdDraft] = useState("");
+  const [resumeChoice, setResumeChoice] = useState<"choice" | "new" | "hidden">(() => {
+    try { return localStorage.getItem("foundphone.player-id.v1")?.trim() ? "choice" : "new"; }
+    catch { return "new"; }
+  });
   useEffect(() => {
     if (error) setCode("");
   }, [error]);
@@ -124,6 +136,73 @@ export function DeviceLock({
             </p>
             <h1>{time}</h1>
           </div>
+          {resumeChoice !== "hidden" && (
+            <div className="player-session-shade">
+              <section className="player-session-modal" role="dialog" aria-modal="true" aria-labelledby="player-session-title">
+                {resumeChoice === "choice" ? (
+                  <>
+                    <h2 id="player-session-title">欢迎回来</h2>
+                    <p>继续使用玩家 ID「{playerId}」读取上次进度，或开始一段全新的游戏。</p>
+                    <button
+                      type="button"
+                      className="player-session-primary"
+                      disabled={!canContinue}
+                      onClick={() => setResumeChoice("hidden")}
+                    >
+                      {canContinue ? "继续游戏" : "正在读取存档…"}
+                    </button>
+                    <button
+                      type="button"
+                      className="player-session-secondary"
+                      onClick={() => { setIdDraft(""); setResumeChoice("new"); }}
+                    >
+                      新 ID，从头开始
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h2 id="player-session-title">{playerId ? "开始新游戏" : "设置玩家 ID"}</h2>
+                    <p>{playerId ? "新进度会单独保存，之前的存档不会被删除。" : "先设置你的玩家 ID / 昵称。"}</p>
+                    <form
+                      className="player-session-form"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const value = idDraft.trim().slice(0, 24);
+                        if (!value) return;
+                        // Blur immediately so Safari starts dismissing the
+                        // keyboard before React swaps the ID dialog for PIN.
+                        e.currentTarget.querySelector<HTMLInputElement>("#foundphone-player-id")?.blur();
+                        window.setTimeout(() => {
+                          setPlayerId(value);
+                          onNewPlayer(value);
+                          setResumeChoice("hidden");
+                          if (work.phone.passcode) setPinOpen(true); else onUnlock("");
+                        }, 220);
+                      }}
+                    >
+                      <input
+                        id="foundphone-player-id"
+                        style={{ fontSize: `${16 / Math.max(phoneScale, 0.4)}px` }}
+                        value={idDraft}
+                        onChange={(e) => setIdDraft(e.target.value)}
+                        maxLength={24}
+                        autoComplete="nickname"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        placeholder="输入你想使用的名字"
+                        required
+                      />
+                      <button type="submit" className="player-session-primary">开始新游戏</button>
+                      {playerId ? (
+                        <button type="button" className="player-session-secondary" onClick={() => setResumeChoice("choice")}>返回</button>
+                      ) : null}
+                    </form>
+                  </>
+                )}
+              </section>
+            </div>
+          )}
           <div className="lock-notifications">
             {work.phone.notifications && (
               <SystemNotifications
@@ -135,7 +214,7 @@ export function DeviceLock({
               />
             )}
           </div>
-          <UnlockHandle onUnlock={open} />
+          {playerId && resumeChoice === "hidden" ? <UnlockHandle onUnlock={open} /> : null}
 
           <div className="lock-tools">
             <button onClick={onLight} aria-label="手电筒">
