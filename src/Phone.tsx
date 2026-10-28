@@ -245,7 +245,11 @@ function createInstagramFanDmBatch(): string[] {
   }));
   for (let i = records.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
-    [records[i], records[j]] = [records[j], records[i]];
+    const current = records[i];
+    const target = records[j];
+    if (!current || !target) continue;
+    records[i] = target;
+    records[j] = current;
   }
   return records.map((record) => JSON.stringify(record));
 }
