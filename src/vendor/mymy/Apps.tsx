@@ -232,6 +232,9 @@ export function MymyKakao(p: SkinProps) {
     [npcTyping, setNpcTyping] = useState(false),
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
+  const declineReplyPending =
+    p.ui?.["scandal-call-result-v5"] === "declined" &&
+    p.ui?.["scandal-call-decline-reply-needed-v6"] === true;
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
   const notifyKktNpcMessage = (thread: string, text: string, translation: string, time: string) => {
@@ -374,9 +377,6 @@ export function MymyKakao(p: SkinProps) {
     const queue: Array<[string, string, string, string]> = [
       ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
       ["집에 있어?", "你在家吗？", "npc", "14:06"],
-      ["응.", "嗯。", "owner", "14:07"],
-      ["알겠어. 내가 갈게.", "好，我来找你。", "npc", "14:07"],
-      ["걱정하지 마.", "别担心。", "npc", "14:08"],
     ];
     setProcessedCallResult(result);
     setNpcTyping(true);
@@ -390,11 +390,14 @@ export function MymyKakao(p: SkinProps) {
       sentRef.current = updated;
       setSent(updated);
       if (role === "npc") notifyKktNpcMessage(p.thread, ko, zh, time);
-      if (index < queue.length) deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
-      else deliveryTimer.current = setTimeout(() => {
-        setNpcTyping(false);
-        p.onUi?.("scandal-call-decline-messages-finished-v6", true);
-      }, 450);
+      if (index < queue.length) {
+        deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
+      } else {
+        deliveryTimer.current = setTimeout(() => {
+          setNpcTyping(false);
+          p.onUi?.("scandal-call-decline-reply-needed-v6", true);
+        }, 450);
+      }
     };
     deliveryTimer.current = setTimeout(deliverCallMessage, 700);
   }, [p.thread, p.ui?.["scandal-call-result-v5"], processedCallResult]);
@@ -589,7 +592,11 @@ export function MymyKakao(p: SkinProps) {
             className="kzinp"
             onSubmit={(e) => {
               e.preventDefault();
-              const time = KKT_STORY_ROUNDS[storyStep]?.time || p.virtualTime || "20:17";
+              const isDeclineReply =
+                p.thread === "金旼炡" &&
+                declineReplyPending &&
+                selectedChoices.some(([ko]) => ko === "응.");
+              const time = isDeclineReply ? "14:07" : (KKT_STORY_ROUNDS[storyStep]?.time || p.virtualTime || "20:17");
               const outgoingEntries = p.thread === "金旼炡" && selectedChoices.length
                 ? selectedChoices.map(([ko, zh]) => JSON.stringify([
                     p.thread, ko, time, "owner", zh.replaceAll("{{playerId}}", p.playerId || "你"),
@@ -605,6 +612,36 @@ export function MymyKakao(p: SkinProps) {
               setSelectedZh("");
               setSelectedChoices([]);
               setCandidateOpen(false);
+              if (isDeclineReply) {
+                p.onUi?.("scandal-call-decline-reply-needed-v6", false);
+                p.onUi?.("scandal-call-player-replied-v6", true);
+                setNpcTyping(true);
+                const replies: Array<[string, string, string]> = [
+                  ["알겠어. 내가 갈게.", "好，我来找你。", "14:07"],
+                  ["걱정하지 마.", "别担心。", "14:08"],
+                ];
+                let replyIndex = 0;
+                const deliverCallReply = () => {
+                  const entry = replies[replyIndex++];
+                  if (!entry) return;
+                  const [ko, zh, replyTime] = entry;
+                  const npcEntry = JSON.stringify([p.thread, ko, replyTime, "npc", zh]);
+                  const updated = [...sentRef.current, npcEntry];
+                  sentRef.current = updated;
+                  setSent(updated);
+                  notifyKktNpcMessage(p.thread, ko, zh, replyTime);
+                  if (replyIndex < replies.length) {
+                    deliveryTimer.current = setTimeout(deliverCallReply, 1500);
+                  } else {
+                    deliveryTimer.current = setTimeout(() => {
+                      setNpcTyping(false);
+                      p.onUi?.("scandal-call-decline-messages-finished-v6", true);
+                    }, 450);
+                  }
+                };
+                deliveryTimer.current = setTimeout(deliverCallReply, 1200);
+                return;
+              }
               if (p.thread === "金旼炡") {
                 const nextStep = storyStep + 1;
                 const nextRound = KKT_STORY_ROUNDS[nextStep];
@@ -687,9 +724,10 @@ export function MymyKakao(p: SkinProps) {
               发送
             </button>
           </form>
-          {p.thread === "金旼炡" && !p.ui?.["scandal-call-result-v5"] && candidateOpen && !npcTyping && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0 && (
+          {p.thread === "金旼炡" && candidateOpen && !npcTyping &&
+            ((declineReplyPending) || (!p.ui?.["scandal-call-result-v5"] && (KKT_STORY_ROUNDS[storyStep]?.choices.length || 0) > 0)) && (
             <section className="kkt-choice-panel" aria-label="剧情回复选项">
-              {(KKT_STORY_ROUNDS[storyStep]?.choices || []).map(([ko, zh]) => (
+              {(declineReplyPending ? [["응.", "嗯。"] as const] : (KKT_STORY_ROUNDS[storyStep]?.choices || [])).map(([ko, zh]) => (
                 <button
                   type="button"
                   className={"kkt-choice" + (selectedChoices.some(([chosenKo]) => chosenKo === ko) ? " selected" : "")}
