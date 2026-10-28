@@ -202,41 +202,38 @@ export function MymyKakao(p: SkinProps) {
       return total + (Number.isFinite(n) && n > 0 ? n : 1);
     }, 0);
   };
-  const list = grouped(p.items).sort(
+  const localSentItems = sent.flatMap((raw, index): Item[] => {
+    try {
+      const entry: unknown = JSON.parse(raw);
+      if (
+        !Array.isArray(entry) ||
+        (entry.length !== 3 && entry.length !== 5) ||
+        !entry.every((v) => typeof v === "string")
+      ) return [];
+      const role = entry.length >= 4 ? entry[3] : "owner";
+      const outgoing = role !== "npc";
+      return [makeItem({
+        id: "local-kkt-" + index,
+        title: entry[0],
+        body: entry[1],
+        time: entry[2],
+        sender: outgoing ? (p.playerId || p.owner || "机主") : "金旼炡",
+        outgoing,
+        meta: {
+          local: "true",
+          translation: entry.length >= 5 ? entry[4] : "",
+        },
+      })];
+    } catch {
+      return [];
+    }
+  });
+  const list = grouped([...p.items, ...localSentItems]).sort(
       (a, b) => Number(b.title === "金旼炡") - Number(a.title === "金旼炡"),
     ),
     messages = [
       ...p.items.filter((i) => i.title === p.thread),
-      ...sent.flatMap((raw, index) => {
-        try {
-          const entry: unknown = JSON.parse(raw);
-          if (
-            !Array.isArray(entry) ||
-            (entry.length !== 3 && entry.length !== 5) ||
-            !entry.every((v) => typeof v === "string") ||
-            entry[0] !== p.thread
-          )
-            return [];
-          const role = entry.length >= 4 ? entry[3] : "owner";
-          const outgoing = role !== "npc";
-          return [
-            makeItem({
-              id: "local-kkt-" + index,
-              title: entry[0],
-              body: entry[1],
-              time: entry[2],
-              sender: outgoing ? (p.playerId || p.owner || "机主") : "金旼炡",
-              outgoing,
-              meta: {
-                local: "true",
-                translation: entry.length >= 5 ? entry[4] : "",
-              },
-            }),
-          ];
-        } catch {
-          return [];
-        }
-      }),
+      ...localSentItems.filter((i) => i.title === p.thread),
     ],
     scroll = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -476,10 +473,10 @@ export function MymyKakao(p: SkinProps) {
                     key={g.title}
                     onClick={() => { markThreadRead(g.title); p.onThread(g.title); }}
                   >
-                    <Avatar name={g.title} src={last.avatar} />
+                    <Avatar name={g.title} src={[...g.items].reverse().find((item) => item.avatar)?.avatar || last.avatar} />
                     <span className="kzkn">
                       <b>{g.title}</b>
-                      <small>{tab === "好友" ? last.sender : last.body}</small>
+                      <small className="kkt-chat-preview">{tab === "好友" ? last.sender : last.body}</small>
                     </span>
                     <span className="kzkmt">
                       {last.time.slice(-5)}
