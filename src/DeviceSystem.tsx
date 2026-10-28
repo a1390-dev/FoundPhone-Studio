@@ -71,8 +71,10 @@ export function DeviceLock({
   onLight,
   canContinue,
   onNewPlayer,
+  phoneScale,
 }: {
   work: Work;
+  phoneScale: number;
   time: string;
   notices: string[];
   onDismiss: (index: number) => void;
@@ -167,14 +169,20 @@ export function DeviceLock({
                         e.preventDefault();
                         const value = idDraft.trim().slice(0, 24);
                         if (!value) return;
-                        setPlayerId(value);
-                        onNewPlayer(value);
-                        setResumeChoice("hidden");
-                        if (work.phone.passcode) setPinOpen(true); else onUnlock("");
+                        // Blur immediately so Safari starts dismissing the
+                        // keyboard before React swaps the ID dialog for PIN.
+                        e.currentTarget.querySelector<HTMLInputElement>("#foundphone-player-id")?.blur();
+                        window.setTimeout(() => {
+                          setPlayerId(value);
+                          onNewPlayer(value);
+                          setResumeChoice("hidden");
+                          if (work.phone.passcode) setPinOpen(true); else onUnlock("");
+                        }, 220);
                       }}
                     >
                       <input
                         id="foundphone-player-id"
+                        style={{ fontSize: `${16 / Math.max(phoneScale, 0.4)}px` }}
                         value={idDraft}
                         onChange={(e) => setIdDraft(e.target.value)}
                         maxLength={24}
