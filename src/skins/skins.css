@@ -3723,11 +3723,11 @@
 }
 .delivery-ui .catalog-search input {
   padding: 6px 0;
-  font-size: 9px;
+  font-size: 14px;
   border-radius: 10px;
 }
 .delivery-ui .catalog-search input::placeholder {
-  font-size: 9px;
+  font-size: 14px;
 }
 .delivery-merchant {
   display: flex;
