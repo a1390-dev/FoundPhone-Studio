@@ -110,17 +110,12 @@ type TaobaoSavedState = {
 const TAOBAO_DEFAULT_ADDRESS = "首尔特别市 江南区 · 清潭洞";
 const TAOBAO_DEFAULT_ADDRESSES = [
   TAOBAO_DEFAULT_ADDRESS,
-  "首尔特别市 江南区 · 三成洞",
-  "首尔特别市 江南区 · 狎鸥亭洞",
+  "首尔特别市 江南区 · 三成洞高层公寓区",
+  "SM娱乐总部 · 首尔特别市城东区圣水洞",
+  "KWANGYA SEOUL · SM大楼附近",
   "首尔特别市 江南区 · 新沙洞",
-  "首尔特别市 江南区 · 驿三洞",
-  "首尔特别市 城东区 · 圣水洞",
   "首尔特别市 龙山区 · 汉南洞",
-  "首尔特别市 龙山区 · 梨泰院洞",
-  "首尔特别市 松坡区 · 蚕室洞",
   "首尔特别市 麻浦区 · 合井洞",
-  "首尔特别市 西大门区 · 延禧洞",
-  "首尔特别市 钟路区 · 三清洞",
 ];
 const TAOBAO_DEFAULT_STATE: TaobaoSavedState = {
   cart: {},
@@ -178,8 +173,8 @@ export function TaobaoSkin(p: Props) {
       : playerLabel,
   );
   const [address, setAddress] = useState(() =>
-    typeof restored.address === "string" && restored.address
-      ? restored.address === "我家 · 首尔江南区" ? TAOBAO_DEFAULT_ADDRESS : restored.address
+    typeof restored.address === "string" && TAOBAO_DEFAULT_ADDRESSES.includes(restored.address)
+      ? restored.address
       : TAOBAO_DEFAULT_ADDRESS,
   );
   const [paymentMethod, setPaymentMethod] = useState(
@@ -290,17 +285,17 @@ export function TaobaoSkin(p: Props) {
                 {[playerLabel,"刘知珉","内永绘里","金旼炡","宁艺卓"].map(n => <button key={n} onClick={() => setPayer(n)} style={{ display: "inline-block", padding: "8px 12px", border: 0, borderRadius: 20, background: payer === n ? "#222" : "#f2f2f2", color: payer === n ? "#fff" : "#333", fontWeight: payer === n ? 700 : 500 }}>{n}{payer === n ? " ✓" : ""}</button>)}
               </div>
             </section>
-            <section style={{ background: "#fff", borderRadius: 14, padding: 14, marginBottom: 12, boxShadow: "0 1px 4px #00000008" }}><strong>支付方式</strong>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
-                {["KakaoPay","Naver Pay","信用卡","货到付款"].map(method => <button key={method} onClick={() => setPaymentMethod(method)} style={{ padding: "8px 12px", border: paymentMethod === method ? "1px solid #e98c3b" : "1px solid #eee", borderRadius: 18, background: paymentMethod === method ? "#fff0df" : "#f8f8f8", color: "#333", fontWeight: paymentMethod === method ? 700 : 500 }}>{method}{paymentMethod === method ? " ✓" : ""}</button>)}
-              </div>
-            </section>
             <section style={{ background: "#fff", borderRadius: 14, padding: 14, marginBottom: 12, boxShadow: "0 1px 4px #00000008" }}><strong>收货地址</strong>
               <div style={{ marginTop: 6 }}>
                 {addresses.map(a => <button key={a} onClick={() => setAddress(a)} style={{ display: "block", width: "100%", textAlign: "left", padding: "11px 4px", borderBottom: "1px solid #eee", background: "transparent", color: "#222" }}>{address === a ? "🔘 " : "◯ "}{a}</button>)}
               </div>
             </section>
             <section style={{ background: "#fff", borderRadius: 12, padding: 14, marginBottom: 12 }}><strong>商品清单</strong>{cartProducts.map(i => <p key={i.id} style={{ fontSize: 13 }}>{i.title} × {cart[i.id]} <span style={{ float: "right" }}>{money(Number(meta(i,"price","0").replace(/,/g,""))*(cart[i.id]||0))}</span></p>)}<hr/><strong>应付总额：<span style={{ color: "#c62828" }}>{money(total)}</span></strong></section>
+            <section style={{ background: "#fff", borderRadius: 14, padding: 14, marginBottom: 12, boxShadow: "0 1px 4px #00000008" }}><strong>支付方式</strong>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                {["KakaoPay","Naver Pay","信用卡","货到付款"].map(method => <button key={method} onClick={() => setPaymentMethod(method)} style={{ padding: "8px 12px", border: paymentMethod === method ? "1px solid #e98c3b" : "1px solid #eee", borderRadius: 18, background: paymentMethod === method ? "#fff0df" : "#f8f8f8", color: "#333", fontWeight: paymentMethod === method ? 700 : 500 }}>{method}{paymentMethod === method ? " ✓" : ""}</button>)}
+              </div>
+            </section>
             <button disabled={!totalCount} onClick={() => {
               if (!totalCount) return;
               const order: TaobaoOrder = {
