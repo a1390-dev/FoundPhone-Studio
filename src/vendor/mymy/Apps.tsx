@@ -234,6 +234,16 @@ export function MymyKakao(p: SkinProps) {
     [menu, setMenu] = useState(false);
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
+  const notifyKktNpcMessage = (thread: string, text: string, translation: string, time: string) => {
+    if (!thread || !text) return;
+    p.onUi?.("kkt-incoming-message-event", JSON.stringify({
+      id: thread + "-" + time + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      thread,
+      text,
+      translation,
+      time,
+    }));
+  };
   const preCallSequenceStartedRef = useRef(false);
   const storyStepRef = useRef(storyStep);
   useEffect(() => { storyStepRef.current = storyStep; }, [storyStep]);
@@ -288,6 +298,7 @@ export function MymyKakao(p: SkinProps) {
       ];
       sentRef.current = updated;
       setSent(updated);
+      notifyKktNpcMessage(p.thread, KKT_OPENING_FOLLOWUP[1], KKT_OPENING_FOLLOWUP[4], KKT_OPENING_FOLLOWUP[2]);
       setNpcTyping(false);
     }, 2000);
     return () => window.clearTimeout(timer);
@@ -332,6 +343,7 @@ export function MymyKakao(p: SkinProps) {
         const updated = [...sentRef.current, JSON.stringify([p.thread, ko, "14:06", "npc", zh])];
         sentRef.current = updated;
         setSent(updated);
+        notifyKktNpcMessage(p.thread, ko, zh, "14:06");
       }
       p.onUi?.("scandal-precall-step-v5", index + 1);
       if (index + 1 < messages.length) {
@@ -377,6 +389,7 @@ export function MymyKakao(p: SkinProps) {
       const updated = [...sentRef.current, raw];
       sentRef.current = updated;
       setSent(updated);
+      if (role === "npc") notifyKktNpcMessage(p.thread, ko, zh, time);
       if (index < queue.length) deliveryTimer.current = setTimeout(deliverCallMessage, 1200 + Math.floor(Math.random() * 500));
       else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 450);
     };
@@ -411,6 +424,12 @@ export function MymyKakao(p: SkinProps) {
       const updated = [...sentRef.current, npcEntry];
       sentRef.current = updated;
       setSent(updated);
+      notifyKktNpcMessage(
+        p.thread,
+        ko.replaceAll("{{playerId}}", p.playerId || "你"),
+        zh.replaceAll("{{playerId}}", p.playerId || "你"),
+        round.time,
+      );
       if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
       else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
     };
@@ -433,11 +452,21 @@ export function MymyKakao(p: SkinProps) {
   }, []);
   const markThreadRead = (title: string) => {
     if (!readThreads.includes(title)) setReadThreads([...readThreads, title]);
+    // Read state is tracked per conversation in the phone runtime, not just
+    // within this mounted KKT component.
+    p.onUi?.("kkt-clear-thread-notifications", title);
   };
   useEffect(() => {
     if (p.thread) markThreadRead(p.thread);
   }, [p.thread]);
   const unreadCount = (group: { title: string; items: Item[] }) => {
+    const runtimeCount = p.ui?.["kkt-unread-count:" + group.title];
+    // Once the phone runtime has a counter for this conversation, it is the
+    // source of truth, including zero after the player opens that chat.
+    if (runtimeCount !== undefined) {
+      const n = Number(runtimeCount);
+      return Number.isFinite(n) ? Math.max(0, n) : 0;
+    }
     if (readThreads.includes(group.title)) return 0;
     return group.items.reduce((total, item) => {
       if (item.outgoing || item.read || !item.meta.unread) return total;
@@ -579,6 +608,12 @@ export function MymyKakao(p: SkinProps) {
                     const updated = [...sentRef.current, npcEntry];
                     sentRef.current = updated;
                     setSent(updated);
+                    notifyKktNpcMessage(
+                      p.thread,
+                      ko.replaceAll("{{playerId}}", p.playerId || "你"),
+                      zh.replaceAll("{{playerId}}", p.playerId || "你"),
+                      nextRound.time,
+                    );
                     if (index < nextRound.npc.length) {
                       deliveryTimer.current = setTimeout(deliverOne, 2000);
                     } else {
