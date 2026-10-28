@@ -29,7 +29,7 @@ export default defineConfig(() => ({
         // Cache an icon/image only after it is actually requested by a visible screen.
         runtimeCaching: [
           {
-            urlPattern: /\\/assets\\/[^/]+\\.(?:png|jpe?g|svg)$/i,
+            urlPattern: /\/assets\/[^/]+\.(?:png|jpe?g|svg)$/i,
             handler: "CacheFirst",
             options: {
               cacheName: "foundphone-app-icons-v3",
@@ -39,7 +39,7 @@ export default defineConfig(() => ({
           },
           {
             // Reuse successfully loaded pictures across app visits and reloads.
-            urlPattern: /\\.(?:avif|webp|png|jpe?g|gif|svg)(?:\\?.*)?$/i,
+            urlPattern: /\.(?:avif|webp|png|jpe?g|gif|svg)(?:\?.*)?$/i,
             handler: "CacheFirst",
             options: {
               cacheName: "foundphone-media-images-v1",
@@ -50,7 +50,7 @@ export default defineConfig(() => ({
           {
             // Keep video assets when a cacheable response is available, and
             // let Workbox serve Range requests from fully cached video files.
-            urlPattern: /\\.(?:mp4|webm|mov|m4v)(?:\\?.*)?$/i,
+            urlPattern: /\.(?:mp4|webm|mov|m4v)(?:\?.*)?$/i,
             handler: "CacheFirst",
             rangeRequests: true,
             options: {
