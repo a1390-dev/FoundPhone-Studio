@@ -946,3 +946,35 @@
   font-weight: 500;
   letter-spacing: 0;
 }
+
+/* The reply tray takes the place of the software keyboard inside the phone.
+   It shrinks only the chat history area and never resizes/moves the phone shell. */
+.mymy-ui.mymy-kakao .kkt-choice-panel {
+  box-sizing: border-box;
+  flex: 0 1 32%;
+  min-height: 0;
+  max-height: 32%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 10px max(8px, env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #dce1e6;
+  background: #f7f7f7;
+}
+.mymy-ui.mymy-kakao .kkt-choice {
+  padding: 8px 5px;
+  gap: 3px;
+}
+.mymy-ui.mymy-kakao .kkt-choice > span {
+  font-size: 12px;
+  line-height: 1.35;
+}
+.mymy-ui.mymy-kakao .kkt-choice > small {
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+.mymy-ui.mymy-kakao .kkt-choice.selected {
+  background: #fff9c7;
+  border-radius: 9px;
+}
