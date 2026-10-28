@@ -3045,13 +3045,13 @@
   color: inherit;
   text-decoration: none;
 }
-.youtube-linked-byline .catalog-avatar {
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: #f03;
+.youtube-channel-avatar {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  object-fit: cover;
   border-radius: 50%;
-  font-size: 13px;
 }
 .youtube-thumb {
   width: 100%;
