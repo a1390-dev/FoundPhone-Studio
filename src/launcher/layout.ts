@@ -186,7 +186,6 @@ export function useDeviceLayout(authored: Work, creator = false) {
       return next;
     });
   const work = useMemo(() => {
-    if (creator) return base;
     const known = new Map(base.apps.map((a) => [a.id, a]));
     const apps = [
       ...layout.apps.filter(
@@ -210,7 +209,7 @@ export function useDeviceLayout(authored: Work, creator = false) {
           ]),
       ),
     };
-  }, [base, creator, layout]);
+  }, [base, layout]);
   return {
     work,
     layout,
