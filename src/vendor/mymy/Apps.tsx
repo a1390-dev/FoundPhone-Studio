@@ -160,7 +160,7 @@ export function MymyKakao(p: SkinProps) {
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV1", ""),
-    [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV1", ""),
+    [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV2", ""),
     [draft, setDraft] = useState(""),
     [selectedZh, setSelectedZh] = useState(""),
     [selectedChoices, setSelectedChoices] = useState<Array<readonly [string, string]>>([]),
@@ -215,15 +215,39 @@ export function MymyKakao(p: SkinProps) {
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const started = p.ui?.["scandal-precall-started"];
-    if (started !== true || processedPreCall === "sent") return;
-    const preCallMessages = [
-      JSON.stringify([p.thread, "어디야?", "14:06", "npc", "你在哪？"]),
-      JSON.stringify([p.thread, "혼자 있어?", "14:06", "npc", "你一个人吗？"]),
+    if (started !== true || processedPreCall) return;
+    setProcessedPreCall("running");
+    const messages: Array<[string, string]> = [
+      ["어디야?", "你在哪？"],
+      ["혼자 있어?", "你一个人吗？"],
     ];
-    const updated = [...sentRef.current, ...preCallMessages];
-    sentRef.current = updated;
-    setSent(updated);
-    setProcessedPreCall("sent");
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const deliver = (index: number) => {
+      const entry = messages[index];
+      if (!entry) return;
+      const [ko, zh] = entry;
+      const alreadyDelivered = sentRef.current.some((raw) => {
+        try {
+          const parsed: unknown = JSON.parse(raw);
+          return Array.isArray(parsed) && parsed[0] === p.thread &&
+            parsed[1] === ko && parsed[3] === "npc";
+        } catch { return false; }
+      });
+      if (!alreadyDelivered) {
+        const updated = [...sentRef.current, JSON.stringify([p.thread, ko, "14:06", "npc", zh])];
+        sentRef.current = updated;
+        setSent(updated);
+      }
+      p.onUi?.("scandal-precall-step", index + 1);
+      if (index + 1 < messages.length) {
+        timer = window.setTimeout(() => deliver(index + 1), 2000);
+      } else {
+        setProcessedPreCall("sent");
+        p.onUi?.("scandal-precall-delivered", true);
+      }
+    };
+    timer = window.setTimeout(() => deliver(0), 650);
+    return () => { if (timer) window.clearTimeout(timer); };
   }, [p.thread, p.ui?.["scandal-precall-started"], processedPreCall]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
