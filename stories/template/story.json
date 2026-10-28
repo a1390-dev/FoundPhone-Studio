@@ -2,8 +2,8 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "X 与 Threads 首页有多风格原创信息流；包含韩文原帖及简体中文翻译，也包含中文用户直接发布的中文原帖。点赞量更贴近日常账号，评论区包含多角色接话。额外新帖可通过刷新逐步进入首页，并会模拟实时到达；开场不含恋情传闻。",
-  "revision": 15,
+  "description": "X 与 Threads 的实时信息流会围绕 2026-10-28 的未证实恋情传闻逐条更新；X 新增 36 条讨论帖，Threads 新增 20 条讨论帖。用户可发帖、回复，NPC 会延迟随机加入讨论。",
+  "revision": 16,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
@@ -6871,6 +6871,1014 @@
     "tiktok": [],
     "twitter": [
       {
+        "id": "xrumor-20261028-01",
+        "title": "실시간제보 @citywatch_now",
+        "body": "어젯밤 늦게 고급 아파트 단지 근처 편의점에서 찍혔다는 흐릿한 사진이 올라왔는데, 옆모습이 에스파 윈터 같다는 말이 나오는 중. 사진만으로는 확실히 알 수 없음.\n\n昨晚有人发了张据说是在高档公寓附近便利店拍到的模糊照片，有人说侧影像 aespa Winter。光凭照片还无法确认。",
+        "sender": "실시간제보",
+        "time": "2026-10-28 14:06",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1200,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "citywatch_now",
+          "category": "rumor-discussion",
+          "reposts": "240",
+          "bookmarks": "70",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "68400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-02",
+        "title": "winterloop @winterloop_",
+        "body": "그 사진 화질이 너무 낮아서 얼굴이 보이지도 않는데 벌써 연애 확정이라고 하는 건 너무 빠른 거 아닌가요.\n\n照片糊到脸都看不清，现在就说恋情实锤是不是太早了？",
+        "sender": "winterloop",
+        "time": "2026-10-28 14:07",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2027,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "winterloop_",
+          "category": "rumor-discussion",
+          "reposts": "357",
+          "bookmarks": "111",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "42100",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-03",
+        "title": "연예소식24 @idolflash24",
+        "body": "온라인에서 윈터로 추정되는 인물이 일반인으로 보이는 여성과 함께 있는 사진이 확산 중입니다. 소속사 확인은 아직 없습니다.\n\n网上正在传播一张疑似 Winter 与一名普通女性同行的照片，目前尚无经纪公司确认。",
+        "sender": "연예소식24",
+        "time": "2026-10-28 14:07",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2854,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "idolflash24",
+          "category": "rumor-discussion",
+          "reposts": "474",
+          "bookmarks": "152",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "58100",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-04",
+        "title": "오늘도마이 @myday_again",
+        "body": "사진 속 사람 둘 다 얼굴이 안 보이는데 누구라고 단정하는 글이 너무 많음. 추측은 추측으로만 두자.\n\n照片里两个人的脸都看不清，却已经有很多帖子直接下结论了。猜测就先当猜测吧。",
+        "sender": "오늘도마이",
+        "time": "2026-10-28 14:08",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 3681,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "myday_again",
+          "category": "rumor-discussion",
+          "reposts": "591",
+          "bookmarks": "193",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "33300",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-05",
+        "title": "윈터기록장 @winter_archive",
+        "body": "혹시 몰라서 말하는데 위치 찾겠다고 아파트나 편의점 찾아다니는 건 제발 하지 맙시다. 당사자들 사생활이에요.\n\n先说一句：别为了找地点去搜公寓或便利店，更别跑去蹲点。当事人的私人生活需要尊重。",
+        "sender": "윈터기록장",
+        "time": "2026-10-28 14:08",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 4508,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "winter_archive",
+          "category": "rumor-discussion",
+          "reposts": "708",
+          "bookmarks": "234",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "26700",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-06",
+        "title": "루머체크 @rumor_check_kr",
+        "body": "현재 도는 사진은 촬영 시점·장소 모두 제3자 주장일 뿐입니다. 원본 출처와 맥락을 확인하기 전에는 사실처럼 공유하지 마세요.\n\n目前流传的照片，其拍摄时间和地点都只是第三方说法。确认原始来源和上下文前，请别当事实传播。",
+        "sender": "루머체크",
+        "time": "2026-10-28 14:09",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 5335,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "rumor_check_kr",
+          "category": "rumor-discussion",
+          "reposts": "825",
+          "bookmarks": "275",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "36200",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-07",
+        "title": "마이의타임라인 @mytimeline_",
+        "body": "X 들어오자마자 이 얘기만 보이네… 아까까지만 해도 평범한 하루였는데 타임라인 분위기가 갑자기 달라짐.\n\n一打开 X 就全是这个话题……刚才还是普通的一天，时间线氛围突然变了。",
+        "sender": "마이의타임라인",
+        "time": "2026-10-28 14:09",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 6162,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "mytimeline_",
+          "category": "rumor-discussion",
+          "reposts": "942",
+          "bookmarks": "316",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "19400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-08",
+        "title": "연예한입 @ent_bite",
+        "body": "사진에 보이는 옷 색이 비슷하다고 같은 사람이라고 단정할 수는 없죠. 다른 각도 사진이나 확인된 정보가 없는 상태입니다.\n\n不能因为照片里的衣服颜色相似就认定是同一个人。目前没有其他角度的照片，也没有确认信息。",
+        "sender": "연예한입",
+        "time": "2026-10-28 14:10",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 6989,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "ent_bite",
+          "category": "rumor-discussion",
+          "reposts": "1059",
+          "bookmarks": "357",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "28800",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-09",
+        "title": "민정이편 @for_minjeong",
+        "body": "진짜든 아니든 지금 당사자 입장에선 많이 부담스러울 듯. 확인 안 된 사진으로 사람 몰아가지 않았으면.\n\n不管真假，当事人现在应该都会很有压力。希望大家别拿未经确认的照片围攻任何人。",
+        "sender": "민정이편",
+        "time": "2026-10-28 14:10",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 7816,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "for_minjeong",
+          "category": "rumor-discussion",
+          "reposts": "1176",
+          "bookmarks": "398",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "17300",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-10",
+        "title": "더쿠관찰자 @forum_watcher",
+        "body": "커뮤니티마다 같은 사진 캡처가 다른 설명 붙어서 퍼지고 있어요. 처음 올린 계정부터 확인해야 할 듯.\n\n各个社区正在给同一张截图配上不同说法传播。感觉应该先查最初发布的账号。",
+        "sender": "더쿠관찰자",
+        "time": "2026-10-28 14:11",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 8643,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "forum_watcher",
+          "category": "rumor-discussion",
+          "reposts": "1293",
+          "bookmarks": "439",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "25100",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-11",
+        "title": "뉴스알림봇 @news_ping_kr",
+        "body": "[온라인 이슈] 윈터 추정 사진 확산…현재까지 공식 입장 확인되지 않아\n\n【网络话题】疑似 Winter 的照片传播中……截至目前未确认官方回应。",
+        "sender": "뉴스알림봇",
+        "time": "2026-10-28 14:11",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 9470,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "news_ping_kr",
+          "category": "rumor-discussion",
+          "reposts": "1410",
+          "bookmarks": "480",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "48700",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-12",
+        "title": "라면먹는마이 @ramyeon_my",
+        "body": "사람들이 말하는 '증거'가 죄다 흐릿한 뒷모습이랑 추측뿐이라서 난 아직 판단 보류.\n\n大家所谓的“证据”全是模糊背影和猜测，所以我暂时不下结论。",
+        "sender": "라면먹는마이",
+        "time": "2026-10-28 14:12",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 10297,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "ramyeon_my",
+          "category": "rumor-discussion",
+          "reposts": "1527",
+          "bookmarks": "521",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "20900",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-13",
+        "title": "아이돌이슈방 @idol_issue_board",
+        "body": "사진이 진짜라 해도 동행한 사람이 누구인지 공개적으로 추적하는 건 선 넘는 일입니다. 특히 일반인일 수 있다면 더더욱.\n\n即使照片是真的，公开追查同行者身份也越界了。尤其对方可能是普通人时更应该注意。",
+        "sender": "아이돌이슈방",
+        "time": "2026-10-28 14:12",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 11124,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "idol_issue_board",
+          "category": "rumor-discussion",
+          "reposts": "1644",
+          "bookmarks": "562",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "31900",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-14",
+        "title": "오늘의떡밥 @today_talk_idol",
+        "body": "지금 가장 많이 공유되는 건 원본보다 2차 편집 캡처인 듯. 편집하면서 설명까지 덧붙여져서 더 확정처럼 보임.\n\n现在传播最多的似乎不是原图，而是二次编辑的截图。加上说明文字后，看起来更像已经实锤。",
+        "sender": "오늘의떡밥",
+        "time": "2026-10-28 14:13",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 11951,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "today_talk_idol",
+          "category": "rumor-discussion",
+          "reposts": "1761",
+          "bookmarks": "603",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "37200",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-15",
+        "title": "윈터팬로그 @winterfanlog",
+        "body": "추측으로 사람을 공격하거나 계정 찾아가서 욕하는 건 하지 말아 주세요. 누구든 사생활은 지켜져야 합니다.\n\n请不要因为猜测就攻击当事人，也不要跑去账号下面辱骂。无论是谁都应该有私人生活。",
+        "sender": "윈터팬로그",
+        "time": "2026-10-28 14:13",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 12778,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "winterfanlog",
+          "category": "rumor-discussion",
+          "reposts": "1878",
+          "bookmarks": "644",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "18100",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-16",
+        "title": "하루뉴스픽 @daily_newspick",
+        "body": "X에서 '윈터 열애설' 키워드가 급상승 중이지만, 사진의 진위나 인물은 확인되지 않았습니다.\n\n“Winter 恋爱传闻”正在 X 上快速升温，但照片真伪及人物身份尚未确认。",
+        "sender": "하루뉴스픽",
+        "time": "2026-10-28 14:14",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 13605,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "daily_newspick",
+          "category": "rumor-discussion",
+          "reposts": "1995",
+          "bookmarks": "685",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "51200",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-17",
+        "title": "마이들수다 @mytalk_aespa",
+        "body": "다들 사진 이야기만 하는데 오늘 예정된 공식 일정이나 음원 얘기도 타임라인에서 밀려나 버렸네.\n\n大家都在讨论照片，今天原本的官方行程和音乐话题都被挤出时间线了。",
+        "sender": "마이들수다",
+        "time": "2026-10-28 14:14",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 14432,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "mytalk_aespa",
+          "category": "rumor-discussion",
+          "reposts": "2112",
+          "bookmarks": "726",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "12300",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-18",
+        "title": "팩트만보자 @just_facts_pls",
+        "body": "사진 촬영자가 누구인지, 언제 어디서 찍었는지 입증된 게 없으니 '확정'이라는 단어는 쓰지 맙시다.\n\n拍摄者是谁、何时何地拍摄都没有证实，先别用“实锤”这个词。",
+        "sender": "팩트만보자",
+        "time": "2026-10-28 14:15",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 15259,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "just_facts_pls",
+          "category": "rumor-discussion",
+          "reposts": "2229",
+          "bookmarks": "767",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "27300",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-19",
+        "title": "익명마이 @anon_my",
+        "body": "옆에 있는 사람이 누구인지 맞히기 놀이처럼 소비하는 건 좀 불편함. 그냥 당사자들이 말하기 전까지 기다리는 게 낫지 않을까.\n\n把旁边的人是谁当成猜谜游戏来消费，有点不舒服。或许等当事人愿意说再说比较好。",
+        "sender": "익명마이",
+        "time": "2026-10-28 14:15",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 16086,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "anon_my",
+          "category": "rumor-discussion",
+          "reposts": "2346",
+          "bookmarks": "808",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "15900",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-20",
+        "title": "팬덤뉴스룸 @fandom_newsroom",
+        "body": "여러 계정이 같은 문구를 거의 동시에 올리고 있어요. 단순한 재게시인지, 누군가가 의도적으로 확산시키는 건지 확인이 필요합니다.\n\n多个账号几乎同时发布相同文案。需要确认这是单纯转发，还是有人在刻意扩散。",
+        "sender": "팬덤뉴스룸",
+        "time": "2026-10-28 14:16",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 16913,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "fandom_newsroom",
+          "category": "rumor-discussion",
+          "reposts": "2463",
+          "bookmarks": "849",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "34600",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-21",
+        "title": "윈터생각 @thinkingwinter",
+        "body": "어떤 선택을 하든 팬이 대신 결정할 일은 아니죠. 확인도 안 된 사진으로 당사자에게 해명을 요구하지 않았으면 해요.\n\n无论当事人做什么，都不该由粉丝替她决定。希望别凭未经确认的照片逼当事人解释。",
+        "sender": "윈터생각",
+        "time": "2026-10-28 14:16",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 17740,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "thinkingwinter",
+          "category": "rumor-discussion",
+          "reposts": "2580",
+          "bookmarks": "890",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "21200",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-22",
+        "title": "한국연예읽기 @k_ent_reader",
+        "body": "온라인 사진 한 장이 순식간에 기사 제목으로 바뀌는 과정이 무섭다. 제목은 점점 단정적인데 근거는 그대로 흐릿함.\n\n一张网图转眼就变成新闻标题，这个过程有点可怕。标题越来越肯定，依据却依然模糊。",
+        "sender": "한국연예읽기",
+        "time": "2026-10-28 14:17",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 18567,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "k_ent_reader",
+          "category": "rumor-discussion",
+          "reposts": "2697",
+          "bookmarks": "931",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "29600",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-23",
+        "title": "마이새벽반 @late_my",
+        "body": "지금은 사진 확대해서 얼굴 찾는 것보다 원본이 어디서 나왔는지 보는 게 먼저라고 생각함.\n\n现在比起放大照片找脸，我觉得更应该先确认原图从哪里来的。",
+        "sender": "마이새벽반",
+        "time": "2026-10-28 14:17",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 19394,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "late_my",
+          "category": "rumor-discussion",
+          "reposts": "2814",
+          "bookmarks": "972",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "16400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-24",
+        "title": "뉴스제보창 @tipline_news",
+        "body": "제보라는 이름으로 사적인 동선을 공개하면 당사자 안전에도 문제가 생길 수 있습니다. 구체적인 장소 공유는 자제해 주세요.\n\n打着爆料的名义公开私人行踪，可能会危及当事人安全。请不要分享具体地点。",
+        "sender": "뉴스제보창",
+        "time": "2026-10-28 14:18",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 20221,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "tipline_news",
+          "category": "rumor-discussion",
+          "reposts": "2931",
+          "bookmarks": "1013",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "38400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-25",
+        "title": "아이돌토론장 @idol_debate",
+        "body": "열애설을 믿는 쪽도, 아니라고 보는 쪽도 지금은 추측 단계라는 점은 같아요. 서로 욕하지 말고 확인된 내용만 이야기합시다.\n\n相信传闻的人和不相信的人，目前都还处于猜测阶段。别互骂，只讨论已确认的信息吧。",
+        "sender": "아이돌토론장",
+        "time": "2026-10-28 14:18",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 21048,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "idol_debate",
+          "category": "rumor-discussion",
+          "reposts": "3048",
+          "bookmarks": "1054",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "22500",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-26",
+        "title": "마이들의대화 @my_debate",
+        "body": "사진 속 인물이 맞는지 아닌지보다, 일반인이 찍혀 있다면 사진을 계속 퍼뜨리는 게 괜찮은지 생각해 봤으면.\n\n比起照片里的人是不是她，如果照片里有普通人，大家更该想想继续传播是否合适。",
+        "sender": "마이들의대화",
+        "time": "2026-10-28 14:19",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 21875,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "my_debate",
+          "category": "rumor-discussion",
+          "reposts": "3165",
+          "bookmarks": "1095",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "20300",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-27",
+        "title": "알림너무많아 @notification_mute",
+        "body": "이 이슈 관련 알림이 너무 많이 와서 잠시 뮤트함. 공식 확인 나오기 전까지는 과열되지 않았으면.\n\n这个话题的通知太多，我暂时静音了。希望在官方确认前别继续发酵。",
+        "sender": "알림너무많아",
+        "time": "2026-10-28 14:19",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 22702,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "notification_mute",
+          "category": "rumor-discussion",
+          "reposts": "3282",
+          "bookmarks": "1136",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "13800",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-28",
+        "title": "아이돌뉴스체크 @idolnews_check",
+        "body": "현재 확인 가능한 건 온라인에서 사진이 돌고 있다는 사실뿐입니다. 인물 관계나 촬영 장소에 대한 단정은 확인되지 않았습니다.\n\n目前唯一能确认的是网传照片正在流传。人物关系和拍摄地点都没有得到确认。",
+        "sender": "아이돌뉴스체크",
+        "time": "2026-10-28 14:20",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 23529,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "idolnews_check",
+          "category": "rumor-discussion",
+          "reposts": "3399",
+          "bookmarks": "1177",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "42800",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-29",
+        "title": "마이한명 @just_one_my",
+        "body": "팬이라면 무슨 일이든 알고 싶을 수 있지만, 알고 싶다는 마음이 남의 사생활을 확인할 권리가 되지는 않아요.\n\n作为粉丝或许会想知道一切，但好奇并不意味着有权查探别人的私生活。",
+        "sender": "마이한명",
+        "time": "2026-10-28 14:20",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 24356,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "just_one_my",
+          "category": "rumor-discussion",
+          "reposts": "3516",
+          "bookmarks": "1218",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "15100",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-30",
+        "title": "연예포커스 @focus_ent",
+        "body": "온라인에서 추정 사진을 두고 의견이 갈리고 있습니다. 현재로서는 공식 확인이 없어 추가 확인이 필요합니다.\n\n网传疑似照片在网上引发不同看法。目前没有官方确认，仍需进一步核实。",
+        "sender": "연예포커스",
+        "time": "2026-10-28 14:21",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 25183,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "focus_ent",
+          "category": "rumor-discussion",
+          "reposts": "3633",
+          "bookmarks": "1259",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "30700",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-31",
+        "title": "아이돌타임라인 @idol_timeline_",
+        "body": "처음엔 그냥 편의점에서 누가 찍은 사진인 줄 알았는데, 몇 번 재업로드되더니 설명이 계속 붙으면서 큰 이슈가 됐네.\n\n一开始还以为只是有人在便利店拍的照片，转发几轮后附加说明越来越多，竟然变成了大话题。",
+        "sender": "아이돌타임라인",
+        "time": "2026-10-28 14:21",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 26010,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "idol_timeline_",
+          "category": "rumor-discussion",
+          "reposts": "3750",
+          "bookmarks": "1300",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "19000",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-32",
+        "title": "마이마음 @my_heart_note",
+        "body": "이런 식으로 갑자기 퍼지면 사실 여부와 상관없이 당사자들이 하루 종일 신경 쓸 수밖에 없을 듯.\n\n这种突然扩散的方式，不论真假，当事人恐怕一整天都无法不在意。",
+        "sender": "마이마음",
+        "time": "2026-10-28 14:22",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 26837,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "my_heart_note",
+          "category": "rumor-discussion",
+          "reposts": "3867",
+          "bookmarks": "1341",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "17700",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-33",
+        "title": "소문읽기 @rumor_reader",
+        "body": "몇몇 계정이 '지인 확인'이라고 쓰지만 구체적인 근거는 전혀 제시하지 않음. 그런 말만으로 사실 취급하면 안 됩니다.\n\n有些账号写着“熟人确认”，却完全没有提供具体依据。不能只凭这种话就当成事实。",
+        "sender": "소문읽기",
+        "time": "2026-10-28 14:22",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 27664,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "rumor_reader",
+          "category": "rumor-discussion",
+          "reposts": "3984",
+          "bookmarks": "1382",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "26400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-34",
+        "title": "뉴스룸실시간 @newsroom_live",
+        "body": "관련 검색량이 늘고 있지만, 검색량 상승이 곧 내용의 진실성을 뜻하는 건 아닙니다.\n\n相关搜索量正在上升，但热度上升不代表内容就是真的。",
+        "sender": "뉴스룸실시간",
+        "time": "2026-10-28 14:23",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 28491,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "newsroom_live",
+          "category": "rumor-discussion",
+          "reposts": "4101",
+          "bookmarks": "1423",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "33500",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-35",
+        "title": "윈터를응원해 @cheer_for_w",
+        "body": "확인되지 않은 이야기가 너무 커지지 않길 바랍니다. 당사자가 어떤 입장을 내든 조롱이나 비난부터 하는 분위기는 아니었으면.\n\n希望未经确认的消息不要越滚越大。不管当事人之后怎么回应，都希望大家别先嘲笑或指责。",
+        "sender": "윈터를응원해",
+        "time": "2026-10-28 14:23",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 29318,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "cheer_for_w",
+          "category": "rumor-discussion",
+          "reposts": "4218",
+          "bookmarks": "1464",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "18400",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "xrumor-20261028-36",
+        "title": "타임라인관찰자 @feed_observer",
+        "body": "새 글이 올라올 때마다 처음 사진에는 없던 디테일이 추가되는 게 이상함. 실제로 보이지 않는 건 보이지 않는다고 해야죠.\n\n奇怪的是每有新帖出现，最初照片里没有的细节就被补充出来。看不到的东西就该承认看不到。",
+        "sender": "타임라인관찰자",
+        "time": "2026-10-28 14:24",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 30145,
+        "comments": [
+          "路过的用户：这张图真的太糊了，目前看不出能确认身份的细节。",
+          "마이한명: 공식 확인 전에는 추측만으로 결론 내리지 않았으면 해요. / 希望官方确认前不要只靠猜测下结论。",
+          "观察记录员：现在各账号的描述都有差别，最好回到原始来源。"
+        ],
+        "meta": {
+          "handle": "feed_observer",
+          "category": "rumor-discussion",
+          "reposts": "4335",
+          "bookmarks": "1505",
+          "platform": "twitter",
+          "fictional": "true",
+          "live": "true",
+          "views": "24600",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
         "id": "xhome-post-01",
         "title": "달콩마이 @dalcommy",
         "body": "오늘 무대 영상 다시 보는데 표정 연기 진짜 좋다… 같은 파트인데 볼 때마다 새로움.\n\n又重看了一遍今天的舞台视频，表情管理真的很好……同一个part，每次看都有新感觉。",
@@ -7884,6 +8892,546 @@
     "netflix": [],
     "pinterest": [],
     "threads": [
+      {
+        "id": "threadrumor-20261028-01",
+        "title": "도시의관찰자 @cityobserver.kr",
+        "body": "어젯밤 아파트 단지 근처 편의점 사진이라는 게시물이 돌고 있네요. 윈터라는 말도 있지만 사진만으로 확인하기 어렵습니다.\n\n有人在传一张据说昨晚拍于公寓附近便利店的照片。有人说是 Winter，但仅凭照片很难确认。",
+        "sender": "도시의관찰자",
+        "time": "2026-10-28 14:06",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 320,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "cityobserver.kr",
+          "category": "rumor-discussion",
+          "reposts": "240",
+          "bookmarks": "70",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "11000",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-02",
+        "title": "마이한숨 @my_sigh",
+        "body": "사진은 흐릿하고 설명은 점점 확신에 차고… 온라인에서 소문이 커지는 전형적인 흐름 같아요.\n\n照片越来越模糊，文案却越来越肯定……感觉像是网络传闻扩大化的典型流程。",
+        "sender": "마이한숨",
+        "time": "2026-10-28 14:08",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 493,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "my_sigh",
+          "category": "rumor-discussion",
+          "reposts": "357",
+          "bookmarks": "111",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "12703",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-03",
+        "title": "中文追星日记 @idol_diary_cn",
+        "body": "先别急着锤。没有清楚正脸、没有当事人确认，大家转发的时候至少把“疑似”两个字留着。",
+        "sender": "中文追星日记",
+        "time": "2026-10-28 14:10",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 666,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "idol_diary_cn",
+          "category": "rumor-discussion",
+          "reposts": "474",
+          "bookmarks": "152",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "14406",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-04",
+        "title": "윈터팬페이지 @winter_page",
+        "body": "추정 사진 하나로 일반인일 수도 있는 동행자를 찾아내려는 건 위험해요. 위치 추적은 하지 맙시다.\n\n凭一张疑似照片追查同行者——对方也可能是普通人——是有风险的。不要追踪地点。",
+        "sender": "윈터팬페이지",
+        "time": "2026-10-28 14:12",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 839,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "winter_page",
+          "category": "rumor-discussion",
+          "reposts": "591",
+          "bookmarks": "193",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "16109",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-05",
+        "title": "커피와수다 @coffee_talk",
+        "body": "오늘 Threads 분위기가 갑자기 바뀌었어요. 누군가는 사실이라 하고 누군가는 조작이라 하고 아직 확인된 건 없는데요.\n\n今天 Threads 的氛围突然变了。有人说是真的，有人说是造假，但目前都没有确认。",
+        "sender": "커피와수다",
+        "time": "2026-10-28 14:14",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1012,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "coffee_talk",
+          "category": "rumor-discussion",
+          "reposts": "708",
+          "bookmarks": "234",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "17812",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-06",
+        "title": "루머피로 @rumor_tired",
+        "body": "다른 계정에서 본 말을 다시 인용하는 것만으로는 증거가 생기지 않아요. 출처를 따라가도 최초 게시물이 흐릿한 사진뿐.\n\n不断引用别人的说法并不会让它变成证据。追到源头，最初也只是一张模糊照片。",
+        "sender": "루머피로",
+        "time": "2026-10-28 14:16",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1185,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "rumor_tired",
+          "category": "rumor-discussion",
+          "reposts": "825",
+          "bookmarks": "275",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "19515",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-07",
+        "title": "팬덤라운지 @fandom_lounge",
+        "body": "팬들이 걱정하는 마음은 이해하지만, 확인 안 된 사진을 근거로 당사자에게 답을 요구하진 않았으면 좋겠어요.\n\n理解粉丝担心的心情，但希望别用未经确认的照片要求当事人给说法。",
+        "sender": "팬덤라운지",
+        "time": "2026-10-28 14:18",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1358,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "fandom_lounge",
+          "category": "rumor-discussion",
+          "reposts": "942",
+          "bookmarks": "316",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "21218",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-08",
+        "title": "小号观察员 @alt_account_watch",
+        "body": "同一张图在不同平台被裁成不同角度，配文也换了好几版。先找原始来源，比继续猜人更重要。",
+        "sender": "小号观察员",
+        "time": "2026-10-28 14:20",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1531,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "alt_account_watch",
+          "category": "rumor-discussion",
+          "reposts": "1059",
+          "bookmarks": "357",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "22921",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-09",
+        "title": "오늘의화제 @topic_today",
+        "body": "공식 입장이 나오지 않은 상태에서 제목만 확정적으로 쓰는 계정이 많네요. 클릭 수와 사실 확인은 다른 문제입니다.\n\n官方尚未回应，很多账号标题却已经写得像确定事实。点击量和事实核查是两回事。",
+        "sender": "오늘의화제",
+        "time": "2026-10-28 14:22",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1704,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "topic_today",
+          "category": "rumor-discussion",
+          "reposts": "1176",
+          "bookmarks": "398",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "24624",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-10",
+        "title": "晚间刷帖的人 @night_scroll_cn",
+        "body": "感觉大家已经从“照片里是谁”发展到“住哪儿、去哪儿”，这就过界了。不要把私人行踪当线索挖。",
+        "sender": "晚间刷帖的人",
+        "time": "2026-10-28 14:24",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 1877,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "night_scroll_cn",
+          "category": "rumor-discussion",
+          "reposts": "1293",
+          "bookmarks": "439",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "26327",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-11",
+        "title": "마이의거리두기 @my_boundaries",
+        "body": "진짜라 해도 사적인 관계를 공개할 의무는 없죠. 루머가 커지는 걸 즐기는 분위기는 아니었으면 합니다.\n\n就算是真的，当事人也没有义务公开私人关系。希望大家别把传闻越闹越大当成乐趣。",
+        "sender": "마이의거리두기",
+        "time": "2026-10-28 14:26",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2050,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "my_boundaries",
+          "category": "rumor-discussion",
+          "reposts": "1410",
+          "bookmarks": "480",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "28030",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-12",
+        "title": "新闻碎片箱 @news_fragments",
+        "body": "转发数量正在上涨，但目前能确认的仍然只有“有人发了模糊照片”这一点。其他都是不同账号的解释。",
+        "sender": "新闻碎片箱",
+        "time": "2026-10-28 14:28",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2223,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "news_fragments",
+          "category": "rumor-discussion",
+          "reposts": "1527",
+          "bookmarks": "521",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "29733",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-13",
+        "title": "아이돌토론 @idol_talk",
+        "body": "사진 속 인물이 맞다고 보는 사람도, 아니라고 보는 사람도 말투는 조금만 낮췄으면. 아직 모르는 게 더 많아요.\n\n认为是她的人和认为不是的人都稍微冷静一点吧。目前未知的事情更多。",
+        "sender": "아이돌토론",
+        "time": "2026-10-28 14:30",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2396,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "idol_talk",
+          "category": "rumor-discussion",
+          "reposts": "1644",
+          "bookmarks": "562",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "31436",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-14",
+        "title": "小心二手消息 @secondhand_news",
+        "body": "我看到至少三种互相矛盾的说法了。没有可靠来源之前，最好别继续把细节补全。",
+        "sender": "小心二手消息",
+        "time": "2026-10-28 14:32",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2569,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "secondhand_news",
+          "category": "rumor-discussion",
+          "reposts": "1761",
+          "bookmarks": "603",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "33139",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-15",
+        "title": "민정이응원방 @minjeong_support",
+        "body": "누가 누구와 시간을 보냈는지 추측하는 것보다 당사자들이 안전하고 편안했으면 하는 마음이 큽니다.\n\n比起猜她和谁在一起，更希望当事人都能安全、自在。",
+        "sender": "민정이응원방",
+        "time": "2026-10-28 14:34",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2742,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "minjeong_support",
+          "category": "rumor-discussion",
+          "reposts": "1878",
+          "bookmarks": "644",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "34842",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-16",
+        "title": "讨论区路人 @thread_walker",
+        "body": "同一张模糊照片能长出这么多版本，说明传播过程中已经混入了大量推测。请别把猜测当原图细节。",
+        "sender": "讨论区路人",
+        "time": "2026-10-28 14:36",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 2915,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "thread_walker",
+          "category": "rumor-discussion",
+          "reposts": "1995",
+          "bookmarks": "685",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "36545",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-17",
+        "title": "조용히보는마이 @quiet_my",
+        "body": "아직 확인된 사실이 없다는 말도 계속 타임라인에 남아 있어야 해요. 루머 글만 위로 떠밀리지 않았으면.\n\n“目前没有已确认事实”也应该一直留在时间线上，而不是只让传闻帖被推上去。",
+        "sender": "조용히보는마이",
+        "time": "2026-10-28 14:38",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 3088,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "quiet_my",
+          "category": "rumor-discussion",
+          "reposts": "2112",
+          "bookmarks": "726",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "38248",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-18",
+        "title": "夜间话题记录 @topic_record",
+        "body": "平台上有新闻号、搬运号、普通用户，大家说法都不一样。先区分谁真的核实过、谁只是在转述。",
+        "sender": "夜间话题记录",
+        "time": "2026-10-28 14:40",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 3261,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "topic_record",
+          "category": "rumor-discussion",
+          "reposts": "2229",
+          "bookmarks": "767",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "39951",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-19",
+        "title": "팬덤과사생활 @fan_privacy",
+        "body": "팬이라고 해서 사생활을 확인할 권리가 생기는 건 아니에요. 추측성 사진 공유는 멈춰도 됩니다.\n\n成为粉丝并不代表有权查探私生活。可以停止传播猜测性的照片。",
+        "sender": "팬덤과사생활",
+        "time": "2026-10-28 14:42",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 3434,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "fan_privacy",
+          "category": "rumor-discussion",
+          "reposts": "2346",
+          "bookmarks": "808",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "41654",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
+      {
+        "id": "threadrumor-20261028-20",
+        "title": "一条评论而已 @one_comment_cn",
+        "body": "希望接下来出现的是可靠的核实信息，而不是更多账号重复同一句话，把热度误当成结论。",
+        "sender": "一条评论而已",
+        "time": "2026-10-28 14:44",
+        "avatar": "",
+        "kind": "post",
+        "media": "",
+        "likes": 3607,
+        "comments": [
+          "路人甲：先别把不同账号的转述当成新的证据。",
+          "팬심기록: 사진만으로 단정하지 말아요. / 不要只凭照片下结论。"
+        ],
+        "meta": {
+          "handle": "one_comment_cn",
+          "category": "rumor-discussion",
+          "reposts": "2463",
+          "bookmarks": "849",
+          "platform": "threads",
+          "fictional": "true",
+          "live": "true",
+          "views": "43357",
+          "language": "mixed",
+          "story": "true"
+        }
+      },
       {
         "id": "threadshome-post-01",
         "title": "질문하는사람 @asksoftly",
