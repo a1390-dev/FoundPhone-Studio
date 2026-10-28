@@ -432,6 +432,17 @@ function PhoneRuntime({
   };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
+    const current = runtimeRef.current;
+    const hasRumorStory = (work.data.twitter || []).some((i) => i.meta.category === "rumor-discussion");
+    const storyUi = current.ui?.story || {};
+    if ((id === "twitter" || id === "threads") && hasRumorStory && storyUi["rumor-day-started"] !== true) {
+      update({
+        ...current,
+        date: "2026-10-28",
+        time: "14:06",
+        ui: { ...current.ui, story: { ...storyUi, "rumor-day-started": true } },
+      });
+    }
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
