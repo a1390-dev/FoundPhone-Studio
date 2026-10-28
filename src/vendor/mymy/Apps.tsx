@@ -132,9 +132,12 @@ export function MymyKakao(p: SkinProps) {
     const field = composerRef.current;
     if (!field) return;
     field.style.height = "34px";
-    const height = Math.min(72, Math.max(34, field.scrollHeight));
+    const css = window.getComputedStyle(field);
+    const minHeight = Number.parseFloat(css.getPropertyValue("--kkt-composer-min-height")) || 34;
+    const maxHeight = Number.parseFloat(css.getPropertyValue("--kkt-composer-max-height")) || 72;
+    const height = Math.min(maxHeight, Math.max(minHeight, field.scrollHeight));
     field.style.height = `${height}px`;
-    field.style.overflowY = field.scrollHeight > 72 ? "auto" : "hidden";
+    field.style.overflowY = field.scrollHeight > maxHeight ? "auto" : "hidden";
   }, [draft, p.thread]);
   useEffect(() => () => {
     if (deliveryTimer.current) clearTimeout(deliveryTimer.current);
