@@ -49,7 +49,8 @@ export function AppArtwork({
         src={file}
         alt=""
         loading="eager"
-        decoding="sync"
+        decoding="async"
+        fetchPriority="high"
         draggable={false}
         style={{ position: "absolute", inset: 0 }}
         onError={() => setFailed(true)}
