@@ -906,3 +906,35 @@
 .mymy-ui.mymy-kakao .kzinp button {
   flex: 0 0 32px;
 }
+
+
+/* Slightly roomier native KKT conversation bubbles: Korean first, Chinese below. */
+.mymy-ui.mymy-kakao .kzbub {
+  padding: 9px 12px;
+  max-width: 82%;
+  gap: 4px;
+}
+.mymy-ui.mymy-kakao .kkt-korean {
+  font-size: 14px;
+  line-height: 1.42;
+}
+.mymy-ui.mymy-kakao .kzbub .kkt-translation {
+  font-size: 12px;
+  line-height: 1.38;
+}
+.mymy-ui.mymy-kakao .kzmav .catalog-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.mymy-ui.mymy-kakao .msgs {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+.mymy-ui.mymy-kakao .kzkb,
+.mymy-ui.mymy-kakao .kkt-choice-panel {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
