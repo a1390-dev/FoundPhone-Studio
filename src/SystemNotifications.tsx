@@ -4,6 +4,19 @@ import { X } from "lucide-react";
 import { AppArtwork } from "./AppArtwork";
 import type { Work } from "./schema";
 export function notificationContent(text: string, apps: Work["apps"]) {
+  if (text.startsWith("IGDM|")) {
+    const payload = text.slice(5);
+    const separator = payload.indexOf("|");
+    const threadId = separator >= 0 ? payload.slice(0, separator) : "";
+    const message = separator >= 0 ? payload.slice(separator + 1) : payload;
+    const divider = message.indexOf(":");
+    return {
+      title: divider > 0 ? message.slice(0, divider).trim() : "Instagram",
+      body: divider > 0 ? message.slice(divider + 1).trim() : message,
+      appId: "instagram",
+      threadId,
+    };
+  }
   if (text.startsWith("KKT|")) {
     const message = text.slice(4);
     const separator = message.search(/[:：]/);
