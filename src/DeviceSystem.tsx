@@ -185,7 +185,7 @@ export function DeviceLock({
                         autoCapitalize="none"
                         autoCorrect="off"
                         spellCheck={false}
-                        placeholder="输入你想使用的名字"
+                        placeholder="NAME"
                         required
                       />
                       <button type="submit" className="player-session-primary">开始新游戏</button>
