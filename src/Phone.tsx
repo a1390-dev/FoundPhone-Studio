@@ -998,7 +998,7 @@ function PhoneRuntime({
                         <small>我来处理。</small>
                       </div>
                     </div>
-                    {callDialogueStep >= 1 && (
+                    {callDialogueStep >= 3 && (
                       <div className="call-dialogue-row call-dialogue-player">
                         <div className="call-dialogue-bubble">
                           <div>알겠어.</div>
@@ -1006,7 +1006,7 @@ function PhoneRuntime({
                         </div>
                       </div>
                     )}
-                    {callDialogueStep >= 1 && (
+                    {callDialogueStep >= 4 && (
                       <div className="call-dialogue-row call-dialogue-npc">
                         <div className="call-dialogue-bubble">
                           <div>집에 있어?</div>
@@ -1014,7 +1014,7 @@ function PhoneRuntime({
                         </div>
                       </div>
                     )}
-                    {callDialogueStep >= 2 && (
+                    {callDialogueStep >= 5 && (
                       <div className="call-dialogue-row call-dialogue-player">
                         <div className="call-dialogue-bubble">
                           <div>응.</div>
@@ -1022,7 +1022,7 @@ function PhoneRuntime({
                         </div>
                       </div>
                     )}
-                    {callDialogueStep >= 2 && (
+                    {callDialogueStep >= 6 && (
                       <div className="call-dialogue-row call-dialogue-npc">
                         <div className="call-dialogue-bubble">
                           <div>알겠어. 내가 갈게.</div>
