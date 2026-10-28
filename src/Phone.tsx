@@ -487,9 +487,10 @@ function PhoneRuntime({
     const current = runtimeRef.current;
     const unreadKey = "kkt-unread-count:" + incoming.thread;
     const activeConversation = app === "kakao" && appThread === incoming.thread;
-    const unreadCount = activeConversation
-      ? 0
-      : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
+    // Count each incoming NPC message until the player opens this conversation
+    // again. Messages arriving in the visible chat still count for the inbox,
+    // matching the supplied KKT list reference after the player backs out.
+    const unreadCount = Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
     const notifications = activeConversation
       ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
       : app === "kakao"
