@@ -494,3 +494,15 @@
   width: 21px;
   height: 21px;
 }
+
+.tr-comment{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;border-bottom:.5px solid #e7e7e7}
+.tr-comment>.catalog-avatar{width:36px;height:36px;flex:none;border-radius:50%}
+.tr-comment-content{flex:1;min-width:0}
+.tr-comment-content>header{display:flex;align-items:center;gap:7px}
+.tr-comment-content>header b{font-size:14px;font-weight:650}
+.tr-comment-content>header small{font-size:12px;color:#999}
+.tr-comment-content>p{font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0 4px}
+.tr-comment-actions{display:flex;align-items:center;gap:25px;margin-top:6px;color:#777}
+.tr-comment-actions button{display:flex;align-items:center;gap:5px;color:inherit;font-size:12px}
+.tr-comment-actions button.liked{color:#f91880}
+.tr-comment-actions button.liked svg{fill:#f91880}
