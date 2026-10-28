@@ -378,7 +378,7 @@ export function DeliverySkin(p: Props) {
             <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
               <strong style={{display:"block",marginBottom:10}}>选择付款人</strong>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                {["玩家自己","刘知珉","内永绘里","金旼炡","宁艺卓"].map(person=><button key={person} onClick={()=>setPayer(person)} style={{border:0,borderRadius:22,padding:"9px 13px",background:payer===person?"#222":"#f2f2f2",color:payer===person?"#fff":"#333",fontWeight:payer===person?700:500}}>{person}{payer===person?" ✓":""}</button>)}
+                {[playerLabel,"刘知珉","内永绘里","金旼炡","宁艺卓"].map(person=><button key={person} onClick={()=>setPayer(person)} style={{border:0,borderRadius:22,padding:"9px 13px",background:payer===person?"#222":"#f2f2f2",color:payer===person?"#fff":"#333",fontWeight:payer===person?700:500}}>{person}{payer===person?" ✓":""}</button>)}
               </div>
             </section>
             <section style={{background:"#fff",borderRadius:16,padding:14,boxShadow:"0 1px 4px #00000008"}}>
