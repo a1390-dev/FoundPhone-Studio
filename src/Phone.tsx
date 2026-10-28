@@ -207,6 +207,21 @@ function PhoneRuntime({
     } catch { return "legacy"; }
   });
   const [resumePromptKey, setResumePromptKey] = useState(0);
+  const kktOpeningNoticeKey = `foundphone.kkt-opening-seen.v1:${encodeURIComponent(playerId || "default")}:${saveGeneration}`;
+  const [kktOpeningSeen, setKktOpeningSeen] = useState(() => {
+    try { return localStorage.getItem(kktOpeningNoticeKey) === "1"; }
+    catch { return false; }
+  });
+  const kktOpeningSeenRef = useRef(kktOpeningSeen);
+  const isKktOpeningNotice = (notice: string) =>
+    notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
+  useEffect(() => {
+    let seen = false;
+    try { seen = localStorage.getItem(kktOpeningNoticeKey) === "1"; }
+    catch { /* Per-session suppression still works without persistent storage. */ }
+    kktOpeningSeenRef.current = seen;
+    setKktOpeningSeen(seen);
+  }, [kktOpeningNoticeKey]);
   useEffect(() => {
     if (creator) return;
     let hiddenAt = 0;
@@ -348,12 +363,21 @@ function PhoneRuntime({
     if (creator || !ready) return;
     const interval = setInterval(() => {
       const previous = runtimeRef.current;
-      const next = advance(work, previous, 1000);
+      let next = advance(work, previous, 1000);
+      // Once KKT has been opened for this player run, discard only the opening
+      // notification if its pending three-second timer fires after a reload.
+      if (kktOpeningSeenRef.current && next.notifications.some(isKktOpeningNotice)) {
+        next = {
+          ...next,
+          notifications: next.notifications.filter((notice) => !isKktOpeningNotice(notice)),
+        };
+      }
       runtimeRef.current = next;
 
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
+        next.notifications.join("\u0000") !== previous.notifications.join("\u0000") ||
         (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
 
       if (changed) {
@@ -394,8 +418,20 @@ function PhoneRuntime({
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
+  const markKktOpeningAsSeen = () => {
+    kktOpeningSeenRef.current = true;
+    setKktOpeningSeen(true);
+    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
+    catch { /* This run still suppresses repeat opening notices while mounted. */ }
+    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
+    const current = runtimeRef.current;
+    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
+    if (notifications.length !== current.notifications.length)
+      update({ ...current, notifications });
+  };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
+    if (id === "kakao" && !creator) markKktOpeningAsSeen();
     setAppThread(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
@@ -425,8 +461,14 @@ function PhoneRuntime({
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
-    if (!locked && work.phone.notifications && count > noticesSeen.current) {
-      setBanner(s.notifications.at(-1) || "");
+    const latest = s.notifications.at(-1) || "";
+    if (
+      !locked &&
+      work.phone.notifications &&
+      count > noticesSeen.current &&
+      !(kktOpeningSeenRef.current && isKktOpeningNotice(latest))
+    ) {
+      setBanner(latest);
       const timer = setTimeout(() => setBanner(""), 4500);
       noticesSeen.current = count;
       return () => clearTimeout(timer);
@@ -440,6 +482,14 @@ function PhoneRuntime({
         (_, i) => i !== index,
       ),
     });
+  const visibleNoticeEntries = s.notifications
+    .map((text, index) => ({ text, index }))
+    .filter(({ text }) => !(kktOpeningSeen && isKktOpeningNotice(text)));
+  const visibleNotices = visibleNoticeEntries.map((entry) => entry.text);
+  const dismissVisibleNotice = (visibleIndex: number) => {
+    const originalIndex = visibleNoticeEntries[visibleIndex]?.index;
+    if (originalIndex !== undefined) dismissNotice(originalIndex);
+  };
   if (!ready) return <div className="phone-loading">正在恢复进度…</div>;
   return (
     <div
@@ -563,8 +613,8 @@ function PhoneRuntime({
                     : work
                 }
                 time={displayTime}
-                notices={s.notifications}
-                onDismiss={dismissNotice}
+                notices={visibleNotices}
+                onDismiss={dismissVisibleNotice}
                 pinOpen={pinOpen}
                 setPinOpen={setPinOpen}
                 error={pinError}
@@ -697,9 +747,9 @@ function PhoneRuntime({
               {panel === "notification" ? (
                 <>
                   <h2>通知中心</h2>
-                  {work.phone.notifications && s.notifications.length ? (
+                  {work.phone.notifications && visibleNotices.length ? (
                     <SystemNotifications
-                      notices={s.notifications}
+                      notices={visibleNotices}
                       apps={work.apps}
                       onOpen={() => {
                         setPanel("");
@@ -713,7 +763,7 @@ function PhoneRuntime({
                             open("messages");
                         }
                       }}
-                      onDismiss={dismissNotice}
+                      onDismiss={dismissVisibleNotice}
                     />
                   ) : (
                     <p>没有新通知</p>
