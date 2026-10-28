@@ -856,6 +856,8 @@ function PhoneRuntime({
                   const record = work.data.phone?.find(
                     (i) => i.id === s.incomingCall?.target,
                   );
+                  if (s.incomingCall?.target === "scandal-call")
+                    return <p>正在通话中…</p>;
                   return record?.kind === "audio" && safeMedia(record.media) ? (
                     <audio controls src={safeMedia(record.media)} />
                   ) : (
