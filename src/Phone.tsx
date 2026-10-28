@@ -492,7 +492,9 @@ function PhoneRuntime({
       : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
     const notifications = activeConversation
       ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
-      : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
+      : app === "kakao"
+        ? current.notifications
+        : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
     if (activeConversation && banner && kktNoticeThread(banner) === incoming.thread) setBanner("");
     update({
       ...current,
@@ -548,10 +550,14 @@ function PhoneRuntime({
           if (!thread) return;
           const unreadKey = "kkt-unread-count:" + thread;
           if (app === "kakao" && appThread === thread) {
+            // The exact conversation is visible: consume silently and mark read.
             removeIndexes.add(previous.notifications.length + offset);
             kakaoUi[unreadKey] = 0;
           } else {
+            // KKT is foregrounded but the conversation is not open: show only
+            // its unread badge. Outside KKT, keep the OS notification banner.
             kakaoUi[unreadKey] = Math.max(0, Number(kakaoUi[unreadKey] ?? 0)) + 1;
+            if (app === "kakao") removeIndexes.add(previous.notifications.length + offset);
           }
           handledKktState = true;
         });
@@ -718,7 +724,9 @@ function PhoneRuntime({
         (app === "kakao" && appThread === "金旼炡")) return;
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
+        notifications: app === "kakao"
+          ? latest.notifications
+          : [...latest.notifications, "KKT|金旼炡:어디야?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-first-notice-v5": true },
@@ -746,7 +754,9 @@ function PhoneRuntime({
         (app === "kakao" && appThread === "金旼炡")) return;
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+        notifications: app === "kakao"
+          ? latest.notifications
+          : [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-second-notice-v5": true },
