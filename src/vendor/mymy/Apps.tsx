@@ -1228,14 +1228,20 @@ export function MymyInstagram(p: SkinProps) {
   return (
     <div className="mymy-ui mymy-instagram" data-mymy="instagram">
       <div className="ig">
-        <header className={"igh" + (!selected && tab === "搜索" ? " ig-search-header-hidden" : "")}>
+        <header className={"igh" + (!selected && !activeFanDm && tab === "搜索" ? " ig-search-header-hidden" : "")}>
           <button
-            aria-label={selected ? "返回Instagram动态" : "关闭当前App"}
-            onClick={() => (selected ? setSelected(null) : p.onBack())}
+            aria-label={activeFanDm ? "返回Instagram私信" : selected ? "返回Instagram动态" : "关闭当前App"}
+            onClick={() => {
+              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); }
+              else if (selected) setSelected(null);
+              else p.onBack();
+            }}
           >
             <ArrowLeft />
           </button>
-          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
+          {activeFanDm ? (
+            <span className="igl2"><b>{activeFan?.handle || "私信"}</b></span>
+          ) : selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
             <span className="igl2 ig-first-detail-title">
               <b>帖子</b>
               <small>imwinter</small>
@@ -1245,15 +1251,42 @@ export function MymyInstagram(p: SkinProps) {
               {selected ? "帖子" : tab === "主页" ? "Instagram" : tab}
             </span>
           )}
-          {selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
+          {activeFanDm ? (
+            <span className="ig-first-header-space" aria-hidden="true" />
+          ) : selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId) ? (
             <span className="ig-first-header-space" aria-hidden="true" />
           ) : (
-            <button aria-label="打开私信" onClick={() => setTab("私信")}>
+            <button aria-label="打开私信" onClick={() => { setSelected(null); setActiveFanDm(""); setTab("私信"); }}>
               <Send />
             </button>
           )}
         </header>
         <div className="igb">
+          {activeFanDm ? (
+            <div className="ig-rumor-dm-thread">
+              <div className="ig-rumor-dm-history" ref={fanDmScrollRef}>
+                {activeFanMessages.map((message) => (
+                  <article className={"ig-rumor-dm-message " + (message.role === "player" ? "outgoing" : "incoming")} key={message.id}>
+                    <div className="ig-rumor-dm-bubble">
+                      <p>{message.text}</p>
+                      {message.translation && <small>{message.translation}</small>}
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <form className="ig-rumor-dm-compose" onSubmit={(e) => { e.preventDefault(); sendFanDmReply(); }}>
+                <input
+                  aria-label="回复Instagram私信"
+                  value={fanDmDraft}
+                  onChange={(e) => setFanDmDraft(e.target.value)}
+                  placeholder="发送消息…"
+                  maxLength={1000}
+                />
+                <button type="submit" disabled={!fanDmDraft.trim()}>发送</button>
+              </form>
+            </div>
+          ) : (
+            <>
           {selected && post(selected)}
           {!selected && tab === "主页" && (
             <>
@@ -1406,7 +1439,21 @@ export function MymyInstagram(p: SkinProps) {
                   </span>
                 </button>
               ))}
-              {!dms.length && <Blank />}
+              {visibleFanDms.map((dm) => {
+                const lastReply = [...fanDmReplyEntries].reverse().find((message) => message.threadId === dm.id);
+                return (
+                  <button className="kzkr ig-rumor-dm-row" key={dm.id} onClick={() => { setSelected(null); setActiveFanDm(dm.id); setTab("私信"); }}>
+                    <Avatar name={dm.handle} round />
+                    <span className="kzkn">
+                      <b>{dm.handle}</b>
+                      <small>{lastReply?.text || dm.text}</small>
+                      {(lastReply?.translation || dm.translation) && <small className="ig-rumor-dm-translation">{lastReply?.translation || dm.translation}</small>}
+                    </span>
+                    <span className="ig-rumor-dm-dot" aria-hidden="true" />
+                  </button>
+                );
+              })}
+              {!dms.length && !visibleFanDms.length && <Blank />}
             </>
           )}
           {!selected && tab === "搜索" && (
@@ -1428,8 +1475,10 @@ export function MymyInstagram(p: SkinProps) {
 
             </>
           )}
+            </>
+          )}
         </div>
-        <nav className="mymy-ig-nav">
+        {!activeFanDm && <nav className="mymy-ig-nav">
           {[Home, CirclePlay, Send, Search, User].map((Icon, n) => (
             <button
               key={n}
@@ -1444,7 +1493,7 @@ export function MymyInstagram(p: SkinProps) {
               <Icon />
             </button>
           ))}
-        </nav>
+        </nav>}
       </div>
       {sheet && (
         <div className="kzcs">
