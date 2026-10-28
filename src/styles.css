@@ -5053,3 +5053,8 @@ label {
   -webkit-text-size-adjust: 100%;
   transform: none;
 }
+
+/* Taobao-only search placeholder sizing; keep delivery styles untouched. */
+.taobao-ui .taobao-search .catalog-search input {
+  font-size: 14px !important;
+}
