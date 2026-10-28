@@ -1267,6 +1267,9 @@ export function MymyInstagram(p: SkinProps) {
               <div className="ig-rumor-dm-history" ref={fanDmScrollRef}>
                 {activeFanMessages.map((message) => (
                   <article className={"ig-rumor-dm-message " + (message.role === "player" ? "outgoing" : "incoming")} key={message.id}>
+                    {message.role !== "player" && (
+                      <Avatar name={message.handle || activeFan?.handle || "粉丝"} round />
+                    )}
                     <div className="ig-rumor-dm-bubble">
                       <p>{message.text}</p>
                       {message.translation && <small>{message.translation}</small>}
