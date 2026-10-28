@@ -128,6 +128,128 @@ export const AppIcon = memo(function AppIcon({
   prev.custom === next.custom &&
   (prev.id !== "calendar" || prev.date === next.date) &&
   (prev.id !== "clock" || prev.time === next.time));
+type InstagramFanDm = {
+  id: string;
+  handle: string;
+  text: string;
+  translation: string;
+  category: "support" | "critical" | "curious" | "passerby";
+};
+const IG_FAN_HANDLE_BASES = [
+  "mood_blue", "winterlog", "myday_cloud", "mjjarchive", "after_rain",
+  "cafe_11pm", "tiny_mood", "nightwalk", "winterzip", "daily_mood",
+  "mango_soda", "idolwatcher", "softpeach", "bluehour_my", "starry_day",
+  "moonlit_note", "ordinary_bean", "slow_sunday", "my_little_wave",
+  "soda_and_ice", "filmgrain_day", "latebus_home", "cotton_cloud",
+  "cloudy_record", "mint_choco", "daydream_kr", "quiet_corner",
+  "warm_window", "pocket_diary", "smallplanet",
+];
+const IG_FAN_DM_LINES: Array<Omit<InstagramFanDm, "id" | "handle">> = [
+  { category: "support", text: "사진만으로는 아무것도 단정할 수 없으니까 너무 마음 쓰지 마요.", translation: "光凭照片什么都不能下定论，别太放在心上。" },
+  { category: "support", text: "갑자기 이런 일이 생겨서 놀랐겠어요. 오늘은 푹 쉬어요.", translation: "突然发生这种事一定吓到了吧，今天好好休息。" },
+  { category: "support", text: "어떤 상황이든 당신이 괜찮았으면 좋겠어요.", translation: "不管是什么情况，都希望你能好好的。" },
+  { category: "support", text: "억측하는 말은 너무 신경 쓰지 않았으면 해요 🤍", translation: "希望你不要太在意那些猜测的话 🤍" },
+  { category: "support", text: "사진이 흐릿한데 다들 너무 빨리 결론 내리는 것 같아요.", translation: "照片那么模糊，大家下结论也太快了。" },
+  { category: "support", text: "힘든 하루였겠지만 밥도 챙겨 먹고 마음 잘 돌봐요.", translation: "今天应该很难熬，记得吃饭，也照顾好自己的心情。" },
+  { category: "support", text: "누가 뭐라고 하든 당신 일상도 소중하다는 거 잊지 마요.", translation: "不管别人说什么，都别忘了你的日常生活也很重要。" },
+  { category: "support", text: "괜히 상처받지 않았으면 해서 조심스럽게 메시지 남겨요.", translation: "怕你无端受伤，所以小心地给你留条消息。" },
+  { category: "support", text: "지나친 추측보다 서로 예의를 지키는 게 먼저인 것 같아요.", translation: "比起过度猜测，我觉得先保持彼此的礼貌更重要。" },
+  { category: "support", text: "오늘은 SNS 잠깐 꺼 두고 편하게 있어도 괜찮아요.", translation: "今天暂时关掉社交软件、放松一下也没关系。" },
+  { category: "support", text: "어제 무슨 일이 있었든 안전하고 평온했길 바라요.", translation: "不管昨晚发生了什么，希望你平安、平静。" },
+  { category: "support", text: "남들이 만든 이야기보다 본인이 느끼는 게 더 중요해요.", translation: "比起别人编出来的故事，你自己的感受更重要。" },
+  { category: "support", text: "갑자기 DM 보내서 미안해요. 그냥 응원하고 싶었어요.", translation: "突然发私信不好意思，只是想给你一点支持。" },
+  { category: "support", text: "괜찮아질 때까지 천천히 해도 돼요. 서두를 필요 없어요.", translation: "等心情好起来再慢慢来就好，不用着急。" },
+  { category: "support", text: "온라인에서 떠드는 사람들보다 실제 주변 사람을 믿어요.", translation: "比起网上议论的人，更应该相信现实中身边的人。" },
+  { category: "support", text: "혹시 많이 놀랐다면 오늘은 알림을 꺼 두는 것도 추천해요.", translation: "如果真的被吓到了，今天关掉通知也是个选择。" },
+  { category: "support", text: "사실 확인도 안 된 얘기로 누군가를 몰아가지 않았으면 해요.", translation: "希望大家不要用未经证实的消息围攻任何人。" },
+  { category: "support", text: "당신이 평범하게 하루를 보낼 수 있길 바라는 사람도 있어요.", translation: "也有人希望你能像平常一样度过一天。" },
+  { category: "support", text: "괜찮다는 말 한마디라도 전하고 싶어서 연락했어요.", translation: "只是想告诉你一句，希望你没事。" },
+  { category: "support", text: "사생활은 사생활인데 사진 한 장으로 너무 커졌네요.", translation: "私人生活就是私人生活，却因为一张照片闹得这么大。" },
+  { category: "support", text: "오늘만큼은 댓글보다 따뜻한 말들을 더 많이 봤으면 해요.", translation: "希望你今天看到的温暖话语能比评论区里的更多。" },
+  { category: "support", text: "어떤 선택을 하든 무리하지 말고 스스로를 먼저 챙겨요.", translation: "无论怎么选择，都别勉强自己，先照顾好自己。" },
+  { category: "support", text: "괜히 나서서 말 얹지 않고 조용히 응원할게요.", translation: "我不会跟着起哄，只会安静地支持你。" },
+  { category: "critical", text: "사진 한 장 때문에 이렇게 시끄러워지는 것도 좀 피곤하네요.", translation: "因为一张照片闹成这样，确实有点烦。" },
+  { category: "critical", text: "관심 받고 싶어서 일부러 그런 거라는 말까지 나오던데요.", translation: "甚至有人说这是故意博关注的。" },
+  { category: "critical", text: "솔직히 이런 소문에 계속 엮이는 건 별로예요.", translation: "说实话，我不太喜欢总是卷进这种传闻。" },
+  { category: "critical", text: "팬들 입장도 생각해 줬으면 한다는 사람도 있더라고요.", translation: "也有人希望能考虑一下粉丝的感受。" },
+  { category: "critical", text: "확실한 것도 없는데 괜히 일만 커진 느낌이에요.", translation: "什么都没确定，感觉事情倒是越闹越大。" },
+  { category: "critical", text: "이런 사진 찍어서 퍼뜨리는 사람이나 그걸 확대하는 사람이나…", translation: "偷拍照片再传播的人，和跟着放大的人都……" },
+  { category: "critical", text: "다들 연예인이면 사생활도 마음대로 소비해도 되는 줄 아나 봐요.", translation: "好像大家觉得只要是艺人，私生活就能随便消费。" },
+  { category: "critical", text: "루머 계정들이 또 조회수 올리려고 신났네요.", translation: "传闻账号又为了流量兴奋起来了。" },
+  { category: "critical", text: "솔직히 지금은 누구 말도 믿기 어렵네요.", translation: "说实话，现在谁的话都很难相信。" },
+  { category: "critical", text: "한 장의 사진으로 사람을 판단하는 건 좀 성급하지 않나요?", translation: "凭一张照片判断一个人，不觉得太草率了吗？" },
+  { category: "critical", text: "관종 계정들이 추측을 사실처럼 쓰는 건 정말 별로예요.", translation: "那些博眼球的账号把猜测写得像事实一样，真的很败好感。" },
+  { category: "critical", text: "이런 일이 반복되니까 피곤하긴 하네요. 조용히 좀 넘어갔으면.", translation: "这种事一再发生确实很累，希望能安静地过去。" },
+  { category: "critical", text: "팬덤 분위기만 더 나빠지는 것 같아서 답답해요.", translation: "感觉只会让粉圈气氛更差，挺让人憋闷的。" },
+  { category: "critical", text: "제발 확인 안 된 캡처로 사람 몰아가는 건 그만했으면.", translation: "拜托别再用未经证实的截图围攻别人了。" },
+  { category: "critical", text: "누군가는 장난처럼 말하지만 당사자는 불편할 수도 있죠.", translation: "有人说得像开玩笑，但当事人也可能会不舒服。" },
+  { category: "critical", text: "소문에 신나서 달려드는 계정들 진짜 한결같네요.", translation: "那些兴奋地冲进传闻里的账号还真是一如既往。" },
+  { category: "critical", text: "왜 꼭 남의 밤 산책까지 콘텐츠로 만들어야 하는지 모르겠어요.", translation: "真不明白为什么连别人晚上散个步都要做成内容。" },
+  { category: "critical", text: "이쯤 되면 사진보다 사람들 반응이 더 무섭네요.", translation: "到这个地步，比起照片本身，大家的反应更吓人。" },
+  { category: "critical", text: "추측성 게시물에 좋아요 누르는 것도 조금은 생각해 봐야죠.", translation: "给猜测帖点赞之前，也该稍微想一想。" },
+  { category: "critical", text: "당사자 입장도 모르면서 훈수 두는 건 그만했으면 해요.", translation: "连当事人的立场都不知道，就别再指手画脚了。" },
+  { category: "critical", text: "소문 하나로 하루 종일 싸우는 거 보면 다들 지친 것 같아요.", translation: "看大家为了一个传闻吵一整天，感觉所有人都累了。" },
+  { category: "critical", text: "관심 끌려고 말을 보태는 계정은 그냥 넘기는 게 답인 듯.", translation: "为了吸引关注添油加醋的账号，还是划走算了。" },
+  { category: "critical", text: "진짜라 해도 남이 확인할 일은 아닌 것 같아요.", translation: "就算是真的，也不是旁人该去查证的事。" },
+  { category: "critical", text: "이 일로 누굴 공격하는 건 선 넘는 행동이라고 봐요.", translation: "因为这件事去攻击谁，我觉得就是越界了。" },
+  { category: "curious", text: "실례지만 사진 속 사람이 정말 본인 맞아요?", translation: "冒昧问一下，照片里的人真的是你吗？" },
+  { category: "curious", text: "어제 그 편의점 근처에 계셨던 거예요? 그냥 궁금해서요.", translation: "你昨晚在那家便利店附近吗？只是有点好奇。" },
+  { category: "curious", text: "사진이 너무 흐려서 누군지 잘 안 보이던데 무슨 상황이에요?", translation: "照片太模糊了，看不清是谁，究竟是什么情况？" },
+  { category: "curious", text: "혹시 기사에 나온 시간대가 맞는지 아세요?", translation: "你知道报道里写的时间对不对吗？" },
+  { category: "curious", text: "다른 사람들은 다 아는 분위기라 저만 놓친 건가 싶네요.", translation: "感觉别人都知道了，我还以为只有我错过了。" },
+  { category: "curious", text: "그냥 동행한 건지 친구인지 팬들은 엄청 궁금해하네요.", translation: "只是同行还是朋友，粉丝们好像都很好奇。" },
+  { category: "curious", text: "혹시 사진이 찍힌 걸 그때 알고 있었어요?", translation: "你当时知道自己被拍了吗？" },
+  { category: "curious", text: "타임라인에 계속 떠서 봤는데 원본은 어디서 나온 거래요?", translation: "时间线上一直出现，我想知道原图是从哪里来的？" },
+  { category: "curious", text: "제가 맥락을 못 봤는데 처음 올린 계정이 따로 있나요?", translation: "我没看到来龙去脉，最早发布的账号另有其人吗？" },
+  { category: "curious", text: "혹시 오해할 만한 각도였던 건지 궁금해요.", translation: "有点好奇是不是拍摄角度容易造成误会。" },
+  { category: "curious", text: "사람들이 말하는 아파트 근처가 거기 맞는지 모르겠어요.", translation: "我不确定大家说的公寓附近是不是那个地方。" },
+  { category: "curious", text: "지금 올라온 이야기 중에 확인된 사실이 있긴 한가요?", translation: "目前流传的内容里，有什么已经确认的事实吗？" },
+  { category: "curious", text: "혹시 두 분이 같이 있는 걸 본 사람이 더 있대요?", translation: "听说还有其他人看到你们在一起吗？" },
+  { category: "curious", text: "사진 속 가방 때문에 말이 많던데 그냥 같은 제품 아닌가요?", translation: "大家在讨论照片里的包，说不定只是同款吧？" },
+  { category: "curious", text: "아직 아무 말도 안 나온 거죠? 제가 늦게 본 건가 해서요.", translation: "目前还没有任何回应，对吧？我怕是自己看晚了。" },
+  { category: "curious", text: "이 상황이 어디서부터 시작됐는지 아는 분 있나요?", translation: "有人知道这件事是从哪里开始的吗？" },
+  { category: "curious", text: "댓글마다 설명이 달라서 뭐가 뭔지 모르겠어요.", translation: "每条评论说法都不一样，我已经看糊涂了。" },
+  { category: "curious", text: "혹시 편의점에서 뭘 샀는지까지 추측하는 건 너무 간 거겠죠?", translation: "连在便利店买了什么都要猜，是不是太过了？" },
+  { category: "curious", text: "그날 날씨나 시간 때문에 얼굴이 더 안 나온 걸까요?", translation: "是因为那天天气或时间的缘故，脸才看不清吗？" },
+  { category: "curious", text: "진짜인지 아닌지보다 왜 사진이 퍼졌는지가 궁금해요.", translation: "比起真假，我更好奇照片为什么会被传开。" },
+  { category: "curious", text: "저도 그냥 지나가다 봤는데 다들 어디까지 알고 있는 거예요?", translation: "我只是路过看到的，大家到底掌握多少信息啊？" },
+  { category: "curious", text: "혹시 공식 입장 나오기 전까지는 기다려 보는 게 맞겠죠?", translation: "在正式回应出来之前，还是先等等比较好吧？" },
+  { category: "passerby", text: "추천 탭에 계속 떠서 무슨 일인가 하고 들어와 봤어요.", translation: "推荐页一直推给我，我就进来看看发生了什么。" },
+  { category: "passerby", text: "아이돌 소식인 줄 알고 눌렀는데 생각보다 큰 얘기네요.", translation: "我以为只是偶像新闻，点进来才发现讨论这么大。" },
+  { category: "passerby", text: "그냥 편의점 다녀온 사진 같은데 인터넷은 정말 빠르네요.", translation: "看起来就像去便利店的照片，网络传播真快。" },
+  { category: "passerby", text: "저는 팬은 아닌데 사생활까지 추적하는 건 좀 무섭네요.", translation: "我不是粉丝，但追踪到私人生活有点吓人。" },
+  { category: "passerby", text: "퇴근하고 들어왔더니 타임라인이 이 얘기로 가득해요.", translation: "下班回来一看，时间线已经全是这件事了。" },
+  { category: "passerby", text: "누군지 잘 모르지만 사진 찍은 사람은 왜 따라다닌 거죠?", translation: "我不太认识她，但拍照的人为什么要跟着别人？" },
+  { category: "passerby", text: "이런 건 당사자들이 알아서 할 일 아닌가요.", translation: "这种事不应该由当事人自己处理吗？" },
+  { category: "passerby", text: "실시간 검색어처럼 다들 한꺼번에 몰려드는 게 신기하네요.", translation: "大家一下子都涌过来，简直像实时热搜一样。" },
+  { category: "passerby", text: "사진 화질이 안 좋은데도 추리를 엄청 하시네요.", translation: "照片画质这么差，大家却推理得很起劲。" },
+  { category: "passerby", text: "요즘은 잠깐 외출해도 누군가 사진을 올릴 수 있군요.", translation: "现在只是出个门，也可能有人把照片发上网。" },
+  { category: "passerby", text: "댓글 읽다가 원래 무슨 뉴스였는지도 잊어버렸어요.", translation: "看评论看着看着，我都忘了最初是什么新闻。" },
+  { category: "passerby", text: "이런 소식은 왜 항상 밤사이에 크게 번지는 걸까요.", translation: "这种消息怎么总是在一夜之间闹大呢？" },
+  { category: "passerby", text: "모르는 사람이 봐도 사진만으로는 판단하기 어려워 보여요.", translation: "就算是不认识的人看，也很难只凭照片判断。" },
+  { category: "passerby", text: "팬덤 문화는 복잡하네요. 저는 조용히 스크롤할게요.", translation: "粉圈文化真复杂，我还是安静地划走吧。" },
+  { category: "passerby", text: "요즘은 확인 전 속보가 너무 많아서 좀 쉬고 싶어요.", translation: "现在未经确认的快讯太多了，有点想休息一下。" },
+  { category: "passerby", text: "사람들이 궁금해하는 건 알겠지만 선은 지켰으면 해요.", translation: "我理解大家好奇，但还是希望能有个界限。" },
+  { category: "passerby", text: "뉴스 보고 왔는데 아직 확실한 건 없어 보이네요.", translation: "我看新闻过来的，目前好像还没有确切信息。" },
+  { category: "passerby", text: "누가 찍었는지 모르겠지만 공개할 사진은 아닌 것 같아요.", translation: "不知道是谁拍的，但我觉得这不是该公开的照片。" },
+  { category: "passerby", text: "그냥 오늘 인터넷에서 가장 많이 본 사진이 됐네요.", translation: "这张照片简直成了我今天在网上看到最多的图片。" },
+  { category: "passerby", text: "이야기가 너무 빨리 커져서 내일이면 또 다른 얘기로 넘어가겠죠.", translation: "事情闹得太快了，可能明天大家又会讨论别的。" },
+  { category: "passerby", text: "당사자들이 불편하지 않게 여기서 더 퍼뜨리진 말았으면.", translation: "希望别再继续扩散了，免得当事人更不舒服。" },
+  { category: "passerby", text: "알고리즘이 계속 보여 줘서 왔는데 이제 그만 봐야겠어요.", translation: "算法一直推送，我点进来看了，现在该停下了。" },
+];
+function createInstagramFanDmBatch(): string[] {
+  const records: InstagramFanDm[] = IG_FAN_DM_LINES.map((line, index) => ({
+    ...line,
+    id: "ig-rumor-dm-" + String(index + 1).padStart(3, "0"),
+    handle: "@" + IG_FAN_HANDLE_BASES[index % IG_FAN_HANDLE_BASES.length] + "_" + String(index + 1).padStart(2, "0"),
+  }));
+  for (let i = records.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [records[i], records[j]] = [records[j], records[i]];
+  }
+  return records.map((record) => JSON.stringify(record));
+}
+
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
