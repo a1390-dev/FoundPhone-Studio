@@ -961,8 +961,11 @@ function PhoneRuntime({
           {!creator && s.incomingCall && (
             <div className={"incoming-call-screen" + (s.incomingCall.target === "scandal-call" && s.incomingCall.status === "answered" ? " incoming-call-screen-chat" : "")}>
               <small>
-                {s.incomingCall.status === "ringing" ? "来电" : "通话中"} ·
-                作品内模拟
+                {s.incomingCall.target === "scandal-call" && s.incomingCall.status === "answered"
+                  ? "KakaoTalk · 通话中"
+                  : s.incomingCall.status === "ringing"
+                    ? "来电 · 作品内模拟"
+                    : "通话中 · 作品内模拟"}
               </small>
               <div className="incoming-avatar">
                 {s.incomingCall.caller === "金旼炡" ? (
