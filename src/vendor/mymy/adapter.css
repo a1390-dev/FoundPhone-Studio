@@ -1075,3 +1075,33 @@
   color: #a3a3a3;
   opacity: 1;
 }
+
+
+/* Final KKT-only overrides requested: keep composer small, make NPC messages clearer. */
+.mymy-ui.mymy-kakao .kzmav .catalog-avatar {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+}
+.mymy-ui.mymy-kakao .kzmn {
+  font-size: 14.5px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.mymy-ui.mymy-kakao .kzbub .kkt-korean {
+  font-size: 16px;
+  line-height: 1.45;
+}
+.mymy-ui.mymy-kakao .kzbub .kkt-translation {
+  font-size: 13px;
+  line-height: 1.4;
+}
+.mymy-ui.mymy-kakao .kzinp .kkt-composer-textarea {
+  font-size: var(--kkt-composer-font-size, 12px) !important;
+  min-height: var(--kkt-composer-min-height, 34px);
+  max-height: var(--kkt-composer-max-height, 72px);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
