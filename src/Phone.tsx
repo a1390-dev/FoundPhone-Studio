@@ -1,10 +1,8 @@
+import "./styles.css";
 import { StatusGlyph } from "./ios/StatusGlyph";
-import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
-import { NativeCalculator } from "./ios/Calculator";
 import { HomeLauncher } from "./launcher/HomeLauncher";
 import { useDeviceLayout } from "./launcher/layout";
 import "./launcher/launcher.css";
-import { NativeDetail, nativeDetailApps } from "./ios/Details";
 import "./ios/details.css";
 import {
   SystemNotifications,
@@ -22,7 +20,7 @@ import {
   KeyboardContext,
   NativeSettings,
 } from "./DeviceSystem";
-import { AppArtwork, hasNativeArtwork, preloadOriginalIcons } from "./AppArtwork";
+import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
 import { getFields } from "./fields";
 import { catalogSkins } from "./skins/catalog";
 import "./skins/skins.css";
@@ -31,7 +29,6 @@ import "./device-system.css";
 import "./ios/tokens.css";
 import "./ios/reference.css";
 import "./ios/status-bar.css";
-import { WeChatSkin, WhatsAppSkin } from "./AppSkins";
 import { RichText } from "./RichText";
 import {
   useEffect,
@@ -39,6 +36,7 @@ import {
   useState,
   useRef,
   Suspense,
+  lazy,
   type CSSProperties,
 } from "react";
 import { AnimatePresence } from "motion/react";
@@ -65,6 +63,28 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
+
+// Large, app-specific UI modules are loaded only when the user opens the
+// relevant app or detail view, rather than delaying the first lock screen.
+const WeChatSkin = lazy(() =>
+  import("./AppSkins").then((m) => ({ default: m.WeChatSkin })),
+);
+const WhatsAppSkin = lazy(() =>
+  import("./AppSkins").then((m) => ({ default: m.WhatsAppSkin })),
+);
+const SocialDetail = lazy(() =>
+  import("./skins/SocialDetails").then((m) => ({ default: m.SocialDetail })),
+);
+const NativeDetail = lazy(() =>
+  import("./ios/Details").then((m) => ({ default: m.NativeDetail })),
+);
+const NativeCalculator = lazy(() =>
+  import("./ios/Calculator").then((m) => ({ default: m.NativeCalculator })),
+);
+const socialDetailApps = new Set(["twitter"]);
+const nativeDetailApps = new Set([
+  "notes", "photos", "contacts", "phone", "calendar", "safari",
+]);
 export const AppIcon = memo(function AppIcon({
   id,
   name,
@@ -108,9 +128,6 @@ export const AppIcon = memo(function AppIcon({
   (prev.id !== "calendar" || prev.date === next.date) &&
   (prev.id !== "clock" || prev.time === next.time));
 type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
-const isKktOpeningNotice = (notice: string) =>
-  notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
-
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
   return (
@@ -144,6 +161,7 @@ function PhoneRuntime({
 }) {
   const [app, setApp] = useState("");
   const [appThread, setAppThread] = useState("");
+  const [appOpenSequence, setAppOpenSequence] = useState(0);
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
@@ -153,29 +171,11 @@ function PhoneRuntime({
   const appSnapshots = useRef(new Map<string, HTMLElement>());
   const [banner, setBanner] = useState("");
   const noticesSeen = useRef(0);
-  const kktOpeningNoticeKey = `foundphone.kkt-opening-seen.v1:${work.id}:${work.updatedAt}`;
-  const [kktOpeningSeen, setKktOpeningSeen] = useState(() => {
-    try { return localStorage.getItem(kktOpeningNoticeKey) === "1"; }
-    catch { return false; }
-  });
-  const kktOpeningSeenRef = useRef(kktOpeningSeen);
-  useEffect(() => {
-    let seen = false;
-    try { seen = localStorage.getItem(kktOpeningNoticeKey) === "1"; }
-    catch { /* Per-session suppression still works while mounted. */ }
-    kktOpeningSeenRef.current = seen;
-    setKktOpeningSeen(seen);
-  }, [kktOpeningNoticeKey]);
   const [contextApp, setContextApp] = useState("");
   const [deviceScale, setDeviceScale] = useState(0.84);
   const shell = useRef<HTMLDivElement>(null);
   const gesture = useRef({ x: 0, y: 0, time: 0, zone: "" });
   const [launchOrigin, setLaunchOrigin] = useState(screenOrigin);
-
-  useEffect(() => {
-    // Start loading the original home-screen icons before the user unlocks.
-    preloadOriginalIcons();
-  }, []);
 
   const beginUnlock = () => {
     setPinError("");
@@ -194,34 +194,112 @@ function PhoneRuntime({
   const [saveSlots, setSaveSlots] = useState<Array<{ id: string; state: Runtime } | undefined>>([undefined, undefined, undefined]);
   const [ready, setReady] = useState(creator || !!external);
   const [loadError, setLoadError] = useState("");
+  const [playerId, setPlayerId] = useState(() => {
+    try { return localStorage.getItem("foundphone.player-id.v1")?.trim() || ""; }
+    catch { return ""; }
+  });
+  const [saveGeneration, setSaveGeneration] = useState(() => {
+    try {
+      const savedId = localStorage.getItem("foundphone.player-id.v1")?.trim();
+      return savedId
+        ? localStorage.getItem(`foundphone.player-run.v1:${encodeURIComponent(savedId)}`) || "legacy"
+        : "legacy";
+    } catch { return "legacy"; }
+  });
+  const [resumePromptKey, setResumePromptKey] = useState(0);
+  const kktOpeningNoticeKey = `foundphone.kkt-opening-seen.v1:${encodeURIComponent(playerId || "default")}:${saveGeneration}`;
+  const [kktOpeningSeen, setKktOpeningSeen] = useState(() => {
+    try { return localStorage.getItem(kktOpeningNoticeKey) === "1"; }
+    catch { return false; }
+  });
+  const kktOpeningSeenRef = useRef(kktOpeningSeen);
+  const isKktOpeningNotice = (notice: string) =>
+    notice.startsWith("KKT|金旼炡:") && notice.includes("아직 안 잤어?");
+  useEffect(() => {
+    let seen = false;
+    try { seen = localStorage.getItem(kktOpeningNoticeKey) === "1"; }
+    catch { /* Per-session suppression still works without persistent storage. */ }
+    kktOpeningSeenRef.current = seen;
+    setKktOpeningSeen(seen);
+  }, [kktOpeningNoticeKey]);
+  useEffect(() => {
+    if (creator) return;
+    let hiddenAt = 0;
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        hiddenAt = Date.now();
+        return;
+      }
+      if (hiddenAt && Date.now() - hiddenAt >= 30 * 60 * 1000 && playerId) {
+        setApp("");
+        setPinOpen(false);
+        setQuickCamera(false);
+        setLocked(true);
+        setResumePromptKey((value) => value + 1);
+      }
+      hiddenAt = 0;
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [creator, playerId]);
+
   useEffect(() => {
     const el = shell.current;
     if (!el) return;
     const fit = () => {
+      // Size the device from its fixed simulator stage, not window.innerHeight
+      // or visualViewport: iOS Safari shrinks those while the keyboard is open.
+      // Using that temporary height caused the phone to jump/shrink after ID entry.
+      const stage = el.parentElement;
+      if (!stage) return;
+      const availableWidth = stage.clientWidth - 24;
+      const availableHeight = stage.clientHeight - (creator ? 170 : external ? 150 : 40);
+      if (availableWidth <= 0 || availableHeight <= 0) return;
       setDeviceScale(
         Math.max(
           0.4,
-          Math.min(
-            1,
-            (el.parentElement!.clientWidth - 24) / 407,
-            (window.innerHeight - (creator ? 170 : external ? 150 : 40)) / 866,
-          ),
+          Math.min(1, availableWidth / 407, availableHeight / 866),
         ),
       );
     };
     const observer = new ResizeObserver(fit);
-    observer.observe(el.parentElement!);
-    window.addEventListener("resize", fit);
+    const stage = el.parentElement;
+    if (stage) observer.observe(stage);
+    // Do not listen to the visual viewport: its height changes with the iOS
+    // keyboard and is not the dimensions of the simulated phone stage.
+    window.addEventListener("orientationchange", fit);
     fit();
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", fit);
+      window.removeEventListener("orientationchange", fit);
     };
   }, [creator, ready]);
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
-  const slotId = (index: number) => `${work.id}:manual-slot-${index + 1}`;
+  const playerSaveName = playerId || "未设置玩家ID";
+  const autoSaveBase = `${work.id}:default:${encodeURIComponent(playerSaveName)}`;
+  const autoSaveId = saveGeneration === "legacy"
+    ? autoSaveBase
+    : `${autoSaveBase}:${saveGeneration}`;
+  const slotId = (index: number) => saveGeneration === "legacy"
+    ? `${work.id}:manual-slot-${index + 1}`
+    : `${work.id}:manual-slot:${encodeURIComponent(playerSaveName)}:${saveGeneration}:${index + 1}`;
+  const startNewPlayer = (value: string) => {
+    const generation = `run-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    try {
+      localStorage.setItem("foundphone.player-id.v1", value);
+      localStorage.setItem(`foundphone.player-run.v1:${encodeURIComponent(value)}`, generation);
+    } catch { /* This session can still start if storage is unavailable. */ }
+    // The new player gets a separate autosave key and fresh runtime below.
+    // Keep the mounted phone in place; unmounting it here can trigger a second
+    // viewport-size calculation while Safari is dismissing the ID keyboard.
+    setLoadError("");
+    setSaveSlots([undefined, undefined, undefined]);
+    setPlayerId(value);
+    setSaveGeneration(generation);
+    setOwn(dispatch(work, initialRuntime(work), "start"));
+  };
   useEffect(() => {
     let active = true;
     if (creator || external) return;
@@ -229,7 +307,7 @@ function PhoneRuntime({
       .then((slots) => { if (active) setSaveSlots(slots); })
       .catch(() => {});
     return () => { active = false; };
-  }, [work.id, creator, external]);
+  }, [work.id, creator, external, playerId, saveGeneration]);
   const saveToSlot = async (index: number) => {
     const entry = { id: slotId(index), state: { ...runtimeRef.current, workId: work.id, revision: work.updatedAt } };
     await db.saves.put(entry);
@@ -255,7 +333,7 @@ function PhoneRuntime({
     let active = true;
     if (creator || external) return;
     void db.saves
-      .get(work.id)
+      .get(autoSaveId)
       .then((saved) => {
         if (!active) return;
         if (saved && saved.state.revision === work.updatedAt)
@@ -274,18 +352,20 @@ function PhoneRuntime({
     return () => {
       active = false;
     };
-  }, [work.id, work.updatedAt, creator, external]);
+  }, [work.id, work.updatedAt, creator, external, autoSaveId]);
   useEffect(() => {
     if (!creator && !external && ready)
       void db.saves
-        .put({ id: work.id, state: own })
+        .put({ id: autoSaveId, state: own })
         .catch(() => setLoadError("存档失败，请检查浏览器存储权限。"));
-  }, [own, creator, work.id, external, ready]);
+  }, [own, creator, work.id, autoSaveId, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
     const interval = setInterval(() => {
       const previous = runtimeRef.current;
       let next = advance(work, previous, 1000);
+      // Once KKT has been opened for this player run, discard only the opening
+      // notification if its pending three-second timer fires after a reload.
       if (kktOpeningSeenRef.current && next.notifications.some(isKktOpeningNotice)) {
         next = {
           ...next,
@@ -297,7 +377,7 @@ function PhoneRuntime({
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
-        next.notifications.join("\\u0000") !== previous.notifications.join("\\u0000") ||
+        next.notifications.join("\u0000") !== previous.notifications.join("\u0000") ||
         (next.scheduled?.length ?? 0) !== (previous.scheduled?.length ?? 0);
 
       if (changed) {
@@ -310,25 +390,14 @@ function PhoneRuntime({
       ) {
         // Preserve timer progress without forcing a full phone rerender every second.
         void db.saves
-          .put({ id: work.id, state: { ...next, workId: work.id, revision: work.updatedAt } })
+          .put({ id: autoSaveId, state: { ...next, workId: work.id, revision: work.updatedAt } })
           .catch(() => {});
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [creator, ready, work.id, work.updatedAt, work.mode]);
+  }, [creator, ready, work.id, work.updatedAt, work.mode, autoSaveId]);
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, runtimeRef.current, event, target));
-  };
-  const markKktOpeningAsSeen = () => {
-    kktOpeningSeenRef.current = true;
-    setKktOpeningSeen(true);
-    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
-    catch { /* This game session still suppresses the opening notification. */ }
-    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
-    const current = runtimeRef.current;
-    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
-    if (notifications.length !== current.notifications.length)
-      update({ ...current, notifications });
   };
   const captureApp = () => {
     if (!app) return;
@@ -349,11 +418,21 @@ function PhoneRuntime({
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
+  const markKktOpeningAsSeen = () => {
+    kktOpeningSeenRef.current = true;
+    setKktOpeningSeen(true);
+    try { localStorage.setItem(kktOpeningNoticeKey, "1"); }
+    catch { /* This run still suppresses repeat opening notices while mounted. */ }
+    setBanner((current) => isKktOpeningNotice(current) ? "" : current);
+    const current = runtimeRef.current;
+    const notifications = current.notifications.filter((notice) => !isKktOpeningNotice(notice));
+    if (notifications.length !== current.notifications.length)
+      update({ ...current, notifications });
+  };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setAppThread(initialThread);
-    if (id === "kakao" && initialThread === "金旼炡" && !creator)
-      markKktOpeningAsSeen();
+    setAppOpenSequence((value) => value + 1);
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -414,7 +493,13 @@ function PhoneRuntime({
   return (
     <div
       ref={shell}
-      style={{ "--phone-scale": deviceScale } as CSSProperties}
+      style={{
+        "--phone-scale": deviceScale,
+        "--phone-input-font-size": `${16 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-font-size": `${12 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-min-height": `${34 / Math.max(deviceScale, 0.4)}px`,
+        "--kkt-composer-max-height": `${72 / Math.max(deviceScale, 0.4)}px`,
+      } as CSSProperties}
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
       <KeyboardContext.Provider value={setKeyboard}>
@@ -517,6 +602,10 @@ function PhoneRuntime({
           <AnimatePresence mode="wait">
             {locked && !(quickCamera && app === "camera") ? (
               <DeviceLock
+                key={resumePromptKey}
+                canContinue={ready}
+                onNewPlayer={startNewPlayer}
+                phoneScale={deviceScale}
                 work={
                   s.date
                     ? { ...work, phone: { ...work.phone, date: s.date } }
@@ -537,15 +626,13 @@ function PhoneRuntime({
               />
             ) : app && app !== "appstore" ? (
               <AppWindow
-                key={app}
+                key={app + ":" + appOpenSequence}
                 className={`app-screen engine-${plugin.engine} skin-${app}`}
                 creator={creator}
                 origin={launchOrigin}
               >
                 <AppContent
                   app={plugin}
-                  initialThread={appThread}
-                  onKktOpeningSeen={markKktOpeningAsSeen}
                   name={
                     work.apps.find((a) => a.id === app)?.name ?? plugin.name
                   }
@@ -581,6 +668,9 @@ function PhoneRuntime({
                     );
                   }}
                   work={work}
+                  initialThread={appThread}
+                  playerId={playerId}
+                  onKktOpeningSeen={markKktOpeningAsSeen}
                 />
               </AppWindow>
             ) : (
@@ -664,8 +754,14 @@ function PhoneRuntime({
                       onOpen={() => {
                         setPanel("");
                         if (locked) beginUnlock();
-                        else if (installedApps.some((a) => a.id === "messages"))
-                          open("messages");
+                        else {
+                          const latest = runtimeRef.current.notifications.at(-1) || "";
+                          const targetApp = notificationContent(latest, work.apps).appId;
+                          if (installedApps.some((a) => a.id === targetApp))
+                            open(targetApp, targetApp === "kakao" ? notificationContent(latest, work.apps).title : "");
+                          else if (installedApps.some((a) => a.id === "messages"))
+                            open("messages");
+                        }
                       }}
                       onDismiss={dismissVisibleNotice}
                     />
@@ -790,11 +886,10 @@ function PhoneRuntime({
               onClick={() => {
                 const latest = banner;
                 setBanner("");
-                if (isKktOpeningNotice(latest) && installedApps.some((item) => item.id === "kakao")) {
-                  open("kakao", "金旼炡");
-                } else {
-                  setPanel("notification");
-                }
+                const notification = notificationContent(latest, work.apps);
+                if (installedApps.some((a) => a.id === notification.appId))
+                  open(notification.appId, notification.appId === "kakao" ? notification.title : "");
+                else setPanel("notification");
               }}
             >
               <AppIcon
@@ -967,8 +1062,6 @@ function Media({ item }: { item: Item }) {
 }
 function AppContent({
   app,
-  initialThread = "",
-  onKktOpeningSeen,
   name,
   items,
   creator,
@@ -983,10 +1076,11 @@ function AppContent({
   onSaveSlot,
   onLoadSlot,
   work,
+  initialThread = "",
+  playerId = "",
+  onKktOpeningSeen,
 }: {
   app: AppPlugin;
-  initialThread?: string;
-  onKktOpeningSeen?: () => void;
   name: string;
   items: Item[];
   creator: boolean;
@@ -1001,12 +1095,16 @@ function AppContent({
   onSaveSlot?: (index: number) => void | Promise<void>;
   onLoadSlot?: (index: number) => void | Promise<void>;
   work: Work;
+  initialThread?: string;
+  playerId?: string;
+  onKktOpeningSeen?: () => void;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
-  const [thread, setThread] = useState(initialThread);
+  const [thread, setThread] = useState(initialThread || "");
   useEffect(() => {
-    if (initialThread) setThread(initialThread);
-  }, [initialThread]);
+    if (app.id === "kakao" && thread === "金旼炡" && !creator)
+      onKktOpeningSeen?.();
+  }, [app.id, thread, creator]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
@@ -1113,6 +1211,7 @@ function AppContent({
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
+              playerId={playerId}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
@@ -1125,39 +1224,41 @@ function AppContent({
               thread={thread}
               onThread={(nextThread) => {
                 setThread(nextThread);
-                if (app.id === "kakao" && nextThread === "金旼炡" && !creator) {
+                if (app.id === "kakao" && nextThread === "金旼炡" && !creator)
                   onKktOpeningSeen?.();
-                }
               }}
             />
           </Suspense>
         </div>
-        {detail &&
-          (socialDetailApps.has(app.id) &&
-          (!detail.password || unlocks.includes(detail.id)) ? (
-            <SocialDetail
-              app={app.id}
-              item={detail}
-              back={back}
-              owner={work.phone.owner}
-              ui={state.ui?.[app.id]}
-              onUi={onUi}
-            />
-          ) : nativeDetailApps.has(app.id) &&
+        {detail && (
+          <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
+            {socialDetailApps.has(app.id) &&
             (!detail.password || unlocks.includes(detail.id)) ? (
-            <NativeDetail app={app.id} item={detail} back={back} />
-          ) : (
-            <>
-              <div className="app-nav">
-                <button aria-label="返回" onClick={back}>
-                  <ChevronLeft size={23} />
-                </button>
-                <strong>{detail.title}</strong>
-                <span />
-              </div>
-              {detailView}
-            </>
-          ))}
+              <SocialDetail
+                app={app.id}
+                item={detail}
+                back={back}
+                owner={work.phone.owner}
+                ui={state.ui?.[app.id]}
+                onUi={onUi}
+              />
+            ) : nativeDetailApps.has(app.id) &&
+              (!detail.password || unlocks.includes(detail.id)) ? (
+              <NativeDetail app={app.id} item={detail} back={back} />
+            ) : (
+              <>
+                <div className="app-nav">
+                  <button aria-label="返回" onClick={back}>
+                    <ChevronLeft size={23} />
+                  </button>
+                  <strong>{detail.title}</strong>
+                  <span />
+                </div>
+                {detailView}
+              </>
+            )}
+          </Suspense>
+        )}
       </>
     );
   return (
@@ -1196,12 +1297,14 @@ function AppContent({
           onLoadSlot={onLoadSlot ?? (() => {})}
         />
       ) : app.id === "calculator" && !detail ? (
-        <NativeCalculator
-          items={shown}
-          onRead={read}
-          ui={state.ui?.[app.id]}
-          onUi={onUi}
-        />
+        <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
+          <NativeCalculator
+            items={shown}
+            onRead={read}
+            ui={state.ui?.[app.id]}
+            onUi={onUi}
+          />
+        </Suspense>
       ) : detail ? (
         detailView
       ) : app.engine === "messaging" && thread ? (
