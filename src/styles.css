@@ -5140,3 +5140,131 @@ label {
 .ios18 .incoming-actions > .decline-call:active > svg {
   transform: rotate(135deg) scale(.94);
 }
+
+/* In-call story chat: keep call controls visible with NPC left / player right. */
+.ios18 .incoming-call-screen-chat {
+  overflow: hidden;
+  padding-top: max(48px, env(safe-area-inset-top));
+  padding-bottom: 10px;
+}
+.ios18 .incoming-call-screen-chat .incoming-avatar {
+  flex: 0 0 auto;
+  width: 62px;
+  height: 62px;
+  margin-top: 16px;
+}
+.ios18 .incoming-call-screen-chat h2 {
+  margin-top: 8px;
+  font-size: 22px;
+}
+.ios18 .incoming-call-screen-chat .incoming-call-kind {
+  margin-top: 3px;
+  font-size: 12px;
+}
+.call-chat-panel {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  min-height: 0;
+  margin-top: 12px;
+}
+.call-chat-log {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  min-height: 110px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 9px;
+  border: 1px solid #ffffff16;
+  border-radius: 18px;
+  background: #1017224d;
+}
+.call-dialogue-row {
+  display: flex;
+  width: 100%;
+}
+.call-dialogue-npc {
+  justify-content: flex-start;
+}
+.call-dialogue-player {
+  justify-content: flex-end;
+}
+.call-dialogue-bubble {
+  max-width: 88%;
+  padding: 9px 12px 8px;
+  border: 1px solid #ffffff22;
+  border-radius: 15px;
+  text-align: left;
+  overflow-wrap: anywhere;
+  box-shadow: 0 2px 8px #0002;
+}
+.call-dialogue-npc .call-dialogue-bubble {
+  border-top-left-radius: 5px;
+  background: #f4f5f7;
+  color: #20232b;
+}
+.call-dialogue-player .call-dialogue-bubble {
+  border-top-right-radius: 5px;
+  background: #397a61;
+  color: #fff;
+}
+.call-dialogue-bubble > div {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.call-dialogue-bubble > small {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1.35;
+  opacity: .76;
+}
+.call-reply-options {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.call-reply-options > button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 14px;
+  min-width: 132px;
+  max-width: 100%;
+  padding: 9px 13px;
+  border: 1px solid #ffffff40;
+  border-radius: 14px;
+  background: #f7f8fa;
+  color: #21242a;
+  text-align: left;
+}
+.call-reply-options > button > span {
+  font-size: 13px;
+  font-weight: 600;
+}
+.call-reply-options > button > small {
+  font-size: 10px;
+  opacity: .7;
+}
+.call-reply-options > button > b {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 5px 8px;
+  border-radius: 9px;
+  background: #2088ff;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ios18 .incoming-call-screen-chat .incoming-actions {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
