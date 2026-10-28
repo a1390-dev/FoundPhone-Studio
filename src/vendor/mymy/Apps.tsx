@@ -1394,8 +1394,9 @@ export function MymyX(p: SkinProps) {
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
+  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked"] === true;
   const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
-  const liveItems = allLiveRumorItems.slice(0, 26);
+  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 26) : [];
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1413,9 +1414,9 @@ export function MymyX(p: SkinProps) {
     ...p.items.filter((i) => i.meta.category !== "rumor-discussion").slice().sort((a, b) => b.time.localeCompare(a.time)),
   ];
   useEffect(() => {
-    if (p.items.some((i) => i.meta.category === "rumor-discussion"))
+    if (rumorNewsUnlocked && p.items.some((i) => i.meta.category === "rumor-discussion"))
       p.onUi?.("rumor-feed-opened", true);
-  }, [p.items.length]);
+  }, [p.items.length, rumorNewsUnlocked]);
   useEffect(() => {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
