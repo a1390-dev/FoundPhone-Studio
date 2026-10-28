@@ -3,7 +3,7 @@
   "id": "ui-test-phone-v2",
   "title": "捡手机",
   "description": "解锁手机后，主屏幕上方弹出金旼炡发来的 KKT 通知，点击可直接进入原生 KKT 聊天。",
-  "revision": 10,
+  "revision": 11,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
@@ -381,7 +381,8 @@
           "time": "2026-10-27 20:17",
           "meta": {
             "pinned": "true",
-            "translation": "还没睡？"
+            "translation": "还没睡？",
+            "unread": "1"
           }
         }
       ]
