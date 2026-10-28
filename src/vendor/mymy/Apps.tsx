@@ -1345,7 +1345,7 @@ export function MymyX(p: SkinProps) {
     meta: { handle: (p.playerId || "you").replace(/^@/, ""), local: "true", views: "1", platform: "twitter" },
   }));
   const feedItems = [
-    ...localXItems,
+    ...localXItems.slice().reverse(),
     ...liveItems.slice(0, liveCount).reverse(),
     ...p.items.filter((i) => i.meta.live !== "true"),
   ];
@@ -1412,7 +1412,7 @@ export function MymyX(p: SkinProps) {
             e.preventDefault();
             const body = draft.trim();
             if (!body) return;
-            setUserPosts((current) => [body, ...current]);
+            setUserPosts((current) => [...current, body]);
             setDraft("");
             setComposeOpen(false);
             setTab("为你推荐");
