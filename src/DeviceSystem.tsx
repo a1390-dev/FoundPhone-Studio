@@ -731,9 +731,6 @@ export function DeviceKeyboard({
             {candidate}
           </button>
         ))}
-        <button type="button" aria-label="收起键盘" onClick={finishTyping}>
-          <ChevronDown size={18} />
-        </button>
       </div>
       {rows.map((row, index) => (
         <div className="keyboard-row" key={row}>
