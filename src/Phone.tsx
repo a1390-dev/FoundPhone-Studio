@@ -2341,6 +2341,37 @@ function AppContent({
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
     );
+  const rumorTimelineItems =
+    app.id === "twitter" || app.id === "threads"
+      ? items.filter(
+          (i) =>
+            i.meta.live === "true" &&
+            i.meta.story === "true" &&
+            i.meta.category === "rumor-discussion" &&
+            i.folder !== "私信" &&
+            !i.meta.activityType,
+        )
+      : [];
+  const rumorPlotTriggered =
+    state.ui?.story?.["scandal-news-triggered-v6"] === true;
+  const rumorTimelineCount = rumorPlotTriggered
+    ? Math.min(84, Math.max(0, Number(state.ui?.story?.["rumor-live-post-count-v2"] ?? 0)))
+    : 0;
+  const skinItems =
+    app.id === "twitter" || app.id === "threads"
+      ? shown.filter((item) => {
+          const isRumorLive =
+            item.meta.live === "true" &&
+            item.meta.story === "true" &&
+            item.meta.category === "rumor-discussion" &&
+            item.folder !== "私信" &&
+            !item.meta.activityType;
+          if (!isRumorLive) return true;
+          if (!rumorPlotTriggered) return false;
+          const sequenceIndex = rumorTimelineItems.findIndex((entry) => entry.id === item.id);
+          return sequenceIndex >= 0 && sequenceIndex < rumorTimelineCount;
+        })
+      : shown;
   const filtered =
     tab === "收藏"
       ? shown.filter((i) => i.favorite)
@@ -2452,7 +2483,7 @@ function AppContent({
               }
               onUi={creator ? undefined : onUi}
               name={name}
-              items={shown}
+              items={skinItems}
               creator={creator}
               onRead={onRead}
               onItem={read}
