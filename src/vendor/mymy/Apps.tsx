@@ -272,52 +272,45 @@ export function MymyKakao(p: SkinProps) {
       ["어디야?", "你在哪？"],
       ["혼자 있어?", "你一个人吗？"],
     ];
-    // Earlier preview builds inserted both messages at once. Remove just those
-    // two event lines so the current flow can replay them at the intended pace.
-    const cleanHistory = sentRef.current.filter((raw) => {
+    // Preserve already-read messages. On re-entry, continue at the first
+    // undelivered line rather than deleting history and replaying from line one.
+    const isDelivered = (ko: string) => sentRef.current.some((raw) => {
       try {
         const parsed: unknown = JSON.parse(raw);
-        return !(Array.isArray(parsed) && parsed[0] === p.thread &&
-          parsed[3] === "npc" &&
-          ((parsed[1] === "어디야?" && parsed[4] === "你在哪？") ||
-           (parsed[1] === "혼자 있어?" && parsed[4] === "你一个人吗？")));
-      } catch { return true; }
+        return Array.isArray(parsed) && parsed[0] === p.thread &&
+          parsed[1] === ko && parsed[3] === "npc";
+      } catch { return false; }
     });
-    if (cleanHistory.length !== sentRef.current.length) {
-      sentRef.current = cleanHistory;
-      setSent(cleanHistory);
+    const firstMissing = messages.findIndex(([ko]) => !isDelivered(ko));
+    if (firstMissing < 0) {
+      setProcessedPreCall("sent");
+      p.onUi?.("scandal-precall-delivered-v5", true);
+      return () => { preCallSequenceStartedRef.current = false; };
     }
     let timer: ReturnType<typeof setTimeout> | null = null;
     const deliver = (index: number) => {
       const entry = messages[index];
       if (!entry) return;
       const [ko, zh] = entry;
-      const alreadyDelivered = sentRef.current.some((raw) => {
-        try {
-          const parsed: unknown = JSON.parse(raw);
-          return Array.isArray(parsed) && parsed[0] === p.thread &&
-            parsed[1] === ko && parsed[3] === "npc";
-        } catch { return false; }
-      });
-      if (!alreadyDelivered) {
+      if (!isDelivered(ko)) {
         const updated = [...sentRef.current, JSON.stringify([p.thread, ko, "14:06", "npc", zh])];
         sentRef.current = updated;
         setSent(updated);
         notifyKktNpcMessage(p.thread, ko, zh, "14:06");
       }
       p.onUi?.("scandal-precall-step-v5", index + 1);
-      if (index + 1 < messages.length) {
-        timer = window.setTimeout(() => deliver(index + 1), 2000);
+      const nextIndex = messages.findIndex(([nextKo], i) => i > index && !isDelivered(nextKo));
+      if (nextIndex >= 0) {
+        // Each follow-up is a separate delivery, one second after the previous line.
+        timer = window.setTimeout(() => deliver(nextIndex), 1000);
       } else {
         setProcessedPreCall("sent");
         p.onUi?.("scandal-precall-delivered-v5", true);
       }
     };
-    timer = window.setTimeout(() => deliver(0), 650);
+    timer = window.setTimeout(() => deliver(firstMissing), 650);
     return () => {
       if (timer) window.clearTimeout(timer);
-      // If the chat is temporarily closed (or React replays effects in dev),
-      // allow the sequence to resume instead of leaving a stuck "started" ref.
       if (processedPreCall !== "sent") preCallSequenceStartedRef.current = false;
     };
   }, [p.thread, p.ui?.["scandal-precall-started-v5"], processedPreCall]);
@@ -360,12 +353,13 @@ export function MymyKakao(p: SkinProps) {
   }, [p.thread, p.ui?.["scandal-call-result-v5"], processedCallResult]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
-    const round = KKT_STORY_ROUNDS[storyStepRef.current];
+    const round = KKT_STORY_ROUNDS[storyStep];
     if (!round?.npc.length) return;
     const missing = round.npc.filter(([ko]) => !sentRef.current.some((raw) => {
       try {
         const entry: unknown = JSON.parse(raw);
-        return Array.isArray(entry) && entry[0] === p.thread && entry[1] === ko && entry[3] === "npc";
+        return Array.isArray(entry) && entry[0] === p.thread &&
+          entry[1] === ko && entry[2] === round.time && entry[3] === "npc";
       } catch {
         return false;
       }
@@ -373,44 +367,43 @@ export function MymyKakao(p: SkinProps) {
     if (!missing.length) return;
     setNpcTyping(true);
     let index = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
     const deliverMissing = () => {
       const entry = missing[index++];
       if (!entry) { setNpcTyping(false); return; }
       const [ko, zh] = entry;
-      // Re-check the live message list so replayed effects cannot append duplicates.
+      // Re-check live history to avoid duplicate delivery after re-entry.
       const alreadyDelivered = sentRef.current.some((raw) => {
         try {
           const existing: unknown = JSON.parse(raw);
           return Array.isArray(existing) && existing[0] === p.thread &&
             existing[1] === ko && existing[2] === round.time && existing[3] === "npc";
-        } catch { return false; }
+        } catch {
+          return false;
+        }
       });
-      if (alreadyDelivered) {
-        if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
-        else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
-        return;
+      if (!alreadyDelivered) {
+        const localizedKo = ko.replaceAll("{{playerId}}", p.playerId || "你");
+        const localizedZh = zh.replaceAll("{{playerId}}", p.playerId || "你");
+        const npcEntry = JSON.stringify([
+          p.thread, localizedKo, round.time, "npc", localizedZh,
+        ]);
+        const updated = [...sentRef.current, npcEntry];
+        sentRef.current = updated;
+        setSent(updated);
+        notifyKktNpcMessage(p.thread, localizedKo, localizedZh, round.time);
       }
-      const npcEntry = JSON.stringify([
-        p.thread,
-        ko.replaceAll("{{playerId}}", p.playerId || "你"),
-        round.time,
-        "npc",
-        zh.replaceAll("{{playerId}}", p.playerId || "你"),
-      ]);
-      const updated = [...sentRef.current, npcEntry];
-      sentRef.current = updated;
-      setSent(updated);
-      notifyKktNpcMessage(
-        p.thread,
-        ko.replaceAll("{{playerId}}", p.playerId || "你"),
-        zh.replaceAll("{{playerId}}", p.playerId || "你"),
-        round.time,
-      );
-      if (index < missing.length) deliveryTimer.current = setTimeout(deliverMissing, 1500);
-      else deliveryTimer.current = setTimeout(() => setNpcTyping(false), 500);
+      if (index < missing.length) timer = setTimeout(deliverMissing, 1500);
+      else timer = setTimeout(() => setNpcTyping(false), 500);
     };
-    deliveryTimer.current = setTimeout(deliverMissing, 800);
-  }, [p.thread]);
+    timer = setTimeout(deliverMissing, 800);
+    // Pause the current automatic-message sequence when the player leaves this
+    // conversation. Reopening it recomputes missing lines and resumes in order.
+    return () => {
+      if (timer) clearTimeout(timer);
+      setNpcTyping(false);
+    };
+  }, [p.thread, storyStep]);
   useEffect(() => {
     const field = composerRef.current;
     if (!field) return;
