@@ -218,7 +218,7 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
-    [openingSequenceReleased, setOpeningSequenceReleased] = useSkinState<boolean>(p, "mymyKktOpeningSequenceReleasedV1", false),
+    [openingSequenceReleased, setOpeningSequenceReleased] = useSkinState<boolean>(p, "mymyKktOpeningSequenceReleasedV2", false),
     [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV5", ""),
     [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV5", ""),
     [draft, setDraft] = useState(""),
@@ -495,18 +495,27 @@ export function MymyKakao(p: SkinProps) {
       ...p.items.filter((i) => i.title === p.thread),
       ...localSentItems.filter((i) => i.title === p.thread),
     ],
-    openingNpcAtStart = p.thread === "金旼炡"
-      ? allMessages.filter((m) => !m.outgoing && /(?:^|\\s)20:17$/.test(m.time))
-      : [],
+    // This is the fixed story opening, not a time-format heuristic. The second
+    // line can come from runtime state while the first comes from story.json,
+    // so matching only the timestamp failed to catch the pair.
+    hasOpeningFirst = p.thread === "金旼炡" &&
+      allMessages.some((m) => !m.outgoing && m.id === "kkt-minjeong-opening-01"),
+    openingFollowup = p.thread === "金旼炡"
+      ? allMessages.find((m) => !m.outgoing && m.body === "나 오늘 집에 좀 늦게 들어갈 것 같아.")
+      : undefined,
+    hideOpeningFollowup = hasOpeningFirst && Boolean(openingFollowup) && !openingSequenceReleased,
     messages = allMessages.filter((m) =>
-      openingSequenceReleased || openingNpcAtStart.length < 2 || m.id !== openingNpcAtStart[1]?.id
+      !hideOpeningFollowup || m.id !== openingFollowup?.id
     ),
     scroll = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (p.thread !== "金旼炡" || openingSequenceReleased || openingNpcAtStart.length < 2) return;
+    // Start playback when the player enters the correct chat, even if the
+    // follow-up is appended by Phone.tsx moments later. This prevents both
+    // initial bubbles from appearing together on first entry.
+    if (p.thread !== "金旼炡" || !hasOpeningFirst || openingSequenceReleased) return;
     const timer = window.setTimeout(() => setOpeningSequenceReleased(true), 1000);
     return () => window.clearTimeout(timer);
-  }, [p.thread, openingNpcAtStart.length, openingSequenceReleased]);
+  }, [p.thread, hasOpeningFirst, openingSequenceReleased]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
