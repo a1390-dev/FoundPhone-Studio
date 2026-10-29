@@ -886,17 +886,17 @@ function PhoneRuntime({
     }, 1500);
     return () => window.clearTimeout(timer);
   }, [creator, app, appThread, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
-  // Deliver Minjeong's 20:17 follow-up on the story timeline, not as a side effect
-  // of opening her chat. Existing saves may already contain the line; still send
-  // its one-time notification unless it was already handled.
+  // Treat the first message as delivered once the timed story event completes.
+  // Use a boolean dependency, not the notifications array: dismissing/opening the
+  // first banner must not cancel or restart the second message's scheduled delivery.
+  const firstOpeningNoticeDelivered =
+    s.variables?.["kkt-opening-first-notice-delivered-v1"] === true ||
+    s.completed.includes("kkt-first-message-after-unlock");
+
   useEffect(() => {
     const hasOpeningChat = (work.data.kakao || []).some(
       (item) => item.id === "kkt-minjeong-opening-01",
     );
-    const firstOpeningNoticeDelivered =
-      s.variables?.["kkt-opening-first-notice-delivered-v1"] === true ||
-      s.completed.includes("kkt-first-message-after-unlock") ||
-      s.notifications.some((notice) => notice === "KKT|金旼炡: 아직 안 잤어?");
     if (
       creator ||
       !hasOpeningChat ||
@@ -908,12 +908,11 @@ function PhoneRuntime({
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestKakao = latest.ui?.kakao || {};
-      const firstOpeningNoticeDelivered =
+      const latestFirstOpeningNoticeDelivered =
         latest.variables?.["kkt-opening-first-notice-delivered-v1"] === true ||
-        latest.completed.includes("kkt-first-message-after-unlock") ||
-        latest.notifications.some((notice) => notice === "KKT|金旼炡: 아직 안 잤어?");
+        latest.completed.includes("kkt-first-message-after-unlock");
       if (
-        !firstOpeningNoticeDelivered ||
+        !latestFirstOpeningNoticeDelivered ||
         latest.time?.startsWith("14:") ||
         latestKakao["scandal-precall-started-v5"] === true ||
         latestKakao["mymyKktOpeningFollowupNoticeHandledV1"] === true
@@ -956,9 +955,7 @@ function PhoneRuntime({
     s.time,
     s.ui?.kakao?.["scandal-precall-started-v5"],
     s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"],
-    s.variables?.["kkt-opening-first-notice-delivered-v1"],
-    s.completed,
-    s.notifications,
+    firstOpeningNoticeDelivered,
   ]);
 
   // If either lead-in message arrives while Minjeong's chat is visible, consume
