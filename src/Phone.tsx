@@ -1185,6 +1185,7 @@ function PhoneRuntime({
       style={{
         "--phone-scale": deviceScale,
         "--phone-input-font-size": `${16 / Math.max(deviceScale, 0.4)}px`,
+        "--phone-input-focus-font-size": `${18 / Math.max(deviceScale, 0.4)}px`,
         "--kkt-composer-font-size": `${12 / Math.max(deviceScale, 0.4)}px`,
         "--kkt-composer-min-height": `${34 / Math.max(deviceScale, 0.4)}px`,
         "--kkt-composer-max-height": `${72 / Math.max(deviceScale, 0.4)}px`,
