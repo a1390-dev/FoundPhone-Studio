@@ -16,8 +16,6 @@ import {
 import {
   DeviceLock,
   ControlCenter,
-  DeviceKeyboard,
-  KeyboardContext,
   NativeSettings,
 } from "./DeviceSystem";
 import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
@@ -40,7 +38,6 @@ import {
   Suspense,
   lazy,
   type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -306,8 +303,6 @@ function PhoneRuntime({
   const [locked, setLocked] = useState(!creator);
   const [pinOpen, setPinOpen] = useState(false);
   const [quickCamera, setQuickCamera] = useState(false);
-  const [keyboard, setKeyboard] = useState(false);
-  const [keyboardTarget, setKeyboardTarget] = useState<HTMLElement | null>(null);
   const [recent, setRecent] = useState<string[]>([]);
   const appSnapshots = useRef(new Map<string, HTMLElement>());
   const handledKktEventsRef = useRef(new Set<string>());
@@ -329,122 +324,75 @@ function PhoneRuntime({
     else unlock();
   };
 
-  // Intercept taps on editable content inside the simulated device before iOS
-  // Safari focuses the real DOM field. Its native keyboard changes the visual
-  // viewport and can permanently zoom this CSS-zoomed phone; the in-phone
-  // keyboard edits the same controlled fields without ever focusing them.
-  const captureEditorPointer = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (creator) return;
-    const origin = event.target;
+  // Allow Safari's native iPhone keyboard to handle real text composition.
+  // The focused controls use inverse-scaled font sizing in CSS to keep the
+  // rendered text at 16px and avoid WebKit zooming the entire simulator.
+  // After focus, pin chat histories to their latest message as the viewport
+  // changes for the native keyboard.
+  const scrollOnEditableFocus = (origin: EventTarget | null) => {
     if (!(origin instanceof HTMLElement)) return;
-    if (origin.closest(".device-keyboard")) return;
-
-    const editor = origin.closest<HTMLElement>(
-      'textarea, [contenteditable="true"], input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="range"]):not([type="file"]):not([type="color"])',
-    );
-    if (!editor || !editor.closest(".phone-screen")) {
-      if (keyboard) {
-        setKeyboard(false);
-        setKeyboardTarget(null);
-      }
-      return;
-    }
-
-    if (
-      editor.hasAttribute("disabled") ||
-      editor.getAttribute("aria-disabled") === "true" ||
-      (("readOnly" in editor) && Boolean((editor as HTMLInputElement | HTMLTextAreaElement).readOnly)) ||
-      (editor instanceof HTMLInputElement && ["number", "date", "time", "datetime-local", "month", "week"].includes(editor.type))
-    ) {
-      if (keyboard) {
-        setKeyboard(false);
-        setKeyboardTarget(null);
-      }
-      return;
-    }
-
-    event.preventDefault();
-    if (editor instanceof HTMLInputElement || editor instanceof HTMLTextAreaElement) {
-      try {
-        editor.setSelectionRange(editor.value.length, editor.value.length);
-      } catch {
-        // Inputs such as date-like controls do not support caret selection.
-      }
-    }
-    setKeyboardTarget(editor);
-    setKeyboard(true);
-  };
-
-  useEffect(() => {
-    if (!keyboard) setKeyboardTarget(null);
-  }, [keyboard]);
-
-  // When an actual chat composer opens the in-phone keyboard, keep the latest
-  // messages visible above it. The keyboard overlays the bottom of the device,
-  // so scroll after the layout has settled instead of resizing the phone shell.
-  useEffect(() => {
-    if (!keyboard || !keyboardTarget) return;
+    if (!origin.matches('textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="range"]):not([type="file"]):not([type="color"]), select, [contenteditable="true"]')) return;
     const screen = shell.current?.querySelector<HTMLElement>(".phone-screen");
     if (!screen) return;
 
-    const panes: HTMLElement[] = [];
-    const kktRoot = keyboardTarget.closest<HTMLElement>(".mymy-ui.mymy-kakao");
-    const kktComposer = keyboardTarget.closest(".mymy-ui.mymy-kakao .kzinp");
-    if (kktRoot && kktComposer) {
+    const panes = new Set<HTMLElement>();
+    const kktRoot = origin.closest<HTMLElement>(".mymy-ui.mymy-kakao");
+    if (kktRoot && origin.closest(".kzinp")) {
       const pane = kktRoot.querySelector<HTMLElement>(".msgs");
-      if (pane) panes.push(pane);
+      if (pane) panes.add(pane);
     }
 
-    const igThread = keyboardTarget.closest<HTMLElement>(".ig-rumor-dm-thread");
+    const igThread = origin.closest<HTMLElement>(".ig-rumor-dm-thread");
     if (igThread) {
       const pane = igThread.querySelector<HTMLElement>(".ig-rumor-dm-history");
-      if (pane) panes.push(pane);
+      if (pane) panes.add(pane);
     }
 
-    const skinComposer = keyboardTarget.closest<HTMLElement>(".skin-compose");
-    if (skinComposer) {
-      const chatApp = skinComposer.closest<HTMLElement>(".wechat-ui, .whatsapp-ui");
-      const pane = chatApp?.querySelector<HTMLElement>(".skin-messages");
-      if (pane) panes.push(pane);
+    if (origin.closest(".skin-compose")) {
+      const pane = screen.querySelector<HTMLElement>(".skin-messages");
+      if (pane) panes.add(pane);
     }
 
-    // Fallback for other chat UIs whose composer is inside a scrollable pane.
-    if (!panes.length) {
-      let node = keyboardTarget.parentElement;
+    // For other reply composers, find the nearest scrollable history containing
+    // the field. Search forms and ordinary non-chat inputs do not move the feed.
+    if (!panes.size) {
+      let node = origin.parentElement;
       while (node && node !== screen) {
+        const className = typeof node.className === "string" ? node.className : "";
+        const isLikelyHistory =
+          /message|conversation|chat|thread|comment|reply|timeline|msgs/i.test(className);
         const style = window.getComputedStyle(node);
-        if (
+        const isScrollable =
           (style.overflowY === "auto" || style.overflowY === "scroll" || style.overflowY === "overlay") &&
-          node.scrollHeight > node.clientHeight + 1
-        ) {
-          panes.push(node);
+          node.scrollHeight > node.clientHeight + 1;
+        if (isLikelyHistory && isScrollable) {
+          panes.add(node);
           break;
         }
         node = node.parentElement;
       }
     }
-    if (!panes.length) return;
+    if (!panes.size) return;
 
     let secondFrame = 0;
     let settleTimer: number | undefined;
     const scrollToLatest = () => {
       for (const pane of panes) {
-        if (pane.isConnected && pane.clientHeight > 0) {
-          pane.scrollTop = pane.scrollHeight;
-        }
+        if (pane.isConnected && pane.clientHeight > 0) pane.scrollTop = pane.scrollHeight;
       }
     };
     const firstFrame = window.requestAnimationFrame(() => {
       scrollToLatest();
       secondFrame = window.requestAnimationFrame(scrollToLatest);
-      settleTimer = window.setTimeout(scrollToLatest, 280);
+      settleTimer = window.setTimeout(scrollToLatest, 300);
     });
-    return () => {
-      window.cancelAnimationFrame(firstFrame);
-      if (secondFrame) window.cancelAnimationFrame(secondFrame);
+    // The timer intentionally settles after iOS has resized its visual viewport.
+    window.setTimeout(() => {
       if (settleTimer !== undefined) window.clearTimeout(settleTimer);
-    };
-  }, [keyboard, keyboardTarget, app, appThread]);
+    }, 350);
+    void firstFrame;
+  };
+
 
   const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
@@ -1390,11 +1338,10 @@ function PhoneRuntime({
       } as CSSProperties}
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
-      <KeyboardContext.Provider value={setKeyboard}>
         <div
-          className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
+          className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""}`}
+          onFocusCapture={(event) => scrollOnEditableFocus(event.target)}
           data-app={app}
-          onPointerDownCapture={captureEditorPointer}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
             gestureConsumed.current = false;
@@ -1433,7 +1380,6 @@ function PhoneRuntime({
             else if ((g.zone === "bottom" || g.zone === "lock") && dy < -55) {
               gestureConsumed.current = true;
               if (!locked) captureApp();
-              setKeyboard(false);
               if (panel) {
                 setPanel("");
               } else if (locked) {
@@ -1992,15 +1938,6 @@ function PhoneRuntime({
               </div>
             </div>
           )}
-          {keyboard && (
-            <DeviceKeyboard
-              target={keyboardTarget}
-              close={() => {
-                setKeyboard(false);
-                setKeyboardTarget(null);
-              }}
-            />
-          )}
           {loadError && (
             <button className="runtime-error" onClick={() => setLoadError("")}>
               {loadError}
@@ -2026,7 +1963,6 @@ function PhoneRuntime({
           <div className="screen-dimmer" />
           <div className="hardware-reflection" />
         </div>
-      </KeyboardContext.Provider>
     </div>
   );
 }
