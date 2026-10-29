@@ -535,7 +535,7 @@ function PhoneRuntime({
     if (banner && kktNoticeThread(banner) === thread) setBanner("");
     update(next);
   };
-  const handleKktIncomingMessage = (rawValue: UiValue) => {
+  const handleKktIncomingMessage = (rawValue: UiValue, forcePopup = false) => {
     if (typeof rawValue !== "string") return;
     let incoming: { id?: string; thread?: string; text?: string; translation?: string };
     try { incoming = JSON.parse(rawValue) as typeof incoming; }
@@ -569,13 +569,15 @@ function PhoneRuntime({
     const previousUnread = storedUnread === undefined
       ? templateUnread
       : Math.max(0, Number(storedUnread) || 0);
-    const unreadCount = activeConversation ? 0 : previousUnread + 1;
-    // Suppress only the NPC thread that is currently visible. Being in a
-    // different KKT conversation is not enough to suppress this NPC's popup.
-    const notifications = activeConversation
-      ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
-      : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
-    if (activeConversation && banner && kktNoticeThread(banner) === incoming.thread) setBanner("");
+    const shouldPopup = forcePopup || !activeConversation;
+    const unreadCount = shouldPopup ? previousUnread + 1 : 0;
+    // Ordinary incoming messages are read immediately while their chat is open.
+    // The two scripted opening messages are the exception: each must produce its
+    // own ordered notification and unread increment, even if the first banner was tapped.
+    const notifications = shouldPopup
+      ? [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`]
+      : current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread);
+    if (!shouldPopup && activeConversation && banner && kktNoticeThread(banner) === incoming.thread) setBanner("");
     update({
       ...current,
       notifications,
@@ -945,7 +947,7 @@ function PhoneRuntime({
         text,
         translation: "我今天可能会晚点回家。",
         time: "20:17",
-      }));
+      }), true);
     }, 2000);
     return () => window.clearTimeout(timer);
   }, [
