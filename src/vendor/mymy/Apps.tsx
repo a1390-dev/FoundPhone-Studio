@@ -909,13 +909,13 @@ export function MymyInstagram(p: SkinProps) {
     [story, setStory] = useState(0),
     [draft, setDraft] = useState(""),
     [pop, setPop] = useState("");
-  const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v7", []);
-  const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v7", 0);
-  const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v7", []);
+  const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v8", []);
+  const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v8", 0);
+  const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v8", []);
   const [fanDmReadIds, setFanDmReadIds] = useSkinState<string[]>(p, "scandal-ig-dm-read-ids-v1", []);
   const [fanDmUnreadReplyIds, setFanDmUnreadReplyIds] = useSkinState<string[]>(p, "scandal-ig-dm-unread-reply-ids-v1", []);
-  const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v7", []);
-  const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v7", "");
+  const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v8", []);
+  const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v8", "");
   const [activeFanDm, setActiveFanDm] = useState("");
   const [fanDmDraft, setFanDmDraft] = useState("");
   const [activeThreadVisibleCount, setActiveThreadVisibleCount] = useState(0);
@@ -958,12 +958,12 @@ export function MymyInstagram(p: SkinProps) {
     if (fanDmUnreadReplyIds.includes(fanDmOpenRequest)) {
       setFanDmUnreadReplyIds(fanDmUnreadReplyIds.filter((id) => id !== fanDmOpenRequest));
     }
-    p.onUi?.("scandal-ig-open-thread-v7", fanDmOpenRequest);
+    p.onUi?.("scandal-ig-open-thread-v8", fanDmOpenRequest);
     setFanDmOpenRequest("");
   }, [fanDmOpenRequest, fanDmReadIds, fanDmUnreadReplyIds]);
   useEffect(() => {
-    p.onUi?.("scandal-ig-dm-screen-active-v7", tab === "私信" && !selected);
-    return () => p.onUi?.("scandal-ig-dm-screen-active-v7", false);
+    p.onUi?.("scandal-ig-dm-screen-active-v8", tab === "私信" && !selected);
+    return () => p.onUi?.("scandal-ig-dm-screen-active-v8", false);
   }, [tab, selected?.id]);
   useEffect(() => {
     const node = fanDmScrollRef.current;
@@ -1360,7 +1360,7 @@ export function MymyInstagram(p: SkinProps) {
           <button
             aria-label={activeFanDm ? "返回Instagram私信" : selected ? "返回Instagram动态" : "关闭当前App"}
             onClick={() => {
-              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); p.onUi?.("scandal-ig-open-thread-v7", ""); }
+              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); p.onUi?.("scandal-ig-open-thread-v8", ""); }
               else if (selected) setSelected(null);
               else p.onBack();
             }}
@@ -1576,7 +1576,7 @@ export function MymyInstagram(p: SkinProps) {
                     if (fanDmUnreadReplyIds.includes(dm.id)) {
                       setFanDmUnreadReplyIds(fanDmUnreadReplyIds.filter((id) => id !== dm.id));
                     }
-                    p.onUi?.("scandal-ig-open-thread-v7", dm.id);
+                    p.onUi?.("scandal-ig-open-thread-v8", dm.id);
                   }}>
                     <Avatar name={dm.handle} round />
                     <span className="kzkn">
