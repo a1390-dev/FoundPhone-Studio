@@ -501,7 +501,38 @@ const PINYIN_CANDIDATES: Record<string, string[]> = {
   zhuyianquan: ["注意安全"], zenme: ["怎么"], zenmeyang: ["怎么样"],
   weishenme: ["为什么"], wanshang: ["晚上"], wanshanghao: ["晚上好"],
   jiayou: ["加油"],
+  bei: ["被", "北"], dian: ["点", "电"], duo: ["多", "躲"], fa: ["发", "法"],
+  fan: ["饭", "烦"], ge: ["个"], geng: ["更"], gongsi: ["公司"], guo: ["过", "国"],
+  huan: ["换", "还", "欢"], jiaqi: ["假期"], ji: ["几", "记"], kaixin: ["开心"],
+  kan: ["看"], kou: ["口"], leng: ["冷"], la: ["啦", "拉"], li: ["里", "理"],
+  liao: ["聊", "了"], lu: ["路"], nan: ["难", "男"], ne: ["呢"], pai: ["拍", "排"],
+  piao: ["票"], qi: ["起", "气", "七"], re: ["热"], shang: ["上"], shao: ["少"],
+  shen: ["身"], sheng: ["生", "声"], shu: ["书"], suo: ["所"], suan: ["算"],
+  tiao: ["条"], wai: ["外"], wei: ["为", "喂"], wen: ["问"], xia: ["下", "夏"],
+  xi: ["西", "喜", "系"], xiao: ["小", "笑"], xue: ["学", "雪"], xuexiao: ["学校"],
+  yue: ["月", "越"], zhang: ["张", "长"], zhi: ["只", "知", "直"], zhou: ["周"],
+  zui: ["最", "嘴"], zuo: ["做", "坐", "昨"], zhijie: ["直接"],
 };
+function composePinyin(value: string): string {
+  let remaining = value.toLowerCase();
+  let result = "";
+  while (remaining) {
+    let matched = "";
+    for (let length = Math.min(7, remaining.length); length >= 1; length--) {
+      const syllable = remaining.slice(0, length);
+      if (PINYIN_CANDIDATES[syllable]) {
+        matched = syllable;
+        break;
+      }
+    }
+    // Keep the original spelling if this buffer cannot be segmented safely.
+    if (!matched) return value;
+    result += PINYIN_CANDIDATES[matched][0];
+    remaining = remaining.slice(matched.length);
+  }
+  return result || value;
+}
+
 type KeyboardEditable = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
 
 function readKeyboardText(target: KeyboardEditable | null | undefined): string {
@@ -604,7 +635,7 @@ export function DeviceKeyboard({
   const pressSpace = () => {
     if (pinyin) {
       const options = PINYIN_CANDIDATES[pinyin.toLowerCase()];
-      pickCandidate(options?.[0] || pinyin);
+      pickCandidate(options?.[0] || composePinyin(pinyin));
       return;
     }
     replaceText(" ");
@@ -618,7 +649,10 @@ export function DeviceKeyboard({
     setShift(false);
   };
   const candidates = pinyin
-    ? (PINYIN_CANDIDATES[pinyin.toLowerCase()] || [pinyin]).slice(0, 5)
+    ? (
+        PINYIN_CANDIDATES[pinyin.toLowerCase()] ||
+        [composePinyin(pinyin), pinyin].filter((candidate, index, all) => all.indexOf(candidate) === index)
+      ).slice(0, 5)
     : ["我", "你", "好的", "可以"];
   const placeholder = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
     ? (target.placeholder || target.getAttribute("aria-label") || "输入内容")
