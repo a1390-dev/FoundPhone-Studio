@@ -1720,7 +1720,7 @@ export function MymyX(p: SkinProps) {
     [composeOpen, setComposeOpen] = useState(false);
   const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v5"] === true;
   const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
-  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 26) : [];
+  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 60) : [];
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1745,7 +1745,7 @@ export function MymyX(p: SkinProps) {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      1500 + Math.floor(Math.random() * 501),
+      1500,
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
