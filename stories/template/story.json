@@ -2,8 +2,8 @@
   "scriptVersion": 1,
   "id": "ui-test-phone-v2",
   "title": "捡手机",
-  "description": "围绕 2026-10-28 未证实恋情传闻的 X 与 Threads 实时讨论各 84 条；Threads 话题聚焦 Winter 本人与传闻，涵盖唯粉、甜唯、毒唯、事业粉、妈粉、全肯定粉、女友粉、梦女粉、理性粉及路人吃瓜，不含 CP 与队友相关内容。Instagram 私信队列含 125 条不同类型粉丝消息。传闻内容均为虚构剧情。",
-  "revision": 18,
+  "description": "围绕 2026-10-28 未证实恋情传闻的 X 与 Threads 实时讨论各 84 条。X 以新闻搬运、路人吃瓜、网络舆论和讨论楼为主；Threads 为 Winter 不同类型粉丝的个人情绪与看法，不含 CP 或队友话题。Instagram 私信队列含 125 条不同类型粉丝消息。全部内容为虚构剧情。",
+  "revision": 19,
   "phone": {
     "owner": "机主",
     "date": "2026-10-27",
@@ -9398,11 +9398,11 @@
       },
       {
         "id": "xrumor-20261028-56",
-        "title": "winter_focus56 @winter_focus56",
-        "body": "민정이 개인 활동 얘기가 전부 루머에 묻히는 건 아쉽다. 확인 전까지는 자극적인 추측보다 무대 얘기를 하고 싶음.\n\n旼炡的个人活动全被传闻淹没了，挺可惜的。确认之前我更想聊舞台，而不是刺激性的猜测。",
+        "title": "citywatch_now @citywatch_now",
+        "body": "[속보] 온라인 커뮤니티에서 aespa Winter로 추정되는 인물의 사진 확산. 사진의 원본 출처와 동행자 신원은 확인되지 않았습니다.\n\n【快讯】网络社区正在传播疑似 aespa Winter 的照片。原图来源及同行者身份尚未确认。",
         "time": "2026-10-28 15:01",
         "meta": {
-          "handle": "winter_focus56",
+          "handle": "citywatch_now",
           "category": "rumor-discussion",
           "reposts": "78",
           "bookmarks": "24",
@@ -9411,17 +9411,16 @@
           "live": "true",
           "views": "5801",
           "language": "mixed",
-          "story": "true",
-          "fanType": "毒唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-57",
-        "title": "wintervoice57 @wintervoice57",
-        "body": "사진보다 오늘 들은 민정이 보컬 클립이 더 오래 기억에 남는다. 결국 내가 좋아하는 건 그 목소리야.\n\n比起照片，今天听到的旼炡 vocal 片段更让我记得住。我喜欢的终究是她的声音。",
+        "title": "scrollby_now @scrollby_now",
+        "body": "사진 한 장으로 열애설까지 가는 속도 뭐야… 원본도 안 보이는데 다들 결론부터 내리네.\n\n一张照片怎么这么快就变成恋爱传闻了……原图都没看到，大家先把结论下好了。",
         "time": "2026-10-28 15:02",
         "meta": {
-          "handle": "wintervoice57",
+          "handle": "scrollby_now",
           "category": "rumor-discussion",
           "reposts": "161",
           "bookmarks": "53",
@@ -9430,17 +9429,16 @@
           "live": "true",
           "views": "7108",
           "language": "mixed",
-          "story": "true",
-          "fanType": "甜唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-58",
-        "title": "mom_for_min58 @mom_for_min58",
-        "body": "루머가 도는 날일수록 잘 먹고 쉬었으면 좋겠어. 팬들이 다 지켜볼 수는 없어도 응원은 할 수 있으니까.\n\n传闻发酵的日子里，更希望她好好吃饭、休息。粉丝不能时时守着她，但可以支持她。",
+        "title": "idol_alert_kr @idol_alert_kr",
+        "body": "현재 여러 계정에서 같은 사진이 재게시되고 있습니다. 게시물마다 촬영 장소 설명이 달라 추가 확인이 필요합니다.\n\n目前多个账号在重复发布同一张照片。不同帖子对拍摄地点的描述不一致，还需要核实。",
         "time": "2026-10-28 15:03",
         "meta": {
-          "handle": "mom_for_min58",
+          "handle": "idol_alert_kr",
           "category": "rumor-discussion",
           "reposts": "244",
           "bookmarks": "82",
@@ -9449,17 +9447,16 @@
           "live": "true",
           "views": "8415",
           "language": "mixed",
-          "story": "true",
-          "fanType": "妈粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-59",
-        "title": "winter_gf59 @winter_gf59",
-        "body": "축하할 수 있을지 아직 모르겠지만, 민정이의 선택을 내가 대신 정할 수 없다는 건 알아.\n\n我还不知道自己能不能祝福，但我知道不能替旼炡做选择。",
+        "title": "tmi_tracker @tmi_tracker",
+        "body": "처음 글 본 사람 있어요? 지금은 캡처만 돌아서 원래 문장이 뭔지도 모르겠네.\n\n有人看到最初的帖子了吗？现在全是截图，连原文到底写了什么都不知道。",
         "time": "2026-10-28 15:04",
         "meta": {
-          "handle": "winter_gf59",
+          "handle": "tmi_tracker",
           "category": "rumor-discussion",
           "reposts": "327",
           "bookmarks": "111",
@@ -9468,17 +9465,16 @@
           "live": "true",
           "views": "9722",
           "language": "mixed",
-          "story": "true",
-          "fanType": "女友粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-60",
-        "title": "onlyminjeong60 @onlyminjeong60",
-        "body": "다른 멤버 이름을 끌어와 비교하는 글은 그만 봤으면. 지금은 윈터 얘기만 차분히 하자.\n\n希望别再把其他成员扯进来比较了。现在就冷静谈 Winter 本人吧。",
+        "title": "forum_mirror @forum_mirror",
+        "body": "[토론] 흐릿한 사진만으로 연애설을 기사화해도 되는가. 조회수와 사생활 보호 사이의 기준이 필요하다는 의견.\n\n【讨论】仅凭模糊照片就报道恋爱传闻是否合适？有人认为需要明确流量与隐私保护的边界。",
         "time": "2026-10-28 15:05",
         "meta": {
-          "handle": "onlyminjeong60",
+          "handle": "forum_mirror",
           "category": "rumor-discussion",
           "reposts": "410",
           "bookmarks": "140",
@@ -9487,17 +9483,16 @@
           "live": "true",
           "views": "11029",
           "language": "mixed",
-          "story": "true",
-          "fanType": "毒唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-61",
-        "title": "winkarina_view61 @winkarina_view61",
-        "body": "윈카 무대를 좋아하는 마음은 그대로지만, 무대 케미가 현실 증거라고 우기고 싶진 않다.\n\n我依然喜欢 윈카 舞台上的互动，但不想硬说舞台默契就是现实关系的证据。",
+        "title": "no_context99 @no_context99",
+        "body": "옷이 비슷하다는 이유로 같은 사람이라고 하는 건 근거가 너무 약하지 않나. 색감도 조명 따라 달라지는데.\n\n只因为衣服相似就认定是同一个人，依据也太弱了吧。颜色还会受光线影响。",
         "time": "2026-10-28 15:06",
         "meta": {
-          "handle": "winkarina_view61",
+          "handle": "no_context99",
           "category": "rumor-discussion",
           "reposts": "493",
           "bookmarks": "169",
@@ -9506,17 +9501,16 @@
           "live": "true",
           "views": "12336",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-62",
-        "title": "winter_track62 @winter_track62",
-        "body": "검색어가 올랐다고 사실이 되는 건 아니지. 공식 확인 전에는 캡처만 반복해서 퍼 나르지 말자.\n\n热搜上升不代表事情成真。正式确认前别反复传播截图。",
+        "title": "headline_watch @headline_watch",
+        "body": "첫 게시물은 '추정'이었는데 재업로드될수록 제목에서 그 단어가 사라지는 중. 전달 과정도 봐야 할 듯.\n\n最初的帖子还写着“疑似”，转发几轮后标题里的这个词就消失了。传播过程也值得关注。",
         "time": "2026-10-28 15:07",
         "meta": {
-          "handle": "winter_track62",
+          "handle": "headline_watch",
           "category": "rumor-discussion",
           "reposts": "576",
           "bookmarks": "198",
@@ -9525,17 +9519,16 @@
           "live": "true",
           "views": "13643",
           "language": "mixed",
-          "story": "true",
-          "fanType": "毒唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-63",
-        "title": "w_melody63 @w_melody63",
-        "body": "오늘은 논쟁 대신 플레이리스트를 정리했다. 민정이가 들려준 노래들이 아직 내 하루를 채워 줌.\n\n今天我没有继续争论，而是整理了歌单。旼炡带来的音乐依然填满我的一天。",
+        "title": "tea_break_kr @tea_break_kr",
+        "body": "타임라인에서 목격담이라는 글 봤는데 댓글마다 장소가 다름. 이 정도면 누가 기억을 보탠 건지부터 확인해야겠어요.\n\n我看到时间线上有人说是目击帖，但评论里的地点各不相同。现在得先查清是不是有人不断添油加醋。",
         "time": "2026-10-28 15:08",
         "meta": {
-          "handle": "w_melody63",
+          "handle": "tea_break_kr",
           "category": "rumor-discussion",
           "reposts": "659",
           "bookmarks": "227",
@@ -9544,17 +9537,16 @@
           "live": "true",
           "views": "14950",
           "language": "mixed",
-          "story": "true",
-          "fanType": "甜唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-64",
-        "title": "winning_memory64 @winning_memory64",
-        "body": "윈닝이 함께 웃던 장면을 좋아하는 건 여전해. 다만 그 추억을 누군가를 몰아붙이는 근거로 쓰진 않을래.\n\n我依然喜欢 윈닝 一起笑的片段，但不会拿那些回忆去逼迫任何人。",
+        "title": "ent_update_now @ent_update_now",
+        "body": "현재까지 공식 입장은 확인되지 않았습니다. 온라인에서 유통 중인 사진만으로 관계를 단정하기는 어렵습니다.\n\n截至目前未发现官方回应。仅凭网络流传的照片，难以认定双方关系。",
         "time": "2026-10-28 15:09",
         "meta": {
-          "handle": "winning_memory64",
+          "handle": "ent_update_now",
           "category": "rumor-discussion",
           "reposts": "742",
           "bookmarks": "16",
@@ -9563,17 +9555,16 @@
           "live": "true",
           "views": "16257",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-65",
-        "title": "minjeong_rest65 @minjeong_rest65",
-        "body": "오늘은 댓글을 다 읽지 말고 쉬었으면 해. 아이돌도 결국 피곤하면 쉬어야 하는 사람이니까.\n\n希望她今天不要把评论全看完，好好休息。偶像终究也是累了需要休息的人。",
+        "title": "late_for_work @late_for_work",
+        "body": "출근길에 트렌드 보고 들어왔는데 원본 링크는 하나도 없고 서로 다른 캡처만 잔뜩이네.\n\n上班路上看到热搜点进来，原图链接一个没有，全是各种不同截图。",
         "time": "2026-10-28 15:10",
         "meta": {
-          "handle": "minjeong_rest65",
+          "handle": "late_for_work",
           "category": "rumor-discussion",
           "reposts": "825",
           "bookmarks": "45",
@@ -9582,17 +9573,16 @@
           "live": "true",
           "views": "17564",
           "language": "mixed",
-          "story": "true",
-          "fanType": "妈粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-66",
-        "title": "dreamwinter66 @dreamwinter66",
-        "body": "현실은 모르는 채로 두고, 오늘은 상상 속 민정이랑 늦은 밤 편의점 간식 고르는 이야기나 쓸래.\n\n现实就先不去猜了，今天我想写一段幻想中和旼炡深夜挑便利店零食的故事。",
+        "title": "context_matters @context_matters",
+        "body": "[토론] 소속사가 침묵하는 걸 인정으로 보는 사람도 있고 사생활이라 판단을 보류해야 한다는 사람도 있음. 침묵만으론 둘 다 확정 못 함.\n\n【讨论】有人把经纪公司沉默当作默认，也有人认为这是隐私问题、应暂缓判断。仅凭沉默两边都不能坐实。",
         "time": "2026-10-28 15:11",
         "meta": {
-          "handle": "dreamwinter66",
+          "handle": "context_matters",
           "category": "rumor-discussion",
           "reposts": "118",
           "bookmarks": "74",
@@ -9601,17 +9591,16 @@
           "live": "true",
           "views": "18871",
           "language": "mixed",
-          "story": "true",
-          "fanType": "梦女"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-67",
-        "title": "mywinterheart67 @mywinterheart67",
-        "body": "질투가 난다고 해서 그 사람을 미워해야 하는 건 아니겠지. 오늘은 내 마음부터 진정시키는 중.\n\n会嫉妒，也不代表就必须讨厌对方。今天我先让自己的心情平静下来。",
+        "title": "repost_counter @repost_counter",
+        "body": "같은 사진인데 인용 게시물마다 붙는 설명이 다르다. 내용이 추가된 게 아니라 해석이 덧붙는 중인 듯.\n\n同一张照片，每条引用帖附带的解释都不一样。增加的不是信息，而是解读。",
         "time": "2026-10-28 15:12",
         "meta": {
-          "handle": "mywinterheart67",
+          "handle": "repost_counter",
           "category": "rumor-discussion",
           "reposts": "201",
           "bookmarks": "103",
@@ -9620,17 +9609,16 @@
           "live": "true",
           "views": "20178",
           "language": "mixed",
-          "story": "true",
-          "fanType": "女友粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-68",
-        "title": "winzel_archive68 @winzel_archive68",
-        "body": "윈젤의 예전 비하인드를 다시 보는 건 좋지만, 그걸 열애설의 답처럼 끼워 맞추진 말자.\n\n重看以前的 윈젤 花絮很好，但别把它硬拼成这次恋爱传闻的答案。",
+        "title": "source_first @source_first",
+        "body": "사진을 누가 찍었는지, 원본이 어디에 올라왔는지 확인한 계정은 아직 못 봄. 출처부터 나와야 하는 거 아닌가요.\n\n还没看到哪个账号确认拍摄者是谁、原图最初发布在哪里。是不是该先找到来源？",
         "time": "2026-10-28 15:13",
         "meta": {
-          "handle": "winzel_archive68",
+          "handle": "source_first",
           "category": "rumor-discussion",
           "reposts": "284",
           "bookmarks": "132",
@@ -9639,17 +9627,16 @@
           "live": "true",
           "views": "21485",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-69",
-        "title": "casual_my69 @casual_my69",
-        "body": "사진 원본이나 최초 게시 시점도 불분명한데 설명만 여러 버전이네. 정보가 늘었다기보다 소문이 늘어난 듯.\n\n原图和最初发布时间都不清楚，却出现好几个版本的说法。感觉增加的不是信息，而是传闻。",
+        "title": "trendwatch_kr @trendwatch_kr",
+        "body": "검색량이 급격히 늘어나는 중이지만 검색량이 사실 확인을 대신할 수는 없죠.\n\n搜索量正在快速上升，但热度不能代替事实核实。",
         "time": "2026-10-28 15:14",
         "meta": {
-          "handle": "casual_my69",
+          "handle": "trendwatch_kr",
           "category": "rumor-discussion",
           "reposts": "367",
           "bookmarks": "161",
@@ -9658,17 +9645,16 @@
           "live": "true",
           "views": "22792",
           "language": "mixed",
-          "story": "true",
-          "fanType": "普通粉丝"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-70",
-        "title": "wintercareer70 @wintercareer70",
-        "body": "민정이가 직접 입장을 내기 전까지는 활동 평가와 소문을 분리해서 보고 싶다.\n\n在旼炡亲自表态前，我想把活动评价和传闻分开看。",
+        "title": "public_square @public_square",
+        "body": "[댓글 모음] ①사진만으론 모른다 ②사생활이다 ③공식 입장을 기다리자 ④보도 방식이 문제다. 의견이 네 갈래로 갈리는 중.\n\n【评论汇总】①照片无法确认 ②属于私人生活 ③等待官方回应 ④报道方式有问题。目前主要分成四种观点。",
         "time": "2026-10-28 15:15",
         "meta": {
-          "handle": "wintercareer70",
+          "handle": "public_square",
           "category": "rumor-discussion",
           "reposts": "450",
           "bookmarks": "190",
@@ -9677,17 +9663,16 @@
           "live": "true",
           "views": "24099",
           "language": "mixed",
-          "story": "true",
-          "fanType": "毒唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-71",
-        "title": "stage_for_w71 @stage_for_w71",
-        "body": "다음 무대 티저를 기다리는 중. 타임라인이 온통 열애설이어도 내가 좋아하는 이유까지 바뀌진 않아.\n\n我在等下一次舞台预告。即使时间线全是恋爱传闻，我喜欢她的理由也不会改变。",
+        "title": "coffee_and_news @coffee_and_news",
+        "body": "처음엔 작은 커뮤니티 글이었는데 지금은 뉴스 계정까지 가져갔네. 어디서부터 이렇게 커진 건지 신기하다.\n\n一开始只是小社区帖子，现在连新闻账号都搬运了。还挺想知道是从哪里开始发酵的。",
         "time": "2026-10-28 15:16",
         "meta": {
-          "handle": "stage_for_w71",
+          "handle": "coffee_and_news",
           "category": "rumor-discussion",
           "reposts": "533",
           "bookmarks": "219",
@@ -9696,17 +9681,16 @@
           "live": "true",
           "views": "25406",
           "language": "mixed",
-          "story": "true",
-          "fanType": "甜唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-72",
-        "title": "warmwinter72 @warmwinter72",
-        "body": "누군가 옆에 있다면 민정이가 오늘 하루만이라도 휴대폰을 내려놓고 편히 쉬게 해 줬으면.\n\n如果有人陪在她身边，希望能让旼炡今天至少放下手机，好好休息。",
+        "title": "daily_ent_brief @daily_ent_brief",
+        "body": "관련 게시물이 늘고 있지만, 현재 확인된 사실은 사진이 온라인에 게시됐다는 점뿐입니다.\n\n相关帖子正在增加，但目前唯一确定的是照片已经被发布到网络上。",
         "time": "2026-10-28 15:17",
         "meta": {
-          "handle": "warmwinter72",
+          "handle": "daily_ent_brief",
           "category": "rumor-discussion",
           "reposts": "616",
           "bookmarks": "248",
@@ -9715,17 +9699,16 @@
           "live": "true",
           "views": "26713",
           "language": "mixed",
-          "story": "true",
-          "fanType": "妈粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-73",
-        "title": "winkarina_clip73 @winkarina_clip73",
-        "body": "윈카 팬이지만 다른 해석을 하는 사람을 적으로 만들 생각은 없어. 좋아하는 조합은 각자 즐기면 되니까.\n\n我是 윈카 粉丝，但不会把持不同解读的人当敌人。喜欢的组合各自享受就好。",
+        "title": "not_a_fan_kr @not_a_fan_kr",
+        "body": "팬도 아닌데 추천에 계속 떠서 읽는 중. 댓글은 엄청 확신에 차 있는데 근거 링크는 없네.\n\n我不是粉丝，只是推荐页一直推才看了看。评论语气都很肯定，却没有依据链接。",
         "time": "2026-10-28 15:18",
         "meta": {
-          "handle": "winkarina_clip73",
+          "handle": "not_a_fan_kr",
           "category": "rumor-discussion",
           "reposts": "699",
           "bookmarks": "37",
@@ -9734,17 +9717,16 @@
           "live": "true",
           "views": "28020",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-74",
-        "title": "gf_mood74 @gf_mood74",
-        "body": "현실을 갑자기 마주하니 마음이 뒤숭숭하지만, 팬이라는 이유로 상대에게 답을 요구할 권리는 없겠지.\n\n突然面对现实，心情很乱；但身为粉丝，也没有权利要求对方给答案。",
+        "title": "open_question @open_question",
+        "body": "[토론] 유명인의 사생활 사진을 올리는 것과 그 사진을 재유포하는 것, 책임은 어디까지 있다고 봐야 하나요?\n\n【讨论】发布艺人私生活照片与再次转发照片，分别应该承担多大责任？",
         "time": "2026-10-28 15:19",
         "meta": {
-          "handle": "gf_mood74",
+          "handle": "open_question",
           "category": "rumor-discussion",
           "reposts": "782",
           "bookmarks": "66",
@@ -9753,17 +9735,16 @@
           "live": "true",
           "views": "29327",
           "language": "mixed",
-          "story": "true",
-          "fanType": "女友粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-75",
-        "title": "justscroll75 @justscroll75",
-        "body": "추천 탭에서 계속 떠서 봤는데, 확실한 사실은 거의 없고 서로의 해석만 늘어나는 것 같아요.\n\n推荐页一直推给我才点进来，几乎没有确定事实，只有越来越多的个人解读。",
+        "title": "global_feed @global_feed",
+        "body": "해외 팬 계정도 번역을 붙여 퍼 가는 중인데, 원문이 불분명한 상태에서 번역이 확정된 사실처럼 소비될까 걱정됨.\n\n海外粉丝账号也在翻译转发，但原文不清楚，担心翻译后会被当成确定事实。",
         "time": "2026-10-28 15:20",
         "meta": {
-          "handle": "justscroll75",
+          "handle": "global_feed",
           "category": "rumor-discussion",
           "reposts": "75",
           "bookmarks": "95",
@@ -9772,17 +9753,16 @@
           "live": "true",
           "views": "30634",
           "language": "mixed",
-          "story": "true",
-          "fanType": "路人"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-76",
-        "title": "not_here_to_hate76 @not_here_to_hate76",
-        "body": "루머를 핑계로 외모까지 평가하는 글은 그냥 악플 아닌가요. 사실 확인과 조롱은 다른 문제예요.\n\n借传闻评价外貌的帖子不就是恶评吗？核实事实和嘲讽是两回事。",
+        "title": "lunch_break_kr @lunch_break_kr",
+        "body": "사진 속 인물 맞히기 놀이처럼 흘러가는 게 좀 불편함. 당사자 이름 검색해서 찾아가는 건 선 넘는 일이지.\n\n把它变成猜照片里是谁的游戏，有点不舒服。搜索当事人名字去找人，就越界了。",
         "time": "2026-10-28 15:21",
         "meta": {
-          "handle": "not_here_to_hate76",
+          "handle": "lunch_break_kr",
           "category": "rumor-discussion",
           "reposts": "158",
           "bookmarks": "124",
@@ -9791,17 +9771,16 @@
           "live": "true",
           "views": "31941",
           "language": "mixed",
-          "story": "true",
-          "fanType": "黑粉借题发挥"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-77",
-        "title": "winter_only77 @winter_only77",
-        "body": "팬들이 걱정하는 건 알지만, 민정이 이름으로 서로 싸우는 글이 더 많이 노출되는 건 원치 않아.\n\n我理解粉丝担心，但不希望更多曝光的是大家打着旼炡名字互相争吵的帖子。",
+        "title": "media_check @media_check",
+        "body": "일부 게시물은 '목격자 제보'라고 쓰지만 실제 제보 내용은 공개하지 않았습니다. 확인된 내용과 주장을 구분해야 합니다.\n\n有些帖子标注“目击者爆料”，却没有公开实际爆料内容。应区分已确认信息和单方面说法。",
         "time": "2026-10-28 15:22",
         "meta": {
-          "handle": "winter_only77",
+          "handle": "media_check",
           "category": "rumor-discussion",
           "reposts": "241",
           "bookmarks": "153",
@@ -9810,17 +9789,16 @@
           "live": "true",
           "views": "33248",
           "language": "mixed",
-          "story": "true",
-          "fanType": "毒唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-78",
-        "title": "my_daydream78 @my_daydream78",
-        "body": "내가 쓰는 작은 상상은 내 노트 안에 두고, 현실의 당사자에겐 아무것도 요구하지 않으려고.\n\n我会把自己的小幻想留在笔记里，不向现实中的当事人要求什么。",
+        "title": "just_curious @just_curious",
+        "body": "혹시 사진 원본 본 사람? 지금 돌아다니는 건 다 확대하거나 잘라 놓은 것 같아서 판단을 못 하겠음.\n\n有人看过照片原图吗？现在流传的好像全是放大或裁剪版，没法判断。",
         "time": "2026-10-28 15:23",
         "meta": {
-          "handle": "my_daydream78",
+          "handle": "just_curious",
           "category": "rumor-discussion",
           "reposts": "324",
           "bookmarks": "182",
@@ -9829,17 +9807,16 @@
           "live": "true",
           "views": "5555",
           "language": "mixed",
-          "story": "true",
-          "fanType": "梦女"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-79",
-        "title": "winterning_story79 @winterning_story79",
-        "body": "윈닝을 좋아했던 순간은 여전히 즐거운 기억이야. 그렇다고 이번 사진의 정체를 대신 결론 내리진 않겠어.\n\n喜欢 윈닝 的那些瞬间仍是美好回忆，但我不会替这张照片里的身份下结论。",
+        "title": "quote_debate @quote_debate",
+        "body": "[토론] 사진이 사실이어도 연애 여부를 당사자가 공개해야 할 의무가 있을까요? 공개하지 않을 권리도 있다는 의견이 나옵니다.\n\n【讨论】即使照片是真的，当事人就有义务公开恋爱关系吗？也有人认为她有不公开的权利。",
         "time": "2026-10-28 15:24",
         "meta": {
-          "handle": "winterning_story79",
+          "handle": "quote_debate",
           "category": "rumor-discussion",
           "reposts": "407",
           "bookmarks": "211",
@@ -9848,17 +9825,16 @@
           "live": "true",
           "views": "6862",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-80",
-        "title": "w_support80 @w_support80",
-        "body": "민정이가 팬들에게 사과해야 한다는 분위기는 아니었으면 해. 확인되지 않은 일로 본인을 탓할 이유는 없잖아.\n\n希望不要变成旼炡必须向粉丝道歉的氛围，没必要因为未经证实的事责怪自己。",
+        "title": "algorithm_victim @algorithm_victim",
+        "body": "앱마다 똑같은 캡처가 떠서 이제는 사진보다 캡처 설명을 더 많이 읽고 있음. 알고리즘이 불을 붙이는 듯.\n\n每个平台都出现同一张截图，现在我读说明文字比看照片还多。感觉算法也在添火。",
         "time": "2026-10-28 15:25",
         "meta": {
-          "handle": "w_support80",
+          "handle": "algorithm_victim",
           "category": "rumor-discussion",
           "reposts": "490",
           "bookmarks": "240",
@@ -9867,17 +9843,16 @@
           "live": "true",
           "views": "8169",
           "language": "mixed",
-          "story": "true",
-          "fanType": "甜唯"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-81",
-        "title": "jealousbutcalm81 @jealousbutcalm81",
-        "body": "마음이 바로 정리되진 않겠지만, 서운함을 이유로 누군가를 괴롭히지는 않을 거야.\n\n心情可能没那么快整理好，但不会因为失落就去骚扰任何人。",
+        "title": "update_without_claim @update_without_claim",
+        "body": "새로운 공식 확인은 아직 없습니다. 추가 게시물이 올라오더라도 출처가 확인되기 전에는 사실로 단정하지 않겠습니다.\n\n目前仍无新的官方确认。即使出现更多帖子，在来源核实前也不会认定为事实。",
         "time": "2026-10-28 15:26",
         "meta": {
-          "handle": "jealousbutcalm81",
+          "handle": "update_without_claim",
           "category": "rumor-discussion",
           "reposts": "573",
           "bookmarks": "29",
@@ -9886,17 +9861,16 @@
           "live": "true",
           "views": "9476",
           "language": "mixed",
-          "story": "true",
-          "fanType": "女友粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-82",
-        "title": "shipper_soft82 @shipper_soft82",
-        "body": "좋아하는 케미와 실제 연애는 별개일 수 있다는 걸 기억하고 싶어요. 오늘도 조합 영상은 즐겁게 볼래요.\n\n我想记住喜欢的互动和现实恋爱可能是两回事。今天还是会开心看组合视频。",
+        "title": "comment_reader @comment_reader",
+        "body": "댓글에 '내 지인이 안다'는 말만 계속 늘어남. 지인이라는 말 자체가 근거는 아닌데.\n\n评论里“我认识的人知道”越来越多，但“认识的人”本身又不是证据。",
         "time": "2026-10-28 15:27",
         "meta": {
-          "handle": "shipper_soft82",
+          "handle": "comment_reader",
           "category": "rumor-discussion",
           "reposts": "656",
           "bookmarks": "58",
@@ -9905,17 +9879,16 @@
           "live": "true",
           "views": "10783",
           "language": "mixed",
-          "story": "true",
-          "fanType": "CP粉"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-83",
-        "title": "wait_for_words83 @wait_for_words83",
-        "body": "공식적인 설명이 나오기 전까지는 새로 나온 캡처를 사실처럼 다루지 않으려고 합니다.\n\n在正式说明出来之前，我不会把新出现的截图当成事实。",
+        "title": "bus_home_kr @bus_home_kr",
+        "body": "퇴근하면서 보는데 서로 다른 설명이 열 개 넘게 붙었네. 이쯤이면 정보가 아니라 이야기 경쟁 같음.\n\n下班路上看了看，已经出现十几种不同解释了。到这一步看着像是在比赛编故事，而不是传递信息。",
         "time": "2026-10-28 15:28",
         "meta": {
-          "handle": "wait_for_words83",
+          "handle": "bus_home_kr",
           "category": "rumor-discussion",
           "reposts": "739",
           "bookmarks": "87",
@@ -9924,17 +9897,16 @@
           "live": "true",
           "views": "12090",
           "language": "mixed",
-          "story": "true",
-          "fanType": "普通粉丝"
+          "story": "true"
         }
       },
       {
         "id": "xrumor-20261028-84",
-        "title": "minjeong_song84 @minjeong_song84",
-        "body": "오늘은 관련 검색을 멈추고 민정이 솔로 무대 영상을 보려고요. 좋아하는 이유를 다시 떠올리고 싶어요.\n\n今天我打算停止搜索相关内容，去看旼炡的个人舞台视频，重新想想自己喜欢她的原因。",
+        "title": "privacy_column @privacy_column",
+        "body": "유명인이라도 사진 속 상대가 일반인일 수 있다면 신상 추적을 막는 게 우선이라는 의견. 사진 유포와 신상 공개는 별개의 문제입니다.\n\n有人指出，即使是艺人，如果照片里的同行者可能是普通人，也应优先避免追查身份。传播照片和曝光身份是两回事。",
         "time": "2026-10-28 15:29",
         "meta": {
-          "handle": "minjeong_song84",
+          "handle": "privacy_column",
           "category": "rumor-discussion",
           "reposts": "822",
           "bookmarks": "116",
@@ -9943,8 +9915,7 @@
           "live": "true",
           "views": "13397",
           "language": "mixed",
-          "story": "true",
-          "fanType": "甜唯"
+          "story": "true"
         }
       }
     ],
@@ -9958,8 +9929,8 @@
     "threads": [
       {
         "id": "threadrumor-20261028-01",
-        "title": "민정밥은먹었니 @winter_mom01",
-        "body": "사진 한 장 뜨자마자 실검에 이름 오르고 댓글창 뒤집히는 거 보니까 마음이 쓰인다. 오늘 스케줄도 있을 텐데 밥은 먹었으려나.\n\n一张照片刚出现，她的名字就冲上热搜、评论区也吵翻了，看着真让人心疼。她今天应该还有行程，不知道有没有好好吃饭。",
+        "title": "winter_only01 @winter_only01",
+        "body": "아니 사진 하나 떴다고 민정이 커리어에 훈수 두는 글 벌써 올라오는 거 짜증 나네. 무대 얘기나 하던 사람들까지 갑자기 연애 전문가 됨.\n\n才一张照片，就有人开始对旼炡的事业指手画脚，看得我心烦。平时聊舞台的人突然全成恋爱专家了。",
         "sender": "민정밥은먹었니",
         "time": "2026-10-28 14:06",
         "avatar": "",
@@ -9971,7 +9942,7 @@
           "팬들이 답을 재촉할수록 본인만 더 힘들겠어요. / 粉丝越催她回应，她只会越难受。"
         ],
         "meta": {
-          "handle": "winter_mom01",
+          "handle": "winter_only01",
           "category": "rumor-discussion",
           "reposts": "90",
           "bookmarks": "30",
@@ -9981,13 +9952,13 @@
           "views": "3200",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-02",
-        "title": "오늘의제보창 @today_tip02",
-        "body": "사진 원본도 안 풀렸는데 캡처본만 돌고 있네. 계정마다 설명이 다르니까 일단 누구라고 단정하기는 어려워 보임.\n\n原图都没流出来，现在传的全是截图。每个账号的说法还不一样，暂时很难确认照片里的人是谁。",
+        "title": "winter_smile02 @winter_smile02",
+        "body": "민정이 웃는 영상 보러 들어왔다가 이 글만 몇십 개째 보고 있음… 오늘은 그냥 직캠 틀어놓고 타임라인 닫아야겠다.\n\n本来是来找旼炡笑起来的视频，结果刷了几十条全是这个……今天还是开着直拍，把时间线关了吧。",
         "sender": "오늘의제보창",
         "time": "2026-10-28 14:07",
         "avatar": "",
@@ -9999,7 +9970,7 @@
           "확대截图는 화질만 깨져요. / 放大截图只会让画质更糊。"
         ],
         "meta": {
-          "handle": "today_tip02",
+          "handle": "winter_smile02",
           "category": "rumor-discussion",
           "reposts": "121",
           "bookmarks": "39",
@@ -10009,13 +9980,13 @@
           "views": "3607",
           "language": "mixed",
           "story": "true",
-          "fanType": "路人吃瓜"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-03",
-        "title": "winter_only03 @winter_only03",
-        "body": "민정이 연애설 하나로 하루 종일 모든 얘기를 그쪽으로 몰아가진 않았으면 좋겠어. 확인도 안 된 사진인데 오늘은 민정이 본업 얘기도 하자.\n\n希望别因为旼炡一条恋爱传闻，就把一整天的话题全带偏。照片都还没确认，今天也聊聊旼炡的作品吧。",
+        "title": "gf_cloud03 @gf_cloud03",
+        "body": "나 괜찮은 줄 알았는데 사진 보자마자 기분이 이상해짐. 내가 뭐라고 질투까지 하나 싶어서 그게 또 현타 와.\n\n我还以为自己没事，看到照片还是心里一沉。然后又觉得自己凭什么嫉妒，第二波清醒感更难受。",
         "sender": "윈터만보는계정",
         "time": "2026-10-28 14:08",
         "avatar": "",
@@ -10027,7 +9998,7 @@
           "비교글에 이름만 계속 소환되는 것도 피곤함. / 比较帖里总被点名也很烦。"
         ],
         "meta": {
-          "handle": "winter_only03",
+          "handle": "gf_cloud03",
           "category": "rumor-discussion",
           "reposts": "152",
           "bookmarks": "48",
@@ -10037,13 +10008,13 @@
           "views": "4014",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-04",
-        "title": "민정여친일기 @winter_gf04",
-        "body": "평소엔 버블 한 줄에도 하루 종일 설레면서, 사진 한 장에 현실을 생각하게 되니까 기분이 이상하다. 질투는 나는데 민정이가 잘못한 건 아니잖아.\n\n平时她在 Bubble 里发一句话，我都能开心一整天；现在一张照片却把我拉回现实，心情很奇怪。会嫉妒，但旼炡也没做错什么。",
+        "title": "winter_work04 @winter_work04",
+        "body": "이번 주 활동 기다리고 있었는데 관련 검색어만 계속 뜨니까 속상함. 일단 예정된 무대나 홍보가 영향 안 받았으면 좋겠다.\n\n我一直在等这周的活动，现在相关热搜却不停刷屏，挺难受的。只希望原定舞台和宣传别受影响。",
         "sender": "민정여친일기",
         "time": "2026-10-28 14:09",
         "avatar": "",
@@ -10055,7 +10026,7 @@
           "오늘은 버블 다시 읽다가 괜히 울컥함. / 今天重看 Bubble，莫名有点难受。"
         ],
         "meta": {
-          "handle": "winter_gf04",
+          "handle": "winter_work04",
           "category": "rumor-discussion",
           "reposts": "183",
           "bookmarks": "57",
@@ -10065,13 +10036,13 @@
           "views": "4421",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-05",
-        "title": "winter_stage05 @winter_stage05",
-        "body": "사진의 진위부터 확인됐으면 좋겠다. 이 일로 민정이의 무대나 음악에 대한 평가까지 한꺼번에 흔들리는 건 원치 않아.\n\n希望先确认照片真假。我不希望这件事连带影响大家对旼炡舞台和音乐的评价。",
+        "title": "winter_mom05 @winter_mom05",
+        "body": "밥 먹었는지 잠은 잤는지부터 걱정되는 내가 웃기기도 한데… 이런 날은 댓글 좀 안 보고 푹 쉬었으면.\n\n我居然先担心她有没有吃饭、有没有睡好，想想也有点好笑……这种时候真希望她别看评论，好好休息。",
         "sender": "윈카는운명",
         "time": "2026-10-28 14:10",
         "avatar": "",
@@ -10083,7 +10054,7 @@
           "윈카는 내 취향이고 현실은 아직 모르는 거지. / 윈卡是我的喜好，现实情况仍然未知。"
         ],
         "meta": {
-          "handle": "winter_stage05",
+          "handle": "winter_mom05",
           "category": "rumor-discussion",
           "reposts": "214",
           "bookmarks": "66",
@@ -10093,13 +10064,13 @@
           "views": "4828",
           "language": "mixed",
           "story": "true",
-          "fanType": "事业粉"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-06",
-        "title": "꿈속민정한테 @winter_dream06",
-        "body": "현실 소식은 잠깐 내려놓고 상상 속에서는 민정이랑 퇴근길 편의점 들러서 아이스크림 고르는 중ㅋㅋ 내 망상은 내가 즐길 테니 현실 당사자한테 답을 요구하진 않을래.\n\n先把现实消息放一边，我在幻想里和旼炡下班后一起去便利店挑冰淇淋，哈哈。我的幻想自己享受就好，不会要求现实中的她给答案。",
+        "title": "winter_dream06 @winter_dream06",
+        "body": "아니 나 진짜 민정이랑 결혼한다고 생각한 적도 없는데 왜 이렇게 마음이 복잡하냐고ㅋㅋ 내 망상은 망상인데 현실 소식은 또 따로 충격임.\n\n我又不是真的以为自己会和旼炡结婚，怎么心情还是这么复杂啊哈哈。幻想归幻想，现实消息还是会冲击到我。",
         "sender": "꿈속민정한테",
         "time": "2026-10-28 14:11",
         "avatar": "",
@@ -10121,13 +10092,13 @@
           "views": "5235",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-07",
-        "title": "wintercare07 @wintercare07",
-        "body": "오늘도 일정이 있을 텐데 댓글이 이렇게 시끄러우면 신경 쓰일까 걱정돼. 민정이가 밥 잘 먹고 편하게 쉬었으면 해.\n\n她今天应该也有行程，评论区这么吵，担心她会受影响。希望旼炡好好吃饭、安心休息。",
+        "title": "winter_yes07 @winter_yes07",
+        "body": "민정이가 누구를 만나든 본인이 선택한 일이면 존중하고 싶어. 근데 나도 놀란 건 놀란 거라 하루 정도는 조용히 소화할래.\n\n无论旼炡和谁交往，只要是她自己的选择，我都想尊重。不过震惊也是真的，我想花一天安静消化。",
         "sender": "마이네명다소중해",
         "time": "2026-10-28 14:12",
         "avatar": "",
@@ -10139,7 +10110,7 @@
           "팬덤끼리 싸우는 동안 정작 컴백 얘기는 묻히네. / 粉圈吵来吵去，回归话题反倒被淹没了。"
         ],
         "meta": {
-          "handle": "wintercare07",
+          "handle": "winter_yes07",
           "category": "rumor-discussion",
           "reposts": "276",
           "bookmarks": "84",
@@ -10149,13 +10120,13 @@
           "views": "5642",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "全肯定粉"
         }
       },
       {
         "id": "threadrumor-20261028-08",
-        "title": "winterfeel08 @winterfeel08",
-        "body": "평소엔 민정이가 팬들에게 다정하게 한마디만 해도 하루 종일 설렜는데, 연애설을 보니 마음이 복잡하네. 질투 나도 민정이 탓은 못 하겠어.\n\n平时旼炡对粉丝说一句温柔的话，我都能开心一整天；看到恋爱传闻后心情却很复杂。会嫉妒，但也不能怪旼炡。",
+        "title": "winter_focus08 @winter_focus08",
+        "body": "사진 하나로 상대가 누군지 맞히기 놀이하는 계정들 좀 그만 보고 싶다. 민정이 이름 걸고 추측을 사실처럼 쓰지 마.\n\n真不想再看那些靠一张照片猜对方身份的账号。别挂着旼炡的名字，把猜测写得像事实一样。",
         "sender": "윈닝만이답",
         "time": "2026-10-28 14:13",
         "avatar": "",
@@ -10167,7 +10138,7 @@
           "둘이 장난치는 영상은 계속 볼 거지만 증거라고 하진 않을래. / 我会继续看她们打闹的视频，但不会说那是证据。"
         ],
         "meta": {
-          "handle": "winterfeel08",
+          "handle": "winter_focus08",
           "category": "rumor-discussion",
           "reposts": "307",
           "bookmarks": "93",
@@ -10177,13 +10148,13 @@
           "views": "6049",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-09",
-        "title": "자료부터보자 @source_check09",
-        "body": "지인 인증이라는 글도 봤고 합성이라는 글도 봤는데 둘 다 출처가 빈약함. 원본과 최초 게시물 확인 전까지는 퍼 나르지 않는 게 낫겠다.\n\n我看到有人说是熟人确认，也有人说是合成图，但双方都没拿出可靠来源。找到原图和最早的帖子之前，最好先别转发。",
+        "title": "gf_diary09 @gf_diary09",
+        "body": "버블에서 오늘도 고맙다고 해 줬던 거 생각나서 괜히 더 서운해짐. 그 말이 거짓이었던 건 아닌데 내 마음이 알아서 의미를 붙였나 봐.\n\n想起她在 Bubble 里说过今天也谢谢大家，反而更失落了。那句话当然不是假的，大概是我的心自己赋予了太多意义。",
         "sender": "자료부터보자",
         "time": "2026-10-28 14:14",
         "avatar": "",
@@ -10195,7 +10166,7 @@
           "이미 퍼진 뒤라 늦었지만 지금이라도 확산은 멈췄으면. / 虽然已经传开了，但希望现在至少别继续扩散。"
         ],
         "meta": {
-          "handle": "source_check09",
+          "handle": "gf_diary09",
           "category": "rumor-discussion",
           "reposts": "338",
           "bookmarks": "102",
@@ -10205,13 +10176,13 @@
           "views": "6456",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-10",
-        "title": "윈터논란수집 @winter_hate10",
-        "body": "평소엔 무대 얘기하다가 반박당하면 조용하더니 이런 날만 기다렸다는 듯 달려드는 계정들 보이네. 루머를 핑계로 조롱하는 건 너무 티 남.\n\n平时聊舞台时被反驳就不出声，一到这种日子就像等着机会一样涌出来的账号真不少。借传闻嘲笑她，意图太明显了。",
+        "title": "winter_voice10 @winter_voice10",
+        "body": "솔직히 사진보다 오늘 올라온 노래 클립이 더 좋았어. 근데 검색창 열 때마다 열애설부터 보여서 흐름 끊기는 게 아쉽다.\n\n说实话，我更喜欢今天发的歌曲片段。但每次打开搜索框先看到的都是恋爱传闻，很扫兴。",
         "sender": "윈터논란수집",
         "time": "2026-10-28 14:15",
         "avatar": "",
@@ -10223,7 +10194,7 @@
           "관심 받으려고 일부러 자극적인 말 쓰는 듯. / 感觉就是故意说刺激性的话博关注。"
         ],
         "meta": {
-          "handle": "winter_hate10",
+          "handle": "winter_voice10",
           "category": "rumor-discussion",
           "reposts": "369",
           "bookmarks": "111",
@@ -10233,13 +10204,13 @@
           "views": "6863",
           "language": "mixed",
           "story": "true",
-          "fanType": "黑粉借题发挥"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-11",
-        "title": "winter_smile11 @winter_smile11",
-        "body": "민정이가 무대에서 웃는 모습이 좋아서 응원하기 시작했어. 오늘도 사진 분석보다 예전 직캠을 다시 보는 게 내 마음에는 더 좋겠다.\n\n我是因为喜欢旼炡在舞台上笑起来的样子才开始支持她。今天比起分析照片，我还是重看以前的直拍更开心。",
+        "title": "winter_line11 @winter_line11",
+        "body": "민정이한테 당장 설명하라는 반응도 이해 안 되고, 반대로 팬이면 무조건 아무 감정 없어야 한다는 말도 이상함. 놀랄 수는 있지.\n\n不理解那些要求旼炡立刻解释的人，也不理解说粉丝就必须毫无情绪的人。感到震惊很正常吧。",
         "sender": "윈젤떡밥수집",
         "time": "2026-10-28 14:16",
         "avatar": "",
@@ -10251,7 +10222,7 @@
           "윈젤 콘텐츠 보러 왔다가 싸움만 보고 나감. / 本来是来看 윈젤 内容，结果只看到吵架。"
         ],
         "meta": {
-          "handle": "winter_smile11",
+          "handle": "winter_line11",
           "category": "rumor-discussion",
           "reposts": "400",
           "bookmarks": "120",
@@ -10261,13 +10232,13 @@
           "views": "7270",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-12",
-        "title": "민정이잠부터 @mom_winter12",
-        "body": "앨범 준비하느라 연습하고 촬영하느라 바빴을 텐데, 이제는 사생활 해명까지 해야 하는 분위기라니. 팬이면 더 조용히 기다려 줄 줄도 알아야지.\n\n她为了专辑准备，练习、拍摄已经够忙了，现在还像是必须出来解释私生活一样。作为粉丝，也该学会安静等待。",
+        "title": "winter_rest12 @winter_rest12",
+        "body": "이럴 때일수록 민정이가 미안해할 일처럼 분위기 만들지 않았으면 해. 누구를 만나든 본인 삶인데.\n\n越是这种时候，越希望别营造出旼炡做错了事、需要道歉的氛围。无论她和谁交往，都是她的人生。",
         "sender": "민정이잠부터",
         "time": "2026-10-28 14:17",
         "avatar": "",
@@ -10279,7 +10250,7 @@
           "오늘은 댓글창 말고 무대 영상이나 보려고요. / 今天不看评论区了，去看舞台视频。"
         ],
         "meta": {
-          "handle": "mom_winter12",
+          "handle": "winter_rest12",
           "category": "rumor-discussion",
           "reposts": "431",
           "bookmarks": "129",
@@ -10294,8 +10265,8 @@
       },
       {
         "id": "threadrumor-20261028-13",
-        "title": "민정이랑산책중 @winterdate13",
-        "body": "나 오늘 현실 타임라인은 닫고 민정이랑 한강 산책하는 상상만 할래. 현실 사진이 누구든 내 머릿속 데이트 코스까지 망칠 수는 없지ㅋㅋ\n\n我今天要关掉现实时间线，只幻想和旼炡去汉江散步。不管现实照片里是谁，也不能毁掉我脑子里的约会路线，哈哈。",
+        "title": "gf_mood13 @gf_mood13",
+        "body": "다른 팬들 축하한다는 말 보는데 나는 아직 그 말이 안 나옴. 그렇다고 그 사람한테 화낼 생각은 없고 그냥 내 마음이 좀 느린 듯.\n\n看到别的粉丝说祝福，我还说不出口。但我也没打算对那个人发火，只是我的心情还没跟上。",
         "sender": "민정이랑산책중",
         "time": "2026-10-28 14:18",
         "avatar": "",
@@ -10307,7 +10278,7 @@
           "상상 속 민정이는 오늘도 내 편임ㅋㅋ / 幻想里的旼炡今天也站在我这边，哈哈。"
         ],
         "meta": {
-          "handle": "winterdate13",
+          "handle": "gf_mood13",
           "category": "rumor-discussion",
           "reposts": "462",
           "bookmarks": "138",
@@ -10317,13 +10288,13 @@
           "views": "8084",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-14",
-        "title": "winter_guard14 @winter_guard14",
-        "body": "루머 때문에 민정이의 홍보나 활동 기회가 줄어들지 않을까 걱정돼. 회사가 추측성 기사에 휘둘리지 않고 예정된 활동을 잘 지켜 줬으면 해.\n\n担心旼炡的宣传和活动机会会不会因为传闻受到影响。希望公司不要被猜测性报道牵着走，能好好保障原定活动。",
+        "title": "winter_stage14 @winter_stage14",
+        "body": "루머가 진짜인지 아닌지랑 별개로 다음 활동이 제대로 주목받았으면 해. 오늘 준비한 무대나 음악 얘기도 계속 하고 싶다.\n\n不管传闻真假，我都希望接下来的活动能得到应有关注。我还想继续聊她准备的舞台和音乐。",
         "sender": "윈터분량지켜",
         "time": "2026-10-28 14:19",
         "avatar": "",
@@ -10335,7 +10306,7 @@
           "그렇다고 다른 멤버한테 화살 돌리진 맙시다. / 但也别把矛头转向其他成员。"
         ],
         "meta": {
-          "handle": "winter_guard14",
+          "handle": "winter_stage14",
           "category": "rumor-discussion",
           "reposts": "493",
           "bookmarks": "147",
@@ -10345,13 +10316,13 @@
           "views": "8491",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-15",
-        "title": "질투는내몫 @winter_gf15",
-        "body": "친구한테는 '난 괜찮아'라고 했는데 알고리즘이 계속 관련 글을 띄워서 하루 종일 보게 된다. 솔직히 질투 나고 속상하지만 민정이한테 설명하라고 할 수는 없지.\n\n我跟朋友说“我没事”，但算法一直推相关帖子，害我看了一整天。说实话会嫉妒、会难过，可我没资格要求旼炡解释。",
+        "title": "winter_dream15 @winter_dream15",
+        "body": "나 오늘은 관련 계정 안 들어갈래. 들어갈수록 혼자 상상했던 장면이랑 현실이랑 부딪혀서 기분만 이상해짐.\n\n今天不想再点相关账号了。看得越多，脑海里的幻想越和现实碰撞，心情越奇怪。",
         "sender": "질투는내몫",
         "time": "2026-10-28 14:20",
         "avatar": "",
@@ -10363,7 +10334,7 @@
           "팬심이랑 현실 감정 분리하는 게 쉽지 않네요. / 把粉丝心情和现实情绪分开真不容易。"
         ],
         "meta": {
-          "handle": "winter_gf15",
+          "handle": "winter_dream15",
           "category": "rumor-discussion",
           "reposts": "524",
           "bookmarks": "156",
@@ -10373,13 +10344,13 @@
           "views": "8898",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-16",
-        "title": "winter_check16 @winter_check16",
-        "body": "사진 한 장만으로 연애 여부를 확정할 순 없지. 확인된 정보와 추측을 나눠서 이야기했으면 좋겠어.\n\n不能只凭一张照片就确认是否恋爱。希望大家把已知信息和猜测分开讨论。",
+        "title": "winter_only16 @winter_only16",
+        "body": "상대가 누군지 알아내겠다고 사진 확대하고 옷 분석하는 거 너무 과해. 맞든 아니든 여기서 멈추는 게 낫지 않나.\n\n为了知道对方是谁就放大照片、分析衣服，真的太过了。无论真假，不如先停在这里。",
         "sender": "카리나가먼저였어",
         "time": "2026-10-28 14:21",
         "avatar": "",
@@ -10391,7 +10362,7 @@
           "떡밥은 떡밥으로 즐길 때 재밌는 건데. / 互动糖点当糖点嗑才好玩。"
         ],
         "meta": {
-          "handle": "winter_check16",
+          "handle": "winter_only16",
           "category": "rumor-discussion",
           "reposts": "555",
           "bookmarks": "165",
@@ -10401,13 +10372,13 @@
           "views": "9305",
           "language": "mixed",
           "story": "true",
-          "fanType": "理性粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-17",
-        "title": "컴백날짜만기다림 @comeback_maigo17",
-        "body": "사진 얘기만 세 페이지째인데 나는 다음 무대 셋리스트 얘기나 하고 싶다. 열애 여부가 어떻든 에스파가 준비하는 음악까지 묻히는 건 싫음.\n\n已经连续三页都在聊照片了，我只想讨论下一场舞台的歌单。不管恋爱传闻真假，我不想让 aespa 准备的音乐也被淹没。",
+        "title": "winter_yes17 @winter_yes17",
+        "body": "놀랐다고 말하는 것까지 눈치 볼 필요는 없다고 생각함. 다만 그 감정으로 당사자한테 뭘 요구할 수 있는 건 아니니까 천천히 정리하자.\n\n我觉得没必要连说自己震惊都要看人脸色。但这种情绪也不意味着能向当事人索取什么，慢慢整理吧。",
         "sender": "컴백날짜만기다림",
         "time": "2026-10-28 14:22",
         "avatar": "",
@@ -10419,7 +10390,7 @@
           "근데 이런 날엔 팬덤이 원래 이렇게 갈리나 봐요. / 不过这种日子粉圈似乎就是会分裂成这样。"
         ],
         "meta": {
-          "handle": "comeback_maigo17",
+          "handle": "winter_yes17",
           "category": "rumor-discussion",
           "reposts": "586",
           "bookmarks": "174",
@@ -10429,13 +10400,13 @@
           "views": "9712",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "全肯定粉"
         }
       },
       {
         "id": "threadrumor-20261028-18",
-        "title": "winter_yes18 @winter_yes18",
-        "body": "민정이가 어떤 선택을 하든 자기 삶을 살아갈 권리가 있다고 생각해. 놀란 마음은 천천히 정리하고, 확인되지 않은 일로 몰아붙이지는 말자.\n\n我觉得无论旼炡做什么选择，她都有权过自己的生活。受到冲击可以慢慢消化，但别用未经证实的事逼迫她。",
+        "title": "gf_heart18 @gf_heart18",
+        "body": "진짜 한순간에 현타가 오네… 내가 혼자 설레던 시간까지 민망해지는 느낌인데, 그래도 그때 행복했던 건 사실이야.\n\n真的会在一瞬间清醒……连自己独自心动的时光都觉得不好意思，但当时开心也是真的。",
         "sender": "윈닝은가족이야",
         "time": "2026-10-28 14:23",
         "avatar": "",
@@ -10447,7 +10418,7 @@
           "같이 나온 영상만 봐도 충분히 즐길 수 있어요. / 光看她们一起出现的视频就足够开心了。"
         ],
         "meta": {
-          "handle": "winter_yes18",
+          "handle": "gf_heart18",
           "category": "rumor-discussion",
           "reposts": "617",
           "bookmarks": "183",
@@ -10457,13 +10428,13 @@
           "views": "10119",
           "language": "mixed",
           "story": "true",
-          "fanType": "全肯定粉"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-19",
-        "title": "민정아쉬어도돼 @winter_rest19",
-        "body": "팬들이 사랑한다고 말하면서도 사소한 표정 하나까지 해명하라고 하는 건 모순 같아. 일도 사생활도 다 감시받지 않고 편하게 지냈으면 좋겠어.\n\n粉丝嘴上说爱她，却又要求她解释每个细微表情，这很矛盾。希望她工作和私生活都能自在一点，不必时时刻刻被监视。",
+        "title": "winter_clip19 @winter_clip19",
+        "body": "팬들끼리 누구 편인지 시험하듯 묻는 것도 피곤하다. 민정이 좋아하는 마음이 꼭 같은 반응으로 나와야 하는 건 아니잖아.\n\n粉丝之间像考试一样追问站哪边也很累。喜欢旼炡的心情，不一定非得表现成同一种反应吧。",
         "sender": "민정아쉬어도돼",
         "time": "2026-10-28 14:24",
         "avatar": "",
@@ -10475,7 +10446,7 @@
           "무엇보다 잠깐이라도 편하게 쉬었으면 해요. / 最重要的是，希望她能安心休息一会儿。"
         ],
         "meta": {
-          "handle": "winter_rest19",
+          "handle": "winter_clip19",
           "category": "rumor-discussion",
           "reposts": "648",
           "bookmarks": "192",
@@ -10485,13 +10456,13 @@
           "views": "10526",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-20",
-        "title": "민정이여친시점 @gf_view20",
-        "body": "내가 혼자 쌓아 둔 설렘이 현실이 될 거라고 믿은 건 아닌데도 막상 다른 가능성이 보이니까 마음이 철렁한다. 오늘은 팬계정 로그아웃해야겠음.\n\n我并不是相信自己积攒的心动真的会变成现实，可一旦看见别的可能，心还是猛地沉了一下。今天得先退出粉丝账号。",
+        "title": "winter_solo20 @winter_solo20",
+        "body": "나는 민정이 개인 활동 보려고 팔로우한 건데 하루 종일 연애설만 보게 되는 건 싫음. 알고리즘도 오늘은 진짜 심하다.\n\n我关注她是为了看旼炡个人活动，不想一整天只看恋爱传闻。今天算法也太过分了。",
         "sender": "민정이여친시점",
         "time": "2026-10-28 14:25",
         "avatar": "",
@@ -10503,7 +10474,7 @@
           "저도 오늘은 관련 키워드 뮤트했어요. / 我今天也屏蔽了相关关键词。"
         ],
         "meta": {
-          "handle": "gf_view20",
+          "handle": "winter_solo20",
           "category": "rumor-discussion",
           "reposts": "679",
           "bookmarks": "201",
@@ -10513,13 +10484,13 @@
           "views": "10933",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-21",
-        "title": "winter_gf21 @winter_gf21",
-        "body": "질투가 생겨도 민정이의 실제 삶을 내가 정할 수는 없다는 걸 기억하려고 해.\n\n即使会嫉妒，我也会记得自己不能决定旼炡的现实生活。",
+        "title": "winter_mom21 @winter_mom21",
+        "body": "혹시 이 일 때문에 민정이가 팬들 반응 하나하나 신경 쓸까 봐 마음이 쓰여. 다 읽지 않아도 괜찮다고 누가 말해 줬으면.\n\n担心旼炡会因为这件事在意粉丝的每一条反应。真希望有人告诉她，不必把所有评论都看完。",
         "sender": "젤윈서사",
         "time": "2026-10-28 14:26",
         "avatar": "",
@@ -10531,7 +10502,7 @@
           "조합 콘텐츠는 계속 올라왔으면 좋겠다. / 希望组合向内容还能继续更新。"
         ],
         "meta": {
-          "handle": "winter_gf21",
+          "handle": "winter_mom21",
           "category": "rumor-discussion",
           "reposts": "710",
           "bookmarks": "210",
@@ -10541,13 +10512,13 @@
           "views": "11340",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-22",
-        "title": "winter_career22 @winter_career22",
-        "body": "이번 이슈가 오래 이어져서 민정이의 활동 소식까지 묻힐까 봐 걱정돼. 루머 확산보다 무대와 작업물에 관심이 돌아왔으면 좋겠다.\n\n担心这件事持续发酵，把旼炡的活动消息都淹没了。希望关注点能从传闻转回舞台和作品。",
+        "title": "winter_dream22 @winter_dream22",
+        "body": "‘내 여자’라고 혼자 생각하며 덕질한 건 내 마음인데, 이제 현실 얘기 보니까 갑자기 그 마음 둘 데가 없어졌어.\n\n把她当成“我的女孩”只是我自己的心情，可现在看到现实消息，突然不知道该把这份心情放在哪里。",
         "sender": "윈터커리어우선",
         "time": "2026-10-28 14:27",
         "avatar": "",
@@ -10559,7 +10530,7 @@
           "지금은 공식 일정이나 무대 소식이 더 필요함. / 现在更需要官方行程和舞台消息。"
         ],
         "meta": {
-          "handle": "winter_career22",
+          "handle": "winter_dream22",
           "category": "rumor-discussion",
           "reposts": "741",
           "bookmarks": "219",
@@ -10569,13 +10540,13 @@
           "views": "11747",
           "language": "mixed",
           "story": "true",
-          "fanType": "事业粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-23",
-        "title": "winter_heart23 @winter_heart23",
-        "body": "솔직히 질투가 안 난다면 거짓말이지. 그래도 현실의 민정이는 내 상상과 별개인 사람이라는 걸 아니까, 오늘은 마음부터 추슬러 보려고.\n\n说完全不嫉妒肯定是假的。但我知道现实中的旼炡和我的幻想是两回事，今天先整理好自己的心情。",
+        "title": "winter_fact23 @winter_fact23",
+        "body": "현재 확실한 건 사진이 돌고 있다는 것뿐인 듯. 인물이나 관계는 아직 추측이니까 확인된 것과 바람을 나눠서 말했으면.\n\n目前能确定的好像只有照片正在流传。人物和关系都还是猜测，希望大家把事实和自己的期待分开。",
         "sender": "윈카아카이브",
         "time": "2026-10-28 14:28",
         "avatar": "",
@@ -10587,7 +10558,7 @@
           "레전드 무대 링크 모아 둔 거 공유해 주세요. / 可以分享你收藏的经典舞台链接吗？"
         ],
         "meta": {
-          "handle": "winter_heart23",
+          "handle": "winter_fact23",
           "category": "rumor-discussion",
           "reposts": "772",
           "bookmarks": "228",
@@ -10597,13 +10568,13 @@
           "views": "12154",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女粉"
+          "fanType": "理性粉"
         }
       },
       {
         "id": "threadrumor-20261028-24",
-        "title": "photo_check24 @photo_check24",
-        "body": "기사 제목은 확정된 것처럼 보이는데 본문은 추측이 많네. 원본이랑 출처가 확인되기 전까지는 결론을 미루는 게 맞을 듯.\n\n新闻标题看起来像是已经确定，但正文里却有很多猜测。原图和来源确认之前，还是先别急着下结论。",
+        "title": "gf_offline24 @gf_offline24",
+        "body": "친구한텐 괜찮다고 해 놓고 집 와서 검색 계속하는 중… 이럴 때 내가 생각보다 많이 좋아했구나 실감한다.\n\n跟朋友说没事，回家却一直搜索……这才发现，原来我比想象中更喜欢她。",
         "sender": "조합과몰입그만",
         "time": "2026-10-28 14:29",
         "avatar": "",
@@ -10615,7 +10586,7 @@
           "그렇다고 CP팬 전부를 똑같이 몰아가진 말아요. / 但也别把所有 CP 粉都一概而论。"
         ],
         "meta": {
-          "handle": "photo_check24",
+          "handle": "gf_offline24",
           "category": "rumor-discussion",
           "reposts": "803",
           "bookmarks": "237",
@@ -10625,13 +10596,13 @@
           "views": "12561",
           "language": "mixed",
           "story": "true",
-          "fanType": "路人吃瓜"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-25",
-        "title": "퇴근길상상 @winter_dream25",
-        "body": "내 상상 속에서는 민정이가 공연 끝나고 나한테 오늘 힘들었다고 털어놓는 중. 현실의 누구와 있든 내가 만들어 둔 작은 이야기는 그냥 내 마음속에 둘래.\n\n在我的幻想里，旼炡演出结束后正向我倾诉今天有多累。不管现实里她和谁在一起，我都会把自己编的小故事留在心里。",
+        "title": "winter_song25 @winter_song25",
+        "body": "예전 라이브 다시 들으니까 괜히 울컥하네. 오늘은 사진 분석 말고 민정이가 해 준 말이랑 노래만 기억하고 싶어.\n\n重听以前的直播，突然有点鼻酸。今天不想分析照片，只想记得旼炡说过的话和唱过的歌。",
         "sender": "퇴근길상상",
         "time": "2026-10-28 14:30",
         "avatar": "",
@@ -10643,7 +10614,7 @@
           "오늘은 '수고했어'라고 말해 주는 상상만 할래요. / 今天只想象对她说一句“辛苦了”。"
         ],
         "meta": {
-          "handle": "winter_dream25",
+          "handle": "winter_song25",
           "category": "rumor-discussion",
           "reposts": "834",
           "bookmarks": "246",
@@ -10653,13 +10624,13 @@
           "views": "12968",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-26",
-        "title": "winter_guard26 @winter_guard26",
-        "body": "민정이 이름으로 자극적인 게시물을 만들어 관심을 끄는 건 별로야. 관계가 사실인지와 별개로, 추측을 이용해 조회수를 올리는 방식은 싫어.\n\n不喜欢拿旼炡的名字制造刺激性帖子来吸引关注。无论关系是真是假，我都不喜欢靠猜测冲浏览量的做法。",
+        "title": "winter_work26 @winter_work26",
+        "body": "기사 제목만 자극적으로 뽑아 놓고 본문은 확인된 게 별로 없더라. 이런 식으로 조회수만 노리는 보도는 진짜 피곤해.\n\n新闻标题写得很刺激，正文却没多少确认信息。这样只为流量做报道，真的让人疲惫。",
         "sender": "윈터만보호하자",
         "time": "2026-10-28 14:31",
         "avatar": "",
@@ -10671,7 +10642,7 @@
           "어그로 계정은 반응 안 하는 게 답. / 对钓鱼账号不回应才是办法。"
         ],
         "meta": {
-          "handle": "winter_guard26",
+          "handle": "winter_work26",
           "category": "rumor-discussion",
           "reposts": "865",
           "bookmarks": "255",
@@ -10681,13 +10652,13 @@
           "views": "13375",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-27",
-        "title": "winter_mom27 @winter_mom27",
-        "body": "민정이가 팬들 눈치를 보느라 자기 감정까지 숨기지는 않았으면 해. 어떤 소식이든 오늘 하루는 무사히 보내고 잘 쉬었으면 좋겠다.\n\n希望旼炡不要因为顾虑粉丝而连自己的感受都藏起来。无论消息真假，都希望她今天平安度过、好好休息。",
+        "title": "winter_guard27 @winter_guard27",
+        "body": "민정이한테 실망했다고 말하는 글도, 무조건 축하해야 한다는 글도 너무 빨리 결론 내리는 것 같아. 아직 각자 정리할 시간이 필요함.\n\n说对旼炡失望的帖子也好、说必须祝福的帖子也好，都太急着下结论。大家都需要时间消化。",
         "sender": "우리민정응원해",
         "time": "2026-10-28 14:32",
         "avatar": "",
@@ -10699,7 +10670,7 @@
           "민정이 웃는 무대 영상 다시 보고 갑니다. / 我去重看旼炡笑着表演的舞台了。"
         ],
         "meta": {
-          "handle": "winter_mom27",
+          "handle": "winter_guard27",
           "category": "rumor-discussion",
           "reposts": "896",
           "bookmarks": "264",
@@ -10709,13 +10680,13 @@
           "views": "13782",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-28",
-        "title": "기분이상한마이 @gf_mood28",
-        "body": "다른 팬들은 축하한다는데 나는 아직 그 말이 안 나온다. 그래도 확인도 안 된 사진 때문에 민정이한테 실망했다고 말하는 건 너무 이른 것 같아.\n\n有些粉丝已经在祝福了，可我还说不出那句话。不过只凭一张未确认的照片就说对旼炡失望，似乎也太早了。",
+        "title": "winter_dream28 @winter_dream28",
+        "body": "아무렇지 않은 척하려고 했는데 신곡 플레이리스트에서 민정이 목소리 나오니까 또 생각나네. 오늘은 그냥 마음 아픈 팬 할래.\n\n本来想装作没事，结果歌单里一响起旼炡的声音又想起来了。今天就当个心情难过的粉丝吧。",
         "sender": "기분이상한마이",
         "time": "2026-10-28 14:33",
         "avatar": "",
@@ -10727,7 +10698,7 @@
           "저도 축하도 비난도 아직 못 하겠어요. / 我现在也既说不出祝福，也不想责怪她。"
         ],
         "meta": {
-          "handle": "gf_mood28",
+          "handle": "winter_dream28",
           "category": "rumor-discussion",
           "reposts": "927",
           "bookmarks": "273",
@@ -10737,13 +10708,13 @@
           "views": "14189",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-29",
-        "title": "winter_focus29 @winter_focus29",
-        "body": "사진 속 인물이 누군지 확인되지 않았는데 특정 관계를 사실처럼 말하는 건 조심해야 해.\n\n照片里的人都没有确认，把某种关系说成事实还是该谨慎。",
+        "title": "winter_all29 @winter_all29",
+        "body": "내가 바라는 건 민정이가 무슨 선택을 하든 일 때문에나 팬 반응 때문에 죄책감을 떠안지 않는 거야.\n\n我希望无论旼炡做什么选择，都不会因为工作或粉丝反应而背负愧疚。",
         "sender": "윈카실화다",
         "time": "2026-10-28 14:34",
         "avatar": "",
@@ -10755,7 +10726,7 @@
           "확정이라고 말하는 계정도 출처는 없던데요. / 那些说已实锤的账号也没有来源。"
         ],
         "meta": {
-          "handle": "winter_focus29",
+          "handle": "winter_all29",
           "category": "rumor-discussion",
           "reposts": "958",
           "bookmarks": "282",
@@ -10765,13 +10736,13 @@
           "views": "14596",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "全肯定粉"
         }
       },
       {
         "id": "threadrumor-20261028-30",
-        "title": "원본기다리는중 @wait_for_original30",
-        "body": "같은 사진에 장소도 시간도 다르게 적은 게시물이 여러 개 보여서 더 혼란스럽다. 누가 먼저 올렸는지부터 확인하고, 지금은 단정적인 캡처를 리트윗하지 않으려고.\n\n同一张照片被不同帖子写成不同地点和时间，反而更混乱了。我想先查清最早是谁发的，现在不会转发那些下结论的截图。",
+        "title": "gf_sad30 @gf_sad30",
+        "body": "연애설이 사실이면 축하해 줘야 하나 싶다가도 아직은 마음이 아픔. 두 마음이 같이 있으니까 나도 내 반응이 낯설다.\n\n传闻要是真的，我会想是不是该祝福，可现在又很难过。两种心情同时存在，连我自己都觉得陌生。",
         "sender": "원본기다리는중",
         "time": "2026-10-28 14:35",
         "avatar": "",
@@ -10783,7 +10754,7 @@
           "캡처만 여러 번 돌면 사실처럼 굳어져요. / 截图反复传播，最后就容易被当成事实。"
         ],
         "meta": {
-          "handle": "wait_for_original30",
+          "handle": "gf_sad30",
           "category": "rumor-discussion",
           "reposts": "989",
           "bookmarks": "291",
@@ -10793,13 +10764,13 @@
           "views": "15003",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-31",
-        "title": "winter_solo31 @winter_solo31",
-        "body": "나는 민정이 개인 활동을 응원하는 팬이야. 지금은 누가 맞다 틀리다 싸우기보다 민정이 본인이 원할 때 이야기할 수 있게 두고 싶어.\n\n我是支持旼炡个人活动的粉丝。现在比起争论谁对谁错，我更希望等旼炡愿意说的时候再说。",
+        "title": "winter_focus31 @winter_focus31",
+        "body": "팬들이 돈 쓰고 시간 쓰는 건 각자 선택이지만 그걸 이유로 민정이 사생활을 통제할 권리가 생기는 건 아니라고 생각해.\n\n粉丝花钱花时间是自己的选择，但这不代表有权控制旼炡的私生活。",
         "sender": "윈터악개아님",
         "time": "2026-10-28 14:36",
         "avatar": "",
@@ -10811,7 +10782,7 @@
           "진짜 응원 계정이면 다른 멤버 저격은 줄였으면. / 真心应援的账号就少点名攻击其他成员吧。"
         ],
         "meta": {
-          "handle": "winter_solo31",
+          "handle": "winter_focus31",
           "category": "rumor-discussion",
           "reposts": "1020",
           "bookmarks": "300",
@@ -10821,13 +10792,13 @@
           "views": "15410",
           "language": "mixed",
           "story": "true",
-          "fanType": "唯粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-32",
-        "title": "winter_always32 @winter_always32",
-        "body": "민정이가 공개하고 싶은 이야기가 있다면 본인 속도대로 해도 된다고 생각해. 지금 당장 설명하라고 재촉하지 않고 기다릴게.\n\n如果旼炡有想公开的事，我觉得她可以按自己的节奏来。不催她立刻解释，我会继续等。",
+        "title": "winter_care32 @winter_care32",
+        "body": "민정이가 오늘 좋아하는 음식 먹고 푹 쉬었으면. 온라인 분위기보다 실제 컨디션이 더 중요하니까.\n\n希望旼炡今天能吃喜欢的食物，好好休息。现实状态比网上氛围重要得多。",
         "sender": "윈닝모먼트",
         "time": "2026-10-28 14:37",
         "avatar": "",
@@ -10839,7 +10810,7 @@
           "케미는 케미대로, 현실은 현실대로. / 互动归互动，现实归现实。"
         ],
         "meta": {
-          "handle": "winter_always32",
+          "handle": "winter_care32",
           "category": "rumor-discussion",
           "reposts": "1051",
           "bookmarks": "309",
@@ -10849,13 +10820,13 @@
           "views": "15817",
           "language": "mixed",
           "story": "true",
-          "fanType": "全肯定粉"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-33",
-        "title": "민정이와편의점 @winter_dream33",
-        "body": "오늘은 내가 민정이랑 편의점에서 컵라면 고르는 장면을 상상할래. 현실 사진을 분석하는 건 그만하고, 머릿속 데이트는 내가 제일 잘 아니까ㅋㅋ\n\n今天我要幻想和旼炡在便利店挑杯面的场景。先不分析现实照片了，我最了解自己脑海里的约会路线，哈哈。",
+        "title": "winter_soft33 @winter_soft33",
+        "body": "다들 한마디씩 얹다가 사진 속 사람을 실제 사람으로 잊고 있는 것 같아. 추측도 좀 줄었으면 좋겠다.\n\n大家不断评论，像是忘了照片里的人也是现实中的人。希望猜测能少一些。",
         "sender": "민정이와편의점",
         "time": "2026-10-28 14:38",
         "avatar": "",
@@ -10867,7 +10838,7 @@
           "망상은 행복하게, 현실 당사자는 편하게. / 幻想让自己开心，现实中的她也要自在。"
         ],
         "meta": {
-          "handle": "winter_dream33",
+          "handle": "winter_soft33",
           "category": "rumor-discussion",
           "reposts": "1082",
           "bookmarks": "318",
@@ -10877,13 +10848,13 @@
           "views": "16224",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-34",
-        "title": "winter_dream34 @winter_dream34",
-        "body": "현실은 아직 모르는 채로 두고 내가 즐기는 이야기는 상상 속에만 남겨 두려고.\n\n现实暂时不去猜，我喜欢的故事就留在想象里。",
+        "title": "gf_diary34 @gf_diary34",
+        "body": "오늘 탈덕해야 하나 같은 생각까지 들었는데, 몇 년 동안 좋아했던 노래가 갑자기 싫어지는 건 또 아니더라.\n\n今天甚至想过是不是该退坑，但喜欢了好几年的歌，也不会突然就讨厌了。",
         "sender": "윈젤만파는중",
         "time": "2026-10-28 14:39",
         "avatar": "",
@@ -10895,7 +10866,7 @@
           "상대 조합 팬을 비꼬는 글은 그만 봤으면. / 希望别再看阴阳怪气其他组合粉的帖子了。"
         ],
         "meta": {
-          "handle": "winter_dream34",
+          "handle": "gf_diary34",
           "category": "rumor-discussion",
           "reposts": "1113",
           "bookmarks": "327",
@@ -10905,13 +10876,13 @@
           "views": "16631",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-35",
-        "title": "민정이편하게 @winter_mom35",
-        "body": "민정이가 무슨 선택을 하든 괜찮다고 말하면서 댓글로 상대방 신상을 캐려는 사람들은 이해가 안 된다. 응원한다면 사생활을 더 캐묻지 않는 게 맞지.\n\n嘴上说无论旼炡做什么选择都支持，转头却在评论区扒对方身份，这种人我无法理解。真想支持她，就不该继续追问私生活。",
+        "title": "winter_only35 @winter_only35",
+        "body": "이 이슈를 핑계로 민정이 외모나 성격까지 평가하는 글은 보고 싶지 않아. 사진 하나로 사람 전체를 아는 척하지 말자.\n\n不想看到有人借这件事评价旼炡的外貌和性格。别凭一张照片就装作了解一个人。",
         "sender": "민정이편하게",
         "time": "2026-10-28 14:40",
         "avatar": "",
@@ -10923,7 +10894,7 @@
           "사생활 추측글은 공유하지 맙시다. / 别转发猜测私生活的帖子。"
         ],
         "meta": {
-          "handle": "winter_mom35",
+          "handle": "winter_only35",
           "category": "rumor-discussion",
           "reposts": "1144",
           "bookmarks": "336",
@@ -10933,13 +10904,13 @@
           "views": "17038",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-36",
-        "title": "버블다시읽는중 @winter_gf36",
-        "body": "버블에서 '오늘도 고마워'라고 해 준 문장을 다시 읽는데 갑자기 내가 혼자 의미를 너무 많이 붙였나 싶다. 그래도 내가 좋아했던 시간까지 부정하고 싶진 않아.\n\n我重读她在 Bubble 里说“今天也谢谢你”的那句话，突然怀疑是不是自己赋予了太多意义。但我也不想否定自己曾经喜欢她的那些时光。",
+        "title": "winter_check36 @winter_check36",
+        "body": "사진 원본, 최초 게시 시간, 출처가 다 불명확한데 계정마다 새 얘기가 붙는다. 지금은 판단 보류가 맞는 듯.\n\n原图、最初发布时间和来源都不清楚，各账号却不断加新说法。现在先保留判断比较合理。",
         "sender": "버블다시읽는중",
         "time": "2026-10-28 14:41",
         "avatar": "",
@@ -10951,7 +10922,7 @@
           "이런 날엔 예전 메시지가 더 다르게 느껴지네요. / 这种日子里，过去的消息读起来都不一样了。"
         ],
         "meta": {
-          "handle": "winter_gf36",
+          "handle": "winter_check36",
           "category": "rumor-discussion",
           "reposts": "1175",
           "bookmarks": "345",
@@ -10961,13 +10932,13 @@
           "views": "17445",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "理性粉"
         }
       },
       {
         "id": "threadrumor-20261028-37",
-        "title": "winter_newscheck37 @winter_newscheck37",
-        "body": "일부 게시물은 확인보다 자극적인 제목과 확대 해석에 집중하는 것 같아. 비판하더라도 사실에 근거해서 이야기했으면 좋겠어.\n\n有些帖子似乎更关注刺激性标题和过度解读，而不是核实事实。即使要批评，也希望建立在事实之上。",
+        "title": "winter_dream37 @winter_dream37",
+        "body": "나 솔직히 오늘은 민정이가 누굴 만나는지 알고 싶지 않음. 그냥 내가 좋아했던 마음을 어떻게 정리할지 고민하고 싶다.\n\n说实话，今天我并不想知道旼炡和谁交往。我只想想想怎么整理自己曾经的心情。",
         "sender": "윈터실수기록",
         "time": "2026-10-28 14:42",
         "avatar": "",
@@ -10979,7 +10950,7 @@
           "조회수 올려 주기 싫어서 차단함. / 不想帮他们涨浏览量，直接拉黑。"
         ],
         "meta": {
-          "handle": "winter_newscheck37",
+          "handle": "winter_dream37",
           "category": "rumor-discussion",
           "reposts": "1206",
           "bookmarks": "354",
@@ -10989,13 +10960,13 @@
           "views": "17852",
           "language": "mixed",
           "story": "true",
-          "fanType": "理性粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-38",
-        "title": "winter_gf38 @winter_gf38",
-        "body": "버블 문장을 다시 읽으니 기분이 묘하지만, 그때 행복했던 마음까지 부정할 필요는 없겠지.\n\n重新读 Bubble 的话心情很微妙，但没必要否认当时开心的心情。",
+        "title": "winter_work38 @winter_work38",
+        "body": "관련 게시물만 올라오면 댓글이 몇천 개씩 붙는데 무대 영상은 조용하네. 관심이 필요한 건 논란보다 작업물인데.\n\n相关帖子一发就有几千条评论，舞台视频却没人看。真正值得关注的应该是作品，而不是争议。",
         "sender": "윈카가최고",
         "time": "2026-10-28 14:43",
         "avatar": "",
@@ -11007,7 +10978,7 @@
           "윈카 영상 모음 계정 추천 부탁해요. / 求推荐 윈卡视频合集账号。"
         ],
         "meta": {
-          "handle": "winter_gf38",
+          "handle": "winter_work38",
           "category": "rumor-discussion",
           "reposts": "1237",
           "bookmarks": "363",
@@ -11017,13 +10988,13 @@
           "views": "18259",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-39",
-        "title": "winter_wait39 @winter_wait39",
-        "body": "당사자가 말하지 않은 관계를 주변에서 대신 확정하는 건 조심해야 해. 지금까지 확인된 사실이 무엇인지부터 차분히 보자.\n\n当事人没有亲自说明的关系，旁人不该替她盖棺定论。先冷静看看目前到底有哪些已确认的信息吧。",
+        "title": "gf_mood39 @gf_mood39",
+        "body": "민정이한테 화가 난 건 아닌데 괜히 서럽고 질투 나. 이런 마음을 말하면 이상한 팬 취급받을까 봐 그냥 여기 적어 둠.\n\n我不是生旼炡的气，只是难过又嫉妒。怕说出来会被当成奇怪的粉丝，就先写在这里。",
         "sender": "윈터말만듣자",
         "time": "2026-10-28 14:44",
         "avatar": "",
@@ -11035,7 +11006,7 @@
           "기다린다는 말이 제일 어렵지만 맞는 듯. / “等待”最难，但可能确实该这样。"
         ],
         "meta": {
-          "handle": "winter_wait39",
+          "handle": "gf_mood39",
           "category": "rumor-discussion",
           "reposts": "1268",
           "bookmarks": "372",
@@ -11045,13 +11016,13 @@
           "views": "18666",
           "language": "mixed",
           "story": "true",
-          "fanType": "理性粉"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-40",
-        "title": "민정이랑영화관 @winter_dream40",
-        "body": "상상 속에서는 민정이랑 심야 영화 보고 팝콘 반반 나눠 먹는 중. 오늘 현실 얘기는 너무 시끄러우니까 잠깐 덮어 두고 내 작은 세계로 피신.\n\n幻想里，我和旼炡在看午夜场电影，分着吃一桶爆米花。现实话题今天太吵了，先放一边，躲回我自己的小世界。",
+        "title": "winter_fav40 @winter_fav40",
+        "body": "내가 좋아하는 건 민정이가 무대에서 진심으로 노래하는 모습이었어. 오늘도 그건 달라지지 않았으면 좋겠다.\n\n我喜欢的是旼炡在舞台上认真唱歌的样子，希望今天也不会因此改变。",
         "sender": "민정이랑영화관",
         "time": "2026-10-28 14:45",
         "avatar": "",
@@ -11063,7 +11034,7 @@
           "현실이랑 상상 구분하면서 쉬어 가요. / 分清现实和想象，给自己一点休息时间。"
         ],
         "meta": {
-          "handle": "winter_dream40",
+          "handle": "winter_fav40",
           "category": "rumor-discussion",
           "reposts": "1299",
           "bookmarks": "381",
@@ -11073,13 +11044,13 @@
           "views": "19073",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-41",
-        "title": "winter_feed41 @winter_feed41",
-        "body": "예전 무대 장면은 좋아하는 순간으로 남겨 두고, 현실 소문의 증거라고 엮지 않을래.\n\n我会把以前的舞台片段留作喜欢的瞬间，不把它当成现实传闻的证据。",
+        "title": "winter_solo41 @winter_solo41",
+        "body": "이 사진으로 뭔가 증명됐다고 말하는 사람도, 반대로 거짓이라고 확신하는 사람도 근거가 부족한 건 똑같아.\n\n把照片当成实锤的人，和坚信照片是假的人一样，都缺少足够依据。",
         "sender": "윈카아카이브2",
         "time": "2026-10-28 14:46",
         "avatar": "",
@@ -11091,7 +11062,7 @@
           "추억 영상 보다가 또 무대 보고 싶어짐. / 看回忆视频看得又想看舞台了。"
         ],
         "meta": {
-          "handle": "winter_feed41",
+          "handle": "winter_solo41",
           "category": "rumor-discussion",
           "reposts": "1330",
           "bookmarks": "390",
@@ -11101,13 +11072,13 @@
           "views": "19480",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-42",
-        "title": "민정이웃는날 @winter_mom42",
-        "body": "댓글창에서 누가 누구를 이겨야 한다는 식으로 싸우는 게 제일 싫다. 민정이는 팬덤 싸움의 트로피가 아니야. 그냥 웃고 건강하게 활동했으면 좋겠어.\n\n我最讨厌评论区把争论变成谁必须赢。旼炡不是粉圈争斗的奖杯，只希望她能健康、开心地活动。",
+        "title": "winter_mom42 @winter_mom42",
+        "body": "민정이가 팬들한테 늘 고맙다고 해 왔지만 그 고마움을 갚으려고 사생활까지 설명할 필요는 없다고 생각해.\n\n旼炡一直感谢粉丝，但我不认为她需要靠解释私生活来回报这份感谢。",
         "sender": "민정이웃는날",
         "time": "2026-10-28 14:47",
         "avatar": "",
@@ -11134,8 +11105,8 @@
       },
       {
         "id": "threadrumor-20261028-43",
-        "title": "winter_career43 @winter_career43",
-        "body": "사진 얘기만 계속 올라오니까 민정이의 무대와 작업물이 뒤로 밀리는 느낌이야. 다음 활동 소식도 놓치지 않고 기다릴래.\n\n时间线上一直在讨论照片，感觉旼炡的舞台和作品都被挤到后面了。我还是会继续关注她接下来的活动。",
+        "title": "winter_dream43 @winter_dream43",
+        "body": "내가 혼자 상상한 미래가 현실이 될 거라고 믿은 건 아닌데도 막상 가능성이 닫히는 느낌이 들어서 이상하다.\n\n我并没有真的相信幻想会成真，但看到可能性好像关上了，心情还是很奇怪。",
         "sender": "네명무대가좋아",
         "time": "2026-10-28 14:48",
         "avatar": "",
@@ -11147,7 +11118,7 @@
           "멤버 한 명 지킨다고 다른 멤버 깎아내리지 말자. / 保护一位成员不等于贬低另一位。"
         ],
         "meta": {
-          "handle": "winter_career43",
+          "handle": "winter_dream43",
           "category": "rumor-discussion",
           "reposts": "1392",
           "bookmarks": "408",
@@ -11157,13 +11128,13 @@
           "views": "20294",
           "language": "mixed",
           "story": "true",
-          "fanType": "事业粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-44",
-        "title": "질투하고미안하고 @winter_gf44",
-        "body": "민정이 행복했으면 좋겠다고 진심으로 생각하는데, 내 마음 한구석은 아직 서운하다. 이 두 감정이 같이 있다는 걸 인정하니까 조금 덜 힘듦.\n\n我真心希望旼炡幸福，但心里还是有一点失落。承认自己可以同时有这两种情绪后，反而没那么难受了。",
+        "title": "winter_all44 @winter_all44",
+        "body": "오늘은 다들 감정이 다를 수밖에 없지. 누군가는 놀라고 누군가는 축하하고 누군가는 기다릴 거고, 그게 다 팬 마음이라고 생각해.\n\n今天大家的反应本来就会不同。有人震惊、有人祝福、有人等待，我觉得这些都是真实的粉丝心情。",
         "sender": "질투하고미안하고",
         "time": "2026-10-28 14:49",
         "avatar": "",
@@ -11175,7 +11146,7 @@
           "남을 탓하지 않으면서 속상할 수는 있죠. / 不责怪别人，也可以允许自己难过。"
         ],
         "meta": {
-          "handle": "winter_gf44",
+          "handle": "winter_all44",
           "category": "rumor-discussion",
           "reposts": "1423",
           "bookmarks": "417",
@@ -11185,13 +11156,13 @@
           "views": "20701",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "全肯定粉"
         }
       },
       {
         "id": "threadrumor-20261028-45",
-        "title": "winter_mom45 @winter_mom45",
-        "body": "어떤 소식이든 민정이가 직접 말할 때까지 기다리는 게 더 낫다고 생각해.\n\n不管是什么消息，我觉得等旼炡自己开口更好。",
+        "title": "winter_stage45 @winter_stage45",
+        "body": "무대와 음악 얘기를 다시 하고 싶다는 말이 연애설을 덮자는 뜻은 아냐. 민정이의 활동도 동시에 이야기할 수 있다는 거지.\n\n想重新聊舞台和音乐，不代表要掩盖恋爱传闻。旼炡的活动也同样值得讨论。",
         "sender": "윈닝서사안끝남",
         "time": "2026-10-28 14:50",
         "avatar": "",
@@ -11203,7 +11174,7 @@
           "우리 윈닝 영상은 계속 보자고요. / 继续看 윈닝 的视频吧。"
         ],
         "meta": {
-          "handle": "winter_mom45",
+          "handle": "winter_stage45",
           "category": "rumor-discussion",
           "reposts": "1454",
           "bookmarks": "426",
@@ -11213,13 +11184,13 @@
           "views": "21108",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-46",
-        "title": "출처없는말그만 @rumor_check46",
-        "body": "지인이라는 익명 계정이 쓴 글이 캡처로 퍼지고 있는데, 정작 원문은 찾을 수가 없음. 출처가 지워진 주장일수록 더 조심해야 한다고 생각해.\n\n有匿名账号自称知情人，帖子被截图传开了，但原文却找不到。越是失去来源的说法，越应该谨慎。",
+        "title": "gf_slow46 @gf_slow46",
+        "body": "축하한다는 댓글을 누르려다가 손이 멈췄어. 마음이 따라갈 때까지 잠깐 조용히 있을래.\n\n本来想给祝福评论点赞，手却停住了。等心情跟上之前，我先安静一会儿。",
         "sender": "출처없는말그만",
         "time": "2026-10-28 14:51",
         "avatar": "",
@@ -11231,7 +11202,7 @@
           "삭제됐다는 말만으로 진짜였다고 볼 수 없죠. / 不能因为有人说帖子被删了，就认定它是真的。"
         ],
         "meta": {
-          "handle": "rumor_check46",
+          "handle": "gf_slow46",
           "category": "rumor-discussion",
           "reposts": "1485",
           "bookmarks": "435",
@@ -11241,13 +11212,13 @@
           "views": "21515",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-47",
-        "title": "윈터만의활동 @winter_solo47",
-        "body": "윈터가 연애를 하든 안 하든 활동 평가랑 분리해서 봐야지. 다만 이런 이슈가 나올 때마다 윈터만 설명하라는 압박을 받는 건 불공평하다고 생각함.\n\n不管旼炡恋不恋爱，都应该和对她工作的评价分开看。但每次出现这种话题就只要求旼炡出来解释，我觉得不公平。",
+        "title": "winter_focus47 @winter_focus47",
+        "body": "누가 맞든 틀리든 확실하지 않은 얘기를 민정이 실명 검색어랑 엮어 퍼뜨리지는 말자. 이미 너무 빠르게 번지고 있어.\n\n无论谁对谁错，都别把未确认的说法和旼炡的实名热搜绑在一起传播。现在已经扩散得太快了。",
         "sender": "윈터만의활동",
         "time": "2026-10-28 14:52",
         "avatar": "",
@@ -11259,7 +11230,7 @@
           "무조건 해명하라고 몰아붙이는 건 그만했으면. / 希望别再逼她必须出来解释。"
         ],
         "meta": {
-          "handle": "winter_solo47",
+          "handle": "winter_focus47",
           "category": "rumor-discussion",
           "reposts": "1516",
           "bookmarks": "444",
@@ -11274,8 +11245,8 @@
       },
       {
         "id": "threadrumor-20261028-48",
-        "title": "퇴근후라면 @winter_dream48",
-        "body": "오늘은 민정이한테 따뜻한 라면 끓여 주는 상상이나 할래. 내가 만든 이야기는 현실을 바꾸려는 게 아니라 그냥 하루를 버티게 해 주는 작은 즐거움이니까.\n\n今天我只想幻想给旼炡煮一碗热拉面。我的小故事不是为了改变现实，只是让我撑过一天的小乐趣。",
+        "title": "winter_voice48 @winter_voice48",
+        "body": "오늘은 이상하게 민정이 예전 라디오 멘트가 계속 생각나. 소문보다 그때 들었던 따뜻한 말이 더 오래 남는다.\n\n今天不知为什么一直想起旼炡以前在电台说的话。比起传闻，那些温暖的话留得更久。",
         "sender": "퇴근후라면",
         "time": "2026-10-28 14:53",
         "avatar": "",
@@ -11287,7 +11258,7 @@
           "상상으로 위로받되 본인에게 답을 요구하지 않기, 메모. / 用幻想安慰自己，但不向她索要回应，记下了。"
         ],
         "meta": {
-          "handle": "winter_dream48",
+          "handle": "winter_voice48",
           "category": "rumor-discussion",
           "reposts": "1547",
           "bookmarks": "453",
@@ -11297,13 +11268,13 @@
           "views": "22329",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-49",
-        "title": "winter_dream49 @winter_dream49",
-        "body": "현실 소식을 보니까 조금 속상하고 질투도 나지만, 내가 좋아하는 상상까지 현실이라고 우기고 싶진 않아. 오늘은 잠깐 쉬어 가야겠다.\n\n看到现实消息会失落，也会嫉妒，但我不想把自己喜欢的幻想硬说成现实。今天先让自己休息一下。",
+        "title": "gf_mood49 @gf_mood49",
+        "body": "나만 이런 거 아니겠지 싶어서 타임라인 내리는데 다들 괜찮은 척하거나 너무 화나 있거나 둘 중 하나네. 중간도 있을 텐데.\n\n我往下刷时间线，想知道是不是只有我这样，结果大家不是装没事就是特别生气。明明也会有人处在中间吧。",
         "sender": "윈젤모음계정",
         "time": "2026-10-28 14:54",
         "avatar": "",
@@ -11315,7 +11286,7 @@
           "서로 낙인찍지 말고 취향만 즐기면 좋겠음. / 希望别互相贴标签，享受自己的喜好就好。"
         ],
         "meta": {
-          "handle": "winter_dream49",
+          "handle": "gf_mood49",
           "category": "rumor-discussion",
           "reposts": "1578",
           "bookmarks": "462",
@@ -11325,13 +11296,13 @@
           "views": "22736",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女粉"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-50",
-        "title": "우리애보호구역 @winter_mom50",
-        "body": "사진 속 사람이 민정이든 아니든, 그 사진을 찍고 퍼뜨린 과정은 괜찮은 건가 싶다. 좋아한다는 이유로 누군가의 사적인 순간을 구경거리로 만들지 않았으면.\n\n不管照片里的人是不是旼炡，拍摄并传播照片的过程本身就值得质疑。希望大家别因为喜欢一个人，就把她的私人瞬间变成围观素材。",
+        "title": "winter_care50 @winter_care50",
+        "body": "혹시 민정이가 이런 글을 보게 된다면 자기 선택을 미안해하지 않았으면 좋겠다. 팬은 응원하는 사람이니까.\n\n如果旼炡看到这些帖子，希望她不要为自己的选择感到抱歉。粉丝的角色本来是支持她。",
         "sender": "우리애보호구역",
         "time": "2026-10-28 14:55",
         "avatar": "",
@@ -11343,7 +11314,7 @@
           "팬이라면 선을 지키는 것도 응원이죠. / 作为粉丝，守住界限也是支持。"
         ],
         "meta": {
-          "handle": "winter_mom50",
+          "handle": "winter_care50",
           "category": "rumor-discussion",
           "reposts": "1609",
           "bookmarks": "471",
@@ -11358,8 +11329,8 @@
       },
       {
         "id": "threadrumor-20261028-51",
-        "title": "winter_focus51 @winter_focus51",
-        "body": "민정이를 위한다는 마음이 있다면 확인되지 않은 말을 더 퍼뜨리기보다 사실을 기다렸으면 해. 추측이 커질수록 당사자만 피곤해져.\n\n如果真的是为旼炡着想，比起继续传播未经证实的说法，不如等待事实。猜测越闹越大，当事人只会更累。",
+        "title": "winter_fact51 @winter_fact51",
+        "body": "공식 입장이 없다고 해서 어떤 추측이든 맞다는 뜻은 아니고, 침묵한다고 잘못했다는 뜻도 아니야. 둘 다 구분하자.\n\n没有官方回应不代表任何猜测都正确，保持沉默也不代表做错了事。这两点要分开。",
         "sender": "윈터팬덤정리",
         "time": "2026-10-28 14:56",
         "avatar": "",
@@ -11371,7 +11342,7 @@
           "이름 걸고 싸우는 계정이 제일 부담스러움. / 挂着她名字吵架的账号反而最让人有压力。"
         ],
         "meta": {
-          "handle": "winter_focus51",
+          "handle": "winter_fact51",
           "category": "rumor-discussion",
           "reposts": "1640",
           "bookmarks": "480",
@@ -11381,13 +11352,13 @@
           "views": "23550",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "理性粉"
         }
       },
       {
         "id": "threadrumor-20261028-52",
-        "title": "winter_work52 @winter_work52",
-        "body": "연애설이 사실인지 아닌지와 별개로 민정이가 해 온 일과 성과는 그대로 존중받아야 해. 활동 이야기도 계속 이어졌으면.\n\n无论恋爱传闻是真是假，旼炡过去付出的努力和取得的成绩都应该得到尊重。也希望大家继续讨论她的活动。",
+        "title": "winter_dream52 @winter_dream52",
+        "body": "오늘은 팬계정 프사도 바꾸고 싶어졌다가 그냥 뒀어. 마음이 복잡한 날에 큰 결정을 해 봐야 후회할 것 같아서.\n\n今天甚至想换掉粉丝账号头像，但最后还是没动。心情复杂的时候做大决定，可能会后悔。",
         "sender": "윈카아니면안봄",
         "time": "2026-10-28 14:57",
         "avatar": "",
@@ -11399,7 +11370,7 @@
           "다른 조합 팬을 찾아가 싸우지만 않으면 좋겠어요. / 只要不去找其他组合的粉丝吵架就好。"
         ],
         "meta": {
-          "handle": "winter_work52",
+          "handle": "winter_dream52",
           "category": "rumor-discussion",
           "reposts": "1671",
           "bookmarks": "489",
@@ -11409,13 +11380,13 @@
           "views": "23957",
           "language": "mixed",
           "story": "true",
-          "fanType": "事业粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-53",
-        "title": "민정이의작은세계 @winter_dream53",
-        "body": "현실에서는 내가 모르는 게 훨씬 많다는 걸 알아. 그래서 오늘은 결론을 만들기보다, 민정이가 내일도 좋아하는 일을 하길 바라는 마음만 적어 둔다.\n\n我知道现实里有太多事情是我不知道的。所以今天与其急着下结论，不如只记下一个愿望：希望旼炡明天也能做自己喜欢的事。",
+        "title": "gf_diary53 @gf_diary53",
+        "body": "진짜라면 상대가 부럽다는 마음을 숨기긴 어렵네. 그래도 그 사람한테 뭘 증명하라고 요구하고 싶진 않아.\n\n如果是真的，很难不羡慕对方。但我也不想要求那个人证明什么。",
         "sender": "민정이의작은세계",
         "time": "2026-10-28 14:58",
         "avatar": "",
@@ -11427,7 +11398,7 @@
           "오늘은 좋은 무대 하나 보고 자려고요. / 今天准备看一段好舞台再睡。"
         ],
         "meta": {
-          "handle": "winter_dream53",
+          "handle": "gf_diary53",
           "category": "rumor-discussion",
           "reposts": "1702",
           "bookmarks": "498",
@@ -11437,13 +11408,13 @@
           "views": "24364",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-54",
-        "title": "마음천천히정리 @winter_gf54",
-        "body": "축하한다고 말하는 팬도 있고 마음이 복잡해서 잠시 쉬겠다는 팬도 있는데, 서로를 배신자라고 부르진 말자. 좋아하는 방식이 달라도 민정이를 향한 마음까지 함부로 재단할 순 없어.\n\n有的粉丝能说出祝福，有的粉丝心情复杂、想暂时休息，但别互相叫叛徒。喜欢的方式不同，也不能随便评判别人对旼炡的心意。",
+        "title": "winter_only54 @winter_only54",
+        "body": "팬이 불편하다고 말할 수는 있어도 당사자 선택을 취소하라고 요구할 순 없다고 봐. 나도 마음 정리 중임.\n\n粉丝可以表达不舒服，但不能要求当事人撤回自己的选择。我也在整理心情。",
         "sender": "마음천천히정리",
         "time": "2026-10-28 14:59",
         "avatar": "",
@@ -11455,7 +11426,7 @@
           "서로 마음 정리하는 속도는 다를 수밖에요. / 每个人整理心情的速度本来就不同。"
         ],
         "meta": {
-          "handle": "winter_gf54",
+          "handle": "winter_only54",
           "category": "rumor-discussion",
           "reposts": "1733",
           "bookmarks": "507",
@@ -11465,13 +11436,13 @@
           "views": "24771",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-55",
-        "title": "오늘은추측중단 @wait_until_official55",
-        "body": "지금까지 나온 건 흐릿한 사진과 서로 다른 해석뿐이다. 확인된 사실처럼 단정하는 글은 저장하지도 공유하지도 않으려고. 다음 공지가 나오기 전까진 다른 얘기 하자.\n\n目前出现的只有模糊照片和各种不同解读。我不打算收藏或转发那些把猜测说成事实的帖子。官方有新消息之前，聊点别的吧。",
+        "title": "winter_song55 @winter_song55",
+        "body": "몇 년 전 무대부터 다시 보고 있는데 내가 왜 민정이를 좋아했는지 떠올라서 조금 나아짐. 오늘은 그걸로 충분해.\n\n我从几年前的舞台开始重看，慢慢想起自己为什么喜欢旼炡，心情好了一点。今天这样就够了。",
         "sender": "오늘은추측중단",
         "time": "2026-10-28 15:00",
         "avatar": "",
@@ -11483,7 +11454,7 @@
           "오늘 무대 직캠 추천해 주세요. / 求推荐今天的舞台直拍。"
         ],
         "meta": {
-          "handle": "wait_until_official55",
+          "handle": "winter_song55",
           "category": "rumor-discussion",
           "reposts": "1764",
           "bookmarks": "516",
@@ -11493,7 +11464,7 @@
           "views": "25178",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "甜唯"
         }
       },
       {
@@ -12605,11 +12576,11 @@
       },
       {
         "id": "threadrumor-20261028-56",
-        "title": "winter_solo56 @winter_solo56",
-        "body": "열애설이든 아니든 윈터의 다음 무대와 음악 얘기도 같이 올라왔으면 좋겠다. 한 가지 소식만 타임라인을 차지하네.\n\n不管恋爱传闻真假，也希望大家能聊聊 Winter 的下一次舞台和音乐。时间线不该只剩一个话题。",
+        "title": "winter_work56 @winter_work56",
+        "body": "이런 이슈가 나오면 홍보 일정이 바뀔지부터 걱정하게 돼. 괜한 추측보다 예정된 활동이 잘 이어졌으면 한다.\n\n一有这种话题，我就开始担心宣传日程会不会变。比起无谓猜测，我希望原定活动都能顺利进行。",
         "time": "2026-10-28 15:01",
         "meta": {
-          "handle": "winter_solo56",
+          "handle": "winter_work56",
           "category": "rumor-discussion",
           "reposts": "64",
           "bookmarks": "36",
@@ -12619,16 +12590,16 @@
           "views": "5509",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-57",
-        "title": "winter_gf57 @winter_gf57",
-        "body": "축하한다는 말은 아직 어렵지만, 민정이에게 화를 내야 할 일은 아니라는 생각은 들어요.\n\n我现在还很难说祝福，但也觉得没必要把怒气发到旼炡身上。",
+        "title": "winter_guard57 @winter_guard57",
+        "body": "민정이 이름으로 클릭 장사하는 계정은 진짜 피곤하다. 내용은 별거 없는데 제목만 점점 확정적으로 바뀌네.\n\n靠旼炡的名字赚点击的账号真的很烦。内容没多少，标题却越写越像实锤。",
         "time": "2026-10-28 15:02",
         "meta": {
-          "handle": "winter_gf57",
+          "handle": "winter_guard57",
           "category": "rumor-discussion",
           "reposts": "147",
           "bookmarks": "65",
@@ -12638,16 +12609,16 @@
           "views": "6816",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-58",
-        "title": "minjeong_mom58 @minjeong_mom58",
-        "body": "오늘은 반응을 다 확인하지 말고 맛있는 것 먹고 쉬었으면 해. 아무 말도 안 할 자유도 있잖아.\n\n希望她今天别把所有反应都看完，吃点好吃的，好好休息。她也有保持沉默的自由。",
+        "title": "gf_mood58 @gf_mood58",
+        "body": "오늘은 평소처럼 민정이 사진을 저장하려다가 괜히 멈췄어. 내가 왜 멈췄는지 나도 설명을 못 하겠음.\n\n今天本来像往常一样想保存旼炡的照片，却莫名停住了。我自己也说不清为什么。",
         "time": "2026-10-28 15:03",
         "meta": {
-          "handle": "minjeong_mom58",
+          "handle": "gf_mood58",
           "category": "rumor-discussion",
           "reposts": "230",
           "bookmarks": "94",
@@ -12657,16 +12628,16 @@
           "views": "8123",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-59",
-        "title": "winter_voice59 @winter_voice59",
-        "body": "예전 라이브를 다시 듣다가 생각했어요. 루머보다 민정이가 실제로 들려준 목소리가 훨씬 소중하다고.\n\n重听以前的直播时我想，传闻远不如旼炡真正带给我们的声音珍贵。",
+        "title": "winter_mom59 @winter_mom59",
+        "body": "민정이가 쉬는 날만큼은 알림 좀 끄고 편히 있었으면. 팬들이 하루 종일 이야기한다고 당사자도 계속 볼 필요는 없지.\n\n希望旼炡休息日能关掉通知好好放松。粉丝聊一整天，不代表当事人也得一直看。",
         "time": "2026-10-28 15:04",
         "meta": {
-          "handle": "winter_voice59",
+          "handle": "winter_mom59",
           "category": "rumor-discussion",
           "reposts": "313",
           "bookmarks": "123",
@@ -12676,16 +12647,16 @@
           "views": "9430",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-60",
-        "title": "winter_support60 @winter_support60",
-        "body": "민정이가 선택한 삶을 팬이 대신 결정할 수는 없다고 생각해. 조금 놀랐더라도 서로를 존중하면서 기다릴 수 있었으면 좋겠다.\n\n我觉得粉丝不能替旼炡决定她的人生。即使有些意外，也希望大家能互相尊重、慢慢等待。",
+        "title": "winter_yes60 @winter_yes60",
+        "body": "좋아하는 마음과 당황스러운 마음이 같이 있어도 괜찮다고 생각해. 감정이 정리되는 속도까지 남이 정해 줄 순 없잖아.\n\n我觉得喜欢和震惊可以同时存在。别人也不能规定我们整理情绪的速度。",
         "time": "2026-10-28 15:05",
         "meta": {
-          "handle": "winter_support60",
+          "handle": "winter_yes60",
           "category": "rumor-discussion",
           "reposts": "396",
           "bookmarks": "152",
@@ -12701,7 +12672,7 @@
       {
         "id": "threadrumor-20261028-61",
         "title": "winter_dream61 @winter_dream61",
-        "body": "현실 소식은 잠시 내려놓고 민정이와 야식 메뉴를 고르는 상상이나 적어 두려고요.\n\n我先把现实消息放一放，写写幻想中和旼炡一起挑夜宵的场景。",
+        "body": "다들 나처럼 현실에 정신 못 차리는 줄 알았는데 또 아무렇지 않다는 사람도 있네. 팬마다 마음이 다른 게 당연하겠지.\n\n我以为大家都和我一样被现实打懵了，也有人完全不在意。每个粉丝心情不同也是正常的吧。",
         "time": "2026-10-28 15:06",
         "meta": {
           "handle": "winter_dream61",
@@ -12714,16 +12685,16 @@
           "views": "12044",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-62",
-        "title": "gf_diary62 @gf_diary62",
-        "body": "질투와 응원이 같이 있을 수 있다는 걸 오늘 처음 인정했어요. 마음이 복잡하다고 누굴 공격할 필요는 없죠.\n\n今天我第一次承认嫉妒和支持可以同时存在。心情复杂，也不需要攻击谁。",
+        "title": "winter_soft62 @winter_soft62",
+        "body": "댓글이 너무 날카로워져서 잠깐 끄고 왔어. 민정이 좋아하는 마음까지 싸움으로 만들고 싶지는 않다.\n\n评论区变得太尖锐，我先关掉了一会儿。不想连喜欢旼炡这件事都变成争吵。",
         "time": "2026-10-28 15:07",
         "meta": {
-          "handle": "gf_diary62",
+          "handle": "winter_soft62",
           "category": "rumor-discussion",
           "reposts": "562",
           "bookmarks": "210",
@@ -12733,16 +12704,16 @@
           "views": "13351",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-63",
-        "title": "winter_gf63 @winter_gf63",
-        "body": "민정이를 좋아하는 마음이 컸던 만큼 현실 소식이 더 크게 느껴져. 아직 축하할 마음은 안 나지만, 그렇다고 누군가를 공격하고 싶진 않아.\n\n因为喜欢旼炡很深，现实消息才会让我更受冲击。我现在还说不出祝福，但也不想攻击任何人。",
+        "title": "winter_focus63 @winter_focus63",
+        "body": "연애 여부보다 사진이 어떤 과정을 거쳐 기사처럼 퍼졌는지 궁금하다. 사실 확인도 없이 단정적인 문장이 먼저 나오니까.\n\n比起是否恋爱，我更好奇照片如何一路传播成像新闻一样的内容。明明还没核实，肯定句却先出来了。",
         "time": "2026-10-28 15:08",
         "meta": {
-          "handle": "winter_gf63",
+          "handle": "winter_focus63",
           "category": "rumor-discussion",
           "reposts": "645",
           "bookmarks": "239",
@@ -12752,16 +12723,16 @@
           "views": "14658",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-64",
-        "title": "w_focus64 @w_focus64",
-        "body": "민정이가 직접 말하지 않은 일을 주변 계정들이 대신 확정하는 게 제일 피곤해. 기다리는 것도 존중이지.\n\n最让人疲惫的是周围账号替旼炡确认她没说过的事。等待也是一种尊重。",
+        "title": "gf_heart64 @gf_heart64",
+        "body": "솔직히 오늘 마음이 좀 무너졌는데 민정이가 잘못한 건 아니라는 것도 알아. 그래서 더 복잡하고 쉽게 말이 안 나와.\n\n说实话今天心情有点崩，但我也知道旼炡没有做错什么。正因如此才更复杂，反而说不出话。",
         "time": "2026-10-28 15:09",
         "meta": {
-          "handle": "w_focus64",
+          "handle": "gf_heart64",
           "category": "rumor-discussion",
           "reposts": "728",
           "bookmarks": "28",
@@ -12771,16 +12742,16 @@
           "views": "15965",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-65",
-        "title": "care_for_w65 @care_for_w65",
-        "body": "사생활 해명보다 컨디션부터 챙겼으면 해. 긴 하루를 보낸 사람에게 쉴 시간은 필요하니까.\n\n比起解释私生活，我更希望她先照顾好状态。忙了一整天的人需要休息。",
+        "title": "winter_only65 @winter_only65",
+        "body": "이제 팬 반응을 두고 또 다른 계정들이 누가 진짜 팬인지 판정하겠지. 사람 마음을 한 문장으로 평가하지 않았으면.\n\n接下来又会有人靠粉丝反应来评判谁才是真粉吧。希望别用一句话给别人的感情定性。",
         "time": "2026-10-28 15:10",
         "meta": {
-          "handle": "care_for_w65",
+          "handle": "winter_only65",
           "category": "rumor-discussion",
           "reposts": "811",
           "bookmarks": "57",
@@ -12790,16 +12761,16 @@
           "views": "17272",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-66",
-        "title": "my_kpop_scroll66 @my_kpop_scroll66",
-        "body": "원본이 없는 캡처가 여기저기서 다른 설명과 함께 올라오네요. 지금은 확실히 아는 게 많지 않아 보여요.\n\n没有原图的截图配着不同说法到处传播，现在看起来并没有多少确定信息。",
+        "title": "wintercare66 @wintercare66",
+        "body": "무슨 결과가 나오든 민정이가 자기 생활을 지킬 수 있었으면 해. 관심이 크다는 이유로 모든 걸 공개할 필요는 없으니까.\n\n无论最后结果如何，希望旼炡都能保有自己的生活。不该因为关注度高就必须公开一切。",
         "time": "2026-10-28 15:11",
         "meta": {
-          "handle": "my_kpop_scroll66",
+          "handle": "wintercare66",
           "category": "rumor-discussion",
           "reposts": "104",
           "bookmarks": "86",
@@ -12809,16 +12780,16 @@
           "views": "18579",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-67",
-        "title": "winter_stage67 @winter_stage67",
-        "body": "민정이의 무대가 좋아서 오래 응원했어요. 오늘도 그 마음을 기억하고 다음 활동을 기다릴게요.\n\n我一直支持旼炡是因为喜欢她的舞台。今天也会记住这份心意，继续等待下一次活动。",
+        "title": "winter_dream67 @winter_dream67",
+        "body": "나 진짜로 오늘은 상상 계정에만 있고 싶다. 현실 검색하다가 자꾸 내 마음이 작아지는 느낌이라 잠깐 피신.\n\n今天真的只想待在幻想账号里。搜索现实消息会让我觉得自己的心情很渺小，先躲一会儿。",
         "time": "2026-10-28 15:12",
         "meta": {
-          "handle": "winter_stage67",
+          "handle": "winter_dream67",
           "category": "rumor-discussion",
           "reposts": "187",
           "bookmarks": "115",
@@ -12828,16 +12799,16 @@
           "views": "19886",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-68",
-        "title": "winter_gf68 @winter_gf68",
-        "body": "솔직히 오늘은 마음이 아프지만, 민정이가 본인 삶을 선택할 수 있다는 건 알고 있어요.\n\n说实话今天心里难受，但我知道旼炡可以选择自己的人生。",
+        "title": "gf_sad68 @gf_sad68",
+        "body": "내가 민정이한테 바랐던 건 늘 행복하라는 말이었는데 막상 이런 소식엔 바로 웃으면서 축하하긴 어렵네. 나도 천천히 해 볼게.\n\n我一直希望旼炡幸福，可真遇到这种消息，却很难立刻笑着祝福。我也慢慢来吧。",
         "time": "2026-10-28 15:13",
         "meta": {
-          "handle": "winter_gf68",
+          "handle": "gf_sad68",
           "category": "rumor-discussion",
           "reposts": "270",
           "bookmarks": "144",
@@ -12852,11 +12823,11 @@
       },
       {
         "id": "threadrumor-20261028-69",
-        "title": "no_rumor_clicks69 @no_rumor_clicks69",
-        "body": "클릭을 많이 받는다고 근거가 생기는 건 아니죠. 자극적인 계정은 잠시 뮤트해 두겠습니다.\n\n点击量高不代表有证据。我会暂时屏蔽那些刺激性账号。",
+        "title": "winter_voice69 @winter_voice69",
+        "body": "오늘은 민정이 노래를 다시 들으면서 타임라인을 잠깐 닫았어. 남들이 결론 내리는 속도에 맞출 필요는 없으니까.\n\n今天重听旼炡的歌，也暂时关了时间线。不需要跟着别人下结论的速度走。",
         "time": "2026-10-28 15:14",
         "meta": {
-          "handle": "no_rumor_clicks69",
+          "handle": "winter_voice69",
           "category": "rumor-discussion",
           "reposts": "353",
           "bookmarks": "173",
@@ -12866,16 +12837,16 @@
           "views": "22500",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-70",
-        "title": "softdream70 @softdream70",
-        "body": "내가 좋아하는 상상은 현실의 누구에게도 답을 요구하지 않는 작은 이야기로 남겨 둘래요.\n\n我会把喜欢的幻想留成一个不向现实中的任何人索求答案的小故事。",
+        "title": "winter_work70 @winter_work70",
+        "body": "이 뉴스가 며칠 뒤에도 남을지 모르겠지만, 민정이가 준비한 음악은 계속 남았으면 좋겠다.\n\n不知道这条新闻几天后还会不会被讨论，但希望旼炡准备的音乐能一直留下来。",
         "time": "2026-10-28 15:15",
         "meta": {
-          "handle": "softdream70",
+          "handle": "winter_work70",
           "category": "rumor-discussion",
           "reposts": "436",
           "bookmarks": "202",
@@ -12885,16 +12856,16 @@
           "views": "23807",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-71",
-        "title": "wintermeal71 @wintermeal71",
-        "body": "민정이가 밥은 먹었는지, 오늘 잠깐이라도 쉴 수 있는지가 더 궁금해요. 그게 제일 현실적인 걱정이라서.\n\n我更关心旼炡有没有吃饭、今天能不能休息一会儿，因为这是最现实的担心。",
+        "title": "gf_diary71 @gf_diary71",
+        "body": "다른 사람이랑 있을 수 있다는 걸 머리로는 알았는데 사진으로 보니까 느낌이 다르다. 내가 참 단순한가 봐.\n\n我理智上知道她可能会和别人交往，可真的看到照片，感受完全不一样。看来我也挺简单的。",
         "time": "2026-10-28 15:16",
         "meta": {
-          "handle": "wintermeal71",
+          "handle": "gf_diary71",
           "category": "rumor-discussion",
           "reposts": "519",
           "bookmarks": "231",
@@ -12904,16 +12875,16 @@
           "views": "25114",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-72",
-        "title": "winter_work72 @winter_work72",
-        "body": "루머만 보고 활동 성과까지 다시 평가하는 건 공정하지 않다고 생각해요. 음악과 사생활은 구분합시다.\n\n只看传闻就重新评价她的工作成果并不公平。把音乐和私生活分开吧。",
+        "title": "winter_yes72 @winter_yes72",
+        "body": "팬이 놀랄 수는 있지만 당사자에게 미안하라고 할 일은 아니라고 생각해. 마음과 요구는 다른 문제야.\n\n粉丝当然可以震惊，但不能因此要求当事人道歉。情绪和要求是两回事。",
         "time": "2026-10-28 15:17",
         "meta": {
-          "handle": "winter_work72",
+          "handle": "winter_yes72",
           "category": "rumor-discussion",
           "reposts": "602",
           "bookmarks": "20",
@@ -12923,16 +12894,16 @@
           "views": "26421",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "全肯定粉"
         }
       },
       {
         "id": "threadrumor-20261028-73",
-        "title": "gf_slowly73 @gf_slowly73",
-        "body": "누군가를 오래 좋아하면 마음 정리에도 시간이 걸리죠. 그래도 상대에게 설명을 강요하진 않을래요.\n\n喜欢一个人很久，整理心情确实需要时间，但我不会强迫对方解释。",
+        "title": "winter_focus73 @winter_focus73",
+        "body": "사실 아닌 얘기까지 붙어서 퍼지기 시작하면 원래 사진보다 나중에 만들어진 말이 더 커져. 그 흐름은 멈췄으면.\n\n不实说法开始附着传播后，后来编出来的话反而会盖过原照片。希望这个趋势停下来。",
         "time": "2026-10-28 15:18",
         "meta": {
-          "handle": "gf_slowly73",
+          "handle": "winter_focus73",
           "category": "rumor-discussion",
           "reposts": "685",
           "bookmarks": "49",
@@ -12942,16 +12913,16 @@
           "views": "27728",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "毒唯"
         }
       },
       {
         "id": "threadrumor-20261028-74",
-        "title": "warm_winter74 @warm_winter74",
-        "body": "오늘은 서로 다른 감정을 가진 팬들도 조금만 부드럽게 얘기했으면 해요. 다들 놀란 건 비슷하니까요.\n\n希望今天情绪不同的粉丝也能温和一点交流，大家受到的冲击其实都差不多。",
+        "title": "winter_mom74 @winter_mom74",
+        "body": "민정이가 팬들한테 고맙다고 했던 마음은 진심이었겠지. 그 마음을 연애 여부로 시험하듯 확인할 필요는 없어.\n\n旼炡以前感谢粉丝的心意应该是真诚的，没必要用恋爱与否来考验那份心意。",
         "time": "2026-10-28 15:19",
         "meta": {
-          "handle": "warm_winter74",
+          "handle": "winter_mom74",
           "category": "rumor-discussion",
           "reposts": "768",
           "bookmarks": "78",
@@ -12961,16 +12932,16 @@
           "views": "29035",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-75",
-        "title": "watch_music75 @watch_music75",
-        "body": "사진을 확대하기보다 다음 공연 소식을 기다리려고요. 추측만 반복하면 아무도 편해지지 않겠어요.\n\n比起放大照片，我还是等下一场演出的消息。反复猜测不会让任何人轻松。",
+        "title": "winter_dream75 @winter_dream75",
+        "body": "나도 질투하는 내가 싫어서 댓글 쓰다 지웠어. 현실에 화내는 대신 그냥 오늘은 일찍 자려고.\n\n我也因为自己在嫉妒而不喜欢自己，写了评论又删掉。与其对现实生气，今天还是早点睡吧。",
         "time": "2026-10-28 15:20",
         "meta": {
-          "handle": "watch_music75",
+          "handle": "winter_dream75",
           "category": "rumor-discussion",
           "reposts": "61",
           "bookmarks": "107",
@@ -12980,16 +12951,16 @@
           "views": "30342",
           "language": "mixed",
           "story": "true",
-          "fanType": "普通粉丝"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-76",
-        "title": "anti_drama76 @anti_drama76",
-        "body": "이 일을 핑계로 사람을 비하하는 글은 그만했으면 합니다. 비판과 인신공격은 다르잖아요.\n\n希望停止借这件事贬低别人，批评和人身攻击不是一回事。",
+        "title": "gf_mood76 @gf_mood76",
+        "body": "축하하는 팬을 보면 내가 못된 사람 같고, 나처럼 서운한 팬을 보면 또 서로 위로가 돼. 진짜 복잡한 날이다.\n\n看到祝福的粉丝，会觉得自己是不是很差劲；看到和我一样失落的人，又会得到安慰。今天真的很复杂。",
         "time": "2026-10-28 15:21",
         "meta": {
-          "handle": "anti_drama76",
+          "handle": "gf_mood76",
           "category": "rumor-discussion",
           "reposts": "144",
           "bookmarks": "136",
@@ -12999,16 +12970,16 @@
           "views": "31649",
           "language": "mixed",
           "story": "true",
-          "fanType": "黑粉借题发挥"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-77",
-        "title": "winter_first77 @winter_first77",
-        "body": "윈터를 걱정한다면 먼저 확인된 사실과 추측을 나눠 말했으면. 불확실한 말을 반복하면 더 힘들어져요.\n\n如果担心 Winter，就先区分已确认事实和猜测。反复传播不确定的说法只会更难受。",
+        "title": "winter_clip77 @winter_clip77",
+        "body": "민정이가 직접 보여 준 무대와 노래는 그대로 좋아할 수 있어. 지금 당장 모든 감정을 정리하지 않아도 되니까.\n\n我依然可以喜欢旼炡呈现的舞台和歌曲。不必现在就把所有情绪整理清楚。",
         "time": "2026-10-28 15:22",
         "meta": {
-          "handle": "winter_first77",
+          "handle": "winter_clip77",
           "category": "rumor-discussion",
           "reposts": "227",
           "bookmarks": "165",
@@ -13018,16 +12989,16 @@
           "views": "32956",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "甜唯"
         }
       },
       {
         "id": "threadrumor-20261028-78",
-        "title": "winter_soft78 @winter_soft78",
-        "body": "오늘은 댓글창에서 답을 찾기보다 민정이 무대 영상을 다시 보려고. 내가 좋아하는 이유는 여전히 무대 위 민정이니까.\n\n今天比起在评论区找答案，我还是想重看旼炡的舞台视频。我喜欢她的理由依旧是舞台上的旼炡。",
+        "title": "winter_fact78 @winter_fact78",
+        "body": "누가 맞다고 주장하는 게시물은 많은데 원본 출처는 안 나옴. 퍼 나르는 횟수랑 신뢰도는 별개라는 걸 잊지 말자.\n\n声称自己正确的帖子很多，原图来源却没出现。转发次数和可信度是两回事。",
         "time": "2026-10-28 15:23",
         "meta": {
-          "handle": "winter_soft78",
+          "handle": "winter_fact78",
           "category": "rumor-discussion",
           "reposts": "310",
           "bookmarks": "194",
@@ -13037,16 +13008,16 @@
           "views": "5263",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "理性粉"
         }
       },
       {
         "id": "threadrumor-20261028-79",
-        "title": "gf_reflect79 @gf_reflect79",
-        "body": "민정이의 행복을 바라면서도 속상할 수 있네요. 이 감정을 천천히 받아들이는 중이에요.\n\n原来希望旼炡幸福的同时也可能失落，我正在慢慢接受这种情绪。",
+        "title": "winter_career79 @winter_career79",
+        "body": "팬들이 관심을 갖는 건 이해하지만 민정이의 다음 작업물이 논란보다 더 오래 이야기되면 좋겠다.\n\n我理解粉丝会关注这件事，但希望旼炡接下来的作品能比争议被讨论得更久。",
         "time": "2026-10-28 15:24",
         "meta": {
-          "handle": "gf_reflect79",
+          "handle": "winter_career79",
           "category": "rumor-discussion",
           "reposts": "393",
           "bookmarks": "223",
@@ -13056,16 +13027,16 @@
           "views": "6570",
           "language": "mixed",
           "story": "true",
-          "fanType": "女友粉"
+          "fanType": "事业粉"
         }
       },
       {
         "id": "threadrumor-20261028-80",
-        "title": "winter_clip80 @winter_clip80",
-        "body": "팬들이 서로를 공격하기보다 민정이가 보여 준 좋은 무대를 다시 나눴으면 좋겠어요.\n\n比起互相攻击，我更希望粉丝重新分享旼炡带来的精彩舞台。",
+        "title": "gf_heart80 @gf_heart80",
+        "body": "지금은 축하도 비난도 안 하고 싶어. 그냥 내가 생각했던 모습이랑 현실 사이에서 잠깐 멈춰 있는 기분이야.\n\n现在我既不想祝福，也不想批评，只是感觉自己停在想象和现实之间。",
         "time": "2026-10-28 15:25",
         "meta": {
-          "handle": "winter_clip80",
+          "handle": "gf_heart80",
           "category": "rumor-discussion",
           "reposts": "476",
           "bookmarks": "252",
@@ -13075,16 +13046,16 @@
           "views": "7877",
           "language": "mixed",
           "story": "true",
-          "fanType": "甜唯"
+          "fanType": "女友粉"
         }
       },
       {
         "id": "threadrumor-20261028-81",
-        "title": "only_winter81 @only_winter81",
-        "body": "회사나 팬덤이 추측을 키우기보다 민정이가 평소 하던 일을 계속할 수 있게 해 줬으면 합니다.\n\n希望公司和粉圈别再扩大猜测，而是让旼炡继续做平时的工作。",
+        "title": "winter_solo81 @winter_solo81",
+        "body": "루머를 반박하는 계정도 단정하는 계정도 결국 출처를 안 보여 주면 똑같이 믿기 어렵지. 공식 확인을 기다리자.\n\n反驳传闻的账号和下结论的账号，如果都拿不出来源，同样难以相信。还是等正式确认吧。",
         "time": "2026-10-28 15:26",
         "meta": {
-          "handle": "only_winter81",
+          "handle": "winter_solo81",
           "category": "rumor-discussion",
           "reposts": "559",
           "bookmarks": "41",
@@ -13099,11 +13070,11 @@
       },
       {
         "id": "threadrumor-20261028-82",
-        "title": "my_fantasy82 @my_fantasy82",
-        "body": "현실의 관계는 제가 알 수 없는 영역이니까, 제가 만든 이야기는 허구로 즐기고 끝낼게요.\n\n现实关系不是我能知道的领域，所以我会把自己写的故事当作虚构来享受。",
+        "title": "winter_care82 @winter_care82",
+        "body": "오늘 하루 민정이가 웃을 일이 조금이라도 있었으면 좋겠어. 온라인이 시끄러워도 실제 하루는 계속 흘러가니까.\n\n希望旼炡今天至少有一点开心的事。即使网络很吵，现实的一天也还是在继续。",
         "time": "2026-10-28 15:27",
         "meta": {
-          "handle": "my_fantasy82",
+          "handle": "winter_care82",
           "category": "rumor-discussion",
           "reposts": "642",
           "bookmarks": "70",
@@ -13113,16 +13084,16 @@
           "views": "10491",
           "language": "mixed",
           "story": "true",
-          "fanType": "梦女"
+          "fanType": "妈粉"
         }
       },
       {
         "id": "threadrumor-20261028-83",
-        "title": "minjeong_home83 @minjeong_home83",
-        "body": "사진 한 장 때문에 하루 종일 신경 쓰지 않았으면 해. 쉬는 날에는 평범하게 쉴 수도 있어야지.\n\n希望她不要因为一张照片整天操心，休息日也应该能像普通人一样休息。",
+        "title": "winter_dream83 @winter_dream83",
+        "body": "내가 상상한 관계가 아니라고 현실의 민정이를 탓하고 싶진 않아. 내 마음은 내 몫이고, 오늘은 조금 아프면 되는 거겠지.\n\n现实中的旼炡没有成为我幻想里的关系，我也不想怪她。我的心情是自己的，今天难受一下就好。",
         "time": "2026-10-28 15:28",
         "meta": {
-          "handle": "minjeong_home83",
+          "handle": "winter_dream83",
           "category": "rumor-discussion",
           "reposts": "725",
           "bookmarks": "99",
@@ -13132,16 +13103,16 @@
           "views": "11798",
           "language": "mixed",
           "story": "true",
-          "fanType": "妈粉"
+          "fanType": "梦女粉"
         }
       },
       {
         "id": "threadrumor-20261028-84",
-        "title": "wait_official84 @wait_official84",
-        "body": "공식 확인이 나오기 전에는 단정하지 않겠습니다. 조회수보다 당사자의 사생활이 먼저예요.\n\n正式确认前我不会下结论。比起点击量，当事人的隐私更重要。",
+        "title": "winter_yes84 @winter_yes84",
+        "body": "오늘은 팬마다 반응이 다르다는 것만 기억하려고. 당황한 사람도, 기다리는 사람도, 계속 응원하는 사람도 다 각자 마음이 있으니까.\n\n今天只想记得每个粉丝的反应都不同。有人震惊、有人等待、有人继续支持，每个人都有自己的心情。",
         "time": "2026-10-28 15:29",
         "meta": {
-          "handle": "wait_official84",
+          "handle": "winter_yes84",
           "category": "rumor-discussion",
           "reposts": "808",
           "bookmarks": "128",
@@ -13151,7 +13122,7 @@
           "views": "13105",
           "language": "mixed",
           "story": "true",
-          "fanType": "毒唯"
+          "fanType": "全肯定粉"
         }
       }
     ],
