@@ -1747,10 +1747,10 @@ export function MymyX(p: SkinProps) {
     [reposts, setReposts] = useSkinState<string[]>(p, "mymyXReposts", []),
     [marks, setMarks] = useSkinState<string[]>(p, "mymyXMarks", []),
     [query, setQuery] = useState(""),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "x-live-post-count-rumor-v6", 0),
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
+  const liveCount = Math.min(84, Math.max(0, Number(p.ui?.["rumor-live-post-count-v2"] ?? 0)));
   const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v6"] === true;
   const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.story === "true" && i.meta.category === "rumor-discussion");
   const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 84) : [];
@@ -1774,24 +1774,8 @@ export function MymyX(p: SkinProps) {
     if (rumorNewsUnlocked && p.items.some((i) => i.meta.category === "rumor-discussion"))
       p.onUi?.("rumor-feed-opened", true);
   }, [p.items.length, rumorNewsUnlocked]);
-  useEffect(() => {
-    if (rumorNewsUnlocked && liveCount >= 1)
-      p.onUi?.("x-news-post-published-v1", true);
-  }, [rumorNewsUnlocked, liveCount]);
-  useEffect(() => {
-    if (!rumorNewsUnlocked || liveItems.length === 0) return;
-    if (liveCount < 1) {
-      const timer = window.setTimeout(() => setLiveCount(1), 800);
-      return () => window.clearTimeout(timer);
-    }
-    if (liveCount >= liveItems.length) return;
-    const timer = window.setTimeout(
-      () => setLiveCount((count) => Math.min(liveItems.length, count + 1)),
-      1500,
-    );
-    return () => window.clearTimeout(timer);
-  }, [rumorNewsUnlocked, liveCount, liveItems.length]);
-  const refreshFeed = () => setLiveCount(Math.min(liveItems.length, liveCount + 2));
+  const refreshFeed = () =>
+    p.onUi?.("rumor-live-post-count-v2", Math.min(84, liveCount + 2));
   const isLiked = (id: string) =>
     typeof p.ui?.["liked-" + id] === "boolean"
       ? Boolean(p.ui["liked-" + id])
