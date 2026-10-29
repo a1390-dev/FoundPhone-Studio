@@ -140,13 +140,6 @@ const KKT_CONFIRMED_REPLY_OPTIONS = [
   ["자기 먹고 싶은 걸로 준비해 줄게. 오늘 고생했으니까 집에 와서는 편하게 있어.", "我给你准备你想吃的。今天辛苦了，回家以后就好好放松吧。"],
   ["알겠어, 걱정 마. 내가 기다리고 있을 테니까 일 마무리 잘하고 와.", "好啦，别担心。我会等你的，你安心把工作处理好再回来。"],
 ] as const;
-const KKT_OPENING_FOLLOWUP = [
-  "金旼炡",
-  "나 오늘 집에 좀 늦게 들어갈 것 같아.",
-  "20:17",
-  "npc",
-  "我今天可能会晚点回家。",
-] as const;
 const KKT_STORY_ROUNDS = [
   {
     // The opening question already exists in the story template. After this
@@ -201,7 +194,7 @@ const KKT_STORY_ROUNDS = [
   {
     time: "20:25",
     npc: [
-      ["응, 이제 다 산 것 같아. 계산하고 집에 가자.", "嗯，感觉东西都买齐了。结账然后回家吧。"],
+      ["다 샀어. 이제 우리 집에 가자.", "买好了，走吧，我们回家。"],
       ["봉투 하나면 되겠지? 내가 들게.", "一个袋子应该就够了吧？我来拿。"],
     ],
     choices: [
@@ -268,44 +261,6 @@ export function MymyKakao(p: SkinProps) {
     });
     if (completed) p.onUi?.("convenience-store-event-finished-v5", true);
   }, [p.thread, storyStep]);
-  // The opening "I may get home late today" arrives as the second NPC message,
-  // about two seconds after the player opens this KKT conversation.
-  useEffect(() => {
-    if (p.thread !== "金旼炡") return;
-    // This 20:17 follow-up belongs to the previous evening conversation, not
-    // to the Oct 28 afternoon rumor-and-call sequence.
-    if (p.ui?.["scandal-precall-started-v5"] === true || p.virtualTime?.startsWith("14:")) return;
-    const alreadyDelivered = sentRef.current.some((raw) => {
-      try {
-        const entry: unknown = JSON.parse(raw);
-        return Array.isArray(entry) &&
-          entry[0] === p.thread &&
-          entry[1] === KKT_OPENING_FOLLOWUP[1] &&
-          entry[3] === "npc";
-      } catch {
-        return false;
-      }
-    });
-    if (alreadyDelivered) return;
-    setNpcTyping(true);
-    const timer = window.setTimeout(() => {
-      const updated = [
-        ...sentRef.current,
-        JSON.stringify([
-          p.thread,
-          KKT_OPENING_FOLLOWUP[1],
-          KKT_OPENING_FOLLOWUP[2],
-          "npc",
-          KKT_OPENING_FOLLOWUP[4],
-        ]),
-      ];
-      sentRef.current = updated;
-      setSent(updated);
-      notifyKktNpcMessage(p.thread, KKT_OPENING_FOLLOWUP[1], KKT_OPENING_FOLLOWUP[4], KKT_OPENING_FOLLOWUP[2]);
-      setNpcTyping(false);
-    }, 2000);
-    return () => window.clearTimeout(timer);
-  }, [p.thread, p.ui?.["scandal-precall-started-v5"], p.virtualTime]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
     const started = p.ui?.["scandal-precall-started-v5"];
@@ -753,11 +708,10 @@ export function MymyKakao(p: SkinProps) {
                   onClick={() => {
                     const translated = zh.replaceAll("{{playerId}}", p.playerId || "你");
                     const alreadySelected = selectedChoices.some(([chosenKo]) => chosenKo === ko);
-                    const nextChoices = alreadySelected
-                      ? selectedChoices.filter(([chosenKo]) => chosenKo !== ko)
-                      : [...selectedChoices, [ko, translated] as const];
+                    // A reply tap represents one choice, never a multi-line batch.
+                    const nextChoices = alreadySelected ? [] : [[ko, translated] as const];
                     setSelectedChoices(nextChoices);
-                    setDraft(nextChoices.map(([chosenKo]) => chosenKo).join("\n"));
+                    setDraft(nextChoices[0]?.[0] || "");
                     setSelectedZh("");
                   }}
                 >
