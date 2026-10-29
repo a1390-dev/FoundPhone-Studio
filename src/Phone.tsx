@@ -1205,7 +1205,10 @@ function PhoneRuntime({
 
   const plugin = getApp(app);
   useEffect(() => {
+    if (!ready) return;
     if (noticesSeen.current === null) {
+      // Wait until the IndexedDB save has loaded so historical notifications
+      // are not replayed as fresh pop-ups on every app launch.
       noticesSeen.current = [...s.notifications];
       return;
     }
@@ -1247,7 +1250,7 @@ function PhoneRuntime({
         setBanner(newNotices.at(-1) || "");
       }
     }
-  }, [s.notifications, locked, work.phone.notifications, banner, bannerQueue]);
+  }, [ready, s.notifications, locked, work.phone.notifications, banner, bannerQueue]);
 
   // Show notification banners one at a time. A new message queues behind the
   // visible banner instead of replacing it before the player can see it.
