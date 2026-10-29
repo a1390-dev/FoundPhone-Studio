@@ -824,6 +824,7 @@ function PhoneRuntime({
         "scandal-ig-dm-reply-popup-count-v8": 0,
         "scandal-ig-dm-screen-active-v8": false,
         "scandal-ig-open-thread-v8": "",
+        "scandal-ig-active-thread-v1": "",
       },
     };
     return next;
@@ -1259,7 +1260,7 @@ function PhoneRuntime({
       const unreadIds = Array.isArray(unreadRaw) ? unreadRaw.filter((id): id is string => typeof id === "string") : [];
       const viewingThisThread =
         instagramUi["scandal-ig-dm-screen-active-v8"] === true &&
-        instagramUi["scandal-ig-open-thread-v8"] === deliveredReply.threadId;
+        instagramUi["scandal-ig-active-thread-v1"] === deliveredReply.threadId;
       const nextUnreadIds = viewingThisThread
         ? unreadIds.filter((id) => id !== deliveredReply.threadId)
         : Array.from(new Set([...unreadIds, deliveredReply.threadId]));
