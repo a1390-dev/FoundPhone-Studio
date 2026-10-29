@@ -17,7 +17,7 @@ import {
   Share2,
   ThumbsUp,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Item } from "../schema";
 import {
   Avatar,
@@ -195,6 +195,46 @@ export function XSkin(p: Props) {
 }
 export function ThreadsSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "为你推荐");
+  const [liveCount, setLiveCount] = useSkinState<number>(
+    p,
+    "threads-live-post-count-v2",
+    0,
+  );
+  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v6"] === true;
+  const allLiveRumorItems = items.filter(
+    (i) =>
+      i.meta.live === "true" &&
+      i.meta.story === "true" &&
+      i.meta.category === "rumor-discussion",
+  );
+  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 84) : [];
+  const ordinaryItems = items.filter(
+    (i) =>
+      !(
+        i.meta.live === "true" &&
+        i.meta.story === "true" &&
+        i.meta.category === "rumor-discussion"
+      ),
+  );
+  useEffect(() => {
+    if (!rumorNewsUnlocked || liveItems.length === 0) return;
+    if (liveCount < 1) {
+      const timer = window.setTimeout(() => setLiveCount(1), 1800);
+      return () => window.clearTimeout(timer);
+    }
+    if (liveCount >= liveItems.length) return;
+    const timer = window.setTimeout(
+      () => setLiveCount((count) => Math.min(liveItems.length, count + 1)),
+      1600,
+    );
+    return () => window.clearTimeout(timer);
+  }, [rumorNewsUnlocked, liveCount, liveItems.length]);
+  const visibleLiveItems = liveItems.slice(0, liveCount).reverse();
+  const visibleOrdinaryItems =
+    tab === "个人主页"
+      ? ordinaryItems
+      : ordinaryItems.filter((i) => tab !== "正在关注" || i.folder === "正在关注");
+  const visibleItems = [...visibleLiveItems, ...visibleOrdinaryItems];
   return (
     <div className="catalog-skin threads-ui">
       <Header p={p} />
@@ -207,10 +247,7 @@ export function ThreadsSkin(p: Props) {
         </button>
       </div>
       <div className="catalog-scroll">
-        {(tab === "个人主页"
-          ? items
-          : items.filter((i) => tab !== "正在关注" || i.folder === "正在关注")
-        ).map((i) => (
+        {visibleItems.map((i) => (
           <article className="threads-post" key={i.id}>
             <div className="thread-avatar">
               <Avatar name={i.sender} />
@@ -232,7 +269,7 @@ export function ThreadsSkin(p: Props) {
             </div>
           </article>
         ))}
-        <Empty items={items} />
+        <Empty items={visibleItems} />
       </div>
       <Tabs
         tabs={["为你推荐", "正在关注", "个人主页"]}
