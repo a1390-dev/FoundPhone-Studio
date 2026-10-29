@@ -733,37 +733,14 @@
 .ios18 .keyboard-open .app-screen {
   padding-bottom: 370px;
 }
-.ios18 .keyboard-draft {
-  display: flex;
-  background: #f7f7f8;
-  margin: 0 -3px;
-  min-height: 46px;
-  padding: 6px 10px;
-  gap: 10px;
-  align-items: center;
-}
-.ios18 .keyboard-draft-value {
-  box-sizing: border-box;
-  display: block;
-  flex: 1;
-  min-width: 0;
-  max-height: 42px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  background: white;
-  font-size: 16px;
-  line-height: 1.7;
-  border: 1px solid #ddd;
-  border-radius: 17px;
-  padding: 5px 12px;
-}
-.ios18 .keyboard-placeholder {
-  color: #999;
-}
-.ios18 .keyboard-pinyin {
-  margin-left: 4px;
-  color: #007aff;
+.ios18 .keyboard-pinyin-preview {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: 90px;
+  padding: 0 8px !important;
+  color: #007aff !important;
+  font-size: 13px !important;
+  border-right: 1px solid #aaa !important;
 }
 .ios18 .keyboard-candidates {
   height: 39px;
@@ -1347,3 +1324,9 @@
   grid-template-rows: repeat(6, 99px);
   grid-auto-rows: 99px;
 }
+/* Keep the player ID field visible above the custom keyboard so the actual
+   field—not a duplicate placeholder—shows exactly what is being entered. */
+.ios18 .phone-screen.keyboard-open .player-session-modal {
+  top: 31%;
+}
+
