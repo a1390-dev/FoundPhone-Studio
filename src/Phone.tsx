@@ -288,6 +288,18 @@ function PhoneRuntime({
 }) {
   const [app, setApp] = useState("");
   const [appThread, setAppThread] = useState("");
+  // Async NPC messages may call callbacks captured when an earlier thread was open.
+  // Keep the live foreground app/thread in a ref so popup decisions never use stale state.
+  const appViewRef = useRef({ app, appThread });
+  appViewRef.current = { app, appThread };
+  const closeCurrentApp = () => {
+    appViewRef.current = { ...appViewRef.current, app: "" };
+    setApp("");
+  };
+  const setActiveAppThread = (thread: string) => {
+    appViewRef.current = { ...appViewRef.current, appThread: thread };
+    setAppThread(thread);
+  };
   const [appOpenSequence, setAppOpenSequence] = useState(0);
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
@@ -345,7 +357,7 @@ function PhoneRuntime({
         return;
       }
       if (hiddenAt && Date.now() - hiddenAt >= 30 * 60 * 1000 && playerId) {
-        setApp("");
+        closeCurrentApp();
         setPinOpen(false);
         setQuickCamera(false);
         setLocked(true);
@@ -434,7 +446,7 @@ function PhoneRuntime({
     runtimeRef.current = restored;
     setOwn(restored);
     onRuntime?.(restored);
-    setApp("");
+    closeCurrentApp();
     setPanel("");
     setFolder("");
   };
@@ -486,7 +498,8 @@ function PhoneRuntime({
     }
     const current = runtimeRef.current;
     const unreadKey = "kkt-unread-count:" + incoming.thread;
-    const activeConversation = app === "kakao" && appThread === incoming.thread;
+    const view = appViewRef.current;
+    const activeConversation = view.app === "kakao" && view.appThread === incoming.thread;
     // Count each incoming NPC message until the player opens this conversation
     // again. Messages arriving in the visible chat still count for the inbox,
     // matching the supplied KKT list reference after the player backs out.
@@ -495,11 +508,11 @@ function PhoneRuntime({
     const unreadCount = activeConversation
       ? 0
       : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
+    // Suppress only the NPC thread that is currently visible. Being in a
+    // different KKT conversation is not enough to suppress this NPC's popup.
     const notifications = activeConversation
       ? current.notifications.filter((notice) => kktNoticeThread(notice) !== incoming.thread)
-      : app === "kakao"
-        ? current.notifications
-        : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
+      : [...current.notifications, `KKT|${incoming.thread}:${incoming.text}`];
     if (activeConversation && banner && kktNoticeThread(banner) === incoming.thread) setBanner("");
     update({
       ...current,
@@ -554,15 +567,15 @@ function PhoneRuntime({
           const thread = kktNoticeThread(notice);
           if (!thread) return;
           const unreadKey = "kkt-unread-count:" + thread;
-          if (app === "kakao" && appThread === thread) {
-            // The exact conversation is visible: consume silently and mark read.
+          const view = appViewRef.current;
+          if (view.app === "kakao" && view.appThread === thread) {
+            // Only the matching visible NPC conversation consumes this silently.
             removeIndexes.add(previous.notifications.length + offset);
             kakaoUi[unreadKey] = 0;
           } else {
-            // KKT is foregrounded but the conversation is not open: show only
-            // its unread badge. Outside KKT, keep the OS notification banner.
+            // Another NPC's message must still pop up, even while KKT is open
+            // on a different person. Keep the notice for the OS banner.
             kakaoUi[unreadKey] = Math.max(0, Number(kakaoUi[unreadKey] ?? 0)) + 1;
-            if (app === "kakao") removeIndexes.add(previous.notifications.length + offset);
           }
           handledKktState = true;
         });
@@ -628,7 +641,8 @@ function PhoneRuntime({
   };
   const open = (id: string, initialThread = "") => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
-    setAppThread(initialThread);
+    appViewRef.current = { app: id, appThread: initialThread };
+    setActiveAppThread(initialThread);
     if (id === "kakao" && initialThread) clearKktThreadNotifications(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
@@ -660,7 +674,7 @@ function PhoneRuntime({
     }
   };
   useEffect(() => {
-    if (app && !work.apps.some((a) => a.id === app && a.installed)) setApp("");
+    if (app && !work.apps.some((a) => a.id === app && a.installed)) closeCurrentApp();
   }, [app, work.apps]);
   const displayTime = creator ? work.phone.time : s.time || work.phone.time;
   const callDialogueStep = Number(s.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
@@ -756,17 +770,15 @@ function PhoneRuntime({
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
       s.ui?.story?.["scandal-kkt-first-notice-v5"] === true ||
-      (app === "kakao" && appThread === "金旼炡")) return;
+      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
       if (latestStory["scandal-kkt-first-notice-v5"] === true ||
-        (app === "kakao" && appThread === "金旼炡")) return;
+        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
       update({
         ...latest,
-        notifications: app === "kakao"
-          ? latest.notifications
-          : [...latest.notifications, "KKT|金旼炡:어디야?"],
+        notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-first-notice-v5": true },
@@ -786,17 +798,15 @@ function PhoneRuntime({
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-kkt-first-notice-v5"] !== true ||
       s.ui?.story?.["scandal-kkt-second-notice-v5"] === true ||
-      (app === "kakao" && appThread === "金旼炡")) return;
+      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
       if (latestStory["scandal-kkt-second-notice-v5"] === true ||
-        (app === "kakao" && appThread === "金旼炡")) return;
+        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
       update({
         ...latest,
-        notifications: app === "kakao"
-          ? latest.notifications
-          : [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+        notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-second-notice-v5": true },
@@ -1122,7 +1132,7 @@ function PhoneRuntime({
                 captureApp();
                 setPanel("switcher");
               } else {
-                setApp("");
+                closeCurrentApp();
                 setPanel("");
                 setFolder("");
               }
@@ -1245,7 +1255,7 @@ function PhoneRuntime({
                   work={work}
                   initialThread={appThread}
                   playerId={playerId}
-                  onActiveThread={(nextThread) => setAppThread(nextThread)}
+                  onActiveThread={setActiveAppThread}
                   onKktOpeningSeen={markKktOpeningAsSeen}
                   onRequestCall={() => {
                     const current = runtimeRef.current;
@@ -1402,7 +1412,7 @@ function PhoneRuntime({
               <button
                 onClick={() => {
                   update(dispatch(work, initialRuntime(work), "start"));
-                  setApp("");
+                  closeCurrentApp();
                   setLocked(true);
                 }}
               >
@@ -1690,7 +1700,7 @@ function PhoneRuntime({
               captureApp();
               setHomeRequest((n) => n + 1);
               setKeyboard(false);
-              setApp("");
+              closeCurrentApp();
               setFolder("");
               setPanel("");
             }}
