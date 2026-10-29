@@ -819,6 +819,120 @@ function PhoneRuntime({
     }, 1500);
     return () => window.clearTimeout(timer);
   }, [creator, app, appThread, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
+  // Deliver Minjeong's 20:17 follow-up on the story timeline, not as a side effect
+  // of opening her chat. Existing saves may already contain the line; still send
+  // its one-time notification unless it was already handled.
+  useEffect(() => {
+    const hasOpeningChat = work.chats.some((chat) =>
+      chat.id === "kakao-kim-minjeong-chat" &&
+      chat.messages.some((message) => message.id === "kkt-minjeong-opening-01"),
+    );
+    if (
+      creator ||
+      !hasOpeningChat ||
+      s.time?.startsWith("14:") ||
+      s.ui?.kakao?.["scandal-precall-started-v5"] === true ||
+      s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"] === true
+    ) return;
+    const timer = window.setTimeout(() => {
+      const latest = runtimeRef.current;
+      const latestKakao = latest.ui?.kakao || {};
+      if (
+        latest.time?.startsWith("14:") ||
+        latestKakao["scandal-precall-started-v5"] === true ||
+        latestKakao["mymyKktOpeningFollowupNoticeHandledV1"] === true
+      ) return;
+      const saved = latestKakao["mymyKktSentV3"];
+      const sent = Array.isArray(saved) ? saved.filter((item): item is string => typeof item === "string") : [];
+      const text = "나 오늘 집에 좀 늦게 들어갈 것 같아.";
+      const alreadyInChat = sent.some((raw) => {
+        try {
+          const row: unknown = JSON.parse(raw);
+          return Array.isArray(row) && row[0] === "金旼炡" && row[1] === text && row[3] === "npc";
+        } catch { return false; }
+      });
+      const nextSent = alreadyInChat
+        ? sent
+        : [...sent, JSON.stringify(["金旼炡", text, "20:17", "npc", "我今天可能会晚点回家。"])];
+      update({
+        ...latest,
+        ui: {
+          ...latest.ui,
+          kakao: {
+            ...latestKakao,
+            "mymyKktSentV3": nextSent,
+            "mymyKktOpeningFollowupNoticeHandledV1": true,
+          },
+        },
+      });
+      handleKktIncomingMessage(JSON.stringify({
+        id: "minjeong-opening-followup-20-17-v1",
+        thread: "金旼炡",
+        text,
+        translation: "我今天可能会晚点回家。",
+        time: "20:17",
+      }));
+    }, 2000);
+    return () => window.clearTimeout(timer);
+  }, [
+    creator,
+    work.id,
+    s.time,
+    s.ui?.kakao?.["scandal-precall-started-v5"],
+    s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"],
+  ]);
+
+  // If either lead-in message arrives while Minjeong's chat is visible, consume
+  // its deferred system notice immediately so leaving the chat does not pop a stale message.
+  useEffect(() => {
+    if (
+      creator ||
+      app !== "kakao" ||
+      appThread !== "金旼炡" ||
+      s.ui?.kakao?.["scandal-precall-started-v5"] !== true
+    ) return;
+    const saved = s.ui?.kakao?.["mymyKktSentV3"];
+    const sent = Array.isArray(saved) ? saved.filter((item): item is string => typeof item === "string") : [];
+    const hasNpcLine = (text: string) => sent.some((raw) => {
+      try {
+        const row: unknown = JSON.parse(raw);
+        return Array.isArray(row) && row[0] === "金旼炡" && row[1] === text && row[3] === "npc";
+      } catch { return false; }
+    });
+    const latest = runtimeRef.current;
+    const latestStory = latest.ui?.story || {};
+    const firstDelivered = hasNpcLine("어디야?");
+    const secondDelivered = hasNpcLine("혼자 있어?");
+    const nextStory = {
+      ...latestStory,
+      ...(firstDelivered ? { "scandal-kkt-first-notice-v5": true } : {}),
+      ...(secondDelivered ? { "scandal-kkt-second-notice-v5": true } : {}),
+    };
+    if (
+      nextStory["scandal-kkt-first-notice-v5"] === latestStory["scandal-kkt-first-notice-v5"] &&
+      nextStory["scandal-kkt-second-notice-v5"] === latestStory["scandal-kkt-second-notice-v5"]
+    ) return;
+    const notifications = latest.notifications.filter((notice) => kktNoticeThread(notice) !== "金旼炡");
+    if (banner && kktNoticeThread(banner) === "金旼炡") setBanner("");
+    update({
+      ...latest,
+      notifications,
+      ui: {
+        ...latest.ui,
+        story: nextStory,
+        kakao: { ...latest.ui?.kakao, "kkt-unread-count:金旼炡": 0 },
+      },
+    });
+  }, [
+    creator,
+    app,
+    appThread,
+    s.ui?.kakao?.["scandal-precall-started-v5"],
+    s.ui?.kakao?.["mymyKktSentV3"],
+    s.ui?.story?.["scandal-kkt-first-notice-v5"],
+    s.ui?.story?.["scandal-kkt-second-notice-v5"],
+  ]);
+
   useEffect(() => {
     if (creator || s.ui?.kakao?.["scandal-precall-delivered-v5"] !== true) return;
     const current = runtimeRef.current;
