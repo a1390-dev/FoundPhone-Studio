@@ -1751,9 +1751,9 @@ export function MymyX(p: SkinProps) {
     [userPosts, setUserPosts] = useSkinState<string[]>(p, "mymyXUserPostsV1", []),
     [draft, setDraft] = useState(""),
     [composeOpen, setComposeOpen] = useState(false);
-  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v5"] === true;
-  const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.category === "rumor-discussion");
-  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 60) : [];
+  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v6"] === true;
+  const allLiveRumorItems = p.items.filter((i) => i.meta.live === "true" && i.meta.story === "true" && i.meta.category === "rumor-discussion");
+  const liveItems = rumorNewsUnlocked ? allLiveRumorItems.slice(0, 84) : [];
   const localXItems = userPosts.map((body, n) => makeItem({
     id: "local-x-post-" + n,
     title: "本地帖子",
@@ -1775,13 +1775,18 @@ export function MymyX(p: SkinProps) {
       p.onUi?.("rumor-feed-opened", true);
   }, [p.items.length, rumorNewsUnlocked]);
   useEffect(() => {
+    if (!rumorNewsUnlocked || liveItems.length === 0) return;
+    if (liveCount < 1) {
+      const timer = window.setTimeout(() => setLiveCount(1), 800);
+      return () => window.clearTimeout(timer);
+    }
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
-      () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
+      () => setLiveCount((count) => Math.min(liveItems.length, count + 1)),
       1500,
     );
     return () => window.clearTimeout(timer);
-  }, [liveCount, liveItems.length]);
+  }, [rumorNewsUnlocked, liveCount, liveItems.length]);
   const refreshFeed = () => setLiveCount(Math.min(liveItems.length, liveCount + 2));
   const isLiked = (id: string) =>
     typeof p.ui?.["liked-" + id] === "boolean"
