@@ -466,19 +466,11 @@ function PhoneRuntime({
     const current = runtimeRef.current;
     const unreadKey = "kkt-unread-count:" + thread;
     const notifications = current.notifications.filter((notice) => kktNoticeThread(notice) !== thread);
-    const storyState = { ...current.ui?.story };
-    if (thread === "金旼炡" && storyState["scandal-news-pushed-v5"] === true) {
-      // Once the player opens this conversation, both lead-in messages are
-      // consumed in-chat; never defer a duplicate second popup until they leave.
-      storyState["scandal-kkt-first-notice-v5"] = true;
-      storyState["scandal-kkt-second-notice-v5"] = true;
-    }
     const next = {
       ...current,
       notifications,
       ui: {
         ...current.ui,
-        story: storyState,
         kakao: { ...current.ui?.kakao, [unreadKey]: 0 },
       },
     };
@@ -765,63 +757,65 @@ function PhoneRuntime({
     return () => window.clearTimeout(timer);
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
 
-  // Deliver each KKT notification only while the player is outside Minjeong's
-  // chat. If the first alert is opened, the second waits until the player exits.
+  // The two lead-in messages run on their own timeline. Whether to show a
+  // popup is decided when each message arrives, using the live foreground chat.
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
-      s.ui?.story?.["scandal-kkt-first-notice-v5"] === true ||
-      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      s.ui?.story?.["scandal-kkt-first-notice-v5"] === true) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-first-notice-v5"] === true ||
-        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      if (latestStory["scandal-kkt-first-notice-v5"] === true) return;
+      const isSameChatOpen = appViewRef.current.app === "kakao" &&
+        appViewRef.current.appThread === "金旼炡";
+      const key = "kkt-unread-count:金旼炡";
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
+        notifications: isSameChatOpen
+          ? latest.notifications
+          : [...latest.notifications, "KKT|金旼炡:어디야?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-first-notice-v5": true },
           kakao: {
             ...latest.ui?.kakao,
-            "kkt-unread-count:金旼炡": Math.max(
-              0,
-              Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
-            ) + 1,
+            [key]: isSameChatOpen ? 0 :
+              Math.max(0, Number(latest.ui?.kakao?.[key] ?? 0)) + 1,
           },
         },
       });
     }, 1500);
     return () => window.clearTimeout(timer);
-  }, [creator, app, appThread, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["scandal-kkt-first-notice-v5"]]);
+  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["scandal-kkt-first-notice-v5"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-kkt-first-notice-v5"] !== true ||
-      s.ui?.story?.["scandal-kkt-second-notice-v5"] === true ||
-      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      s.ui?.story?.["scandal-kkt-second-notice-v5"] === true) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-second-notice-v5"] === true ||
-        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      if (latestStory["scandal-kkt-second-notice-v5"] === true) return;
+      const isSameChatOpen = appViewRef.current.app === "kakao" &&
+        appViewRef.current.appThread === "金旼炡";
+      const key = "kkt-unread-count:金旼炡";
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+        notifications: isSameChatOpen
+          ? latest.notifications
+          : [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-second-notice-v5": true },
           kakao: {
             ...latest.ui?.kakao,
-            "kkt-unread-count:金旼炡": Math.max(
-              0,
-              Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
-            ) + 1,
+            [key]: isSameChatOpen ? 0 :
+              Math.max(0, Number(latest.ui?.kakao?.[key] ?? 0)) + 1,
           },
         },
       });
     }, 1500);
     return () => window.clearTimeout(timer);
-  }, [creator, app, appThread, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
+  }, [creator, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
   useEffect(() => {
     if (creator || s.ui?.kakao?.["scandal-precall-delivered-v5"] !== true) return;
     const current = runtimeRef.current;
@@ -1275,10 +1269,11 @@ function PhoneRuntime({
                         story: {
                           ...storyState,
                           "scandal-kkt-chat-opened-v5": true,
-                          // Both NPC lines will arrive inside this open chat.
-                          // Consume OS-notice flags so no popup blocks tapping.
+                          // The first alert brought the player into this chat.
+                          // Keep the second alert's own timer alive; it will be
+                          // suppressed only if this exact chat is still visible
+                          // when that message arrives.
                           "scandal-kkt-first-notice-v5": true,
-                          "scandal-kkt-second-notice-v5": true,
                         },
                         kakao: {
                           ...current.ui?.kakao,

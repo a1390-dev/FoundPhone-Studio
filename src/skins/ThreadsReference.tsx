@@ -83,7 +83,7 @@ export function ThreadsReference(p: SkinProps) {
     if (liveCount >= liveItems.length) return;
     const timer = window.setTimeout(
       () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      12000,
+      1500,
     );
     return () => window.clearTimeout(timer);
   }, [liveCount, liveItems.length]);
