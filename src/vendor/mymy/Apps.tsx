@@ -1775,6 +1775,10 @@ export function MymyX(p: SkinProps) {
       p.onUi?.("rumor-feed-opened", true);
   }, [p.items.length, rumorNewsUnlocked]);
   useEffect(() => {
+    if (rumorNewsUnlocked && liveCount >= 1)
+      p.onUi?.("x-news-post-published-v1", true);
+  }, [rumorNewsUnlocked, liveCount]);
+  useEffect(() => {
     if (!rumorNewsUnlocked || liveItems.length === 0) return;
     if (liveCount < 1) {
       const timer = window.setTimeout(() => setLiveCount(1), 800);
