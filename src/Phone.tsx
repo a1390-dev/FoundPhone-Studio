@@ -467,12 +467,9 @@ function PhoneRuntime({
     const unreadKey = "kkt-unread-count:" + thread;
     const notifications = current.notifications.filter((notice) => kktNoticeThread(notice) !== thread);
     const storyState = { ...current.ui?.story };
-    if (thread === "金旼炡" && storyState["scandal-news-pushed-v5"] === true) {
-      // Once the player opens this conversation, both lead-in messages are
-      // consumed in-chat; never defer a duplicate second popup until they leave.
-      storyState["scandal-kkt-first-notice-v5"] = true;
-      storyState["scandal-kkt-second-notice-v5"] = true;
-    }
+    // Opening a chat clears notices already received, but must not mark a
+    // not-yet-delivered follow-up as consumed. The second Minjeong notice
+    // remains queued and fires automatically once this chat is no longer open.
     const next = {
       ...current,
       notifications,
