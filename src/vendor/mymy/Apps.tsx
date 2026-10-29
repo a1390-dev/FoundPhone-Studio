@@ -229,7 +229,8 @@ export function MymyKakao(p: SkinProps) {
     [query, setQuery] = useState(""),
     [menu, setMenu] = useState(false);
   const declineReplyPending =
-    p.ui?.["scandal-call-result-v5"] === "declined" &&
+    (p.ui?.["scandal-call-result-v5"] === "declined" ||
+      p.ui?.["scandal-call-result-v5"] === "answered-hangup") &&
     p.ui?.["scandal-call-decline-reply-needed-v6"] === true;
   const composerRef = useRef<HTMLTextAreaElement | null>(null);
   const sentRef = useRef(sent);
@@ -322,13 +323,17 @@ export function MymyKakao(p: SkinProps) {
       if (processedCallResult) setProcessedCallResult("");
       return;
     }
-    // Answered calls are played entirely inside the call screen. Only a declined
-    // call starts the alternate conversation in KakaoTalk.
-    if (result !== "declined" || result === processedCallResult) return;
-    const queue: Array<[string, string, string, string]> = [
-      ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
-      ["집에 있어?", "你在家吗？", "npc", "14:06"],
-    ];
+    // A missed/declined call gets both lines. If the player answered and
+    // then hung up, continue the story but do not accuse them of not answering.
+    if ((result !== "declined" && result !== "answered-hangup") || result === processedCallResult) return;
+    const queue: Array<[string, string, string, string]> = result === "declined"
+      ? [
+          ["왜 전화 안 받아?", "怎么不接电话？", "npc", "14:06"],
+          ["집에 있어?", "你在家吗？", "npc", "14:06"],
+        ]
+      : [
+          ["집에 있어?", "你在家吗？", "npc", "14:06"],
+        ];
     setProcessedCallResult(result);
     setNpcTyping(true);
     let index = 0;
