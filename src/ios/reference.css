@@ -756,4 +756,14 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
+
+  /* The CSS-zoomed phone can round a nominal 16px field below WebKit's
+     threshold. Give only the active editor an 18px effective size so the
+     page viewport remains still; ordinary, unfocused typography is unchanged. */
+  .phone-shell.ios18 input:focus:not([type="checkbox"]):not([type="radio"]):not(#foundphone-player-id),
+  .phone-shell.ios18 textarea:focus,
+  .phone-shell.ios18 select:focus,
+  .phone-shell.ios18 [contenteditable="true"]:focus {
+    font-size: var(--phone-input-focus-font-size, 18px) !important;
+  }
 }
