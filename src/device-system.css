@@ -701,14 +701,32 @@
   pointer-events: none;
 }
 .ios18 .native-compose-field {
+  box-sizing: border-box;
   flex: 1;
   min-width: 0;
   min-height: 34px;
   border-radius: 5px;
   background: white;
   font-size: 16px;
+  font-family: inherit;
   text-align: left;
   padding: 5px 9px;
+}
+.ios18 textarea.native-compose-field {
+  width: 0;
+  max-height: 64px;
+  border: 1px solid #eee;
+  color: #222;
+  line-height: 1.3;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.ios18 textarea.native-compose-field::placeholder {
+  color: #aaa;
+  opacity: 1;
 }
 .ios18 .device-keyboard {
   position: absolute;
