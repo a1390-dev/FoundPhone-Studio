@@ -469,24 +469,38 @@ export function ControlCenter({
 }
 const PINYIN_CANDIDATES: Record<string, string[]> = {
   a: ["啊", "阿", "呀"], ai: ["爱", "哎", "矮"], an: ["安", "按", "案"],
-  ba: ["吧", "把", "爸"], bu: ["不", "不是", "不用"], chi: ["吃", "迟"],
-  de: ["的", "得", "地"], deng: ["等", "灯"], dui: ["对", "对的"],
-  duibuqi: ["对不起"], en: ["嗯", "恩"], hao: ["好", "好的", "好啊"],
-  he: ["和", "喝"], hen: ["很"], hui: ["会", "回"], jia: ["家", "加"],
-  jian: ["见", "件"], jiao: ["叫", "教"], jin: ["今", "进"], jintian: ["今天"],
-  jiu: ["就", "旧"], ke: ["可", "客"], keyi: ["可以", "可以的"],
-  lai: ["来"], le: ["了", "乐"], ma: ["吗", "嘛", "妈"], mei: ["没", "每"],
-  meiguanxi: ["没关系"], ming: ["明"], mingtian: ["明天"], ni: ["你", "你们", "你好"],
-  nihao: ["你好"], qing: ["请", "情"], qu: ["去", "取"], ren: ["人", "认"],
-  shi: ["是", "时", "事"], shui: ["谁", "睡", "水"], shuo: ["说", "说话"],
-  ta: ["他", "她", "它"], tian: ["天"], ting: ["听"], wo: ["我", "我们", "我也"],
-  woaini: ["我爱你"], xiang: ["想", "像"], xianzai: ["现在"], xie: ["谢"],
-  xiexie: ["谢谢"], xing: ["行", "醒"], yao: ["要", "药"], ye: ["也", "夜"],
-  yi: ["一", "以", "已"], you: ["有", "又"], zai: ["在", "再"], zaoan: ["早安"],
-  zaijian: ["再见"], zhe: ["这", "着"], zhen: ["真", "真的"],
-  zhidao: ["知道", "知道了"], zhong: ["中", "钟"], zenme: ["怎么"],
-  zenmeyang: ["怎么样"], weishenme: ["为什么"], wanshang: ["晚上"],
-  wanshanghao: ["晚上好"], ganxie: ["感谢"], jiayou: ["加油"],
+  ba: ["吧", "把", "爸"], bu: ["不", "不是", "不用"], buyao: ["不要"],
+  buxing: ["不行"], chi: ["吃", "迟"], chifan: ["吃饭"], chang: ["常", "长"],
+  dao: ["到", "道", "倒"], de: ["的", "得", "地"], deng: ["等", "灯"],
+  dengyixia: ["等一下"], dui: ["对", "对的"], duibuqi: ["对不起"],
+  en: ["嗯", "恩"], fang: ["放", "房"], gei: ["给"], ganma: ["干嘛"],
+  ganxie: ["感谢"], hao: ["好", "好的", "好啊"], haode: ["好的"],
+  haoma: ["好吗"], hai: ["还", "海"], he: ["和", "喝"], hen: ["很"],
+  hou: ["后", "候"], hui: ["会", "回"], huijia: ["回家"], jia: ["家", "加"],
+  jian: ["见", "件"], jiao: ["叫", "教"], jie: ["接", "姐"], jin: ["今", "进"],
+  jintian: ["今天"], jiu: ["就", "旧"], ke: ["可", "客"], keyi: ["可以", "可以的"],
+  keyima: ["可以吗"], kuai: ["快"], lai: ["来"], le: ["了", "乐"],
+  ma: ["吗", "嘛", "妈"], man: ["慢", "满"], mei: ["没", "每"], meishi: ["没事", "没事的"],
+  meiyou: ["没有"], meiguanxi: ["没关系"], ming: ["明"], mingtian: ["明天"],
+  na: ["那", "哪"], nage: ["那个"], ni: ["你", "你们", "你好"], nihao: ["你好"],
+  nizaiganma: ["你在干嘛"], pengyou: ["朋友"], qian: ["前", "钱"], qing: ["请", "情"],
+  qu: ["去", "取"], ren: ["人", "认"], shenme: ["什么"], shenmeya: ["什么呀"],
+  shi: ["是", "时", "事"], shijian: ["时间"], shui: ["谁", "睡", "水"],
+  shuo: ["说", "说话"], ta: ["他", "她", "它"], tai: ["太", "台"],
+  tian: ["天"], ting: ["听"], wan: ["晚", "玩"], women: ["我们"], wo: ["我", "我们", "我也"],
+  woaini: ["我爱你"], wobuxiang: ["我不想"], wozaijia: ["我在家"], woxiang: ["我想"],
+  woxihuan: ["我喜欢"], woxianzai: ["我现在"], woxiangni: ["我想你"],
+  wozhidao: ["我知道"], woyaohuijia: ["我要回家"], xian: ["先", "现"],
+  xianzai: ["现在"], xihuan: ["喜欢"], xiang: ["想", "像"], xie: ["谢"],
+  xiexie: ["谢谢"], xing: ["行", "醒"], xingba: ["行吧"], xin: ["心", "新"],
+  yao: ["要", "药"], ye: ["也", "夜"], yi: ["一", "以", "已"], yidian: ["一点"],
+  yixia: ["一下"], you: ["有", "又"], zai: ["在", "再"], zaiganma: ["在干嘛"],
+  zaoan: ["早安"], zaijian: ["再见"], zuotian: ["昨天"], zhe: ["这", "着"],
+  zhege: ["这个"], zheyang: ["这样"], zhen: ["真", "真的"], zhende: ["真的"],
+  zhidao: ["知道", "知道了"], zhong: ["中", "钟"], zhuyi: ["注意"],
+  zhuyianquan: ["注意安全"], zenme: ["怎么"], zenmeyang: ["怎么样"],
+  weishenme: ["为什么"], wanshang: ["晚上"], wanshanghao: ["晚上好"],
+  jiayou: ["加油"],
 };
 type KeyboardEditable = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
 
@@ -606,6 +620,9 @@ export function DeviceKeyboard({
   const candidates = pinyin
     ? (PINYIN_CANDIDATES[pinyin.toLowerCase()] || [pinyin]).slice(0, 5)
     : ["我", "你", "好的", "可以"];
+  const placeholder = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
+    ? (target.placeholder || target.getAttribute("aria-label") || "输入内容")
+    : (target?.getAttribute("aria-label") || "输入内容");
   const rows = numbers
     ? ["1234567890", "-/:;()¥&@", ".,?!'"]
     : ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
@@ -614,7 +631,7 @@ export function DeviceKeyboard({
     <div className="device-keyboard" role="dialog" aria-label="苹果风格屏幕键盘">
       <div className="keyboard-draft">
         <div className="keyboard-draft-value" aria-live="polite">
-          {draft || <span className="keyboard-placeholder">输入消息</span>}
+          {draft || <span className="keyboard-placeholder">{placeholder}</span>}
           {pinyin && <span className="keyboard-pinyin">{pinyin}</span>}
         </div>
         <button type="button" aria-label="收起键盘" onClick={close}>
