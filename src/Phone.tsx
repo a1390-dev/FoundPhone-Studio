@@ -823,9 +823,8 @@ function PhoneRuntime({
   // of opening her chat. Existing saves may already contain the line; still send
   // its one-time notification unless it was already handled.
   useEffect(() => {
-    const hasOpeningChat = work.chats.some((chat) =>
-      chat.id === "kakao-kim-minjeong-chat" &&
-      chat.messages.some((message) => message.id === "kkt-minjeong-opening-01"),
+    const hasOpeningChat = (work.data.kakao || []).some(
+      (item) => item.id === "kkt-minjeong-opening-01",
     );
     if (
       creator ||
