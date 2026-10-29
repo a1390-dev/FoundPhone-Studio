@@ -1878,23 +1878,25 @@ function PhoneRuntime({
                     const current = runtimeRef.current;
                     const call = current.incomingCall;
                     if (call) {
-                      const currentCallStep = Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
-                      const incompleteScandalCall =
-                        call.target === "scandal-call" &&
-                        (call.status === "ringing" ||
-                          (call.status === "answered" && currentCallStep < 6));
+                      const isScandalCall = call.target === "scandal-call";
+                      const wasAnswered = call.status === "answered";
                       const next = dispatch(
                         work,
                         { ...current, incomingCall: null },
-                        incompleteScandalCall || call.status === "ringing" ? "callDeclined" : "callEnded",
+                        isScandalCall && !wasAnswered ? "callDeclined" : call.status === "ringing" ? "callDeclined" : "callEnded",
                         call.target || call.caller,
                       );
-                      if (incompleteScandalCall) {
+                      if (isScandalCall) {
+                        // Only an unanswered/declined call should trigger the
+                        // "왜 전화 안 받아?" line. An answered manual hang-up
+                        // continues the alternate follow-up without that accusation.
                         next.ui = {
                           ...next.ui,
                           kakao: {
                             ...next.ui?.kakao,
-                            "scandal-call-result-v5": "declined",
+                            "scandal-call-result-v5": wasAnswered ? "answered-hangup" : "declined",
+                            "scandal-call-decline-reply-needed-v6": false,
+                            "scandal-call-decline-messages-finished-v6": false,
                           },
                           story: {
                             ...next.ui?.story,
