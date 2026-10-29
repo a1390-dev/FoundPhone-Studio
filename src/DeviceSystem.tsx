@@ -663,6 +663,13 @@ export function DeviceKeyboard({
     setPinyin("");
     setShift(false);
   };
+  const finishTyping = () => {
+    if (pinyin) {
+      const options = PINYIN_CANDIDATES[pinyin.toLowerCase()];
+      pickCandidate(options?.[0] || composePinyin(pinyin));
+    }
+    close();
+  };
   const pressKey = (key: string) => {
     if (numbers || !/^[a-z]$/i.test(key) || language === "en") {
       replaceText(shift && language === "en" ? key.toUpperCase() : key);
@@ -687,8 +694,8 @@ export function DeviceKeyboard({
   };
   const toggleLanguage = () => {
     if (pinyin) {
-      replaceText(pinyin);
-      setPinyin("");
+      const options = PINYIN_CANDIDATES[pinyin.toLowerCase()];
+      pickCandidate(options?.[0] || composePinyin(pinyin));
     }
     setLanguage((current) => current === "zh" ? "en" : "zh");
     setShift(false);
@@ -713,7 +720,7 @@ export function DeviceKeyboard({
           {draft || <span className="keyboard-placeholder">{placeholder}</span>}
           {pinyin && <span className="keyboard-pinyin">{pinyin}</span>}
         </div>
-        <button type="button" aria-label="收起键盘" onClick={close}>
+        <button type="button" aria-label="收起键盘" onClick={finishTyping}>
           <ChevronDown />
         </button>
       </div>
@@ -756,7 +763,7 @@ export function DeviceKeyboard({
           {language === "zh" ? "中/英" : "英/中"}
         </button>
         <button type="button" className="key-space" onClick={pressSpace}>空格</button>
-        <button type="button" onClick={close}>完成</button>
+        <button type="button" onClick={finishTyping}>完成</button>
       </div>
       <div className="keyboard-accessories">
         <Globe size={24} />
