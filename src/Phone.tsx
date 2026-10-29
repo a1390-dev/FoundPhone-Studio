@@ -1685,6 +1685,8 @@ function PhoneRuntime({
                       typeof value === "number"
                     ) {
                       const current = runtimeRef.current;
+                      // Ignore feed interactions until the actual news scene fires.
+                      if (current.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
                       const nextCount = Math.max(0, Math.min(84, Math.floor(value)));
                       update(
                         dispatch(
@@ -2426,7 +2428,19 @@ function AppContent({
               owner={work.phone.owner}
               virtualTime={state.time}
               playerId={playerId}
-              ui={state.ui?.[app.id]}
+              ui={
+                app.id === "twitter" || app.id === "threads"
+                  ? {
+                      ...state.ui?.[app.id],
+                      // The global story trigger is authoritative. Old per-app
+                      // persisted flags must never reveal live rumor posts early.
+                      "rumor-news-unlocked-v6":
+                        state.ui?.story?.["scandal-news-pushed-v5"] === true,
+                      "rumor-live-post-count-v2":
+                        Number(state.ui?.story?.["rumor-live-post-count-v2"] ?? 0),
+                    }
+                  : state.ui?.[app.id]
+              }
               onUi={creator ? undefined : onUi}
               name={name}
               items={shown}
