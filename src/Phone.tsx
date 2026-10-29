@@ -1255,7 +1255,7 @@ function PhoneRuntime({
       if (typeof deliveredReply.threadId !== "string") return;
       const replies = Array.isArray(instagramUi["scandal-ig-dm-replies-v8"])
         ? instagramUi["scandal-ig-dm-replies-v8"] as string[] : [];
-      const unreadRaw = instagramUi["scandal-ig-dm-unread-reply-ids-v1"];
+      const unreadRaw = instagramUi["scandal-ig-dm-unread-reply-ids-v2"];
       const unreadIds = Array.isArray(unreadRaw) ? unreadRaw.filter((id): id is string => typeof id === "string") : [];
       const viewingThisThread =
         instagramUi["scandal-ig-dm-screen-active-v8"] === true &&
@@ -1271,7 +1271,7 @@ function PhoneRuntime({
             ...instagramUi,
             "scandal-ig-dm-replies-v8": [...replies, raw],
             "scandal-ig-dm-reply-count-v8": index + 1,
-            "scandal-ig-dm-unread-reply-ids-v1": nextUnreadIds,
+            "scandal-ig-dm-unread-reply-ids-v2": nextUnreadIds,
           },
         },
       });
