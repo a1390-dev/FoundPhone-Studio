@@ -33,6 +33,7 @@ import "./ios/status-bar.css";
 import { RichText } from "./RichText";
 import {
   useEffect,
+  useCallback,
   memo,
   useState,
   useRef,
@@ -291,15 +292,14 @@ function PhoneRuntime({
   // Async NPC messages may call callbacks captured when an earlier thread was open.
   // Keep the live foreground app/thread in a ref so popup decisions never use stale state.
   const appViewRef = useRef({ app, appThread });
-  appViewRef.current = { app, appThread };
-  const closeCurrentApp = () => {
+  const closeCurrentApp = useCallback(() => {
     appViewRef.current = { ...appViewRef.current, app: "" };
     setApp("");
-  };
-  const setActiveAppThread = (thread: string) => {
+  }, []);
+  const setActiveAppThread = useCallback((thread: string) => {
     appViewRef.current = { ...appViewRef.current, appThread: thread };
     setAppThread(thread);
-  };
+  }, []);
   const [appOpenSequence, setAppOpenSequence] = useState(0);
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
