@@ -385,8 +385,10 @@ function PhoneRuntime({
       // The mobile CSS scale caps used to live in ios18.css, but this inline
       // value takes precedence over them. Respect those caps here so iPhone
       // Safari cannot render the simulated device nearly full-size.
-      const viewportWidth = document.documentElement.clientWidth;
-      const mobileScaleCap = viewportWidth <= 420 ? 0.7 : viewportWidth <= 760 ? 0.76 : 1;
+      // Use the actual player stage width rather than the document viewport:
+      // embedded/mobile Safari can report a wider layout viewport than the visible
+      // page. Keep the simulated phone at 70% scale on phone-sized stages.
+      const mobileScaleCap = stage.clientWidth <= 760 ? 0.7 : 1;
       setDeviceScale(
         Math.max(
           0.4,
