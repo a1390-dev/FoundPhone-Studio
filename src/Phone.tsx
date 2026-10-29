@@ -374,23 +374,17 @@ function PhoneRuntime({
     }
     if (!panes.size) return;
 
-    let secondFrame = 0;
-    let settleTimer: number | undefined;
     const scrollToLatest = () => {
       for (const pane of panes) {
         if (pane.isConnected && pane.clientHeight > 0) pane.scrollTop = pane.scrollHeight;
       }
     };
-    const firstFrame = window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       scrollToLatest();
-      secondFrame = window.requestAnimationFrame(scrollToLatest);
-      settleTimer = window.setTimeout(scrollToLatest, 300);
+      window.requestAnimationFrame(scrollToLatest);
+      // The delay lets the native keyboard finish resizing Safari's visual viewport.
+      window.setTimeout(scrollToLatest, 300);
     });
-    // The timer intentionally settles after iOS has resized its visual viewport.
-    window.setTimeout(() => {
-      if (settleTimer !== undefined) window.clearTimeout(settleTimer);
-    }, 350);
-    void firstFrame;
   };
 
 
@@ -728,7 +722,6 @@ function PhoneRuntime({
     if (id === "kakao" && initialThread) clearKktThreadNotifications(initialThread);
     setAppOpenSequence((value) => value + 1);
     setApp(id);
-    setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
     setFolder("");
     setPanel("");
@@ -1278,12 +1271,9 @@ function PhoneRuntime({
 
   useEffect(() => {
     if (!banner) return;
-    const isOpeningKktBanner =
-      banner === "KKT|金旼炡: 아직 안 잤어?" ||
-      banner.startsWith("KKT|金旼炡:나 오늘 집에 좀 늦게 들어갈 것 같아.");
     const timer = window.setTimeout(
       () => setBanner(""),
-      isOpeningKktBanner ? 1000 : 4500,
+      banner.startsWith("KKT|") ? 2000 : 4500,
     );
     return () => window.clearTimeout(timer);
   }, [banner]);
@@ -1954,7 +1944,6 @@ function PhoneRuntime({
               }
               captureApp();
               setHomeRequest((n) => n + 1);
-              setKeyboard(false);
               closeCurrentApp();
               setFolder("");
               setPanel("");
