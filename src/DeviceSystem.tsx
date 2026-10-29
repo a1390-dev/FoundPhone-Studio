@@ -624,12 +624,17 @@ export function DeviceKeyboard({
   const [draft, setDraft] = useState(() => readKeyboardText(target)),
     [shift, setShift] = useState(false),
     [numbers, setNumbers] = useState(false),
-    [language, setLanguage] = useState<"zh" | "en">("zh"),
+    [language, setLanguage] = useState<"zh" | "en">(
+      () => target instanceof HTMLInputElement && target.id === "foundphone-player-id" ? "en" : "zh",
+    ),
     [pinyin, setPinyin] = useState("");
 
   useEffect(() => {
     setDraft(readKeyboardText(target));
     setPinyin("");
+    setLanguage(
+      target instanceof HTMLInputElement && target.id === "foundphone-player-id" ? "en" : "zh",
+    );
   }, [target]);
 
   const replaceText = (text: string, deleteBackward = false) => {
@@ -708,7 +713,7 @@ export function DeviceKeyboard({
         PINYIN_CANDIDATES[pinyin.toLowerCase()] ||
         [composePinyin(pinyin), pinyin].filter((candidate, index, all) => all.indexOf(candidate) === index)
       ).slice(0, 5)
-    : ["我", "你", "好的", "可以"];
+    : language === "zh" ? ["我", "你", "好的", "可以"] : ["@", ".", "_", "-"];
   const rows = numbers
     ? ["1234567890", "-/:;()¥&@", ".,?!'"]
     : ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
