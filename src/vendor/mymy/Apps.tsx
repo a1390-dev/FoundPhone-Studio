@@ -958,12 +958,15 @@ export function MymyInstagram(p: SkinProps) {
     if (fanDmUnreadReplyIds.includes(fanDmOpenRequest)) {
       setFanDmUnreadReplyIds(fanDmUnreadReplyIds.filter((id) => id !== fanDmOpenRequest));
     }
-    p.onUi?.("scandal-ig-open-thread-v8", fanDmOpenRequest);
+    p.onUi?.("scandal-ig-active-thread-v1", fanDmOpenRequest);
     setFanDmOpenRequest("");
   }, [fanDmOpenRequest, fanDmReadIds, fanDmUnreadReplyIds]);
   useEffect(() => {
     p.onUi?.("scandal-ig-dm-screen-active-v8", tab === "私信" && !selected);
-    return () => p.onUi?.("scandal-ig-dm-screen-active-v8", false);
+    return () => {
+      p.onUi?.("scandal-ig-dm-screen-active-v8", false);
+      p.onUi?.("scandal-ig-active-thread-v1", "");
+    };
   }, [tab, selected?.id]);
   useEffect(() => {
     const node = fanDmScrollRef.current;
@@ -1360,7 +1363,7 @@ export function MymyInstagram(p: SkinProps) {
           <button
             aria-label={activeFanDm ? "返回Instagram私信" : selected ? "返回Instagram动态" : "关闭当前App"}
             onClick={() => {
-              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); p.onUi?.("scandal-ig-open-thread-v8", ""); }
+              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); p.onUi?.("scandal-ig-active-thread-v1", ""); }
               else if (selected) setSelected(null);
               else p.onBack();
             }}
@@ -1576,7 +1579,7 @@ export function MymyInstagram(p: SkinProps) {
                     if (fanDmUnreadReplyIds.includes(dm.id)) {
                       setFanDmUnreadReplyIds(fanDmUnreadReplyIds.filter((id) => id !== dm.id));
                     }
-                    p.onUi?.("scandal-ig-open-thread-v8", dm.id);
+                    p.onUi?.("scandal-ig-active-thread-v1", dm.id);
                   }}>
                     <Avatar name={dm.handle} round />
                     <span className="kzkn">
