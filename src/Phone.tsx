@@ -313,7 +313,9 @@ function PhoneRuntime({
   const handledKktEventsRef = useRef(new Set<string>());
   const [banner, setBanner] = useState("");
   const [bannerQueue, setBannerQueue] = useState<string[]>([]);
-  const noticesSeen = useRef<string[]>([]);
+  // null means the existing saved notifications haven't been baselined yet;
+  // show only notifications added after the first mounted runtime snapshot.
+  const noticesSeen = useRef<string[] | null>(null);
   const [contextApp, setContextApp] = useState("");
   const [deviceScale, setDeviceScale] = useState(0.84);
   const shell = useRef<HTMLDivElement>(null);
@@ -1203,6 +1205,10 @@ function PhoneRuntime({
 
   const plugin = getApp(app);
   useEffect(() => {
+    if (noticesSeen.current === null) {
+      noticesSeen.current = [...s.notifications];
+      return;
+    }
     const previousCounts = new Map<string, number>();
     for (const notice of noticesSeen.current) {
       previousCounts.set(notice, (previousCounts.get(notice) ?? 0) + 1);
