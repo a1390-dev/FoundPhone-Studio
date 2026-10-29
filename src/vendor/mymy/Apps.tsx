@@ -218,6 +218,7 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSentV3", []),
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
+    [openingSequenceReleased, setOpeningSequenceReleased] = useSkinState<boolean>(p, "mymyKktOpeningSequenceReleasedV1", false),
     [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV5", ""),
     [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV5", ""),
     [draft, setDraft] = useState(""),
@@ -490,11 +491,22 @@ export function MymyKakao(p: SkinProps) {
   const list = grouped([...p.items, ...localSentItems]).sort(
       (a, b) => Number(b.title === "金旼炡") - Number(a.title === "金旼炡"),
     ),
-    messages = [
+    allMessages = [
       ...p.items.filter((i) => i.title === p.thread),
       ...localSentItems.filter((i) => i.title === p.thread),
     ],
+    openingNpcAtStart = p.thread === "金旼炡"
+      ? allMessages.filter((m) => !m.outgoing && /(?:^|\\s)20:17$/.test(m.time))
+      : [],
+    messages = allMessages.filter((m) =>
+      openingSequenceReleased || openingNpcAtStart.length < 2 || m.id !== openingNpcAtStart[1]?.id
+    ),
     scroll = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (p.thread !== "金旼炡" || openingSequenceReleased || openingNpcAtStart.length < 2) return;
+    const timer = window.setTimeout(() => setOpeningSequenceReleased(true), 1000);
+    return () => window.clearTimeout(timer);
+  }, [p.thread, openingNpcAtStart.length, openingSequenceReleased]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
