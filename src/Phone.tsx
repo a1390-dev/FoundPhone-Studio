@@ -859,6 +859,7 @@ function PhoneRuntime({
             ...latestStory,
             "rumor-day-started": true,
             "scandal-news-pushed-v5": true,
+            "rumor-live-post-count-v2": 0,
             "scandal-kkt-first-notice-v5": false,
             "scandal-kkt-second-notice-v5": false,
           },
