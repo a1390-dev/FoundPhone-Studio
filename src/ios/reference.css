@@ -741,3 +741,19 @@
   background: #fafafa;
   color: #ffadb7;
 }
+
+
+/* iOS Safari input focus zoom guard for the scaled device. */
+/* The simulated device uses CSS zoom, so every editable control must retain a
+   readable effective font size. Apply this on the phone itself (not only on
+   .story-runtime), including KKT composers, ID/search fields and selects. */
+@media (hover: none) and (pointer: coarse) {
+  .phone-shell.ios18 input:not([type="checkbox"]):not([type="radio"]):not(#foundphone-player-id),
+  .phone-shell.ios18 textarea,
+  .phone-shell.ios18 select,
+  .phone-shell.ios18 [contenteditable="true"] {
+    font-size: max(16px, var(--phone-input-font-size, 16px)) !important;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
