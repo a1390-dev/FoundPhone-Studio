@@ -1222,17 +1222,18 @@
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn b {
   color: #222;
-  font-size: 13px;
+  font-size: 15px;
   margin-bottom: 4px;
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn small {
   color: #686868;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.45;
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-row .kzkn .ig-rumor-dm-translation {
   color: #9a9a9d;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1.4;
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-dot {
   width: 7px;
@@ -1373,16 +1374,16 @@
   color: #17171b;
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-bubble p {
-  font-size: 14px;
-  line-height: 1.48;
+  font-size: 16px;
+  line-height: 1.52;
   font-weight: 700;
   letter-spacing: -.08px;
   color: #17171b;
 }
 .mymy-ui.mymy-instagram .ig-rumor-dm-bubble small {
   margin-top: 6px;
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.48;
   font-weight: 600;
   color: #393940;
 }
@@ -1400,3 +1401,14 @@
   font-weight: 600;
 }
 
+/* Keep the NPC handle modest in the opened rumor DM conversation. */
+.mymy-ui.mymy-instagram .ig-rumor-dm-header {
+  font-size: 19px;
+  line-height: 1.2;
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+.mymy-ui.mymy-instagram .ig-rumor-dm-header b {
+  font: inherit;
+  font-weight: 650;
+}
