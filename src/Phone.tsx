@@ -308,6 +308,7 @@ function PhoneRuntime({
   const handledKktEventsRef = useRef(new Set<string>());
   const [banner, setBanner] = useState("");
   const [bannerQueue, setBannerQueue] = useState<string[]>([]);
+  const [callReplyPending, setCallReplyPending] = useState(false);
   // null means the existing saved notifications haven't been baselined yet;
   // show only notifications added after the first mounted runtime snapshot.
   const noticesSeen = useRef<string[] | null>(null);
@@ -844,22 +845,33 @@ function PhoneRuntime({
   // chat. If the first alert is opened, the second waits until the player exits.
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
-      s.ui?.story?.["scandal-kkt-first-notice-v5"] === true ||
-      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      s.ui?.story?.["scandal-kkt-first-notice-v5"] === true) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-first-notice-v5"] === true ||
-        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      if (latestStory["scandal-kkt-first-notice-v5"] === true) return;
+      const thread = "金旼炡";
+      const text = "어디야?";
+      const sentRaw = latest.ui?.kakao?.["mymyKktSentV3"];
+      const sent = Array.isArray(sentRaw) ? sentRaw.filter((item): item is string => typeof item === "string") : [];
+      const alreadySent = sent.some((raw) => {
+        try {
+          const row: unknown = JSON.parse(raw);
+          return Array.isArray(row) && row[0] === thread && row[1] === text && row[3] === "npc";
+        } catch { return false; }
+      });
+      const activeConversation = appViewRef.current.app === "kakao" && appViewRef.current.appThread === thread;
+      const notifications = activeConversation ? latest.notifications : [...latest.notifications, `KKT|${thread}:${text}`];
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:어디야?"],
+        notifications,
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-first-notice-v5": true },
           kakao: {
             ...latest.ui?.kakao,
-            "kkt-unread-count:金旼炡": Math.max(
+            "mymyKktSentV3": alreadySent ? sent : [...sent, JSON.stringify([thread, text, "20:18", "npc", "你在哪里？"])],
+            "kkt-unread-count:金旼炡": activeConversation ? 0 : Math.max(
               0,
               Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
             ) + 1,
@@ -872,22 +884,33 @@ function PhoneRuntime({
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-kkt-first-notice-v5"] !== true ||
-      s.ui?.story?.["scandal-kkt-second-notice-v5"] === true ||
-      (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      s.ui?.story?.["scandal-kkt-second-notice-v5"] === true) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-kkt-second-notice-v5"] === true ||
-        (appViewRef.current.app === "kakao" && appViewRef.current.appThread === "金旼炡")) return;
+      if (latestStory["scandal-kkt-second-notice-v5"] === true) return;
+      const thread = "金旼炡";
+      const text = "혼자 있어?";
+      const sentRaw = latest.ui?.kakao?.["mymyKktSentV3"];
+      const sent = Array.isArray(sentRaw) ? sentRaw.filter((item): item is string => typeof item === "string") : [];
+      const alreadySent = sent.some((raw) => {
+        try {
+          const row: unknown = JSON.parse(raw);
+          return Array.isArray(row) && row[0] === thread && row[1] === text && row[3] === "npc";
+        } catch { return false; }
+      });
+      const activeConversation = appViewRef.current.app === "kakao" && appViewRef.current.appThread === thread;
+      const notifications = activeConversation ? latest.notifications : [...latest.notifications, `KKT|${thread}:${text}`];
       update({
         ...latest,
-        notifications: [...latest.notifications, "KKT|金旼炡:혼자 있어?"],
+        notifications,
         ui: {
           ...latest.ui,
           story: { ...latestStory, "scandal-kkt-second-notice-v5": true },
           kakao: {
             ...latest.ui?.kakao,
-            "kkt-unread-count:金旼炡": Math.max(
+            "mymyKktSentV3": alreadySent ? sent : [...sent, JSON.stringify([thread, text, "20:19", "npc", "你一个人吗？"])],
+            "kkt-unread-count:金旼炡": activeConversation ? 0 : Math.max(
               0,
               Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
             ) + 1,
@@ -1134,7 +1157,8 @@ function PhoneRuntime({
       try { dm = JSON.parse(raw) as InstagramFanDm; }
       catch { return; }
       const active = app === "instagram" &&
-        instagramUi["scandal-ig-dm-screen-active-v6"] === true;
+        instagramUi["scandal-ig-dm-screen-active-v6"] === true &&
+        instagramUi["scandal-ig-open-thread-v6"] === dm.id;
       const notice = `IGDM|${dm.id}|${dm.handle}: ${dm.text} — ${dm.translation}`;
       update({
         ...current,
@@ -1748,16 +1772,27 @@ function PhoneRuntime({
                     <div className="call-reply-options">
                       <button
                         type="button"
+                        disabled={callReplyPending}
                         onClick={() => {
-                          const current = runtimeRef.current;
-                          const nextStep = callDialogueStep === 1 ? 3 : 5;
-                          update({
-                            ...current,
-                            ui: {
-                              ...current.ui,
-                              story: { ...current.ui?.story, "scandal-call-dialogue-step-v5": nextStep },
-                            },
-                          });
+                          if (callReplyPending) return;
+                          setCallReplyPending(true);
+                          window.setTimeout(() => {
+                            const current = runtimeRef.current;
+                            const currentStep = Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
+                            if (current.incomingCall?.target === "scandal-call" &&
+                              current.incomingCall.status === "answered" &&
+                              (currentStep === 1 || currentStep === 4)) {
+                              const nextStep = currentStep === 1 ? 3 : 5;
+                              update({
+                                ...current,
+                                ui: {
+                                  ...current.ui,
+                                  story: { ...current.ui?.story, "scandal-call-dialogue-step-v5": nextStep },
+                                },
+                              });
+                            }
+                            setCallReplyPending(false);
+                          }, 1000);
                         }}
                       >
                         <span>{callDialogueStep === 1 ? "알겠어." : "응."}</span>
