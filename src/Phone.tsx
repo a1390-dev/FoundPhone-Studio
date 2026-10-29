@@ -878,12 +878,12 @@ function PhoneRuntime({
   useEffect(() => {
     if (
       creator ||
-      s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
+      s.ui?.twitter?.["x-news-post-published-v1"] !== true ||
       s.ui?.threads?.["rumor-news-unlocked-v6"] === true
     ) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
-      if (latest.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+      if (latest.ui?.twitter?.["x-news-post-published-v1"] !== true) return;
       update({
         ...latest,
         ui: {
@@ -896,7 +896,7 @@ function PhoneRuntime({
       });
     }, 3000);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.threads?.["rumor-news-unlocked-v6"]]);
+  }, [creator, s.ui?.twitter?.["x-news-post-published-v1"], s.ui?.threads?.["rumor-news-unlocked-v6"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
