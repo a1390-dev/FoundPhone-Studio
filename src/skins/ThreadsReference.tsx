@@ -35,8 +35,7 @@ export function ThreadsReference(p: SkinProps) {
     [liked, setLiked] = useSkinState<string[]>(p, "threads-liked", []),
     [saved, setSaved] = useSkinState<string[]>(p, "threads-saved", []),
     [posts, setPosts] = useSkinState<string[]>(p, "threads-posts", []),
-    [replies, setReplies] = useSkinState<string[]>(p, "threads-replies", []),
-    [liveCount, setLiveCount] = useSkinState<number>(p, "threads-live-post-count-rumor-v2", 1);
+    [replies, setReplies] = useSkinState<string[]>(p, "threads-replies", []);
   const [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("全部"),
@@ -57,16 +56,27 @@ export function ThreadsReference(p: SkinProps) {
       meta: { local: "true" },
     }),
   );
-  const liveItems = p.items.filter(
-    (i) => i.meta.live === "true" && i.meta.category === "rumor-discussion" && i.folder !== "私信" && !i.meta.activityType,
-  );
+  // The global plot event is the only authority for rumor posts. Never trust
+  // the old local Threads counter, which used to start at 1 and exposed them
+  // as soon as the app opened.
+  const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v6"] === true;
+  const liveCount = rumorNewsUnlocked
+    ? Math.min(84, Math.max(0, Number(p.ui?.["rumor-live-post-count-v2"] ?? 0)))
+    : 0;
+  const liveItems = rumorNewsUnlocked
+    ? p.items.filter(
+        (i) =>
+          i.meta.live === "true" &&
+          i.meta.story === "true" &&
+          i.meta.category === "rumor-discussion" &&
+          i.folder !== "私信" &&
+          !i.meta.activityType,
+      )
+    : [];
   useEffect(() => {
-    if (p.items.some((i) => i.meta.category === "rumor-discussion"))
+    if (rumorNewsUnlocked && liveItems.length > 0)
       p.onUi?.("rumor-feed-opened", true);
-  }, [p.items.length]);
-  useEffect(() => {
-    if (liveCount === 0 && liveItems.length) setLiveCount(1);
-  }, [liveCount, liveItems.length]);
+  }, [rumorNewsUnlocked, liveItems.length]);
   const feed = [
       ...local.slice().reverse(),
       ...liveItems.slice(0, liveCount).reverse(),
@@ -78,15 +88,10 @@ export function ThreadsReference(p: SkinProps) {
     messages = p.items.filter((i) => i.folder === "私信"),
     activities = p.items.filter((i) => i.meta.activityType);
   const touchStartY = useRef<number | null>(null);
-  const refreshFeed = () => setLiveCount(Math.min(liveItems.length, liveCount + 2));
-  useEffect(() => {
-    if (liveCount >= liveItems.length) return;
-    const timer = window.setTimeout(
-      () => setLiveCount(Math.min(liveItems.length, liveCount + 1)),
-      1500,
-    );
-    return () => window.clearTimeout(timer);
-  }, [liveCount, liveItems.length]);
+  const refreshFeed = () => {
+    if (!rumorNewsUnlocked) return;
+    p.onUi?.("rumor-live-post-count-v2", Math.min(84, liveCount + 2));
+  };
   const toggle = (id: string, items: string[], set: (v: string[]) => void) =>
     set(items.includes(id) ? items.filter((v) => v !== id) : [...items, id]);
   const open = (i: Item) => {
