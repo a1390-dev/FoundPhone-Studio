@@ -1678,6 +1678,43 @@ function PhoneRuntime({
                       clearKktThreadNotifications(value);
                       return;
                     }
+                    if (
+                      (app === "twitter" || app === "threads") &&
+                      key === "rumor-live-post-count-v2" &&
+                      typeof value === "number"
+                    ) {
+                      const current = runtimeRef.current;
+                      const nextCount = Math.max(0, Math.min(84, Math.floor(value)));
+                      update(
+                        dispatch(
+                          work,
+                          {
+                            ...current,
+                            ui: {
+                              ...current.ui,
+                              story: {
+                                ...current.ui?.story,
+                                "rumor-live-post-count-v2": nextCount,
+                              },
+                              twitter: {
+                                ...current.ui?.twitter,
+                                "rumor-news-unlocked-v6": true,
+                                "rumor-live-post-count-v2": nextCount,
+                                "x-news-post-published-v1": nextCount >= 1,
+                              },
+                              threads: {
+                                ...current.ui?.threads,
+                                "rumor-news-unlocked-v6": true,
+                                "rumor-live-post-count-v2": nextCount,
+                              },
+                            },
+                          },
+                          "variable",
+                          "ui:story:rumor-live-post-count-v2",
+                        ),
+                      );
+                      return;
+                    }
                     const current = runtimeRef.current;
                     update(
                       dispatch(
