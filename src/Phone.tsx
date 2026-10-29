@@ -133,6 +133,7 @@ type InstagramFanDm = {
   text: string;
   translation: string;
   category: "support" | "critical" | "curious" | "passerby";
+  fanType?: string;
 };
 const IG_FAN_HANDLE_BASES = [
   "mood_blue", "winterlog", "myday_cloud", "mjjarchive", "after_rain",
@@ -144,97 +145,131 @@ const IG_FAN_HANDLE_BASES = [
   "warm_window", "pocket_diary", "smallplanet",
 ];
 const IG_FAN_DM_LINES: Array<Omit<InstagramFanDm, "id" | "handle">> = [
-  { category: "support", text: "우리 민정이를 오래 좋아한 팬이에요. 혹시 정말 사귀는 사이라면 민정이 마음 많이 아껴 주세요 🤍", translation: "我是喜欢旼炡很久的粉丝。如果你们真的是恋人，希望你能好好珍惜她 🤍" },
-  { category: "support", text: "민정이가 무대에서 늘 행복해 보였으면 좋겠어요. 옆에 있는 사람도 그 마음 지켜 줬으면 해요.", translation: "希望旼炡站在舞台上时一直幸福，也希望身边的人能守护她的心情。" },
-  { category: "support", text: "여자친구분께 이런 말 해도 될지 모르겠지만 우리 민정이에게 상처 주지 말아 주세요.", translation: "不知道这样跟女朋友说合不合适，但请不要让我们旼炡受伤。" },
-  { category: "support", text: "솔직히 놀랐지만 민정이가 웃을 수 있다면 그게 제일 중요하다고 생각해요.", translation: "说实话我很震惊，但如果旼炡能一直笑着，那才是最重要的。" },
-  { category: "support", text: "팬이라서 마음이 복잡하긴 한데 두 사람이 서로 존중하는 사이였으면 좋겠어요.", translation: "身为粉丝心情确实复杂，但希望你们能互相尊重。" },
-  { category: "support", text: "우리 애가 밖에서도 편하게 지낼 수 있도록 사생활은 지켜 줬으면 해요.", translation: "希望你能保护她的私人生活，让我们家孩子在外面也能自在生活。" },
-  { category: "support", text: "민정이를 좋아하는 입장에서, 힘든 날에는 옆에서 편이 되어 주셨으면 해요.", translation: "作为喜欢旼炡的粉丝，希望她难过时你能站在她这边。" },
-  { category: "support", text: "아직 사실인지 모르지만 혹시 맞다면 민정이한테 잘해 주세요. 진심이에요.", translation: "现在还不知道是不是真的，但如果是真的，请对旼炡好一点。我是真心的。" },
-  { category: "support", text: "민정이가 쉬는 날만큼은 아이돌이 아니라 한 사람으로 행복했으면 해요.", translation: "希望旼炡休息的时候能作为普通人幸福地生活，而不只是偶像。" },
-  { category: "support", text: "팬심 때문에 쉽게 받아들이긴 어렵지만 민정이가 좋은 사람과 있다면 응원하고 싶어요.", translation: "因为粉丝心情，一时很难接受，但如果旼炡和很好的人在一起，我也想支持她。" },
-  { category: "support", text: "민정이는 늘 팬들에게 최선을 다했어요. 이제는 본인 행복도 잘 챙겼으면 좋겠어요.", translation: "旼炡一直很努力地对待粉丝，现在也希望她能照顾好自己的幸福。" },
-  { category: "support", text: "혹시 기사 때문에 힘들어한다면 너무 미안해하지 않게 곁에서 응원해 주세요.", translation: "如果她因为新闻而难受，希望你能陪着她，让她不必觉得抱歉。" },
-  { category: "support", text: "여자친구분도 갑자기 관심을 받게 돼 당황했을 것 같아요. 두 분 다 무사히 지나가길 바라요.", translation: "女朋友突然受到关注应该也很慌张，希望你们都能平安度过。" },
-  { category: "support", text: "우리 민정이 사생활을 존중해 주는 분이면 좋겠어요. 그게 팬으로서 제 바람이에요.", translation: "希望你是尊重旼炡私人生活的人，这是我作为粉丝的愿望。" },
-  { category: "support", text: "민정이가 누구와 있든 안전하고 존중받았으면 해요. 그건 꼭 부탁드리고 싶어요.", translation: "无论旼炡和谁在一起，我都希望她安全且受到尊重。这点真的拜托了。" },
-  { category: "support", text: "이런 DM 보내서 부담스러울 수 있지만 민정이와 서로에게 좋은 사람이 되어 주세요.", translation: "突然发这样的私信可能会让你有压力，但希望你们能成为彼此的好伴侣。" },
-  { category: "support", text: "사진 한 장으로 너무 많은 말이 나오는 게 속상해요. 두 분이 괜찮기만 했으면 해요.", translation: "因为一张照片冒出这么多议论，真的很难受。只希望你们都没事。" },
-  { category: "support", text: "민정이가 힘들 때 혼자 버티지 않도록 잘 살펴봐 주세요. 팬으로서 부탁해요.", translation: "希望她难过时不用独自撑着，请多关心她。作为粉丝拜托了。" },
-  { category: "support", text: "오래 좋아한 만큼 마음이 복잡해도, 민정이 행복이 결국 제일 중요하겠죠.", translation: "因为喜欢她很久，心情难免复杂，但旼炡的幸福终究才是最重要的吧。" },
-  { category: "support", text: "정말 연인이라면 서로의 일도 이해하고 편안하게 쉴 수 있는 관계였으면 해요.", translation: "如果你们真的是恋人，希望你们能理解彼此的工作，也能自在地休息。" },
-  { category: "support", text: "민정이는 팬들한테 소중한 사람이에요. 그만큼 당신에게도 소중하게 대접받길 바라요.", translation: "旼炡对粉丝来说很珍贵，也希望她在你那里同样被珍惜。" },
-  { category: "support", text: "사실이라면 축하해 주고 싶어요. 민정이가 행복해 보이면 저도 조금씩 받아들일게요.", translation: "如果是真的，我想祝福你们。如果旼炡看起来幸福，我也会慢慢接受。" },
-  { category: "support", text: "팬이라 조심스럽지만 두 분 모두 악플에 휘둘리지 말고 서로 잘 챙겨요.", translation: "身为粉丝，我还是想谨慎地说：希望你们别被恶评影响，好好照顾彼此。" },
-  { category: "critical", text: "우리 민정이한테 진심으로 잘할 자신은 있으세요? 팬이라 괜히 걱정돼서요.", translation: "你有信心真心对旼炡好吗？我是粉丝，所以会忍不住担心。" },
-  { category: "critical", text: "솔직히 아직은 마음이 복잡해요. 민정이 마음 다치게 하는 일만 없었으면 해요.", translation: "说实话我现在心情很复杂，只希望不要发生让旼炡受伤的事。" },
-  { category: "critical", text: "민정이는 일도 열심히 하고 팬들도 많이 아끼는 사람이에요. 그걸 이해해 주세요.", translation: "旼炡很努力工作，也很珍惜粉丝，希望你能理解这一点。" },
-  { category: "critical", text: "갑작스러운 소식이라 쉽게 받아들이긴 어렵네요. 그래도 민정이를 존중해 주셨으면 해요.", translation: "消息来得太突然，我还不太能接受，但希望你能尊重旼炡。" },
-  { category: "critical", text: "팬 입장에서 솔직히 질투가 나는 건 어쩔 수 없네요. 그래도 무례하게 굴고 싶진 않아요.", translation: "作为粉丝说实话难免会嫉妒，但我不想因此对你无礼。" },
-  { category: "critical", text: "혹시 관심 때문에 민정이 이름을 이용하는 건 아니길 바라요. 그건 정말 싫어요.", translation: "希望你不是为了关注度利用旼炡的名字，那样真的让人讨厌。" },
-  { category: "critical", text: "민정이에게 부담을 주거나 일에 방해가 되는 관계는 아니었으면 합니다.", translation: "希望这段关系不会给旼炡带来压力，也不会影响她的工作。" },
-  { category: "critical", text: "우리 민정이 활동하는 동안에는 서로의 사생활과 일정을 잘 지켜 줬으면 해요.", translation: "希望在旼炡活动期间，你们能好好保护彼此的私人生活和行程。" },
-  { category: "critical", text: "팬들이 왜 예민한지 이해는 해 주셨으면 해요. 오래 지켜본 사람들도 있으니까요.", translation: "希望你能理解粉丝为什么敏感，毕竟有些人已经关注她很久了。" },
-  { category: "critical", text: "아직 확인된 것도 없는데 벌써 여자친구라고 확정하는 분위기는 좀 불편해요.", translation: "明明还没确认，大家就已经认定你是女朋友，这种气氛让我不舒服。" },
-  { category: "critical", text: "민정이 이름으로 관심을 끄는 행동만은 하지 말아 주세요. 팬들은 그런 걸 제일 걱정해요.", translation: "请不要利用旼炡的名字吸引关注，这是粉丝最担心的事。" },
-  { category: "critical", text: "미안하지만 팬 입장에선 마냥 축하하는 말이 나오진 않아요. 시간이 좀 필요해요.", translation: "抱歉，作为粉丝我还没法直接说祝福的话，需要一点时间。" },
-  { category: "critical", text: "연애를 하든 말든 민정이 선택이지만, 그 선택이 존중받았으면 좋겠어요.", translation: "无论恋爱与否都是旼炡的选择，但希望她的选择能受到尊重。" },
-  { category: "critical", text: "괜히 사진을 해명하라는 압박은 주지 말아 주세요. 민정이도 쉴 권리가 있어요.", translation: "请不要给她压力，逼她解释照片。旼炡也有休息的权利。" },
-  { category: "critical", text: "팬들이 속상해하는 걸 무조건 악성 반응으로만 보진 않았으면 해요.", translation: "希望不要把粉丝难过的反应一概看成恶意。" },
-  { category: "critical", text: "민정이가 연애 때문에 비난받는 일은 없었으면 하지만, 소식이 너무 갑작스럽긴 해요.", translation: "我不希望旼炡因为恋爱被责怪，但这个消息确实太突然了。" },
-  { category: "critical", text: "솔직히 사진이 퍼진 방식도 싫고, 확인도 안 된 이야기가 커지는 것도 싫어요.", translation: "说实话我讨厌照片传播的方式，也讨厌未经证实的说法越闹越大。" },
-  { category: "critical", text: "혹시 진짜라면 민정이가 일과 사생활 사이에서 곤란해지지 않게 배려해 주세요.", translation: "如果是真的，希望你能体谅旼炡，不要让她为工作和私生活两难。" },
-  { category: "critical", text: "우리 민정이한테 잘해 주는지 팬들은 말보다 행동으로 보게 될 거예요.", translation: "粉丝们会看行动，而不只是听你说，要看你有没有对旼炡好。" },
-  { category: "critical", text: "여자친구라는 이유로 민정이의 노력과 커리어가 가려지는 일은 없었으면 합니다.", translation: "希望她不会因为有女朋友而被遮住自己的努力和事业。" },
-  { category: "critical", text: "아직은 응원하기 어렵지만 민정이를 공격할 생각은 없어요. 조용히 지켜볼게요.", translation: "我暂时还很难祝福，但不会攻击旼炡。我会安静观察。" },
-  { category: "critical", text: "혹시 두 분이 맞더라도 팬들 앞에서 일부러 티 내는 일은 없었으면 해요.", translation: "即使你们真的是恋人，也希望不要刻意在粉丝面前秀出来。" },
-  { category: "critical", text: "민정이가 늘 먼저 배려하는 쪽이 되지 않도록 서로 노력해 주세요.", translation: "希望不要总是旼炡单方面迁就，也请你们彼此努力。" },
-  { category: "critical", text: "팬들이 궁금해한다고 사생활을 다 공개해야 하는 건 아니지만, 소문 이용은 안 했으면 해요.", translation: "粉丝好奇不代表你们必须公开私生活，但也希望不要利用传闻。" },
-  { category: "support", text: "팬 입장에서 솔직히 질투가 나는 건 어쩔 수 없네요. 그래도 무례하게 굴고 싶진 않아요.", translation: "作为粉丝说实话难免会嫉妒，但我不想因此对你无礼。" },
-  { category: "critical", text: "팬이라서 마음이 복잡하긴 한데 두 사람이 서로 존중하는 사이였으면 좋겠어요.", translation: "身为粉丝心情确实复杂，但希望你们能互相尊重。" },
-  { category: "critical", text: "민정이에게 부담을 주거나 일에 방해가 되는 관계는 아니었으면 합니다.", translation: "希望这段关系不会给旼炡带来压力，也不会影响她的工作。" },
-  { category: "support", text: "민정이를 좋아하는 입장에서, 힘든 날에는 옆에서 편이 되어 주셨으면 해요.", translation: "作为喜欢旼炡的粉丝，希望她难过时你能站在她这边。" },
-  { category: "critical", text: "팬들이 왜 예민한지 이해는 해 주셨으면 해요. 오래 지켜본 사람들도 있으니까요.", translation: "希望你能理解粉丝为什么敏感，毕竟有些人已经关注她很久了。" },
-  { category: "critical", text: "민정이가 쉬는 날만큼은 아이돌이 아니라 한 사람으로 행복했으면 해요.", translation: "希望旼炡休息的时候能作为普通人幸福地生活，而不只是偶像。" },
-  { category: "support", text: "민정이 이름으로 관심을 끄는 행동만은 하지 말아 주세요. 팬들은 그런 걸 제일 걱정해요.", translation: "请不要利用旼炡的名字吸引关注，这是粉丝最担心的事。" },
-  { category: "critical", text: "민정이는 늘 팬들에게 최선을 다했어요. 이제는 본인 행복도 잘 챙겼으면 좋겠어요.", translation: "旼炡一直很努力地对待粉丝，现在也希望她能照顾好自己的幸福。" },
-  { category: "critical", text: "민정이 팬이라서 그런데, 혹시 우리 애를 힘들게 하는 사람이면 좋게 보긴 어려워요.", translation: "我是旼炡的粉丝，如果你会让她难过，我真的很难对你有好感。" },
-  { category: "support", text: "嫂子라는 말이 벌써 나오던데 아직 모르는 게 많으니 너무 단정 짓진 않을게요.", translation: "已经有人叫嫂子了，但还有很多未知，我先不妄下定论。" },
-  { category: "critical", text: "우리 민정이한테 좋은 사람인지 천천히 지켜볼게요. 부디 잘해 주세요.", translation: "我会慢慢观察你是不是适合旼炡的人，希望你能对她好。" },
-  { category: "critical", text: "사실이면 조금 속상하긴 해요. 그래도 민정이를 탓하고 싶지는 않아요.", translation: "如果是真的我确实会有点难过，但我不想责怪旼炡。" },
-  { category: "support", text: "민정이한테 피해가 가지 않게 본인 계정에서 추측을 부추기지는 말아 주세요.", translation: "希望你不要在自己的账号里煽动猜测，免得影响旼炡。" },
-  { category: "critical", text: "팬심이 있다고 해서 당신에게 막말하고 싶진 않아요. 다만 걱정은 됩니다.", translation: "即使是粉丝，我也不想对你说难听的话，只是确实担心旼炡。" },
-  { category: "critical", text: "우리 애가 누군가의 연인으로만 소비되지 않고 계속 빛났으면 해요.", translation: "希望我们家孩子不要只被当成某个人的恋人讨论，而是继续闪闪发光。" },
-  { category: "support", text: "팬들이 질투한다고 해서 다 악의를 가진 건 아니에요. 저도 마음을 정리하는 중이에요.", translation: "粉丝会嫉妒不代表都怀有恶意，我也还在整理心情。" },
-  { category: "critical", text: "민정이가 행복하면 좋지만, 팬들 마음도 하루아침에 바뀌진 않네요.", translation: "希望旼炡幸福，但粉丝的心情也不可能一夜之间改变。" },
-  { category: "curious", text: "혹시 편의점에서 뭘 샀는지까지 추측하는 건 너무 간 거겠죠?", translation: "连在便利店买了什么都要猜，是不是太过了？" },
-  { category: "curious", text: "그날 날씨나 시간 때문에 얼굴이 더 안 나온 걸까요?", translation: "是因为那天天气或时间的缘故，脸才看不清吗？" },
-  { category: "curious", text: "진짜인지 아닌지보다 왜 사진이 퍼졌는지가 궁금해요.", translation: "比起真假，我更好奇照片为什么会被传开。" },
-  { category: "curious", text: "저도 그냥 지나가다 봤는데 다들 어디까지 알고 있는 거예요?", translation: "我只是路过看到的，大家到底掌握多少信息啊？" },
-  { category: "curious", text: "혹시 공식 입장 나오기 전까지는 기다려 보는 게 맞겠죠?", translation: "在正式回应出来之前，还是先等等比较好吧？" },
-  { category: "passerby", text: "추천에 떠서 들어왔는데 사진 한 장으로 확정하는 건 너무 이른 것 같아요.", translation: "推荐页一直推，我点进来看了，但凭一张照片就下结论也太早了。" },
-  { category: "passerby", text: "팬은 아니지만 두 분 다 사생활을 존중받았으면 좋겠어요.", translation: "我不是粉丝，但希望你们的私人生活都能受到尊重。" },
-  { category: "passerby", text: "이런 소식은 처음엔 시끄러워도 며칠 지나면 다른 얘기로 바뀌더라고요.", translation: "这种消息刚开始会很吵，过几天大家又会讨论别的了。" },
-  { category: "passerby", text: "어떤 사이든 서로 좋은 영향을 주는 관계면 좋겠네요.", translation: "不管是什么关系，希望你们能给彼此带来好的影响。" },
-  { category: "passerby", text: "그냥 지나가던 사람인데, 두 분 모두 오늘 하루 무사히 보내세요.", translation: "我只是路过，希望你们今天都能平安度过。" },
-  { category: "passerby", text: "사진을 찍은 사람이 누구든 당사자들이 원치 않으면 퍼뜨리지 않았으면 해요.", translation: "不管是谁拍的，如果当事人不愿意，就不该继续传播。" },
-  { category: "passerby", text: "뉴스만 보고 왔는데 확인된 건 없어 보이네요. 기다려 보는 게 맞겠어요.", translation: "我看新闻过来的，好像还没有确认的内容，还是等等吧。" },
-  { category: "passerby", text: "사생활 얘기가 너무 커지지 않고 조용히 정리되면 좋겠습니다.", translation: "希望私人生活的话题不要越闹越大，能安静地过去就好。" },
-  { category: "passerby", text: "아이돌 소식엔 익숙하지 않은데 오늘은 여기저기서 보이네요.", translation: "我不太关注偶像新闻，但今天到处都能看到这件事。" },
-  { category: "passerby", text: "누군가를 좋아하는 마음도, 누군가와 사귀는 선택도 존중받았으면 해요.", translation: "无论喜欢一个人的心情，还是和谁交往的选择，都希望能被尊重。" },
-  { category: "passerby", text: "이런 상황에서 따뜻한 말 하나라도 힘이 되면 좋겠어요.", translation: "希望在这种情况下，一句温暖的话也能带来一点力量。" },
-  { category: "passerby", text: "사실 여부와 상관없이 악성 댓글이 더 커지지는 않았으면 좋겠어요.", translation: "无论真假，都希望恶意评论不要继续扩大。" },
-  { category: "passerby", text: "두 분이 맞다면 서로 편안하고 행복한 관계이길 바랍니다.", translation: "如果你们真的是恋人，希望你们能轻松幸福地相处。" },
-  { category: "passerby", text: "팬이 아니어도 누군가의 사적인 순간을 몰래 찍는 건 별로예요.", translation: "即使不是粉丝，我也不喜欢偷拍别人的私人时刻。" },
-  { category: "passerby", text: "원본이 뭔지 따지는 것보다 왜 사생활을 찍었는지가 더 궁금해요.", translation: "比起追究原图是什么，我更想知道为什么要偷拍私人生活。" },
-  { category: "passerby", text: "이 일로 누구도 공격받지 않고 지나갔으면 합니다.", translation: "希望这件事能平安过去，不要有人因此受到攻击。" },
-  { category: "passerby", text: "저는 그냥 두 분 다 마음 편히 지내셨으면 좋겠어요.", translation: "我只是希望你们两个人都能安心生活。" },
-  { category: "passerby", text: "하루 지나면 또 다른 화제가 생기겠지만, 지금은 말조심하는 게 좋겠네요.", translation: "过一天又会有新话题，但现在还是谨慎发言比较好。" },
-  { category: "passerby", text: "우연히 봤는데 사람들이 당사자보다 더 확신하는 게 신기하네요.", translation: "偶然刷到，觉得大家比当事人还笃定，挺奇怪的。" },
-  { category: "passerby", text: "진짜든 아니든 사진 속 사람들을 함부로 추측하지 않았으면 해요.", translation: "不管真假，希望大家别随意猜测照片里的人。" },
-  { category: "passerby", text: "두 분 모두 주변에서 편하게 이야기할 수 있는 사람들이 있었으면 해요.", translation: "希望你们身边都有能安心倾诉的人。" },
-  { category: "passerby", text: "그냥 좋은 소식이든 아니든, 당사자들이 원할 때 말할 수 있으면 좋겠어요.", translation: "不管算不算好消息，都希望当事人能在自己愿意的时候再开口。" },
+  { category: "critical", fanType: "毒唯", text: "민정이는 무대와 노래만으로도 충분히 주목받을 사람이에요. 연애설만으로 소비하지 않았으면 해요.", translation: "旼炡光靠舞台和音乐就值得被关注，希望别只拿恋爱传闻消费她。" },
+  { category: "critical", fanType: "毒唯", text: "사진 한 장만으로 당신을 여자친구라고 확정하는 것도, 아니라고 단정하는 것도 아직은 이르죠.", translation: "只凭一张照片就认定你是女朋友或断言不是，都还太早。" },
+  { category: "critical", fanType: "毒唯", text: "윈터 개인 활동을 응원하는 입장이라 이번 일이 음악 이야기까지 덮어 버리는 게 아쉬워요.", translation: "作为支持 Winter 个人活动的粉丝，我不希望这件事把音乐话题都盖过去。" },
+  { category: "critical", fanType: "毒唯", text: "민정이가 직접 말하지 않은 관계를 주변 계정이 대신 확정하지 않았으면 합니다.", translation: "希望别的账号不要替旼炡确认她本人没有说过的关系。" },
+  { category: "critical", fanType: "毒唯", text: "당신이 실제로 가까운 사람이라면 민정이 일정과 사생활을 서로 존중해 주세요.", translation: "如果你真是她亲近的人，请互相尊重旼炡的行程与私人生活。" },
+  { category: "critical", fanType: "毒唯", text: "사진이 퍼지는 상황에서 의미심장한 게시물을 더 올리면 추측만 커질 수 있어요.", translation: "照片正在传播，这时候再发意味不明的帖子只会让猜测变多。" },
+  { category: "critical", fanType: "毒唯", text: "팬들이 복잡한 마음을 표현한다고 전부 악의라고 몰아가진 말아 주세요.", translation: "粉丝表达复杂心情不代表全是恶意，希望别一概而论。" },
+  { category: "critical", fanType: "毒唯", text: "윈터는 누군가의 연애 상대라는 말 말고도 이야기할 부분이 정말 많아요.", translation: "Winter 除了恋爱对象这种说法，还有很多值得讨论的地方。" },
+  { category: "critical", fanType: "毒唯", text: "루머로 팔로워를 늘리려는 계정이 되지 않았으면 좋겠어요. 그건 민정이에게도 부담이에요.", translation: "希望你不要成为靠传闻涨粉的账号，那也会给旼炡带来压力。" },
+  { category: "critical", fanType: "毒唯", text: "사실인지 확인되기 전에는 어느 쪽도 정답인 것처럼 말하지 않으려고요.", translation: "在确认真假之前，我不会把任何一方说成已经掌握答案。" },
+  { category: "critical", fanType: "毒唯", text: "민정이를 좋아하는 팬이라면 다른 멤버 이름까지 끌어와 비교하는 건 피했으면 해요.", translation: "喜欢旼炡的粉丝也该避免把其他成员扯进来比较。" },
+  { category: "critical", fanType: "毒唯", text: "이번 일로 윈터의 무대 평가나 커리어까지 함부로 깎아내리는 건 부당하다고 생각해요.", translation: "我觉得不能因为这件事就随意贬低 Winter 的舞台表现或事业。" },
+  { category: "critical", fanType: "毒唯", text: "공식 입장도 없는 상황에서 당신 계정에 해명을 요구하는 건 서로에게 도움이 안 될 수 있어요.", translation: "还没有官方回应，就跑到你的账号要求解释，对双方都未必有帮助。" },
+  { category: "critical", fanType: "毒唯", text: "혹시 사실이라도 민정이가 미안해해야 할 일처럼 만들고 싶진 않아요.", translation: "即使传闻是真的，我也不想把它变成旼炡需要道歉的事。" },
+  { category: "critical", fanType: "毒唯", text: "민정이의 사생활을 지켜야 한다는 말과 팬들이 놀랐다는 마음은 함께 존재할 수 있어요.", translation: "保护旼炡隐私和粉丝感到震惊，这两种心情可以同时存在。" },
+  { category: "critical", fanType: "毒唯", text: "사진 속 인물이 누군지도 확실하지 않은데 상대를 공격하는 계정은 차단하려고요.", translation: "照片里的人都没确认，我打算屏蔽那些攻击对方的账号。" },
+  { category: "critical", fanType: "毒唯", text: "윈터 팬덤이 이번 이슈로 서로 편을 가르느라 에너지를 다 쓰지 않았으면 합니다.", translation: "希望 Winter 粉圈不要把精力全耗在这次事件的站队上。" },
+  { category: "critical", fanType: "毒唯", text: "당신을 의심하는 사람도 있겠지만, 확인되지 않은 일을 사실처럼 퍼뜨리진 말아 주세요.", translation: "可能有人怀疑你，但请别把未确认的事情当事实传播。" },
+  { category: "critical", fanType: "毒唯", text: "민정이가 행복하길 바라면서도 당황스러울 수 있다는 걸 서로 인정했으면 해요.", translation: "希望大家能承认：既希望旼炡幸福，也可能会感到不知所措。" },
+  { category: "critical", fanType: "毒唯", text: "사생활을 캐내는 대신 앨범과 무대 이야기를 다시 할 수 있었으면 좋겠어요.", translation: "比起挖私人生活，我更希望大家重新聊专辑和舞台。" },
+  { category: "critical", fanType: "毒唯", text: "누군가의 여자친구라는 추측만으로 당신의 인격까지 평가하는 건 조심해야죠.", translation: "仅凭“某人的女朋友”这种猜测就评价你的人格，也该谨慎。" },
+  { category: "critical", fanType: "毒唯", text: "윈터가 누구를 만나든 활동을 이어 갈 수 있도록 팬들이 선을 지켰으면 합니다.", translation: "无论 Winter 和谁交往，都希望粉丝守好界限，让她能继续活动。" },
+  { category: "critical", fanType: "毒唯", text: "사진을 확대해 단서를 찾는 글보다 최초 게시물과 출처를 확인하는 글이 더 필요해요.", translation: "比起放大照片找线索，我更希望看到核查原帖和来源的内容。" },
+  { category: "critical", fanType: "毒唯", text: "민정이 이름을 붙여 자극적인 제목을 만드는 계정은 더 이상 보고 싶지 않아요.", translation: "我不想再看那些挂着旼炡名字做刺激标题的账号。" },
+  { category: "critical", fanType: "毒唯", text: "팬들이 불편함을 말하는 것도 가능하지만, 위협이나 모욕까지 갈 필요는 없어요.", translation: "粉丝可以表达不舒服，但没必要上升到威胁或辱骂。" },
+  { category: "critical", fanType: "毒唯", text: "당신이 정말 민정이를 아낀다면 서로의 일에 방해가 되지 않도록 배려해 주세요.", translation: "如果你真的珍惜旼炡，就请彼此体谅，别影响对方的工作。" },
+  { category: "critical", fanType: "毒唯", text: "확인되지 않은 커플 서사를 만들어서 조회수를 얻는 건 모두를 피곤하게 만들어요.", translation: "编造未经确认的情侣故事来赚流量，只会让所有人疲惫。" },
+  { category: "critical", fanType: "毒唯", text: "윈터가 직접 이야기할 때까지 기다리는 게 팬으로서 할 수 있는 일이라고 생각해요.", translation: "我认为等到 Winter 自己开口，是粉丝现在能做的事。" },
+  { category: "critical", fanType: "毒唯", text: "이번 논란을 이유로 다른 멤버를 공격하거나 비교하는 건 그만했으면 합니다.", translation: "希望别再以这次争议为由攻击或比较其他成员。" },
+  { category: "critical", fanType: "毒唯", text: "저는 아직 마음이 복잡하지만 민정이에게 화살을 돌리거나 당신을 찾아가진 않을 거예요.", translation: "我心情还很复杂，但不会把怒气撒向旼炡，也不会去找你。" },
+  { category: "support", fanType: "甜唯", text: "민정이 노래를 들으러 왔다가 이 소식을 봤어요. 오늘도 좋아하는 노래로 하루를 마무리하고 싶네요.", translation: "我是来听旼炡的歌才看到这件事的，今天还是想用喜欢的歌结束一天。" },
+  { category: "support", fanType: "甜唯", text: "놀라긴 했지만 민정이가 무대에서 편안하게 웃는 모습을 계속 보고 싶어요.", translation: "虽然很意外，但我还是想继续看到旼炡在舞台上自在地笑。" },
+  { category: "support", fanType: "甜唯", text: "사진이 사실이든 아니든 당사자들이 너무 많은 말에 시달리지 않았으면 해요.", translation: "不管照片是真是假，都希望当事人不要被过多议论折磨。" },
+  { category: "support", fanType: "甜唯", text: "저는 민정이의 보컬이 좋아요. 오늘은 루머보다 라이브 클립을 다시 보려고요.", translation: "我喜欢旼炡的嗓音，今天比起传闻，我更想重看现场片段。" },
+  { category: "support", fanType: "甜唯", text: "두 분이 진짜 연인이라면 서로 편히 쉴 수 있는 관계였으면 좋겠어요.", translation: "如果你们真是恋人，希望你们能成为彼此安心休息的关系。" },
+  { category: "support", fanType: "甜唯", text: "팬마다 받아들이는 속도는 다르겠죠. 그래도 서로를 배신자라고 부르지는 말아요.", translation: "每个粉丝接受消息的速度都不同，但不要互相叫对方背叛者。" },
+  { category: "support", fanType: "甜唯", text: "민정이는 늘 열심히 해 왔으니 오늘은 본인 컨디션도 잘 챙겼으면 해요.", translation: "旼炡一直很努力，希望她今天也能照顾好自己的状态。" },
+  { category: "support", fanType: "甜唯", text: "당신도 갑자기 관심을 받게 됐다면 당황스러울 것 같아요. 무사히 지나가길 바라요.", translation: "如果你也突然受到关注，应该会很慌，希望你能平安度过。" },
+  { category: "support", fanType: "甜唯", text: "사진 한 장보다 민정이가 직접 들려준 노래와 무대가 저한테는 더 중요해요.", translation: "比起一张照片，对我来说旼炡亲自呈现的歌曲和舞台更重要。" },
+  { category: "support", fanType: "甜唯", text: "사실 확인 전까지는 축하도 비난도 서두르지 않고 조용히 기다리려고요.", translation: "在确认事实之前，我不急着祝福或批评，会安静等待。" },
+  { category: "support", fanType: "甜唯", text: "민정이에게 해명을 재촉하는 글이 줄어들었으면 좋겠어요. 쉴 시간도 필요하니까요.", translation: "希望催旼炡解释的帖子少一点，她也需要休息时间。" },
+  { category: "support", fanType: "甜唯", text: "혹시 여자친구가 맞더라도 두 사람 모두 존중받았으면 해요.", translation: "即使你真是女朋友，也希望你们两个人都受到尊重。" },
+  { category: "support", fanType: "甜唯", text: "오늘 타임라인은 너무 시끄러워서 잠깐 쉬려고요. 서로 조금만 차분해져요.", translation: "今天的时间线太吵了，我准备暂时休息一下。希望大家冷静一点。" },
+  { category: "support", fanType: "甜唯", text: "민정이가 팬들에게 준 행복한 순간들은 사진 한 장으로 사라지지 않아요.", translation: "旼炡曾带给粉丝的快乐时刻，不会因为一张照片就消失。" },
+  { category: "support", fanType: "甜唯", text: "당신 계정에 답을 요구하는 대신 공식적으로 확인된 내용만 기다려 보려고요.", translation: "我不会跑到你的账号索要答案，而是等正式确认的消息。" },
+  { category: "support", fanType: "甜唯", text: "민정이의 다음 무대가 기대돼요. 이번 소문이 활동 전부를 덮지는 않았으면 합니다.", translation: "我很期待旼炡的下一次舞台，希望这次传闻不要盖过她所有活动。" },
+  { category: "support", fanType: "甜唯", text: "팬심과 현실을 정리하는 데 시간이 걸려도 다른 사람에게 상처 주진 말아요.", translation: "整理粉丝心情和现实需要时间，但别因此伤害别人。" },
+  { category: "support", fanType: "甜唯", text: "민정이가 사생활에서도 편안하고 안전하게 지냈으면 좋겠어요.", translation: "希望旼炡在私生活中也能自在、安全地生活。" },
+  { category: "support", fanType: "甜唯", text: "당신이 누구든 두 분이 서로를 존중한다면 더 바랄 건 없겠어요.", translation: "无论你是谁，只要你们彼此尊重，我就没有别的奢求了。" },
+  { category: "support", fanType: "甜唯", text: "오늘은 추측글을 더 공유하지 않고 민정이의 예전 무대 영상이나 볼게요.", translation: "今天我不再转发猜测贴，还是去看旼炡以前的舞台视频吧。" },
+  { category: "support", fanType: "妈粉", text: "우리 애가 일정 끝나고 따뜻한 밥 먹고 푹 잤으면 좋겠어요.", translation: "希望我们家孩子结束行程后能吃顿热饭、好好睡一觉。" },
+  { category: "support", fanType: "妈粉", text: "민정이가 늘 괜찮은 척하지 않아도 되는 사람이 곁에 있었으면 해요.", translation: "希望旼炡身边有人能让她不必总是假装没事。" },
+  { category: "support", fanType: "妈粉", text: "당신이 가까운 사람이라면 오늘은 인터넷 반응보다 민정이 컨디션을 먼저 살펴 주세요.", translation: "如果你是她亲近的人，今天请先关心旼炡的状态，而不是网上反应。" },
+  { category: "support", fanType: "妈粉", text: "우리 민정이는 누구에게 설명해야만 행복할 수 있는 사람이 아니에요.", translation: "我们旼炡不是非得向谁解释才能幸福的人。" },
+  { category: "critical", fanType: "妈粉", text: "팬들이 놀랐다고 해서 민정이가 사과해야 한다고 생각하진 않아요.", translation: "我不认为粉丝感到震惊就意味着旼炡需要道歉。" },
+  { category: "support", fanType: "妈粉", text: "상대가 누구든 서로 안전하고 존중받는 게 제일 중요합니다.", translation: "不管对象是谁，彼此安全并受到尊重才是最重要的。" },
+  { category: "support", fanType: "妈粉", text: "댓글을 다 읽지 않아도 된다고 말해 줄 사람이 옆에 있었으면 좋겠어요.", translation: "希望她身边有人告诉她，不必把每条评论都看完。" },
+  { category: "support", fanType: "妈粉", text: "민정이가 집에 돌아와서는 아무 말 없이 편히 쉬었으면 하네요.", translation: "希望旼炡回家后可以什么都不说，轻松休息。" },
+  { category: "support", fanType: "妈粉", text: "사실이라면 서로 배려하면서 민정이가 자기 일도 잘 이어 가게 도와주세요.", translation: "如果是真的，请彼此体谅，也帮助旼炡继续做好自己的工作。" },
+  { category: "support", fanType: "妈粉", text: "좋아하는 마음이 크다고 해서 사생활까지 알아야 하는 건 아니잖아요.", translation: "喜欢得再深，也不代表必须知道她的私生活吧。" },
+  { category: "support", fanType: "妈粉", text: "사진 때문에 민정이가 죄책감을 느끼지 않도록 주변에서 잘 지켜 줬으면 해요.", translation: "希望身边的人能保护好旼炡，不要让她因为照片感到内疚。" },
+  { category: "support", fanType: "妈粉", text: "상대방 계정에 몰려가 공격하는 건 민정이가 바라는 일도 아닐 거예요.", translation: "涌到对方账号攻击，也不会是旼炡希望看到的事。" },
+  { category: "support", fanType: "妈粉", text: "마음이 복잡한 팬도 있겠지만 결국 민정이가 편안하게 지내는 게 우선이에요.", translation: "有些粉丝心情复杂，但最终还是旼炡能安心生活更重要。" },
+  { category: "support", fanType: "妈粉", text: "오늘만큼은 민정이가 좋아하는 음식 먹고 푹 쉬었으면 좋겠어요.", translation: "希望旼炡今天能吃喜欢的食物，好好休息。" },
+  { category: "support", fanType: "妈粉", text: "무슨 관계인지보다 서로를 불편하게 만들지 않고 지내는지가 더 중요하다고 봐요.", translation: "比起你们是什么关系，我觉得相处时是否让彼此舒服更重要。" },
+  { category: "critical", fanType: "女友粉", text: "버블에서 민정이가 해 준 말을 혼자 오래 간직했는데 오늘은 마음이 조금 허전해요.", translation: "我珍藏着旼炡在 Bubble 里说过的话，但今天心里有点空落落的。" },
+  { category: "critical", fanType: "女友粉", text: "솔직히 질투는 나지만 그 감정으로 민정이에게 선택을 강요할 수는 없겠죠.", translation: "说实话会嫉妒，但不能因为这种感情就逼旼炡做选择。" },
+  { category: "support", fanType: "女友粉", text: "당신이 실제 여자친구라면 부럽기도 해요. 그래도 민정이를 소중하게 대해 주세요.", translation: "如果你真是她女朋友，我也会羡慕，但还是希望你珍惜旼炡。" },
+  { category: "critical", fanType: "女友粉", text: "오늘은 팬 계정에서 잠깐 로그아웃하려고요. 계속 보면 마음이 더 복잡해질 것 같아요.", translation: "今天我打算暂时退出粉丝账号，继续刷只会让心情更复杂。" },
+  { category: "critical", fanType: "女友粉", text: "민정이가 행복하길 바라면서도 서운한 마음이 들어요. 두 감정이 같이 있네요.", translation: "我希望旼炡幸福，同时又会失落，两种心情并存。" },
+  { category: "critical", fanType: "女友粉", text: "당신을 미워하고 싶진 않지만 아직 축하한다는 말은 쉽게 나오지 않아요.", translation: "我不想讨厌你，但现在还是很难轻易说出祝福的话。" },
+  { category: "critical", fanType: "女友粉", text: "나중에 사실로 밝혀져도 팬들끼리 서로 배신자라고 몰아가진 않았으면 해요.", translation: "即使以后证实是真的，也希望粉丝不要互相指责对方是叛徒。" },
+  { category: "critical", fanType: "女友粉", text: "민정이를 좋아했던 시간이 거짓이 된 건 아니겠죠. 오늘은 조금만 쉬어 갈게요.", translation: "喜欢旼炡的那些时光并没有变成假的吧，今天我先休息一下。" },
+  { category: "critical", fanType: "女友粉", text: "사진이 자꾸 떠서 현실을 실감하게 되네요. 그래도 당신에게 화풀이하진 않을게요.", translation: "照片反复出现，让我不断意识到现实，但我不会向你发泄。" },
+  { category: "support", fanType: "女友粉", text: "갑자기 관심을 받는 당신도 불편할 수 있겠죠. 이 일이 공격으로 번지지 않았으면 해요.", translation: "你突然受到关注也可能很不舒服，希望这件事不要发展成攻击。" },
+  { category: "critical", fanType: "女友粉", text: "민정이가 누구를 좋아하는지는 제가 정할 수 없다는 걸 천천히 받아들이는 중이에요.", translation: "我正在慢慢接受：旼炡喜欢谁，不是由我决定的。" },
+  { category: "critical", fanType: "女友粉", text: "부럽다는 마음은 있어도 당신의 신상을 캐거나 찾아가고 싶지는 않아요. 그건 선을 넘는 거니까요.", translation: "我会羡慕，但不想挖你的个人信息或去找你，那样越界了。" },
+  { category: "critical", fanType: "女友粉", text: "마음을 정리하는 데 시간이 걸릴 것 같지만 민정이가 악플을 받지는 않았으면 합니다.", translation: "我可能需要时间整理心情，但仍希望旼炡不要收到恶评。" },
+  { category: "critical", fanType: "女友粉", text: "사실이라면 민정이가 팬들 눈치 때문에 죄책감을 느끼지 않게 곁에서 말해 주세요.", translation: "如果是真的，希望你能陪她说说话，别让她因为粉丝而内疚。" },
+  { category: "critical", fanType: "女友粉", text: "오늘은 질투를 인정하고 관련 검색어를 잠시 안 보려고요. 제 감정도 제가 돌봐야죠.", translation: "今天我承认自己的嫉妒，暂时不看相关热搜了；我也得照顾好自己的情绪。" },
+  { category: "curious", fanType: "梦女", text: "현실 얘기는 잠깐 내려놓고 상상 속에서는 민정이랑 야식 고르는 장면이나 써 볼래요.", translation: "先把现实话题放一边，我想写一段幻想中和旼炡挑夜宵的场景。" },
+  { category: "support", fanType: "梦女", text: "민정이와 데이트하는 상상을 즐기지만 실제 당사자에게 답을 요구하진 않을 거예요.", translation: "我喜欢幻想和旼炡约会，但不会向现实中的当事人索要答案。" },
+  { category: "support", fanType: "梦女", text: "마음속에서는 비 오는 날 우산을 같이 쓰고 있어요. 그건 제 상상으로만 남겨 둘게요.", translation: "在我的想象里，我们雨天共撑一把伞，我会把这留在幻想里。" },
+  { category: "support", fanType: "梦女", text: "현실 사진을 분석하는 것보다 민정이 직캠을 보고 설레는 게 편하네요.", translation: "比起分析现实照片，看旼炡直拍、自己心动反而更自在。" },
+  { category: "support", fanType: "梦女", text: "제가 좋아하는 이야기가 누구의 실제 사생활도 침범하지 않았으면 해요.", translation: "希望我喜欢的故事不要侵犯任何人的现实隐私。" },
+  { category: "support", fanType: "梦女", text: "정말 사귀는 사이라면 부럽겠지만 제 상상은 제 마음속 이야기로 둘게요.", translation: "如果你们真在交往，我会羡慕，但我的幻想会留在自己的心里。" },
+  { category: "curious", fanType: "梦女", text: "오늘은 팬픽을 고치면서 시간을 보내려 해요. 현실의 누군가에게 설명을 요구하진 않을게요.", translation: "今天我想花时间修改同人文，不会要求现实中的任何人解释。" },
+  { category: "support", fanType: "梦女", text: "팬마다 머릿속의 민정이는 다를 수 있으니 자기 상상을 현실이라고 우기지 않았으면 해요.", translation: "每个粉丝心里的旼炡都可能不同，希望别把自己的幻想硬说成现实。" },
+  { category: "support", fanType: "梦女", text: "당신이 민정이에게 편안한 사람이라면 좋겠어요. 저는 제 방식대로 계속 응원할게요.", translation: "希望你是能让旼炡安心的人，我会继续用自己的方式支持她。" },
+  { category: "support", fanType: "梦女", text: "현실 연애설이 제 상상을 바꿔도 당신을 탓할 일은 아니겠죠.", translation: "现实恋爱传闻改变了我的幻想，也不该怪到你头上。" },
+  { category: "support", fanType: "梦女", text: "실제 삶과 제가 즐기는 상상은 다른 거라는 걸 기억하려고요.", translation: "我会记得现实生活和我享受的幻想是两回事。" },
+  { category: "support", fanType: "梦女", text: "오늘은 현실에 답을 찾기보다 제가 좋아하는 무대 영상을 볼래요.", translation: "今天比起在现实里找答案，我更想看喜欢的舞台视频。" },
+  { category: "curious", fanType: "私生粉", text: "그날 사진 원본을 본 적 있나요? 더 선명한 사진이 있는지 궁금해요.", translation: "你见过那天照片的原图吗？我好奇有没有更清晰的照片。" },
+  { category: "curious", fanType: "私生粉", text: "두 분이 언제부터 아는 사이인지 말해 줄 수 있나요? 그냥 너무 궁금해서요.", translation: "能说说你们从什么时候认识的吗？我只是太好奇了。" },
+  { category: "critical", fanType: "私生粉", text: "사진에 나온 옷이 맞는지 직접 확인하고 싶어요. 답하기 싫으면 안 해도 돼요.", translation: "我想确认照片里的衣服是不是那件，不想回答也没关系。" },
+  { category: "critical", fanType: "私生粉", text: "사귀는 게 맞다면 언제부터인지 알려 주세요. 친구들에게 자랑하고 싶어서요.", translation: "如果你们真的在交往，能告诉我从什么时候开始吗？我想跟朋友说。" },
+  { category: "critical", fanType: "私生粉", text: "민정이와 자주 만나는 편인지 궁금해요. 공개할 수 있는 내용만 알려 주세요.", translation: "我很好奇你们是不是经常见面，只说可以公开的内容就好。" },
+  { category: "curious", fanType: "私生粉", text: "사진이 처음 올라온 곳을 아는지 물어봐도 될까요? 계속 검색하게 되네요.", translation: "可以问问你知不知道照片最初发在哪里吗？我一直忍不住搜索。" },
+  { category: "critical", fanType: "私生粉", text: "두 분이 친한 사이라는 말만 확인해 주면 댓글이 조용해질 것 같아요.", translation: "如果你能确认你们关系亲近，评论区可能就会安静些。" },
+  { category: "critical", fanType: "私生粉", text: "당신 프로필을 계속 보게 되네요. 어떤 관계인지 궁금하지만 선은 지켜야겠죠.", translation: "我一直在看你的主页，很好奇你们是什么关系，但也该守住界限吧。" },
+  { category: "curious", fanType: "CP粉", text: "윈카 조합을 오래 좋아해서 이번 소식이 낯설어요. 그래도 당신을 공격할 생각은 없어요.", translation: "我喜欢 윈카 这个组合很久了，所以这条消息让我不习惯，但我不打算攻击你。" },
+  { category: "curious", fanType: "CP粉", text: "윈닝 팬이라 둘의 케미를 아껴 왔어요. 그렇다고 현실의 누군가를 괴롭힐 이유는 없겠죠.", translation: "我是 윈닝 粉丝，一直珍惜她们的互动，但没有理由因此骚扰现实中的任何人。" },
+  { category: "curious", fanType: "CP粉", text: "윈젤을 좋아하지만 팬들의 해석과 현실은 다를 수 있다는 것도 알고 있어요.", translation: "我喜欢 윈젤，但也知道粉丝解读和现实可能不同。" },
+  { category: "support", fanType: "CP粉", text: "제가 좋아했던 조합의 순간은 여전히 소중해요. 지키겠다고 다른 사람을 공격하고 싶진 않아요.", translation: "我喜欢的组合瞬间依然珍贵，但我不想为了维护它去攻击别人。" },
+  { category: "curious", fanType: "CP粉", text: "오늘은 각자 좋아하는 조합 때문에 싸우는 계정이 많네요. 민정이를 증거처럼 쓰지 말았으면 해요.", translation: "今天很多账号为了自己喜欢的组合吵架，希望别把旼炡当成证明谁的证据。" },
+  { category: "curious", fanType: "CP粉", text: "당신과 민정이의 관계는 모르지만 제 해석을 누구에게 강요하지는 않을게요.", translation: "我不知道你和旼炡的关系，但不会把自己的解读强加给别人。" },
+  { category: "support", fanType: "普通粉丝", text: "저는 음악 듣다가 이 소식을 봤어요. 확인되지 않은 일로 두 분이 힘들어지지 않았으면 합니다.", translation: "我听歌时刷到了这件事，希望你们不要因为未经确认的消息而受苦。" },
+  { category: "support", fanType: "普通粉丝", text: "뉴스 제목은 단정적인데 내용은 추측뿐이네요. 당신 계정까지 찾아가는 사람이 줄었으면 해요.", translation: "新闻标题看起来很肯定，内容却只有猜测，希望跑到你账号的人少一些。" },
+  { category: "support", fanType: "普通粉丝", text: "연예인도 누군가를 만날 수 있지만 소문이 뜨면 다들 당황하는 것 같아요.", translation: "我知道艺人也可以交往，但传闻出现时大家还是会慌乱。" },
+  { category: "support", fanType: "普通粉丝", text: "두 분 다 원치 않는 관심을 받고 있는 것 같아 안타깝네요.", translation: "你们两个人似乎都受到了不想要的关注，挺让人难过的。" },
+  { category: "curious", fanType: "普通粉丝", text: "사실이면 축하할 사람도 있고 시간이 필요한 사람도 있겠죠. 서로 몰아붙이지 말아요.", translation: "如果是真的，有人会祝福，也有人需要时间，别互相逼迫。" },
+  { category: "support", fanType: "普通粉丝", text: "다음 공식 무대를 기다릴게요. 확인 전에는 소문을 반복해서 퍼 나르지 않으려고요.", translation: "我会等待下一次正式舞台，在确认之前不反复传播传闻。" },
+  { category: "support", fanType: "普通粉丝", text: "인물 관계보다 사진이 어떤 경로로 퍼졌는지가 더 궁금해요.", translation: "比起两人的关系，我更好奇照片是通过什么渠道传播的。" },
+  { category: "support", fanType: "普通粉丝", text: "오늘은 두 분 모두 알림을 끄고 편하게 쉴 시간이 있었으면 좋겠어요.", translation: "希望你们今天都能关掉通知，安心休息一会儿。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "이런 소식만 기다렸다는 듯 조롱하는 계정이 보이네요. 확인되지 않은 일로 사람을 깎아내리진 맙시다.", translation: "有些账号像是一直等着这种消息来嘲讽人，别用未经证实的事贬低别人。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "누구든 근거 없이 민정이 커리어를 망친다고 몰아가는 건 과하다고 생각해요.", translation: "不管是谁，毫无根据地说对方会毁掉旼炡的事业，我觉得太过了。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "사진을 핑계로 외모나 성격을 조롱하는 건 논의가 아니라 악의에 가까워 보여요.", translation: "借照片嘲讽外貌或性格，看起来不像讨论，更像恶意。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "소문이 맞든 아니든 당사자에게 막말을 보내는 건 그만했으면 합니다.", translation: "无论传闻真假，希望停止给当事人发难听的话。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "논란으로 조회수만 얻으려는 계정들이 제일 피곤해요. 자극적인 떡밥은 더 만들지 마세요.", translation: "最让人疲惫的是靠争议赚流量的账号，请别再制造刺激性话题。" },
+  { category: "critical", fanType: "黑粉借题发挥", text: "좋아하든 싫어하든 확인 전부터 누군가를 범인처럼 몰아가는 건 공정하지 않아요.", translation: "不管喜欢还是讨厌，在确认之前就把人当成罪人并不公平。" },
+  { category: "passerby", fanType: "路人", text: "추천 탭에 떠서 봤는데 사진만으로는 아무것도 확실하지 않네요. 일단 지나갈게요.", translation: "推荐页推给我才点进来看，光凭照片什么也确认不了，我先划走了。" },
+  { category: "passerby", fanType: "路人", text: "팬은 아니지만 두 사람의 사생활이 하루 종일 구경거리가 되는 건 불편해요.", translation: "我不是粉丝，但两个人的私生活被围观一整天，还是让人不舒服。" },
+  { category: "passerby", fanType: "路人", text: "댓글이 너무 빨리 결론을 내리고 있어요. 확인된 내용이 나올 때까지 기다리면 좋겠네요.", translation: "评论区下结论太快了，希望大家等确认消息出来再说。" },
+  { category: "passerby", fanType: "路人", text: "며칠 지나면 또 다른 화제가 되겠지만 서로 상처 주는 말은 줄었으면 해요.", translation: "过几天大家可能又讨论别的话题，但希望互相伤害的话能少一点。" },
+  { category: "passerby", fanType: "路人", text: "당신도 민정이도 오늘은 알림을 꺼 두고 잠시 쉬었으면 좋겠어요.", translation: "希望你和旼炡今天都能关掉通知休息一会儿。" },
 ];
 function createInstagramFanDmBatch(): string[] {
   const records: InstagramFanDm[] = IG_FAN_DM_LINES.map((line, index) => ({
@@ -841,8 +876,8 @@ function PhoneRuntime({
     return () => window.clearTimeout(timer);
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
 
-  // Deliver each KKT notification only while the player is outside Minjeong's
-  // chat. If the first alert is opened, the second waits until the player exits.
+  // Deliver the two KKT notices in order even when the chat is open. The active
+  // conversation only determines whether a notification/unread badge is needed.
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
       s.ui?.story?.["scandal-kkt-first-notice-v5"] === true) return;
@@ -878,9 +913,9 @@ function PhoneRuntime({
           },
         },
       });
-    }, 1500);
+    }, 2200);
     return () => window.clearTimeout(timer);
-  }, [creator, app, appThread, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["scandal-kkt-first-notice-v5"]]);
+  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["scandal-kkt-first-notice-v5"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-kkt-first-notice-v5"] !== true ||
@@ -917,9 +952,9 @@ function PhoneRuntime({
           },
         },
       });
-    }, 1500);
+    }, 2500);
     return () => window.clearTimeout(timer);
-  }, [creator, app, appThread, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
+  }, [creator, s.ui?.story?.["scandal-kkt-first-notice-v5"], s.ui?.story?.["scandal-kkt-second-notice-v5"]]);
   // Treat the first message as delivered once the timed story event completes.
   // Use a boolean dependency, not the notifications array: dismissing/opening the
   // first banner must not cancel or restart the second message's scheduled delivery.
@@ -1297,7 +1332,9 @@ function PhoneRuntime({
     if (!locked && work.phone.notifications && newNotices.length) {
       const isOpeningKktNotice = (notice: string) =>
         notice === "KKT|金旼炡: 아직 안 잤어?" ||
-        notice.startsWith("KKT|金旼炡:나 오늘 집에 좀 늦게 들어갈 것 같아.");
+        notice.startsWith("KKT|金旼炡:나 오늘 집에 좀 늦게 들어갈 것 같아.") ||
+        notice === "KKT|金旼炡:어디야?" ||
+        notice === "KKT|金旼炡:혼자 있어?";
       // Preserve the existing latest-notice behavior for unrelated apps. Only
       // queue this two-message KKT opening so its second banner cannot replace
       // the first one before it has been shown.
