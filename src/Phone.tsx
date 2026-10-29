@@ -310,7 +310,8 @@ function PhoneRuntime({
   const appSnapshots = useRef(new Map<string, HTMLElement>());
   const handledKktEventsRef = useRef(new Set<string>());
   const [banner, setBanner] = useState("");
-  const noticesSeen = useRef(0);
+  const [bannerQueue, setBannerQueue] = useState<string[]>([]);
+  const noticesSeen = useRef<string[]>([]);
   const [contextApp, setContextApp] = useState("");
   const [deviceScale, setDeviceScale] = useState(0.84);
   const shell = useRef<HTMLDivElement>(null);
@@ -502,9 +503,21 @@ function PhoneRuntime({
     // matching the supplied KKT list reference after the player backs out.
     // Messages received while this exact chat is open are read immediately.
     // Do not leave a badge behind when the player later exits the conversation.
-    const unreadCount = activeConversation
-      ? 0
-      : Math.max(0, Number(current.ui?.kakao?.[unreadKey] ?? 0)) + 1;
+    const storedUnread = current.ui?.kakao?.[unreadKey];
+    // The opening NPC line already has one unread item in the story data.
+    // Seed the runtime counter from that metadata before counting the follow-up,
+    // otherwise setting a runtime value of 1 accidentally hides the first unread.
+    const templateUnread = (work.data.kakao || []).reduce((total, item) => {
+      if (item.title !== incoming.thread || item.outgoing || item.read) return total;
+      const rawUnread = item.meta?.unread;
+      if (!rawUnread) return total;
+      const value = Number(rawUnread);
+      return total + (Number.isFinite(value) && value > 0 ? value : 1);
+    }, 0);
+    const previousUnread = storedUnread === undefined
+      ? templateUnread
+      : Math.max(0, Number(storedUnread) || 0);
+    const unreadCount = activeConversation ? 0 : previousUnread + 1;
     // Suppress only the NPC thread that is currently visible. Being in a
     // different KKT conversation is not enough to suppress this NPC's popup.
     const notifications = activeConversation
@@ -826,9 +839,14 @@ function PhoneRuntime({
     const hasOpeningChat = (work.data.kakao || []).some(
       (item) => item.id === "kkt-minjeong-opening-01",
     );
+    const firstOpeningNoticeDelivered =
+      s.variables?.["kkt-opening-first-notice-delivered-v1"] === true ||
+      s.completed.includes("kkt-first-message-after-unlock") ||
+      s.notifications.some((notice) => notice === "KKT|金旼炡: 아직 안 잤어?");
     if (
       creator ||
       !hasOpeningChat ||
+      !firstOpeningNoticeDelivered ||
       s.time?.startsWith("14:") ||
       s.ui?.kakao?.["scandal-precall-started-v5"] === true ||
       s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"] === true
@@ -836,7 +854,12 @@ function PhoneRuntime({
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestKakao = latest.ui?.kakao || {};
+      const firstOpeningNoticeDelivered =
+        latest.variables?.["kkt-opening-first-notice-delivered-v1"] === true ||
+        latest.completed.includes("kkt-first-message-after-unlock") ||
+        latest.notifications.some((notice) => notice === "KKT|金旼炡: 아직 안 잤어?");
       if (
+        !firstOpeningNoticeDelivered ||
         latest.time?.startsWith("14:") ||
         latestKakao["scandal-precall-started-v5"] === true ||
         latestKakao["mymyKktOpeningFollowupNoticeHandledV1"] === true
@@ -879,6 +902,9 @@ function PhoneRuntime({
     s.time,
     s.ui?.kakao?.["scandal-precall-started-v5"],
     s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"],
+    s.variables?.["kkt-opening-first-notice-delivered-v1"],
+    s.completed.length,
+    s.notifications.length,
   ]);
 
   // If either lead-in message arrives while Minjeong's chat is visible, consume
@@ -1126,20 +1152,37 @@ function PhoneRuntime({
 
   const plugin = getApp(app);
   useEffect(() => {
-    const count = s.notifications.length;
-    const latest = s.notifications.at(-1) || "";
-    if (
-      !locked &&
-      work.phone.notifications &&
-      count > noticesSeen.current
-    ) {
-      setBanner(latest);
-      const timer = setTimeout(() => setBanner(""), 4500);
-      noticesSeen.current = count;
-      return () => clearTimeout(timer);
+    const previousCounts = new Map<string, number>();
+    for (const notice of noticesSeen.current) {
+      previousCounts.set(notice, (previousCounts.get(notice) ?? 0) + 1);
     }
-    noticesSeen.current = count;
-  }, [s.notifications.length, locked, work.phone.notifications]);
+    const newNotices = s.notifications.filter((notice) => {
+      const remaining = previousCounts.get(notice) ?? 0;
+      if (remaining > 0) {
+        previousCounts.set(notice, remaining - 1);
+        return false;
+      }
+      return true;
+    });
+    noticesSeen.current = [...s.notifications];
+    if (!locked && work.phone.notifications && newNotices.length) {
+      setBannerQueue((queue) => [...queue, ...newNotices]);
+    }
+  }, [s.notifications, locked, work.phone.notifications]);
+
+  // Show notification banners one at a time. A new message queues behind the
+  // visible banner instead of replacing it before the player can see it.
+  useEffect(() => {
+    if (banner || !bannerQueue.length) return;
+    setBanner(bannerQueue[0]);
+    setBannerQueue((queue) => queue.slice(1));
+  }, [banner, bannerQueue]);
+
+  useEffect(() => {
+    if (!banner) return;
+    const timer = window.setTimeout(() => setBanner(""), 4500);
+    return () => window.clearTimeout(timer);
+  }, [banner]);
   const dismissNotice = (index: number) =>
     update({
       ...runtimeRef.current,
