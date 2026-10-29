@@ -519,6 +519,10 @@ export function MymyKakao(p: SkinProps) {
       return sequenceIndex < 0 || sequenceIndex < scandalOpeningRevealCount;
     }),
     scroll = useRef<HTMLDivElement>(null);
+  const scandalOpeningSequenceStarted =
+    p.ui?.["scandal-kkt-opening-sequence-started-v1"] === true;
+  const scandalOpeningSequenceDelivered =
+    p.ui?.["scandal-kkt-opening-sequence-delivered-v1"] === true;
   const currentRound = p.thread === "金旼炡" ? KKT_STORY_ROUNDS[storyStep] : undefined;
   const currentRoundNpcComplete = !currentRound || currentRound.npc.every(([ko]) => {
     const expected = ko.replaceAll("{{playerId}}", p.playerId || "你");
@@ -527,7 +531,8 @@ export function MymyKakao(p: SkinProps) {
   const kktNpcTurnComplete =
     currentRoundNpcComplete &&
     !hideOpeningFollowup &&
-    scandalOpeningRevealCount >= scandalOpeningMessages.length;
+    scandalOpeningRevealCount >= scandalOpeningMessages.length &&
+    (!scandalOpeningSequenceStarted || scandalOpeningSequenceDelivered);
   useEffect(() => {
     // Only start the one-second reveal after the follow-up has actually been
     // delivered into runtime state. This avoids a timer racing the Phone.tsx
