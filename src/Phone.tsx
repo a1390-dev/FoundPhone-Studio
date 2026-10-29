@@ -875,6 +875,26 @@ function PhoneRuntime({
     return () => window.clearTimeout(timer);
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
 
+  useEffect(() => {
+    if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+    const latest = runtimeRef.current;
+    const kakao = latest.ui?.kakao || {};
+    if (kakao["scandal-kkt-opening-sequence-started-v1"] === true) return;
+    const secondNoticeAlreadySent =
+      latest.ui?.story?.["scandal-kkt-second-notice-v5"] === true;
+    update({
+      ...latest,
+      ui: {
+        ...latest.ui,
+        kakao: {
+          ...kakao,
+          "scandal-kkt-opening-sequence-started-v1": true,
+          "scandal-kkt-opening-sequence-delivered-v1": secondNoticeAlreadySent,
+        },
+      },
+    });
+  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"]]);
+
   // Deliver the two KKT notices in order even when the chat is open. The active
   // conversation only determines whether a notification/unread badge is needed.
   useEffect(() => {
@@ -944,6 +964,7 @@ function PhoneRuntime({
           kakao: {
             ...latest.ui?.kakao,
             "mymyKktSentV3": alreadySent ? sent : [...sent, JSON.stringify([thread, text, "20:19", "npc", "你一个人吗？"])],
+            "scandal-kkt-opening-sequence-delivered-v1": true,
             "kkt-unread-count:金旼炡": activeConversation ? 0 : Math.max(
               0,
               Number(latest.ui?.kakao?.["kkt-unread-count:金旼炡"] ?? 0),
