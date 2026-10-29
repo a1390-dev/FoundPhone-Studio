@@ -509,13 +509,18 @@ export function MymyKakao(p: SkinProps) {
     ),
     scroll = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    // Start playback when the player enters the correct chat, even if the
-    // follow-up is appended by Phone.tsx moments later. This prevents both
-    // initial bubbles from appearing together on first entry.
-    if (p.thread !== "金旼炡" || !hasOpeningFirst || openingSequenceReleased) return;
+    // Only start the one-second reveal after the follow-up has actually been
+    // delivered into runtime state. This avoids a timer racing the Phone.tsx
+    // delivery timer and revealing both opening bubbles in the same render.
+    if (
+      p.thread !== "金旼炡" ||
+      !hasOpeningFirst ||
+      !openingFollowup ||
+      openingSequenceReleased
+    ) return;
     const timer = window.setTimeout(() => setOpeningSequenceReleased(true), 1000);
     return () => window.clearTimeout(timer);
-  }, [p.thread, hasOpeningFirst, openingSequenceReleased]);
+  }, [p.thread, hasOpeningFirst, Boolean(openingFollowup), openingSequenceReleased]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
