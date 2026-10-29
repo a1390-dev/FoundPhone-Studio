@@ -5046,8 +5046,8 @@ label {
 }
 
 /* The whole simulated phone is scaled with CSS zoom. Compensate only the ID
-   field through its inline font size so Safari sees a real rendered 16px field
-   and does not auto-zoom the webpage when the player taps it. */
+   field through its inline font size so Safari sees a real rendered 18px field,
+   leaving a margin above the automatic page-zoom threshold on iOS. */
 .story-runtime #foundphone-player-id {
   font-size: inherit;
   -webkit-text-size-adjust: 100%;
