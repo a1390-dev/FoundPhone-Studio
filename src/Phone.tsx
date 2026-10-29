@@ -379,22 +379,19 @@ function PhoneRuntime({
       const stage = el.parentElement;
       if (!stage) return;
       const availableWidth = stage.clientWidth - 24;
-      const availableHeight = stage.clientHeight - (creator ? 170 : external ? 150 : 40);
-      if (availableWidth <= 0 || availableHeight <= 0) return;
+      if (availableWidth <= 0) return;
 
-      // The mobile CSS scale caps used to live in ios18.css, but this inline
-      // value takes precedence over them. Respect those caps here so iPhone
-      // Safari cannot render the simulated device nearly full-size.
-      // Use the actual player stage width rather than the document viewport:
-      // embedded/mobile Safari can report a wider layout viewport than the visible
-      // page. Keep the simulated phone at 70% scale on phone-sized stages.
-      const mobileScaleCap = stage.clientWidth <= 760 ? 0.7 : 1;
-      setDeviceScale(
-        Math.max(
-          0.4,
-          Math.min(mobileScaleCap, availableWidth / 407, availableHeight / 866),
-        ),
-      );
+      // On phone-sized stages, only use the stable stage width. iOS Safari may
+      // resize the available height while the ID input keyboard opens/closes;
+      // deriving scale from that height makes the phone jump and can leave it
+      // oversized after the ID form is submitted.
+      const isMobileStage = stage.clientWidth <= 760;
+      const mobileScale = Math.min(0.7, availableWidth / 407);
+      const availableHeight = stage.clientHeight - (creator ? 170 : external ? 150 : 40);
+      const fittedScale = isMobileStage
+        ? mobileScale
+        : Math.min(1, availableWidth / 407, Math.max(0, availableHeight) / 866);
+      setDeviceScale(Math.max(0.4, fittedScale));
     };
     const observer = new ResizeObserver(fit);
     const stage = el.parentElement;
