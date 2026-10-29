@@ -467,78 +467,204 @@ export function ControlCenter({
     </motion.div>
   );
 }
-export function DeviceKeyboard({ close }: { close: () => void }) {
-  const [value, setValue] = useState(""),
+const PINYIN_CANDIDATES: Record<string, string[]> = {
+  a: ["啊", "阿", "呀"], ai: ["爱", "哎", "矮"], an: ["安", "按", "案"],
+  ba: ["吧", "把", "爸"], bu: ["不", "不是", "不用"], chi: ["吃", "迟"],
+  de: ["的", "得", "地"], deng: ["等", "灯"], dui: ["对", "对的"],
+  duibuqi: ["对不起"], en: ["嗯", "恩"], hao: ["好", "好的", "好啊"],
+  he: ["和", "喝"], hen: ["很"], hui: ["会", "回"], jia: ["家", "加"],
+  jian: ["见", "件"], jiao: ["叫", "教"], jin: ["今", "进"], jintian: ["今天"],
+  jiu: ["就", "旧"], ke: ["可", "客"], keyi: ["可以", "可以的"],
+  lai: ["来"], le: ["了", "乐"], ma: ["吗", "嘛", "妈"], mei: ["没", "每"],
+  meiguanxi: ["没关系"], ming: ["明"], mingtian: ["明天"], ni: ["你", "你们", "你好"],
+  nihao: ["你好"], qing: ["请", "情"], qu: ["去", "取"], ren: ["人", "认"],
+  shi: ["是", "时", "事"], shui: ["谁", "睡", "水"], shuo: ["说", "说话"],
+  ta: ["他", "她", "它"], tian: ["天"], ting: ["听"], wo: ["我", "我们", "我也"],
+  woaini: ["我爱你"], xiang: ["想", "像"], xianzai: ["现在"], xie: ["谢"],
+  xiexie: ["谢谢"], xing: ["行", "醒"], yao: ["要", "药"], ye: ["也", "夜"],
+  yi: ["一", "以", "已"], you: ["有", "又"], zai: ["在", "再"], zaoan: ["早安"],
+  zaijian: ["再见"], zhe: ["这", "着"], zhen: ["真", "真的"],
+  zhidao: ["知道", "知道了"], zhong: ["中", "钟"], zenme: ["怎么"],
+  zenmeyang: ["怎么样"], weishenme: ["为什么"], wanshang: ["晚上"],
+  wanshanghao: ["晚上好"], ganxie: ["感谢"], jiayou: ["加油"],
+};
+type KeyboardEditable = HTMLInputElement | HTMLTextAreaElement | HTMLElement;
+
+function readKeyboardText(target: KeyboardEditable | null | undefined): string {
+  if (!target) return "";
+  if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+    return target.value;
+  }
+  return target.isContentEditable ? (target.innerText || "") : "";
+}
+
+function setKeyboardText(target: KeyboardEditable, value: string): void {
+  if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+    const prototype = target instanceof HTMLTextAreaElement
+      ? HTMLTextAreaElement.prototype
+      : HTMLInputElement.prototype;
+    const setter = Object.getOwnPropertyDescriptor(prototype, "value")?.set;
+    if (setter) setter.call(target, value);
+    else target.value = value;
+    // Use the native value setter above so React's value tracker sees this
+    // as a real edit and updates the controlled app composer normally.
+    target.dispatchEvent(new Event("input", { bubbles: true }));
+    return;
+  }
+  if (target.isContentEditable) {
+    target.textContent = value;
+    target.dispatchEvent(new InputEvent("input", {
+      bubbles: true,
+      inputType: "insertText",
+      data: value,
+    }));
+  }
+}
+
+export function DeviceKeyboard({
+  close,
+  target = null,
+}: {
+  close: () => void;
+  target?: KeyboardEditable | null;
+}) {
+  const [draft, setDraft] = useState(() => readKeyboardText(target)),
     [shift, setShift] = useState(false),
-    [numbers, setNumbers] = useState(false);
+    [numbers, setNumbers] = useState(false),
+    [language, setLanguage] = useState<"zh" | "en">("zh"),
+    [pinyin, setPinyin] = useState("");
+
+  useEffect(() => {
+    setDraft(readKeyboardText(target));
+    setPinyin("");
+  }, [target]);
+
+  const replaceText = (text: string, deleteBackward = false) => {
+    const current = target ? readKeyboardText(target) : draft;
+    let start = current.length;
+    let end = current.length;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+      const selectionStart = target.selectionStart;
+      const selectionEnd = target.selectionEnd;
+      if (selectionStart !== null && selectionEnd !== null) {
+        start = selectionStart;
+        end = selectionEnd;
+        // The real input deliberately stays unfocused to avoid Safari zoom.
+        // When it has existing text, keep the virtual caret at the end.
+        if (document.activeElement !== target && start === 0 && end === 0 && current.length) {
+          start = end = current.length;
+        }
+      }
+    }
+    if (deleteBackward && start === end && start > 0) {
+      start = Math.max(0, start - 1);
+    }
+    const next = current.slice(0, start) + text + current.slice(end);
+    if (target) setKeyboardText(target, next);
+    setDraft(next);
+    const caret = start + text.length;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+      try { target.setSelectionRange(caret, caret); } catch { /* Some input types do not support selection ranges. */ }
+    }
+  };
+
+  const pickCandidate = (candidate: string) => {
+    replaceText(candidate);
+    setPinyin("");
+    setShift(false);
+  };
+  const pressKey = (key: string) => {
+    if (numbers || !/^[a-z]$/i.test(key) || language === "en") {
+      replaceText(shift && language === "en" ? key.toUpperCase() : key);
+      return;
+    }
+    setPinyin((previous) => previous + key.toLowerCase());
+  };
+  const backspace = () => {
+    if (pinyin) {
+      setPinyin((previous) => previous.slice(0, -1));
+      return;
+    }
+    replaceText("", true);
+  };
+  const pressSpace = () => {
+    if (pinyin) {
+      const options = PINYIN_CANDIDATES[pinyin.toLowerCase()];
+      pickCandidate(options?.[0] || pinyin);
+      return;
+    }
+    replaceText(" ");
+  };
+  const toggleLanguage = () => {
+    if (pinyin) {
+      replaceText(pinyin);
+      setPinyin("");
+    }
+    setLanguage((current) => current === "zh" ? "en" : "zh");
+    setShift(false);
+  };
+  const candidates = pinyin
+    ? (PINYIN_CANDIDATES[pinyin.toLowerCase()] || [pinyin]).slice(0, 5)
+    : ["我", "你", "好的", "可以"];
+  const rows = numbers
+    ? ["1234567890", "-/:;()¥&@", ".,?!'"]
+    : ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+
   return (
-    <div className="device-keyboard" role="dialog" aria-label="屏幕键盘">
+    <div className="device-keyboard" role="dialog" aria-label="苹果风格屏幕键盘">
       <div className="keyboard-draft">
-        <input
-          autoFocus
-          aria-label="消息草稿"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="输入消息"
-        />
-        <button aria-label="收起键盘" onClick={close}>
+        <div className="keyboard-draft-value" aria-live="polite">
+          {draft || <span className="keyboard-placeholder">输入消息</span>}
+          {pinyin && <span className="keyboard-pinyin">{pinyin}</span>}
+        </div>
+        <button type="button" aria-label="收起键盘" onClick={close}>
           <ChevronDown />
         </button>
       </div>
       <div className="keyboard-candidates">
-        {(value ? [value, "好的", "知道了"] : ["我", "你", "好的"]).map(
-          (v, i) => (
-            <button key={i} onClick={() => setValue(value + v)}>
-              {v}
-            </button>
-          ),
-        )}
+        {candidates.map((candidate, index) => (
+          <button type="button" key={candidate + index} onClick={() => pickCandidate(candidate)}>
+            {candidate}
+          </button>
+        ))}
       </div>
-      {(numbers
-        ? ["1234567890", "-/:;()¥&@", ".,?!'"]
-        : ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
-      ).map((row, i) => (
-        <div className="keyboard-row" key={i}>
-          {i === 2 && (
+      {rows.map((row, index) => (
+        <div className="keyboard-row" key={row}>
+          {index === 2 && (
             <button
+              type="button"
               className="key-special"
               aria-label="切换大小写"
-              onClick={() => setShift(!shift)}
+              onClick={() => setShift((value) => !value)}
             >
               <ArrowUp size={19} />
             </button>
           )}
-          {[...row].map((k) => (
-            <button
-              key={k}
-              onClick={() => setValue(value + (shift ? k.toUpperCase() : k))}
-            >
-              {shift ? k.toUpperCase() : k}
+          {[...row].map((key) => (
+            <button type="button" key={key} onClick={() => pressKey(key)}>
+              {language === "en" && shift && !numbers ? key.toUpperCase() : key}
             </button>
           ))}
-          {i === 2 && (
-            <button
-              className="key-special"
-              aria-label="退格"
-              onClick={() => setValue(value.slice(0, -1))}
-            >
+          {index === 2 && (
+            <button type="button" className="key-special" aria-label="退格" onClick={backspace}>
               <Delete size={20} />
             </button>
           )}
         </div>
       ))}
       <div className="keyboard-row keyboard-bottom">
-        <button onClick={() => setNumbers(!numbers)}>
+        <button type="button" onClick={() => setNumbers((value) => !value)}>
           {numbers ? "ABC" : "123"}
         </button>
-        <button className="key-space" onClick={() => setValue(value + " ")}>
-          空格
+        <button type="button" className="keyboard-language" onClick={toggleLanguage}>
+          {language === "zh" ? "中/英" : "英/中"}
         </button>
-        <button onClick={close}>完成</button>
+        <button type="button" className="key-space" onClick={pressSpace}>空格</button>
+        <button type="button" onClick={close}>完成</button>
       </div>
       <div className="keyboard-accessories">
         <Globe size={24} />
-        <small>草稿</small>
+        <small>{language === "zh" ? "简体拼音" : "English"}</small>
         <Mic size={23} />
       </div>
     </div>
