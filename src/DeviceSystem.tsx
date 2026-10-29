@@ -47,14 +47,33 @@ export function NativeComposer({
   onAdd: () => void;
 }) {
   const open = useContext(KeyboardContext);
+  const [draft, setDraft] = useState("");
+  if (creator) {
+    return (
+      <button
+        type="button"
+        className="native-compose-field"
+        aria-label="添加消息"
+        onClick={onAdd}
+      >
+        添加消息
+      </button>
+    );
+  }
+  // This must be a real controlled field, not a blank button that opens an
+  // unrelated keyboard draft. The shared Phone pointer handler keeps it
+  // unfocused and routes all key taps into this actual composer.
   return (
-    <button
+    <textarea
       className="native-compose-field"
-      aria-label={creator ? "添加消息" : "输入消息"}
-      onClick={() => (creator ? onAdd() : open(true))}
-    >
-      {creator ? "添加消息" : ""}
-    </button>
+      aria-label="输入消息"
+      placeholder="输入消息"
+      rows={1}
+      maxLength={2000}
+      value={draft}
+      onChange={(event) => setDraft(event.target.value)}
+      onClick={() => open(true)}
+    />
   );
 }
 export function DeviceLock({
