@@ -1222,7 +1222,7 @@ function PhoneRuntime({
                   onRead={(id) => event("read", id)}
                   onEdit={(item) => onEdit?.(app, item)}
                   onAdd={() => onAdd?.(app)}
-                  onBack={() => setApp("")}
+                  onBack={closeCurrentApp}
                   onSettings={onSettings}
                   saveSlots={saveSlots}
                   onSaveSlot={saveToSlot}
@@ -1296,7 +1296,7 @@ function PhoneRuntime({
                   "home-" + homeRequest + (app === "appstore" ? "store" : "")
                 }
                 storeOpen={app === "appstore"}
-                closeStore={() => setApp("")}
+                closeStore={closeCurrentApp}
                 work={work}
                 layout={deviceLayout.layout}
                 change={deviceLayout.change}
