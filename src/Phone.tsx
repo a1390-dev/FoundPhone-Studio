@@ -174,7 +174,7 @@ const IG_FAN_DM_LINES: Array<Omit<InstagramFanDm, "id" | "handle">> = [
   { category: "critical", fanType: "毒唯", text: "확인되지 않은 사진 하나로 네가 욕먹는 것도 과하지만, 그걸 이용해 관심을 모으는 건 더 싫어. 제발 선은 지켜 줘.", translation: "只凭一张未确认的照片就骂你也过分，但利用它吸引关注更让我反感。请守住界限。" },
   { category: "critical", fanType: "毒唯", text: "나 오늘 관련 글 그만 보려고 했는데 네 계정이 추천에 떠서 또 들어왔어. 진짜 마음이 편하지가 않네.", translation: "我今天本来想不再看相关帖子了，结果推荐了你的账号，我又点进来了。心里真的不平静。" },
   { category: "critical", fanType: "毒唯", text: "민정이가 행복했으면 한다는 생각은 여전한데 네가 그 상대일 수 있다고 생각하니 바로 받아들이긴 어렵다.", translation: "我仍然希望旼炡幸福，但一想到你可能就是那个对象，我还是很难立刻接受。" },
-  { category: undefined, fanType: "독唯", text: "혹시 사실이라면 민정이 사생활을 더 공개하지 말아 줘. 팬들이 알아야 한다고 생각하지는 않아.", translation: "如果这是真的，请别再公开旼炡的私生活。我不认为粉丝就有必要知道一切。" },
+  { category: undefined, fanType: "毒唯", text: "혹시 사실이라면 민정이 사생활을 더 공개하지 말아 줘. 팬들이 알아야 한다고 생각하지는 않아.", translation: "如果这是真的，请别再公开旼炡的私生活。我不认为粉丝就有必要知道一切。" },
   { category: "support", fanType: "甜唯", text: "나도 팬이라 마음이 복잡해서 네 계정까지 오게 됐어. 그렇다고 너한테 답을 강요하려는 건 아니야.", translation: "我也是粉丝，心情很复杂才会点进你的账号。但我不是想强迫你回答。" },
   { category: "support", fanType: "甜唯", text: "사진이 사실인지 아직 모르겠지만, 너도 갑자기 관심받아서 당황스럽겠다는 생각은 들어.", translation: "我还不知道照片是真是假，但也觉得你突然受到这么多关注，应该很慌。" },
   { category: "support", fanType: "甜唯", text: "솔직히 놀랐어. 그래도 민정이가 행복한 사람이었으면 하는 마음은 변하지 않아.", translation: "说实话我很震惊。不过，希望旼炡能幸福的心情没有改变。" },
