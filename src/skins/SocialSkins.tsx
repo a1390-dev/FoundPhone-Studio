@@ -195,11 +195,7 @@ export function XSkin(p: Props) {
 }
 export function ThreadsSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "为你推荐");
-  const [liveCount, setLiveCount] = useSkinState<number>(
-    p,
-    "threads-live-post-count-v2",
-    0,
-  );
+  const liveCount = Math.min(84, Math.max(0, Number(p.ui?.["rumor-live-post-count-v2"] ?? 0)));
   const rumorNewsUnlocked = p.ui?.["rumor-news-unlocked-v6"] === true;
   const allLiveRumorItems = items.filter(
     (i) =>
@@ -216,19 +212,6 @@ export function ThreadsSkin(p: Props) {
         i.meta.category === "rumor-discussion"
       ),
   );
-  useEffect(() => {
-    if (!rumorNewsUnlocked || liveItems.length === 0) return;
-    if (liveCount < 1) {
-      const timer = window.setTimeout(() => setLiveCount(1), 1800);
-      return () => window.clearTimeout(timer);
-    }
-    if (liveCount >= liveItems.length) return;
-    const timer = window.setTimeout(
-      () => setLiveCount((count) => Math.min(liveItems.length, count + 1)),
-      1600,
-    );
-    return () => window.clearTimeout(timer);
-  }, [rumorNewsUnlocked, liveCount, liveItems.length]);
   const visibleLiveItems = liveItems.slice(0, liveCount).reverse();
   const visibleOrdinaryItems =
     tab === "个人主页"
