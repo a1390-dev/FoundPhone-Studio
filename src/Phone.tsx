@@ -308,7 +308,7 @@ function PhoneRuntime({
   const handledKktEventsRef = useRef(new Set<string>());
   const [banner, setBanner] = useState("");
   const [bannerQueue, setBannerQueue] = useState<string[]>([]);
-  const [callReplyPending, setCallReplyPending] = useState(false);
+  const [callReplyVisible, setCallReplyVisible] = useState(false);
   // null means the existing saved notifications haven't been baselined yet;
   // show only notifications added after the first mounted runtime snapshot.
   const noticesSeen = useRef<string[] | null>(null);
@@ -1043,24 +1043,31 @@ function PhoneRuntime({
     s.ui?.story?.["scandal-kkt-second-notice-v5"],
   ]);
 
+  // The call countdown starts only after the second pre-call KKT line has
+  // been delivered while the player is viewing that exact conversation. If
+  // they leave during the three-second wait, cancel it and restart on return.
   useEffect(() => {
-    if (creator || s.ui?.kakao?.["scandal-precall-delivered-v5"] !== true) return;
+    if (
+      creator ||
+      s.ui?.kakao?.["scandal-precall-delivered-v5"] !== true ||
+      app !== "kakao" ||
+      appThread !== "金旼炡"
+    ) return;
     const current = runtimeRef.current;
     const storyState = current.ui?.story || {};
-    if (storyState["scandal-call-countdown-started-v5"] === true ||
-      storyState["scandal-call-triggered-v5"] === true || current.incomingCall) return;
-    update({
-      ...current,
-      ui: {
-        ...current.ui,
-        story: { ...storyState, "scandal-call-countdown-started-v5": true },
-      },
-    });
+    if (storyState["scandal-call-triggered-v5"] === true || current.incomingCall) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-call-triggered-v5"] === true || latest.incomingCall ||
-        latest.ui?.kakao?.["scandal-precall-delivered-v5"] !== true) return;
+      const viewingKktThread =
+        appViewRef.current.app === "kakao" &&
+        appViewRef.current.appThread === "金旼炡";
+      if (
+        !viewingKktThread ||
+        latestStory["scandal-call-triggered-v5"] === true ||
+        latest.incomingCall ||
+        latest.ui?.kakao?.["scandal-precall-delivered-v5"] !== true
+      ) return;
       update({
         ...latest,
         incomingCall: { caller: "金旼炡", target: "scandal-call", status: "ringing" },
@@ -1068,6 +1075,7 @@ function PhoneRuntime({
           ...latest.ui,
           story: {
             ...latestStory,
+            "scandal-call-countdown-started-v5": true,
             "scandal-call-triggered-v5": true,
             "scandal-call-dialogue-step-v5": 0,
           },
@@ -1075,7 +1083,13 @@ function PhoneRuntime({
       });
     }, 3000);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.kakao?.["scandal-precall-delivered-v5"]]);
+  }, [
+    creator,
+    app,
+    appThread,
+    s.ui?.kakao?.["scandal-precall-delivered-v5"],
+    s.ui?.story?.["scandal-call-triggered-v5"],
+  ]);
   useEffect(() => {
     if (creator || s.incomingCall?.target !== "scandal-call" ||
       s.incomingCall.status !== "answered") return;
@@ -1093,6 +1107,28 @@ function PhoneRuntime({
           story: { ...current.ui?.story, "scandal-call-dialogue-step-v5": nextStep },
         },
       });
+    }, 1000);
+    return () => window.clearTimeout(timer);
+  }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
+
+  // Show each player reply option one second after the preceding NPC line
+  // appears. The delay belongs before the option is visible, not after tapping it.
+  useEffect(() => {
+    setCallReplyVisible(false);
+    if (
+      creator ||
+      s.incomingCall?.target !== "scandal-call" ||
+      s.incomingCall.status !== "answered" ||
+      (callDialogueStep !== 1 && callDialogueStep !== 4)
+    ) return;
+    const expectedStep = callDialogueStep;
+    const timer = window.setTimeout(() => {
+      const current = runtimeRef.current;
+      if (
+        current.incomingCall?.target === "scandal-call" &&
+        current.incomingCall.status === "answered" &&
+        Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0) === expectedStep
+      ) setCallReplyVisible(true);
     }, 1000);
     return () => window.clearTimeout(timer);
   }, [creator, s.incomingCall?.target, s.incomingCall?.status, callDialogueStep]);
@@ -1768,31 +1804,26 @@ function PhoneRuntime({
                       </div>
                     )}
                   </div>
-                  {(callDialogueStep === 1 || callDialogueStep === 4) && (
+                  {(callDialogueStep === 1 || callDialogueStep === 4) && callReplyVisible && (
                     <div className="call-reply-options">
                       <button
                         type="button"
-                        disabled={callReplyPending}
                         onClick={() => {
-                          if (callReplyPending) return;
-                          setCallReplyPending(true);
-                          window.setTimeout(() => {
-                            const current = runtimeRef.current;
-                            const currentStep = Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
-                            if (current.incomingCall?.target === "scandal-call" &&
-                              current.incomingCall.status === "answered" &&
-                              (currentStep === 1 || currentStep === 4)) {
-                              const nextStep = currentStep === 1 ? 3 : 5;
-                              update({
-                                ...current,
-                                ui: {
-                                  ...current.ui,
-                                  story: { ...current.ui?.story, "scandal-call-dialogue-step-v5": nextStep },
-                                },
-                              });
-                            }
-                            setCallReplyPending(false);
-                          }, 1000);
+                          const current = runtimeRef.current;
+                          const currentStep = Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
+                          if (current.incomingCall?.target === "scandal-call" &&
+                            current.incomingCall.status === "answered" &&
+                            (currentStep === 1 || currentStep === 4)) {
+                            const nextStep = currentStep === 1 ? 3 : 5;
+                            setCallReplyVisible(false);
+                            update({
+                              ...current,
+                              ui: {
+                                ...current.ui,
+                                story: { ...current.ui?.story, "scandal-call-dialogue-step-v5": nextStep },
+                              },
+                            });
+                          }
                         }}
                       >
                         <span>{callDialogueStep === 1 ? "알겠어." : "응."}</span>
@@ -1807,20 +1838,34 @@ function PhoneRuntime({
                 <button
                   className="decline-call"
                   onClick={() => {
-                    const call = runtimeRef.current.incomingCall;
+                    const current = runtimeRef.current;
+                    const call = current.incomingCall;
                     if (call) {
+                      const currentCallStep = Number(current.ui?.story?.["scandal-call-dialogue-step-v5"] ?? 0);
+                      const incompleteScandalCall =
+                        call.target === "scandal-call" &&
+                        (call.status === "ringing" ||
+                          (call.status === "answered" && currentCallStep < 6));
                       const next = dispatch(
                         work,
-                        { ...runtimeRef.current, incomingCall: null },
-                        call.status === "ringing" ? "callDeclined" : "callEnded",
+                        { ...current, incomingCall: null },
+                        incompleteScandalCall || call.status === "ringing" ? "callDeclined" : "callEnded",
                         call.target || call.caller,
                       );
-                      if (call.target === "scandal-call" && call.status === "ringing") {
+                      if (incompleteScandalCall) {
                         next.ui = {
                           ...next.ui,
-                          kakao: { ...next.ui?.kakao, "scandal-call-result-v5": "declined" },
+                          kakao: {
+                            ...next.ui?.kakao,
+                            "scandal-call-result-v5": "declined",
+                          },
+                          story: {
+                            ...next.ui?.story,
+                            "scandal-call-dialogue-step-v5": 0,
+                          },
                         };
                       }
+                      setCallReplyVisible(false);
                       update(next);
                     }
                   }}
