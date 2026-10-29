@@ -742,14 +742,28 @@
   gap: 10px;
   align-items: center;
 }
-.ios18 .keyboard-draft input {
-  background: white;
+.ios18 .keyboard-draft-value {
+  box-sizing: border-box;
+  display: block;
   flex: 1;
   min-width: 0;
-  font-size: 17px;
+  max-height: 42px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: white;
+  font-size: 16px;
+  line-height: 1.7;
   border: 1px solid #ddd;
   border-radius: 17px;
   padding: 5px 12px;
+}
+.ios18 .keyboard-placeholder {
+  color: #999;
+}
+.ios18 .keyboard-pinyin {
+  margin-left: 4px;
+  color: #007aff;
 }
 .ios18 .keyboard-candidates {
   height: 39px;
@@ -799,6 +813,10 @@
 .ios18 .keyboard-bottom .key-space {
   flex: 5;
   background: white;
+}
+.ios18 .keyboard-bottom .keyboard-language {
+  flex: 1.5;
+  font-size: 11px;
 }
 .ios18 .keyboard-accessories {
   display: flex;
