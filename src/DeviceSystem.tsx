@@ -3,7 +3,7 @@ import {
   SliderModule,
 } from "./vendor/ios-web/ControlModules";
 import { UnlockHandle } from "./vendor/ios-web/UnlockHandle";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   LockKeyhole,
   Flashlight,
@@ -38,7 +38,6 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import type { Work } from "./schema";
-export const KeyboardContext = createContext<(open: boolean) => void>(() => {});
 export function NativeComposer({
   creator,
   onAdd,
@@ -46,7 +45,6 @@ export function NativeComposer({
   creator: boolean;
   onAdd: () => void;
 }) {
-  const open = useContext(KeyboardContext);
   const [draft, setDraft] = useState("");
   if (creator) {
     return (
@@ -60,9 +58,8 @@ export function NativeComposer({
       </button>
     );
   }
-  // This must be a real controlled field, not a blank button that opens an
-  // unrelated keyboard draft. The shared Phone pointer handler keeps it
-  // unfocused and routes all key taps into this actual composer.
+  // Keep this a real controlled field so iOS supplies its complete native
+  // keyboard and input-method composition, including arbitrary characters.
   return (
     <textarea
       className="native-compose-field"
@@ -72,7 +69,6 @@ export function NativeComposer({
       maxLength={2000}
       value={draft}
       onChange={(event) => setDraft(event.target.value)}
-      onClick={() => open(true)}
     />
   );
 }
