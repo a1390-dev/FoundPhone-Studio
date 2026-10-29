@@ -264,42 +264,6 @@ export function MymyKakao(p: SkinProps) {
   }, [p.thread, storyStep]);
   useEffect(() => {
     if (p.thread !== "金旼炡") return;
-    // This 20:17 follow-up belongs to the previous evening conversation, not
-    // to the Oct 28 afternoon rumor-and-call sequence.
-    if (p.ui?.["scandal-precall-started-v5"] === true || p.virtualTime?.startsWith("14:")) return;
-    const alreadyDelivered = sentRef.current.some((raw) => {
-      try {
-        const entry: unknown = JSON.parse(raw);
-        return Array.isArray(entry) &&
-          entry[0] === p.thread &&
-          entry[1] === KKT_OPENING_FOLLOWUP[1] &&
-          entry[3] === "npc";
-      } catch {
-        return false;
-      }
-    });
-    if (alreadyDelivered) return;
-    setNpcTyping(true);
-    const timer = window.setTimeout(() => {
-      const updated = [
-        ...sentRef.current,
-        JSON.stringify([
-          p.thread,
-          KKT_OPENING_FOLLOWUP[1],
-          KKT_OPENING_FOLLOWUP[2],
-          "npc",
-          KKT_OPENING_FOLLOWUP[4],
-        ]),
-      ];
-      sentRef.current = updated;
-      setSent(updated);
-      notifyKktNpcMessage(p.thread, KKT_OPENING_FOLLOWUP[1], KKT_OPENING_FOLLOWUP[4], KKT_OPENING_FOLLOWUP[2]);
-      setNpcTyping(false);
-    }, 2000);
-    return () => window.clearTimeout(timer);
-  }, [p.thread, p.ui?.["scandal-precall-started-v5"], p.virtualTime]);
-  useEffect(() => {
-    if (p.thread !== "金旼炡") return;
     const started = p.ui?.["scandal-precall-started-v5"];
     if (started !== true || processedPreCall || preCallSequenceStartedRef.current) return;
     preCallSequenceStartedRef.current = true;
