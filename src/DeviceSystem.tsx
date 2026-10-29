@@ -596,9 +596,12 @@ function setKeyboardText(target: KeyboardEditable, value: string): void {
     const setter = Object.getOwnPropertyDescriptor(prototype, "value")?.set;
     if (setter) setter.call(target, value);
     else target.value = value;
-    // Use the native value setter above so React's value tracker sees this
-    // as a real edit and updates the controlled app composer normally.
-    target.dispatchEvent(new Event("input", { bubbles: true }));
+    // Dispatch a native InputEvent after bypassing React's patched setter,
+    // so every controlled field receives the same input signal as typed text.
+    const inputEvent = typeof InputEvent === "function"
+      ? new InputEvent("input", { bubbles: true, inputType: "insertText", data: value })
+      : new Event("input", { bubbles: true });
+    target.dispatchEvent(inputEvent);
     return;
   }
   if (target.isContentEditable) {
@@ -706,30 +709,31 @@ export function DeviceKeyboard({
         [composePinyin(pinyin), pinyin].filter((candidate, index, all) => all.indexOf(candidate) === index)
       ).slice(0, 5)
     : ["我", "你", "好的", "可以"];
-  const placeholder = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
-    ? (target.placeholder || target.getAttribute("aria-label") || "输入内容")
-    : (target?.getAttribute("aria-label") || "输入内容");
   const rows = numbers
     ? ["1234567890", "-/:;()¥&@", ".,?!'"]
     : ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
   return (
     <div className="device-keyboard" role="dialog" aria-label="苹果风格屏幕键盘">
-      <div className="keyboard-draft">
-        <div className="keyboard-draft-value" aria-live="polite">
-          {draft || <span className="keyboard-placeholder">{placeholder}</span>}
-          {pinyin && <span className="keyboard-pinyin">{pinyin}</span>}
-        </div>
-        <button type="button" aria-label="收起键盘" onClick={finishTyping}>
-          <ChevronDown />
-        </button>
-      </div>
-      <div className="keyboard-candidates">
+      <div className="keyboard-candidates" aria-label="输入法候选词">
+        {pinyin && (
+          <button
+            type="button"
+            className="keyboard-pinyin-preview"
+            aria-label={"输入拼音 " + pinyin}
+            onClick={() => pickCandidate(pinyin)}
+          >
+            {pinyin}
+          </button>
+        )}
         {candidates.map((candidate, index) => (
           <button type="button" key={candidate + index} onClick={() => pickCandidate(candidate)}>
             {candidate}
           </button>
         ))}
+        <button type="button" aria-label="收起键盘" onClick={finishTyping}>
+          <ChevronDown size={18} />
+        </button>
       </div>
       {rows.map((row, index) => (
         <div className="keyboard-row" key={row}>
