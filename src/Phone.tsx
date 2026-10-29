@@ -1269,10 +1269,11 @@ function PhoneRuntime({
                         story: {
                           ...storyState,
                           "scandal-kkt-chat-opened-v5": true,
-                          // Both NPC lines will arrive inside this open chat.
-                          // Consume OS-notice flags so no popup blocks tapping.
+                          // The first alert brought the player into this chat.
+                          // Keep the second alert's own timer alive; it will be
+                          // suppressed only if this exact chat is still visible
+                          // when that message arrives.
                           "scandal-kkt-first-notice-v5": true,
-                          "scandal-kkt-second-notice-v5": true,
                         },
                         kakao: {
                           ...current.ui?.kakao,
