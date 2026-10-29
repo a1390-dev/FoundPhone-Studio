@@ -1325,12 +1325,3 @@
   font-size: 12px;
 }
 
-
-/* Prevent iOS Safari's automatic page zoom when focusing the KKT composer.
-   Keep the entire shared NPC chat input at the 16px Safari threshold. */
-.mymy-ui.mymy-kakao .kzinp input,
-.mymy-ui.mymy-kakao .kzinp textarea,
-.mymy-ui.mymy-kakao .kzinp .kkt-composer-textarea {
-  font-size: 16px !important;
-  -webkit-text-size-adjust: 100%;
-}
