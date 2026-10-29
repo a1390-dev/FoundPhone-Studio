@@ -1248,9 +1248,14 @@ function PhoneRuntime({
       try { dm = JSON.parse(raw) as InstagramFanDm; }
       catch { return; }
       const notice = `IGDM|${dm.id}|${dm.handle}: ${dm.text} — ${dm.translation}`;
+      const instagramDmScreenOpen =
+        appViewRef.current.app === "instagram" &&
+        instagramUi["scandal-ig-dm-screen-active-v8"] === true;
       update({
         ...current,
-        notifications: [...current.notifications, notice],
+        notifications: instagramDmScreenOpen
+          ? current.notifications
+          : [...current.notifications, notice],
         ui: {
           ...current.ui,
           instagram: { ...instagramUi, "scandal-ig-dm-popup-count-v8": index + 1 },
@@ -1316,9 +1321,14 @@ function PhoneRuntime({
       try { message = JSON.parse(raw) as typeof message; }
       catch { return; }
       const notice = `IGDM|${message.threadId}|${message.handle}: ${message.text} — ${message.translation}`;
+      const instagramDmScreenOpen =
+        appViewRef.current.app === "instagram" &&
+        instagramUi["scandal-ig-dm-screen-active-v8"] === true;
       update({
         ...current,
-        notifications: [...current.notifications, notice],
+        notifications: instagramDmScreenOpen
+          ? current.notifications
+          : [...current.notifications, notice],
         ui: {
           ...current.ui,
           instagram: {
