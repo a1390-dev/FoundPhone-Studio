@@ -798,8 +798,6 @@ function PhoneRuntime({
     ? s.ui?.instagram?.["scandal-ig-dm-reply-queue-v7"] as string[] : [];
   const igDmReplyCount = Number(s.ui?.instagram?.["scandal-ig-dm-reply-count-v7"] ?? 0);
   const igDmReplyPopupCount = Number(s.ui?.instagram?.["scandal-ig-dm-reply-popup-count-v7"] ?? 0);
-  const igDmScreenActive = app === "instagram" &&
-    s.ui?.instagram?.["scandal-ig-dm-screen-active-v7"] === true;
   const startInstagramDmAfterCall = (current: Runtime): Runtime => {
     const instagramUi = current.ui?.instagram || {};
     const next = dispatch(
