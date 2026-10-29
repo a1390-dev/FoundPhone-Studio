@@ -40,6 +40,7 @@ import {
   Suspense,
   lazy,
   type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -306,6 +307,7 @@ function PhoneRuntime({
   const [pinOpen, setPinOpen] = useState(false);
   const [quickCamera, setQuickCamera] = useState(false);
   const [keyboard, setKeyboard] = useState(false);
+  const [keyboardTarget, setKeyboardTarget] = useState<HTMLElement | null>(null);
   const [recent, setRecent] = useState<string[]>([]);
   const appSnapshots = useRef(new Map<string, HTMLElement>());
   const handledKktEventsRef = useRef(new Set<string>());
@@ -324,6 +326,56 @@ function PhoneRuntime({
     if (work.phone.passcode) setPinOpen(true);
     else unlock();
   };
+
+  // Intercept taps on editable content inside the simulated device before iOS
+  // Safari focuses the real DOM field. Its native keyboard changes the visual
+  // viewport and can permanently zoom this CSS-zoomed phone; the in-phone
+  // keyboard edits the same controlled fields without ever focusing them.
+  const captureEditorPointer = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (creator) return;
+    const origin = event.target;
+    if (!(origin instanceof HTMLElement)) return;
+    if (origin.closest(".device-keyboard")) return;
+
+    const editor = origin.closest<HTMLElement>(
+      'textarea, [contenteditable="true"], input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="range"]):not([type="file"]):not([type="color"])',
+    );
+    if (!editor || !editor.closest(".phone-screen")) {
+      if (keyboard) {
+        setKeyboard(false);
+        setKeyboardTarget(null);
+      }
+      return;
+    }
+
+    if (
+      editor.hasAttribute("disabled") ||
+      editor.getAttribute("aria-disabled") === "true" ||
+      (("readOnly" in editor) && Boolean((editor as HTMLInputElement | HTMLTextAreaElement).readOnly)) ||
+      (editor instanceof HTMLInputElement && ["number", "date", "time", "datetime-local", "month", "week"].includes(editor.type))
+    ) {
+      if (keyboard) {
+        setKeyboard(false);
+        setKeyboardTarget(null);
+      }
+      return;
+    }
+
+    event.preventDefault();
+    if (editor instanceof HTMLInputElement || editor instanceof HTMLTextAreaElement) {
+      try {
+        editor.setSelectionRange(editor.value.length, editor.value.length);
+      } catch {
+        // Inputs such as date-like controls do not support caret selection.
+      }
+    }
+    setKeyboardTarget(editor);
+    setKeyboard(true);
+  };
+
+  useEffect(() => {
+    if (!keyboard) setKeyboardTarget(null);
+  }, [keyboard]);
   const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
@@ -1260,6 +1312,7 @@ function PhoneRuntime({
         <div
           className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           data-app={app}
+          onPointerDownCapture={captureEditorPointer}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
             gestureConsumed.current = false;
@@ -1857,7 +1910,15 @@ function PhoneRuntime({
               </div>
             </div>
           )}
-          {keyboard && <DeviceKeyboard close={() => setKeyboard(false)} />}
+          {keyboard && (
+            <DeviceKeyboard
+              target={keyboardTarget}
+              close={() => {
+                setKeyboard(false);
+                setKeyboardTarget(null);
+              }}
+            />
+          )}
           {loadError && (
             <button className="runtime-error" onClick={() => setLoadError("")}>
               {loadError}
