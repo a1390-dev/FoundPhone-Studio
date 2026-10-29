@@ -1311,9 +1311,7 @@ function PhoneRuntime({
     return () => window.clearTimeout(timer);
   }, [creator, igDmReplyPopupCount, igDmReplyQueue.length]);
 
-  useEffect(() => {
-    if (igDmScreenActive && banner.startsWith("IGDM|")) setBanner("");
-  }, [igDmScreenActive]);
+  // IG DM notification banners remain visible while browsing Instagram.
 
   const plugin = getApp(app);
   useEffect(() => {
