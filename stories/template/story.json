@@ -12070,6 +12070,11 @@
           "type": "notification",
           "key": "",
           "value": "KKT|金旼炡: 아직 안 잤어?"
+        },
+        {
+          "type": "variable",
+          "key": "kkt-opening-first-notice-delivered-v1",
+          "value": true
         }
       ],
       "next": [],
