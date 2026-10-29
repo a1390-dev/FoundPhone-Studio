@@ -862,7 +862,7 @@ function PhoneRuntime({
             "scandal-kkt-first-notice-v5": false,
             "scandal-kkt-second-notice-v5": false,
           },
-          twitter: { ...latest.ui?.twitter, "rumor-news-unlocked-v5": true },
+          twitter: { ...latest.ui?.twitter, "rumor-news-unlocked-v6": true },
           kakao: {
             ...latest.ui?.kakao,
             "scandal-call-result-v5": "",
@@ -874,6 +874,29 @@ function PhoneRuntime({
     }, 10000);
     return () => window.clearTimeout(timer);
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
+
+  useEffect(() => {
+    if (
+      creator ||
+      s.ui?.story?.["scandal-news-pushed-v5"] !== true ||
+      s.ui?.threads?.["rumor-news-unlocked-v6"] === true
+    ) return;
+    const timer = window.setTimeout(() => {
+      const latest = runtimeRef.current;
+      if (latest.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+      update({
+        ...latest,
+        ui: {
+          ...latest.ui,
+          threads: {
+            ...latest.ui?.threads,
+            "rumor-news-unlocked-v6": true,
+          },
+        },
+      });
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.threads?.["rumor-news-unlocked-v6"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
