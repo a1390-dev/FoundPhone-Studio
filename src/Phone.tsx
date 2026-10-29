@@ -378,6 +378,74 @@ function PhoneRuntime({
   useEffect(() => {
     if (!keyboard) setKeyboardTarget(null);
   }, [keyboard]);
+
+  // When an actual chat composer opens the in-phone keyboard, keep the latest
+  // messages visible above it. The keyboard overlays the bottom of the device,
+  // so scroll after the layout has settled instead of resizing the phone shell.
+  useEffect(() => {
+    if (!keyboard || !keyboardTarget) return;
+    const screen = shell.current?.querySelector<HTMLElement>(".phone-screen");
+    if (!screen) return;
+
+    const panes: HTMLElement[] = [];
+    const kktRoot = keyboardTarget.closest<HTMLElement>(".mymy-ui.mymy-kakao");
+    const kktComposer = keyboardTarget.closest(".mymy-ui.mymy-kakao .kzinp");
+    if (kktRoot && kktComposer) {
+      const pane = kktRoot.querySelector<HTMLElement>(".msgs");
+      if (pane) panes.push(pane);
+    }
+
+    const igThread = keyboardTarget.closest<HTMLElement>(".ig-rumor-dm-thread");
+    if (igThread) {
+      const pane = igThread.querySelector<HTMLElement>(".ig-rumor-dm-history");
+      if (pane) panes.push(pane);
+    }
+
+    const skinComposer = keyboardTarget.closest<HTMLElement>(".skin-compose");
+    if (skinComposer) {
+      const chatApp = skinComposer.closest<HTMLElement>(".wechat-ui, .whatsapp-ui");
+      const pane = chatApp?.querySelector<HTMLElement>(".skin-messages");
+      if (pane) panes.push(pane);
+    }
+
+    // Fallback for other chat UIs whose composer is inside a scrollable pane.
+    if (!panes.length) {
+      let node = keyboardTarget.parentElement;
+      while (node && node !== screen) {
+        const style = window.getComputedStyle(node);
+        if (
+          (style.overflowY === "auto" || style.overflowY === "scroll" || style.overflowY === "overlay") &&
+          node.scrollHeight > node.clientHeight + 1
+        ) {
+          panes.push(node);
+          break;
+        }
+        node = node.parentElement;
+      }
+    }
+    if (!panes.length) return;
+
+    let secondFrame = 0;
+    let settleTimer: number | undefined;
+    const scrollToLatest = () => {
+      for (const pane of panes) {
+        if (pane.isConnected && pane.clientHeight > 0) {
+          pane.scrollTop = pane.scrollHeight;
+        }
+      }
+    };
+    const firstFrame = window.requestAnimationFrame(() => {
+      scrollToLatest();
+      secondFrame = window.requestAnimationFrame(scrollToLatest);
+      settleTimer = window.setTimeout(scrollToLatest, 280);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      if (secondFrame) window.cancelAnimationFrame(secondFrame);
+      if (settleTimer !== undefined) window.clearTimeout(settleTimer);
+    };
+  }, [keyboard, keyboardTarget, app, appThread]);
+
   const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
@@ -949,7 +1017,7 @@ function PhoneRuntime({
         translation: "我今天可能会晚点回家。",
         time: "20:17",
       }), true);
-    }, 2000);
+    }, 1000);
     return () => window.clearTimeout(timer);
   }, [
     creator,
@@ -1262,7 +1330,13 @@ function PhoneRuntime({
 
   useEffect(() => {
     if (!banner) return;
-    const timer = window.setTimeout(() => setBanner(""), 4500);
+    const isOpeningKktBanner =
+      banner === "KKT|金旼炡: 아직 안 잤어?" ||
+      banner.startsWith("KKT|金旼炡:나 오늘 집에 좀 늦게 들어갈 것 같아.");
+    const timer = window.setTimeout(
+      () => setBanner(""),
+      isOpeningKktBanner ? 1000 : 4500,
+    );
     return () => window.clearTimeout(timer);
   }, [banner]);
   const dismissNotice = (index: number) =>
