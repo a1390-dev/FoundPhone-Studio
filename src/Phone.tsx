@@ -833,19 +833,27 @@ function PhoneRuntime({
     if (creator || s.ui?.kakao?.["convenience-store-event-finished-v5"] !== true) return;
     const current = runtimeRef.current;
     const storyState = current.ui?.story || {};
-    if (storyState["scandal-news-countdown-started-v5"] === true ||
-      storyState["scandal-news-pushed-v5"] === true) return;
+    // Use a fresh versioned event key so stale v5 save flags from prior
+    // broken builds cannot reveal the feed before this scene runs again.
+    if (
+      storyState["scandal-news-countdown-started-v6"] === true ||
+      storyState["scandal-news-triggered-v6"] === true
+    ) return;
     update({
       ...current,
       ui: {
         ...current.ui,
-        story: { ...storyState, "scandal-news-countdown-started-v5": true },
+        story: {
+          ...storyState,
+          "scandal-news-countdown-started-v6": true,
+          "rumor-live-post-count-v2": 0,
+        },
       },
     });
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
       const latestStory = latest.ui?.story || {};
-      if (latestStory["scandal-news-pushed-v5"] === true) return;
+      if (latestStory["scandal-news-triggered-v6"] === true) return;
       const twitterName = work.apps.find((a) => a.id === "twitter")?.name || "X";
       const newsNotice = `${twitterName}:突发新闻：疑似 aespa Winter 昨夜与女性同行的模糊照片正在传播`;
       update({
@@ -859,6 +867,7 @@ function PhoneRuntime({
             ...latestStory,
             "rumor-day-started": true,
             "scandal-news-pushed-v5": true,
+            "scandal-news-triggered-v6": true,
             "rumor-live-post-count-v2": 0,
             "scandal-kkt-first-notice-v5": false,
             "scandal-kkt-second-notice-v5": false,
@@ -886,7 +895,7 @@ function PhoneRuntime({
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
 
   useEffect(() => {
-    if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+    if (creator || s.ui?.story?.["scandal-news-triggered-v6"] !== true) return;
     const count = Number(s.ui?.story?.["rumor-live-post-count-v2"] || 0);
     if (count >= 84) return;
     const timer = window.setTimeout(() => {
@@ -920,7 +929,7 @@ function PhoneRuntime({
       });
     }, count === 0 ? 800 : 1500);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["rumor-live-post-count-v2"]]);
+  }, [creator, s.ui?.story?.["scandal-news-triggered-v6"], s.ui?.story?.["rumor-live-post-count-v2"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
@@ -1686,7 +1695,7 @@ function PhoneRuntime({
                     ) {
                       const current = runtimeRef.current;
                       // Ignore feed interactions until the actual news scene fires.
-                      if (current.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+                      if (current.ui?.story?.["scandal-news-triggered-v6"] !== true) return;
                       const nextCount = Math.max(0, Math.min(84, Math.floor(value)));
                       update(
                         dispatch(
@@ -2435,7 +2444,7 @@ function AppContent({
                       // The global story trigger is authoritative. Old per-app
                       // persisted flags must never reveal live rumor posts early.
                       "rumor-news-unlocked-v6":
-                        state.ui?.story?.["scandal-news-pushed-v5"] === true,
+                        state.ui?.story?.["scandal-news-triggered-v6"] === true,
                       "rumor-live-post-count-v2":
                         Number(state.ui?.story?.["rumor-live-post-count-v2"] ?? 0),
                     }
