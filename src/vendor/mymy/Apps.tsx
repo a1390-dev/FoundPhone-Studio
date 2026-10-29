@@ -1386,7 +1386,7 @@ export function MymyInstagram(p: SkinProps) {
             <ArrowLeft />
           </button>
           {activeFanDm ? (
-            <span className="igl2"><b>{activeFan?.handle || "私信"}</b></span>
+            <span className="igl2 ig-rumor-dm-header"><b>{activeFan?.handle || "私信"}</b></span>
           ) : selected && (selected.id === firstCarouselPostId || selected.id === secondCarouselPostId || selected.id === thirdCarouselPostId || selected.id === fourthCarouselPostId) ? (
             <span className="igl2 ig-first-detail-title">
               <b>帖子</b>
