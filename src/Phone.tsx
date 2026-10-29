@@ -903,8 +903,8 @@ function PhoneRuntime({
     s.ui?.kakao?.["scandal-precall-started-v5"],
     s.ui?.kakao?.["mymyKktOpeningFollowupNoticeHandledV1"],
     s.variables?.["kkt-opening-first-notice-delivered-v1"],
-    s.completed.length,
-    s.notifications.length,
+    s.completed,
+    s.notifications,
   ]);
 
   // If either lead-in message arrives while Minjeong's chat is visible, consume
