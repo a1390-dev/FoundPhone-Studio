@@ -912,8 +912,8 @@ export function MymyInstagram(p: SkinProps) {
   const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v8", []);
   const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v8", 0);
   const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v8", []);
-  const [fanDmReadIds, setFanDmReadIds] = useSkinState<string[]>(p, "scandal-ig-dm-read-ids-v1", []);
-  const [fanDmUnreadReplyIds, setFanDmUnreadReplyIds] = useSkinState<string[]>(p, "scandal-ig-dm-unread-reply-ids-v1", []);
+  const [fanDmReadIds, setFanDmReadIds] = useSkinState<string[]>(p, "scandal-ig-dm-read-ids-v2", []);
+  const [fanDmUnreadReplyIds, setFanDmUnreadReplyIds] = useSkinState<string[]>(p, "scandal-ig-dm-unread-reply-ids-v2", []);
   const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v8", []);
   const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v8", "");
   const [activeFanDm, setActiveFanDm] = useState("");
