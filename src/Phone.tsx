@@ -1343,6 +1343,23 @@ function PhoneRuntime({
 
   // IG DM notification banners remain visible while browsing Instagram.
 
+  useEffect(() => {
+    const readingInstagramDms =
+      app === "instagram" &&
+      s.ui?.instagram?.["scandal-ig-dm-screen-active-v8"] === true;
+    if (!readingInstagramDms) return;
+
+    const current = runtimeRef.current;
+    const remainingNotifications = current.notifications.filter(
+      (notice) => !notice.startsWith("IGDM|"),
+    );
+    if (remainingNotifications.length !== current.notifications.length) {
+      update({ ...current, notifications: remainingNotifications });
+    }
+    setBannerQueue((queue) => queue.filter((notice) => !notice.startsWith("IGDM|")));
+    setBanner((currentBanner) => currentBanner.startsWith("IGDM|") ? "" : currentBanner);
+  }, [app, s.ui?.instagram?.["scandal-ig-dm-screen-active-v8"]]);
+
   const plugin = getApp(app);
   useEffect(() => {
     if (!ready) return;
