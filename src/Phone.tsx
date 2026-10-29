@@ -1166,9 +1166,31 @@ function PhoneRuntime({
     });
     noticesSeen.current = [...s.notifications];
     if (!locked && work.phone.notifications && newNotices.length) {
-      setBannerQueue((queue) => [...queue, ...newNotices]);
+      const isOpeningKktNotice = (notice: string) =>
+        notice === "KKT|金旼炡: 아직 안 잤어?" ||
+        notice.startsWith("KKT|金旼炡:나 오늘 집에 좀 늦게 들어갈 것 같아.");
+      // Preserve the existing latest-notice behavior for unrelated apps. Only
+      // queue this two-message KKT opening so its second banner cannot replace
+      // the first one before it has been shown.
+      const keepOpeningSequenceInOrder =
+        isOpeningKktNotice(banner) ||
+        bannerQueue.some(isOpeningKktNotice) ||
+        newNotices.some(isOpeningKktNotice) ||
+        bannerQueue.length > 0;
+      if (keepOpeningSequenceInOrder) {
+        if (!banner && bannerQueue.length === 0) {
+          setBanner(newNotices[0]);
+          if (newNotices.length > 1) {
+            setBannerQueue((queue) => [...queue, ...newNotices.slice(1)]);
+          }
+        } else {
+          setBannerQueue((queue) => [...queue, ...newNotices]);
+        }
+      } else {
+        setBanner(newNotices.at(-1) || "");
+      }
     }
-  }, [s.notifications, locked, work.phone.notifications]);
+  }, [s.notifications, locked, work.phone.notifications, banner, bannerQueue]);
 
   // Show notification banners one at a time. A new message queues behind the
   // visible banner instead of replacing it before the player can see it.
