@@ -862,7 +862,16 @@ function PhoneRuntime({
             "scandal-kkt-first-notice-v5": false,
             "scandal-kkt-second-notice-v5": false,
           },
-          twitter: { ...latest.ui?.twitter, "rumor-news-unlocked-v6": true },
+          twitter: {
+            ...latest.ui?.twitter,
+            "rumor-news-unlocked-v6": true,
+            "rumor-live-post-count-v2": 0,
+          },
+          threads: {
+            ...latest.ui?.threads,
+            "rumor-news-unlocked-v6": true,
+            "rumor-live-post-count-v2": 0,
+          },
           kakao: {
             ...latest.ui?.kakao,
             "scandal-call-result-v5": "",
@@ -876,27 +885,41 @@ function PhoneRuntime({
   }, [creator, s.ui?.kakao?.["convenience-store-event-finished-v5"]]);
 
   useEffect(() => {
-    if (
-      creator ||
-      s.ui?.twitter?.["x-news-post-published-v1"] !== true ||
-      s.ui?.threads?.["rumor-news-unlocked-v6"] === true
-    ) return;
+    if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
+    const count = Number(s.ui?.story?.["rumor-live-post-count-v2"] || 0);
+    if (count >= 84) return;
     const timer = window.setTimeout(() => {
       const latest = runtimeRef.current;
-      if (latest.ui?.twitter?.["x-news-post-published-v1"] !== true) return;
+      const storyState = latest.ui?.story || {};
+      if (storyState["scandal-news-pushed-v5"] !== true) return;
+      const nextCount = Math.min(
+        84,
+        Number(storyState["rumor-live-post-count-v2"] || 0) + 1,
+      );
       update({
         ...latest,
         ui: {
           ...latest.ui,
+          story: {
+            ...storyState,
+            "rumor-live-post-count-v2": nextCount,
+          },
+          twitter: {
+            ...latest.ui?.twitter,
+            "rumor-news-unlocked-v6": true,
+            "rumor-live-post-count-v2": nextCount,
+            "x-news-post-published-v1": nextCount >= 1,
+          },
           threads: {
             ...latest.ui?.threads,
             "rumor-news-unlocked-v6": true,
+            "rumor-live-post-count-v2": nextCount,
           },
         },
       });
-    }, 3000);
+    }, count === 0 ? 800 : 1500);
     return () => window.clearTimeout(timer);
-  }, [creator, s.ui?.twitter?.["x-news-post-published-v1"], s.ui?.threads?.["rumor-news-unlocked-v6"]]);
+  }, [creator, s.ui?.story?.["scandal-news-pushed-v5"], s.ui?.story?.["rumor-live-post-count-v2"]]);
 
   useEffect(() => {
     if (creator || s.ui?.story?.["scandal-news-pushed-v5"] !== true) return;
