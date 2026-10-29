@@ -219,6 +219,7 @@ export function MymyKakao(p: SkinProps) {
     [storyStep, setStoryStep] = useSkinState<number>(p, "mymyKktNativeStoryStepV3", 0),
     [readThreads, setReadThreads] = useSkinState<string[]>(p, "mymyKktReadThreadsV1", []),
     [openingSequenceReleased, setOpeningSequenceReleased] = useSkinState<boolean>(p, "mymyKktOpeningSequenceReleasedV2", false),
+    [scandalOpeningRevealCount, setScandalOpeningRevealCount] = useSkinState<number>(p, "mymyKktScandalOpeningRevealCountV1", 0),
     [processedCallResult, setProcessedCallResult] = useSkinState<string>(p, "mymyKktProcessedCallResultV5", ""),
     [processedPreCall, setProcessedPreCall] = useSkinState<string>(p, "mymyKktProcessedPreCallV5", ""),
     [draft, setDraft] = useState(""),
@@ -509,9 +510,14 @@ export function MymyKakao(p: SkinProps) {
       ? allMessages.find((m) => !m.outgoing && m.body === "나 오늘 집에 좀 늦게 들어갈 것 같아.")
       : undefined,
     hideOpeningFollowup = hasOpeningFirst && Boolean(openingFollowup) && !openingSequenceReleased,
-    messages = allMessages.filter((m) =>
-      !hideOpeningFollowup || m.id !== openingFollowup?.id
-    ),
+    scandalOpeningMessages = p.thread === "金旼炡"
+      ? allMessages.filter((m) => !m.outgoing && (m.body === "어디야?" || m.body === "혼자 있어?"))
+      : [],
+    messages = allMessages.filter((m) => {
+      if (hideOpeningFollowup && m.id === openingFollowup?.id) return false;
+      const sequenceIndex = scandalOpeningMessages.findIndex((item) => item.id === m.id);
+      return sequenceIndex < 0 || sequenceIndex < scandalOpeningRevealCount;
+    }),
     scroll = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // Only start the one-second reveal after the follow-up has actually been
@@ -526,6 +532,17 @@ export function MymyKakao(p: SkinProps) {
     const timer = window.setTimeout(() => setOpeningSequenceReleased(true), 1000);
     return () => window.clearTimeout(timer);
   }, [p.thread, hasOpeningFirst, Boolean(openingFollowup), openingSequenceReleased]);
+  useEffect(() => {
+    if (
+      p.thread !== "金旼炡" ||
+      scandalOpeningRevealCount >= scandalOpeningMessages.length
+    ) return;
+    const total = scandalOpeningMessages.length;
+    const timer = window.setTimeout(() => {
+      setScandalOpeningRevealCount((count) => Math.min(total, count + 1));
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, [p.thread, scandalOpeningRevealCount, scandalOpeningMessages.length]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
@@ -895,6 +912,8 @@ export function MymyInstagram(p: SkinProps) {
   const [fanDmQueue] = useSkinState<string[]>(p, "scandal-ig-dm-queue-v7", []);
   const [fanDmVisibleCount] = useSkinState<number>(p, "scandal-ig-dm-visible-count-v7", 0);
   const [fanDmReplies, setFanDmReplies] = useSkinState<string[]>(p, "scandal-ig-dm-replies-v7", []);
+  const [fanDmReadIds, setFanDmReadIds] = useSkinState<string[]>(p, "scandal-ig-dm-read-ids-v1", []);
+  const [fanDmUnreadReplyIds] = useSkinState<string[]>(p, "scandal-ig-dm-unread-reply-ids-v1", []);
   const [fanDmReplyQueue, setFanDmReplyQueue] = useSkinState<string[]>(p, "scandal-ig-dm-reply-queue-v7", []);
   const [fanDmOpenRequest, setFanDmOpenRequest] = useSkinState<string>(p, "scandal-ig-open-thread-v7", "");
   const [activeFanDm, setActiveFanDm] = useState("");
@@ -933,8 +952,12 @@ export function MymyInstagram(p: SkinProps) {
     if (!fanDmOpenRequest) return;
     setTab("私信");
     setActiveFanDm(fanDmOpenRequest);
+    if (!fanDmReadIds.includes(fanDmOpenRequest)) {
+      setFanDmReadIds([...fanDmReadIds, fanDmOpenRequest]);
+    }
+    p.onUi?.("scandal-ig-open-thread-v7", fanDmOpenRequest);
     setFanDmOpenRequest("");
-  }, [fanDmOpenRequest]);
+  }, [fanDmOpenRequest, fanDmReadIds]);
   useEffect(() => {
     p.onUi?.("scandal-ig-dm-screen-active-v7", tab === "私信" && !selected);
     return () => p.onUi?.("scandal-ig-dm-screen-active-v7", false);
@@ -1334,7 +1357,7 @@ export function MymyInstagram(p: SkinProps) {
           <button
             aria-label={activeFanDm ? "返回Instagram私信" : selected ? "返回Instagram动态" : "关闭当前App"}
             onClick={() => {
-              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); }
+              if (activeFanDm) { setActiveFanDm(""); setFanDmDraft(""); p.onUi?.("scandal-ig-open-thread-v7", ""); }
               else if (selected) setSelected(null);
               else p.onBack();
             }}
@@ -1542,14 +1565,20 @@ export function MymyInstagram(p: SkinProps) {
                   ? lastReply.role === "npc" ? lastReply.translation : ""
                   : dm.translation;
                 return (
-                  <button className="kzkr ig-rumor-dm-row" key={dm.id} onClick={() => { setSelected(null); setActiveFanDm(dm.id); setTab("私信"); }}>
+                  <button className="kzkr ig-rumor-dm-row" key={dm.id} onClick={() => {
+                    setSelected(null);
+                    setActiveFanDm(dm.id);
+                    setTab("私信");
+                    if (!fanDmReadIds.includes(dm.id)) setFanDmReadIds([...fanDmReadIds, dm.id]);
+                    p.onUi?.("scandal-ig-open-thread-v7", dm.id);
+                  }}>
                     <Avatar name={dm.handle} round />
                     <span className="kzkn">
                       <b>{dm.handle}</b>
                       <small>{previewText}</small>
                       {previewTranslation && <small className="ig-rumor-dm-translation">{previewTranslation}</small>}
                     </span>
-                    <span className="ig-rumor-dm-dot" aria-hidden="true" />
+                    {(!fanDmReadIds.includes(dm.id) || fanDmUnreadReplyIds.includes(dm.id)) && <span className="ig-rumor-dm-dot" aria-hidden="true" />}
                   </button>
                 );
               })}
